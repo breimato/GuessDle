@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Iniciar sesión - GuessDle{% endblock %}
+
+{% block main_class %}
+min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat
+bg-[url('{% static "img/login.png" %}')] py-20 px-4
+{% endblock %}
+
+{% block content %}
+<div class="bg-amber-100 text-gray-900 font-serif border-4 border-yellow-800 rounded-xl shadow-inner p-10 w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-yellow-900 mb-6 drop-shadow">Iniciar sesión</h2>
+
+    {% if form.errors %}
+        <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
+            Por favor, corrige los errores en el formulario.
+        </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-4">
+            <label for="id_username" class="block text-yellow-900 mb-1">Usuario</label>
+            <input type="text" name="username" id="id_username"
+                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                   required autofocus>
+        </div>
+
+        <div class="mb-6">
+            <label for="id_password" class="block text-yellow-900 mb-1">Contraseña</label>
+            <input type="password" name="password" id="id_password"
+                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+                   required>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-yellow-700 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-800 transition">
+            Entrar
+        </button>
+    </form>
+
+    <p class="mt-6 text-sm text-center text-yellow-800">
+        ¿No tienes una cuenta? <a href="#" class="text-yellow-700 hover:underline">Regístrate</a>
+    </p>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}GuessDle{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Activar modo oscuro por clase -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
+    {% load static %}
+</head>
+<body class="text-gray-100 min-h-screen flex flex-col bg-gray-900">
+
+    <!-- Main Content -->
+    <main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
