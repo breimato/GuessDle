@@ -14,7 +14,7 @@ bg-[url('{% static "img/login.png" %}')] py-20 px-4
 
     {% if form.errors %}
         <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
-            Por favor, corrige los errores en el formulario.
+            Usuario y/o contraseña, incorrectos
         </div>
     {% endif %}
 
@@ -42,7 +42,7 @@ bg-[url('{% static "img/login.png" %}')] py-20 px-4
     </form>
 
     <p class="mt-6 text-sm text-center text-yellow-800">
-        ¿No tienes una cuenta? <a href="#" class="text-yellow-700 hover:underline">Regístrate</a>
+    ¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-yellow-700 hover:underline">Regístrate</a>
     </p>
 </div>
 

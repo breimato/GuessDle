@@ -1,8 +1,9 @@
-from django.shortcuts import render
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 @login_required
 def dashboard_view(request):
@@ -35,3 +36,26 @@ def dashboard_view(request):
         'ranking_semanal': ranking_semanal,
         'juegos_disponibles': juegos_disponibles,
     })
+
+
+def register_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if password1 != password2:
+            messages.error(request, 'Las contraseñas no coinciden.')
+        elif User.objects.filter(username=username).exists():
+            messages.error(request, 'Este nickname ya está en uso.')
+        else:
+            user = User.objects.create_user(
+                username=username,
+                first_name=first_name,
+                password=password1
+            )
+            messages.success(request, '¡Registro completado! Ahora inicia sesión.')
+            return redirect('login')
+
+    return render(request, 'accounts/register.html')
