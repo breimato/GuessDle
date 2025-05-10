@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = '/'       # A dónde va después de hacer login
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/accounts/login/'  # A dónde va después de hacer logout
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
