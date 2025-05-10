@@ -2,6 +2,31 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
+
+    {% load static %}
+
+    <style>
+        /* Siempre el cursor base (LOL) */
+        *,
+        *:hover {
+          cursor: url("{% static 'cursors/lol.cur' %}"), auto;
+        }
+
+        /* En el momento justo del clic: blade */
+        button:active,
+        a:active,
+        input:active,
+        textarea:active,
+        select:active,
+        label:active,
+        [role="button"]:active,
+        [type="submit"]:active,
+        [type="button"]:active {
+          cursor: url("{% static 'cursors/blade.cur' %}"), auto;
+        }
+    </style>
+
+
     <meta charset="UTF-8">
     <title>{% block title %}GuessDle{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,15 +41,14 @@
         }
     </script>
 
-    {% load static %}
 </head>
 <body class="text-gray-100 min-h-screen flex flex-col bg-gray-900">
 
-    <!-- Main Content -->
-    <main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
-        {% block content %}
-        {% endblock %}
-    </main>
+<!-- Main Content -->
+<main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
+    {% block content %}
+    {% endblock %}
+</main>
 
 </body>
 </html>
