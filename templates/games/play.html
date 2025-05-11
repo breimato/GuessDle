@@ -48,32 +48,50 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 {% endif %}
 
 {% if attempts %}
-<div class="mt-10 bg-amber-100 p-6 rounded-xl shadow-inner border-4 border-yellow-800 w-full max-w-xl text-gray-900 font-serif">
-    <h2 class="text-xl font-semibold mb-4">📝 Tus intentos:</h2>
-    <div class="space-y-4">
-        {% for attempt in attempts %}
-        <div class="border-b border-yellow-400 pb-2">
-            <h3 class="font-bold text-yellow-900">
-                {{ attempt.name }} {% if attempt.is_correct %}🏆{% endif %}
-            </h3>
-            <ul class="text-sm mt-2">
-                {% for fb in attempt.feedback %}
-                <li>
-                    <strong>{{ fb.attribute }}:</strong>
-                    {% if fb.correct %}
-                        <span class="text-green-700">{{ fb.value }} ✔️</span>
-                    {% else %}
-                        <span class="text-red-700">{{ fb.value }} {{ fb.arrow }}</span>
-                        <span class="text-yellow-700">
-                            {% if fb.hint %}({{ fb.hint }}){% endif %}
-                        </span>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
+<table class="gd-table mx-auto">
+  <thead>
+    <tr>
+      <th class="gd-header">Campeón</th>
+      {% for attr in game.attributes %}
+        <th class="gd-header">{{ attr|title }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for attempt in attempts %}
+    <tr>
+      <!-- Campeón -->
+      <td class="gd-champ-cell">
+        {% if attempt.icon %}
+          <img src="{{ attempt.icon }}" alt="{{ attempt.name }}">
+        {% endif %}
+        <div style="padding:0 .25rem">{{ attempt.name }}</div>
+      </td>
+
+      <!-- Atributos -->
+      {% for fb in attempt.feedback %}
+      <td class="gd-cell {% if fb.correct %}gd-cell--ok
+                          {% elif fb.partial %}gd-cell--part
+                          {% else %}gd-cell--wrong{% endif %}">
+        <div style="position:relative; width:100%; height:100%;">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:.25rem;">
+            {{ fb.value }}
+          </div>
+          {% if fb.arrow %}
+            <span class="gd-emoji">{{ fb.arrow }}</span>
+          {% endif %}
         </div>
-        {% endfor %}
-    </div>
-</div>
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endif %}
+
+
+
+
 {% endblock %}

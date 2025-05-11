@@ -3,8 +3,8 @@
     "id": "Aatrox",
     "name": "Aatrox",
     "title": "the Darkin Blade",
-    "resource": "Blood Well",
-    "genre": "Fighter",
+    "resource": "Pozo de Sangre",
+    "genre": "Luchador",
     "skinCount": 13,
     "image": {
       "full": "Aatrox.png",
@@ -16,7 +16,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2013,
     "region": "runeterra",
     "lane": "top"
@@ -25,8 +25,8 @@
     "id": "Ahri",
     "name": "Ahri",
     "title": "the Nine-Tailed Fox",
-    "resource": "Mana",
-    "genre": "Mage,Assassin",
+    "resource": "Maná",
+    "genre": "Mago,Asesino",
     "skinCount": 20,
     "image": {
       "full": "Ahri.png",
@@ -38,7 +38,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "ionia",
     "lane": "mid"
@@ -47,8 +47,8 @@
     "id": "Akali",
     "name": "Akali",
     "title": "the Rogue Assassin",
-    "resource": "Energy",
-    "genre": "Assassin",
+    "resource": "Energía",
+    "genre": "Asesino",
     "skinCount": 21,
     "image": {
       "full": "Akali.png",
@@ -60,7 +60,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "ionia",
     "lane": "top,mid"
@@ -69,8 +69,8 @@
     "id": "Akshan",
     "name": "Akshan",
     "title": "the Rogue Sentinel",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 4,
     "image": {
       "full": "Akshan.png",
@@ -82,7 +82,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2021,
     "region": "shurima",
     "lane": "mid"
@@ -91,8 +91,8 @@
     "id": "Alistar",
     "name": "Alistar",
     "title": "the Minotaur",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 15,
     "image": {
       "full": "Alistar.png",
@@ -104,17 +104,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Ambessa",
     "name": "Ambessa",
     "title": "Matriarch of War",
-    "resource": "Energy",
-    "genre": "Fighter,Assassin",
+    "resource": "Energía",
+    "genre": "Luchador,Asesino",
     "skinCount": 2,
     "image": {
       "full": "Ambessa.png",
@@ -126,15 +126,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
-    "region": "noxus"
+    "attackType": "melee",
+    "region": "noxus",
+    "releaseDate": 2024,
+    "lane": "top,jungla,mid"
   },
   {
     "id": "Amumu",
     "name": "Amumu",
     "title": "the Sad Mummy",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 14,
     "image": {
       "full": "Amumu.png",
@@ -146,17 +148,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "shurima",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Anivia",
     "name": "Anivia",
     "title": "the Cryophoenix",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 13,
     "image": {
       "full": "Anivia.png",
@@ -168,7 +170,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "freljord",
     "lane": "mid"
@@ -177,8 +179,8 @@
     "id": "Annie",
     "name": "Annie",
     "title": "the Dark Child",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 18,
     "image": {
       "full": "Annie.png",
@@ -190,7 +192,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "runeterra",
     "lane": "mid"
@@ -199,8 +201,8 @@
     "id": "Aphelios",
     "name": "Aphelios",
     "title": "the Weapon of the Faithful",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 6,
     "image": {
       "full": "Aphelios.png",
@@ -212,17 +214,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2019,
     "region": "mount-targon",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Ashe",
     "name": "Ashe",
     "title": "the Frost Archer",
-    "resource": "Mana",
-    "genre": "Marksman,Support",
+    "resource": "Maná",
+    "genre": "Tirador,Soporte",
     "skinCount": 19,
     "image": {
       "full": "Ashe.png",
@@ -234,17 +236,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "freljord",
-    "lane": "bottom,support"
+    "lane": "adc,supp"
   },
   {
     "id": "AurelionSol",
     "name": "Aurelion Sol",
     "title": "The Star Forger",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 6,
     "image": {
       "full": "AurelionSol.png",
@@ -256,7 +258,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2016,
     "region": "mount-targon",
     "lane": "mid"
@@ -265,8 +267,8 @@
     "id": "Aurora",
     "name": "Aurora",
     "title": "the Witch Between Worlds",
-    "resource": "Mana",
-    "genre": "Mage,Assassin",
+    "resource": "Maná",
+    "genre": "Mago,Asesino",
     "skinCount": 2,
     "image": {
       "full": "Aurora.png",
@@ -278,7 +280,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2024,
     "region": "freljord",
     "lane": "top,mid"
@@ -287,8 +289,8 @@
     "id": "Azir",
     "name": "Azir",
     "title": "the Emperor of the Sands",
-    "resource": "Mana",
-    "genre": "Mage,Marksman",
+    "resource": "Maná",
+    "genre": "Mago,Tirador",
     "skinCount": 8,
     "image": {
       "full": "Azir.png",
@@ -300,7 +302,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2014,
     "region": "shurima",
     "lane": "mid"
@@ -309,8 +311,8 @@
     "id": "Bard",
     "name": "Bard",
     "title": "the Wandering Caretaker",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 8,
     "image": {
       "full": "Bard.png",
@@ -322,17 +324,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2015,
     "region": "runeterra",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Belveth",
     "name": "Bel'Veth",
     "title": "the Empress of the Void",
     "resource": "",
-    "genre": "Fighter",
+    "genre": "Luchador",
     "skinCount": 4,
     "image": {
       "full": "Belveth.png",
@@ -344,17 +346,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2022,
     "region": "void",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Blitzcrank",
     "name": "Blitzcrank",
     "title": "the Great Steam Golem",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 16,
     "image": {
       "full": "Blitzcrank.png",
@@ -366,17 +368,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "zaun",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Brand",
     "name": "Brand",
     "title": "the Burning Vengeance",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 13,
     "image": {
       "full": "Brand.png",
@@ -388,17 +390,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "runeterra",
-    "lane": "jungle,support"
+    "lane": "jungla,supp"
   },
   {
     "id": "Braum",
     "name": "Braum",
     "title": "the Heart of the Freljord",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 8,
     "image": {
       "full": "Braum.png",
@@ -410,17 +412,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2014,
     "region": "freljord",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Briar",
     "name": "Briar",
     "title": "the Restrained Hunger",
-    "resource": "Fury",
-    "genre": "Fighter,Assassin",
+    "resource": "Furia",
+    "genre": "Luchador,Asesino",
     "skinCount": 3,
     "image": {
       "full": "Briar.png",
@@ -432,17 +434,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2023,
     "region": "noxus",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Caitlyn",
     "name": "Caitlyn",
     "title": "the Sheriff of Piltover",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 18,
     "image": {
       "full": "Caitlyn.png",
@@ -454,17 +456,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "piltover",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Camille",
     "name": "Camille",
     "title": "the Steel Shadow",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 8,
     "image": {
       "full": "Camille.png",
@@ -476,7 +478,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2016,
     "region": "piltover",
     "lane": "top"
@@ -485,8 +487,8 @@
     "id": "Cassiopeia",
     "name": "Cassiopeia",
     "title": "the Serpent's Embrace",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 9,
     "image": {
       "full": "Cassiopeia.png",
@@ -498,7 +500,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "noxus",
     "lane": "mid"
@@ -507,8 +509,8 @@
     "id": "Chogath",
     "name": "Cho'Gath",
     "title": "the Terror of the Void",
-    "resource": "Mana",
-    "genre": "Tank,Mage",
+    "resource": "Maná",
+    "genre": "Tanque,Mago",
     "skinCount": 11,
     "image": {
       "full": "Chogath.png",
@@ -520,7 +522,7 @@
       "h": 48
     },
     "gender": "divers",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "void",
     "lane": "top"
@@ -529,8 +531,8 @@
     "id": "Corki",
     "name": "Corki",
     "title": "the Daring Bombardier",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 11,
     "image": {
       "full": "Corki.png",
@@ -542,7 +544,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "bandle-city",
     "lane": "mid"
@@ -551,8 +553,8 @@
     "id": "Darius",
     "name": "Darius",
     "title": "the Hand of Noxus",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 14,
     "image": {
       "full": "Darius.png",
@@ -564,7 +566,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "noxus",
     "lane": "top"
@@ -573,8 +575,8 @@
     "id": "Diana",
     "name": "Diana",
     "title": "Scorn of the Moon",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 15,
     "image": {
       "full": "Diana.png",
@@ -586,17 +588,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "mount-targon",
-    "lane": "jungle,mid"
+    "lane": "jungla,mid"
   },
   {
     "id": "Draven",
     "name": "Draven",
     "title": "the Glorious Executioner",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 13,
     "image": {
       "full": "Draven.png",
@@ -608,17 +610,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "noxus",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "DrMundo",
     "name": "Dr. Mundo",
     "title": "the Madman of Zaun",
-    "resource": "None",
-    "genre": "Tank,Fighter",
+    "resource": "Ninguno",
+    "genre": "Tanque,Luchador",
     "skinCount": 12,
     "image": {
       "full": "DrMundo.png",
@@ -630,7 +632,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "zaun",
     "lane": "top"
@@ -639,8 +641,8 @@
     "id": "Ekko",
     "name": "Ekko",
     "title": "the Boy Who Shattered Time",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 12,
     "image": {
       "full": "Ekko.png",
@@ -652,17 +654,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2015,
     "region": "zaun",
-    "lane": "jungle,mid"
+    "lane": "jungla,mid"
   },
   {
     "id": "Elise",
     "name": "Elise",
     "title": "the Spider Queen",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 9,
     "image": {
       "full": "Elise.png",
@@ -674,17 +676,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "shadow-isles",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Evelynn",
     "name": "Evelynn",
     "title": "Agony's Embrace",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 16,
     "image": {
       "full": "Evelynn.png",
@@ -696,17 +698,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Ezreal",
     "name": "Ezreal",
     "title": "the Prodigal Explorer",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 21,
     "image": {
       "full": "Ezreal.png",
@@ -718,17 +720,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "piltover",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Fiddlesticks",
     "name": "Fiddlesticks",
     "title": "the Ancient Fear",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 12,
     "image": {
       "full": "Fiddlesticks.png",
@@ -740,17 +742,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Fiora",
     "name": "Fiora",
     "title": "the Grand Duelist",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 16,
     "image": {
       "full": "Fiora.png",
@@ -762,7 +764,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "demacia",
     "lane": "top"
@@ -771,8 +773,8 @@
     "id": "Fizz",
     "name": "Fizz",
     "title": "the Tidal Trickster",
-    "resource": "Mana",
-    "genre": "Assassin,Fighter",
+    "resource": "Maná",
+    "genre": "Asesino,Luchador",
     "skinCount": 14,
     "image": {
       "full": "Fizz.png",
@@ -784,7 +786,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "bilgewater",
     "lane": "mid"
@@ -793,8 +795,8 @@
     "id": "Galio",
     "name": "Galio",
     "title": "the Colossus",
-    "resource": "Mana",
-    "genre": "Tank,Mage",
+    "resource": "Maná",
+    "genre": "Tanque,Mago",
     "skinCount": 10,
     "image": {
       "full": "Galio.png",
@@ -806,7 +808,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "demacia",
     "lane": "mid"
@@ -815,8 +817,8 @@
     "id": "Gangplank",
     "name": "Gangplank",
     "title": "the Saltwater Scourge",
-    "resource": "Mana",
-    "genre": "Fighter",
+    "resource": "Maná",
+    "genre": "Luchador",
     "skinCount": 13,
     "image": {
       "full": "Gangplank.png",
@@ -828,7 +830,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "bilgewater",
     "lane": "top"
@@ -837,8 +839,8 @@
     "id": "Garen",
     "name": "Garen",
     "title": "The Might of Demacia",
-    "resource": "None",
-    "genre": "Fighter,Tank",
+    "resource": "Ninguno",
+    "genre": "Luchador,Tanque",
     "skinCount": 16,
     "image": {
       "full": "Garen.png",
@@ -850,7 +852,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "demacia",
     "lane": "top"
@@ -859,8 +861,8 @@
     "id": "Gnar",
     "name": "Gnar",
     "title": "the Missing Link",
-    "resource": "Rage",
-    "genre": "Fighter,Tank",
+    "resource": "Ira",
+    "genre": "Luchador,Tanque",
     "skinCount": 10,
     "image": {
       "full": "Gnar.png",
@@ -872,7 +874,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2014,
     "region": "freljord",
     "lane": "top"
@@ -881,8 +883,8 @@
     "id": "Gragas",
     "name": "Gragas",
     "title": "the Rabble Rouser",
-    "resource": "Mana",
-    "genre": "Fighter,Mage",
+    "resource": "Maná",
+    "genre": "Luchador,Mago",
     "skinCount": 15,
     "image": {
       "full": "Gragas.png",
@@ -894,17 +896,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "freljord",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Graves",
     "name": "Graves",
     "title": "the Outlaw",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 14,
     "image": {
       "full": "Graves.png",
@@ -916,17 +918,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "bilgewater",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Gwen",
     "name": "Gwen",
     "title": "The Hallowed Seamstress",
-    "resource": "Mana",
-    "genre": "Fighter",
+    "resource": "Maná",
+    "genre": "Luchador",
     "skinCount": 5,
     "image": {
       "full": "Gwen.png",
@@ -938,7 +940,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2021,
     "region": "shadow-isles",
     "lane": "top"
@@ -947,8 +949,8 @@
     "id": "Hecarim",
     "name": "Hecarim",
     "title": "the Shadow of War",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 12,
     "image": {
       "full": "Hecarim.png",
@@ -960,17 +962,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "shadow-isles",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Heimerdinger",
     "name": "Heimerdinger",
     "title": "the Revered Inventor",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 9,
     "image": {
       "full": "Heimerdinger.png",
@@ -982,17 +984,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "piltover",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Hwei",
     "name": "Hwei",
     "title": "the Visionary",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 2,
     "image": {
       "full": "Hwei.png",
@@ -1004,17 +1006,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2023,
     "region": "runeterra",
-    "lane": "mid,support"
+    "lane": "mid,supp"
   },
   {
     "id": "Illaoi",
     "name": "Illaoi",
     "title": "the Kraken Priestess",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 6,
     "image": {
       "full": "Illaoi.png",
@@ -1026,7 +1028,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2015,
     "region": "bilgewater",
     "lane": "top"
@@ -1035,8 +1037,8 @@
     "id": "Irelia",
     "name": "Irelia",
     "title": "the Blade Dancer",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 15,
     "image": {
       "full": "Irelia.png",
@@ -1048,7 +1050,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "ionia",
     "lane": "top,mid"
@@ -1057,8 +1059,8 @@
     "id": "Ivern",
     "name": "Ivern",
     "title": "the Green Father",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 5,
     "image": {
       "full": "Ivern.png",
@@ -1070,17 +1072,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2016,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Janna",
     "name": "Janna",
     "title": "the Storm's Fury",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 16,
     "image": {
       "full": "Janna.png",
@@ -1092,17 +1094,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "zaun",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "JarvanIV",
     "name": "Jarvan IV",
     "title": "the Exemplar of Demacia",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 14,
     "image": {
       "full": "JarvanIV.png",
@@ -1114,17 +1116,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "demacia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Jax",
     "name": "Jax",
     "title": "Grandmaster at Arms",
-    "resource": "Mana",
-    "genre": "Fighter",
+    "resource": "Maná",
+    "genre": "Luchador",
     "skinCount": 17,
     "image": {
       "full": "Jax.png",
@@ -1136,17 +1138,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "top,jungle"
+    "lane": "top,jungla"
   },
   {
     "id": "Jayce",
     "name": "Jayce",
     "title": "the Defender of Tomorrow",
-    "resource": "Mana",
-    "genre": "Marksman,Fighter",
+    "resource": "Maná",
+    "genre": "Tirador,Luchador",
     "skinCount": 11,
     "image": {
       "full": "Jayce.png",
@@ -1158,7 +1160,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "piltover",
     "lane": "top"
@@ -1167,8 +1169,8 @@
     "id": "Jhin",
     "name": "Jhin",
     "title": "the Virtuoso",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 11,
     "image": {
       "full": "Jhin.png",
@@ -1180,17 +1182,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2016,
     "region": "ionia",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Jinx",
     "name": "Jinx",
     "title": "the Loose Cannon",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 14,
     "image": {
       "full": "Jinx.png",
@@ -1202,17 +1204,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2013,
     "region": "zaun",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Kaisa",
     "name": "Kai'Sa",
     "title": "Daughter of the Void",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 14,
     "image": {
       "full": "Kaisa.png",
@@ -1224,17 +1226,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2018,
     "region": "void",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Kalista",
     "name": "Kalista",
     "title": "the Spear of Vengeance",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 6,
     "image": {
       "full": "Kalista.png",
@@ -1246,17 +1248,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2014,
     "region": "shadow-isles",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Karma",
     "name": "Karma",
     "title": "the Enlightened One",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 15,
     "image": {
       "full": "Karma.png",
@@ -1268,17 +1270,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "ionia",
-    "lane": "mid,support"
+    "lane": "mid,supp"
   },
   {
     "id": "Karthus",
     "name": "Karthus",
     "title": "the Deathsinger",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 10,
     "image": {
       "full": "Karthus.png",
@@ -1290,17 +1292,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "shadow-isles",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Kassadin",
     "name": "Kassadin",
     "title": "the Void Walker",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 10,
     "image": {
       "full": "Kassadin.png",
@@ -1312,7 +1314,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "void",
     "lane": "mid"
@@ -1321,8 +1323,8 @@
     "id": "Katarina",
     "name": "Katarina",
     "title": "the Sinister Blade",
-    "resource": "None",
-    "genre": "Assassin,Mage",
+    "resource": "Ninguno",
+    "genre": "Asesino,Mago",
     "skinCount": 18,
     "image": {
       "full": "Katarina.png",
@@ -1334,7 +1336,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "noxus",
     "lane": "mid"
@@ -1343,8 +1345,8 @@
     "id": "Kayle",
     "name": "Kayle",
     "title": "the Righteous",
-    "resource": "Mana",
-    "genre": "Mage,Marksman",
+    "resource": "Maná",
+    "genre": "Mago,Tirador",
     "skinCount": 17,
     "image": {
       "full": "Kayle.png",
@@ -1356,7 +1358,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "demacia",
     "lane": "top"
@@ -1365,8 +1367,8 @@
     "id": "Kayn",
     "name": "Kayn",
     "title": "the Shadow Reaper",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 7,
     "image": {
       "full": "Kayn.png",
@@ -1378,17 +1380,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2017,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Kennen",
     "name": "Kennen",
     "title": "the Heart of the Tempest",
-    "resource": "Energy",
-    "genre": "Mage",
+    "resource": "Energía",
+    "genre": "Mago",
     "skinCount": 11,
     "image": {
       "full": "Kennen.png",
@@ -1400,7 +1402,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "ionia",
     "lane": "top"
@@ -1409,8 +1411,8 @@
     "id": "Khazix",
     "name": "Kha'Zix",
     "title": "the Voidreaver",
-    "resource": "Mana",
-    "genre": "Assassin",
+    "resource": "Maná",
+    "genre": "Asesino",
     "skinCount": 9,
     "image": {
       "full": "Khazix.png",
@@ -1422,17 +1424,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "void",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Kindred",
     "name": "Kindred",
     "title": "The Eternal Hunters",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 9,
     "image": {
       "full": "Kindred.png",
@@ -1444,17 +1446,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2015,
     "region": "runeterra",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Kled",
     "name": "Kled",
     "title": "the Cantankerous Cavalier",
-    "resource": "Courage",
-    "genre": "Fighter",
+    "resource": "Coraje",
+    "genre": "Luchador",
     "skinCount": 5,
     "image": {
       "full": "Kled.png",
@@ -1466,7 +1468,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2016,
     "region": "noxus",
     "lane": "top"
@@ -1475,8 +1477,8 @@
     "id": "KogMaw",
     "name": "Kog'Maw",
     "title": "the Mouth of the Abyss",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 16,
     "image": {
       "full": "KogMaw.png",
@@ -1488,17 +1490,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "void",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "KSante",
     "name": "K'Sante",
     "title": "the Pride of Nazumah",
-    "resource": "Mana",
-    "genre": "Tank,Fighter",
+    "resource": "Maná",
+    "genre": "Tanque,Luchador",
     "skinCount": 4,
     "image": {
       "full": "KSante.png",
@@ -1510,7 +1512,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2022,
     "region": "shurima",
     "lane": "top"
@@ -1519,8 +1521,8 @@
     "id": "Leblanc",
     "name": "LeBlanc",
     "title": "the Deceiver",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 14,
     "image": {
       "full": "Leblanc.png",
@@ -1532,7 +1534,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "noxus",
     "lane": "mid"
@@ -1541,8 +1543,8 @@
     "id": "LeeSin",
     "name": "Lee Sin",
     "title": "the Blind Monk",
-    "resource": "Energy",
-    "genre": "Fighter,Assassin",
+    "resource": "Energía",
+    "genre": "Luchador,Asesino",
     "skinCount": 19,
     "image": {
       "full": "LeeSin.png",
@@ -1554,17 +1556,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Leona",
     "name": "Leona",
     "title": "the Radiant Dawn",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 18,
     "image": {
       "full": "Leona.png",
@@ -1576,17 +1578,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "mount-targon",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Lillia",
     "name": "Lillia",
     "title": "the Bashful Bloom",
-    "resource": "Mana",
-    "genre": "Fighter,Mage",
+    "resource": "Maná",
+    "genre": "Luchador,Mago",
     "skinCount": 5,
     "image": {
       "full": "Lillia.png",
@@ -1598,17 +1600,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2020,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Lissandra",
     "name": "Lissandra",
     "title": "the Ice Witch",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 9,
     "image": {
       "full": "Lissandra.png",
@@ -1620,7 +1622,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2013,
     "region": "freljord",
     "lane": "mid"
@@ -1629,8 +1631,8 @@
     "id": "Lucian",
     "name": "Lucian",
     "title": "the Purifier",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 13,
     "image": {
       "full": "Lucian.png",
@@ -1642,17 +1644,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2013,
     "region": "demacia",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Lulu",
     "name": "Lulu",
     "title": "the Fae Sorceress",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 13,
     "image": {
       "full": "Lulu.png",
@@ -1664,17 +1666,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "bandle-city",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Lux",
     "name": "Lux",
     "title": "the Lady of Luminosity",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 21,
     "image": {
       "full": "Lux.png",
@@ -1686,17 +1688,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "demacia",
-    "lane": "mid,support"
+    "lane": "mid,supp"
   },
   {
     "id": "Malphite",
     "name": "Malphite",
     "title": "Shard of the Monolith",
-    "resource": "Mana",
-    "genre": "Tank,Mage",
+    "resource": "Maná",
+    "genre": "Tanque,Mago",
     "skinCount": 14,
     "image": {
       "full": "Malphite.png",
@@ -1708,7 +1710,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "ixtal",
     "lane": "top"
@@ -1717,8 +1719,8 @@
     "id": "Malzahar",
     "name": "Malzahar",
     "title": "the Prophet of the Void",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 13,
     "image": {
       "full": "Malzahar.png",
@@ -1730,7 +1732,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "void",
     "lane": "mid"
@@ -1739,8 +1741,8 @@
     "id": "Maokai",
     "name": "Maokai",
     "title": "the Twisted Treant",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 11,
     "image": {
       "full": "Maokai.png",
@@ -1752,17 +1754,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "shadow-isles",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "MasterYi",
     "name": "Master Yi",
     "title": "the Wuju Bladesman",
-    "resource": "Mana",
-    "genre": "Assassin,Fighter",
+    "resource": "Maná",
+    "genre": "Asesino,Luchador",
     "skinCount": 17,
     "image": {
       "full": "MasterYi.png",
@@ -1774,17 +1776,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Milio",
     "name": "Milio",
     "title": "The Gentle Flame",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 3,
     "image": {
       "full": "Milio.png",
@@ -1796,17 +1798,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2023,
     "region": "ixtal",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "MissFortune",
     "name": "Miss Fortune",
     "title": "the Bounty Hunter",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 23,
     "image": {
       "full": "MissFortune.png",
@@ -1818,17 +1820,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "bilgewater",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "MonkeyKing",
     "name": "Wukong",
     "title": "the Monkey King",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 9,
     "image": {
       "full": "MonkeyKing.png",
@@ -1840,17 +1842,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "ionia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Mordekaiser",
     "name": "Mordekaiser",
     "title": "the Iron Revenant",
-    "resource": "Shield",
-    "genre": "Fighter,Mage",
+    "resource": "Escudo",
+    "genre": "Luchador,Mago",
     "skinCount": 12,
     "image": {
       "full": "Mordekaiser.png",
@@ -1862,7 +1864,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "noxus",
     "lane": "top"
@@ -1871,8 +1873,8 @@
     "id": "Morgana",
     "name": "Morgana",
     "title": "the Fallen",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 16,
     "image": {
       "full": "Morgana.png",
@@ -1884,17 +1886,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "demacia",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Naafiri",
     "name": "Naafiri",
     "title": "the Hound of a Hundred Bites",
-    "resource": "Mana",
-    "genre": "Assassin,Fighter",
+    "resource": "Maná",
+    "genre": "Asesino,Luchador",
     "skinCount": 3,
     "image": {
       "full": "Naafiri.png",
@@ -1906,7 +1908,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2023,
     "region": "shurima",
     "lane": "mid"
@@ -1915,8 +1917,8 @@
     "id": "Nami",
     "name": "Nami",
     "title": "the Tidecaller",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 13,
     "image": {
       "full": "Nami.png",
@@ -1928,17 +1930,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "runeterra",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Nasus",
     "name": "Nasus",
     "title": "the Curator of the Sands",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 13,
     "image": {
       "full": "Nasus.png",
@@ -1950,7 +1952,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "shurima",
     "lane": "top"
@@ -1959,8 +1961,8 @@
     "id": "Nautilus",
     "name": "Nautilus",
     "title": "the Titan of the Depths",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 11,
     "image": {
       "full": "Nautilus.png",
@@ -1972,17 +1974,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "bilgewater",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Neeko",
     "name": "Neeko",
     "title": "the Curious Chameleon",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 9,
     "image": {
       "full": "Neeko.png",
@@ -1994,17 +1996,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2018,
     "region": "ixtal",
-    "lane": "mid,support"
+    "lane": "mid,supp"
   },
   {
     "id": "Nidalee",
     "name": "Nidalee",
     "title": "the Bestial Huntress",
-    "resource": "Mana",
-    "genre": "Assassin,Mage",
+    "resource": "Maná",
+    "genre": "Asesino,Mago",
     "skinCount": 16,
     "image": {
       "full": "Nidalee.png",
@@ -2016,17 +2018,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "ixtal",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Nilah",
     "name": "Nilah",
     "title": "the Joy Unbound",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 3,
     "image": {
       "full": "Nilah.png",
@@ -2038,17 +2040,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2022,
     "region": "runeterra",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Nocturne",
     "name": "Nocturne",
     "title": "the Eternal Nightmare",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 11,
     "image": {
       "full": "Nocturne.png",
@@ -2060,17 +2062,17 @@
       "h": 48
     },
     "gender": "divers",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "runeterra",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Nunu",
     "name": "Nunu & Willump",
     "title": "the Boy and His Yeti",
-    "resource": "Mana",
-    "genre": "Tank,Mage",
+    "resource": "Maná",
+    "genre": "Tanque,Mago",
     "skinCount": 13,
     "image": {
       "full": "Nunu.png",
@@ -2082,17 +2084,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "freljord",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Olaf",
     "name": "Olaf",
     "title": "the Berserker",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 12,
     "image": {
       "full": "Olaf.png",
@@ -2104,7 +2106,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "freljord",
     "lane": "top"
@@ -2113,8 +2115,8 @@
     "id": "Orianna",
     "name": "Orianna",
     "title": "the Lady of Clockwork",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 13,
     "image": {
       "full": "Orianna.png",
@@ -2126,7 +2128,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "piltover",
     "lane": "mid"
@@ -2135,8 +2137,8 @@
     "id": "Ornn",
     "name": "Ornn",
     "title": "The Fire below the Mountain",
-    "resource": "Mana",
-    "genre": "Tank",
+    "resource": "Maná",
+    "genre": "Tanque",
     "skinCount": 5,
     "image": {
       "full": "Ornn.png",
@@ -2148,7 +2150,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2017,
     "region": "freljord",
     "lane": "top"
@@ -2157,8 +2159,8 @@
     "id": "Pantheon",
     "name": "Pantheon",
     "title": "the Unbreakable Spear",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 14,
     "image": {
       "full": "Pantheon.png",
@@ -2170,17 +2172,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "mount-targon",
-    "lane": "top,support"
+    "lane": "top,supp"
   },
   {
     "id": "Poppy",
     "name": "Poppy",
     "title": "Keeper of the Hammer",
-    "resource": "Mana",
-    "genre": "Tank,Fighter",
+    "resource": "Maná",
+    "genre": "Tanque,Luchador",
     "skinCount": 13,
     "image": {
       "full": "Poppy.png",
@@ -2192,17 +2194,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "demacia",
-    "lane": "top,jungle"
+    "lane": "top,jungla"
   },
   {
     "id": "Pyke",
     "name": "Pyke",
     "title": "the Bloodharbor Ripper",
-    "resource": "Mana",
-    "genre": "Support,Assassin",
+    "resource": "Maná",
+    "genre": "Soporte,Asesino",
     "skinCount": 11,
     "image": {
       "full": "Pyke.png",
@@ -2214,17 +2216,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2018,
     "region": "bilgewater",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Qiyana",
     "name": "Qiyana",
     "title": "Empress of the Elements",
-    "resource": "Mana",
-    "genre": "Assassin",
+    "resource": "Maná",
+    "genre": "Asesino",
     "skinCount": 9,
     "image": {
       "full": "Qiyana.png",
@@ -2236,7 +2238,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2019,
     "region": "ixtal",
     "lane": "mid"
@@ -2245,8 +2247,8 @@
     "id": "Quinn",
     "name": "Quinn",
     "title": "Demacia's Wings",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 7,
     "image": {
       "full": "Quinn.png",
@@ -2258,7 +2260,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2013,
     "region": "demacia",
     "lane": "top"
@@ -2267,8 +2269,8 @@
     "id": "Rakan",
     "name": "Rakan",
     "title": "The Charmer",
-    "resource": "Mana",
-    "genre": "Support",
+    "resource": "Maná",
+    "genre": "Soporte",
     "skinCount": 12,
     "image": {
       "full": "Rakan.png",
@@ -2280,17 +2282,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2017,
     "region": "ionia",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Rammus",
     "name": "Rammus",
     "title": "the Armordillo",
-    "resource": "Mana",
-    "genre": "Tank",
+    "resource": "Maná",
+    "genre": "Tanque",
     "skinCount": 12,
     "image": {
       "full": "Rammus.png",
@@ -2302,17 +2304,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "shurima",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "RekSai",
     "name": "Rek'Sai",
     "title": "the Void Burrower",
-    "resource": "Rage",
-    "genre": "Fighter,Tank",
+    "resource": "Ira",
+    "genre": "Luchador,Tanque",
     "skinCount": 6,
     "image": {
       "full": "RekSai.png",
@@ -2324,17 +2326,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2014,
     "region": "void",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Rell",
     "name": "Rell",
     "title": "the Iron Maiden",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 4,
     "image": {
       "full": "Rell.png",
@@ -2346,17 +2348,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2020,
     "region": "noxus",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Renata",
     "name": "Renata Glasc",
     "title": "the Chem-Baroness",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 5,
     "image": {
       "full": "Renata.png",
@@ -2368,17 +2370,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2022,
     "region": "zaun",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Renekton",
     "name": "Renekton",
     "title": "the Butcher of the Sands",
-    "resource": "Fury",
-    "genre": "Fighter,Tank",
+    "resource": "Furia",
+    "genre": "Luchador,Tanque",
     "skinCount": 15,
     "image": {
       "full": "Renekton.png",
@@ -2390,7 +2392,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "shurima",
     "lane": "top"
@@ -2400,7 +2402,7 @@
     "name": "Rengar",
     "title": "the Pridestalker",
     "resource": "Ferocity",
-    "genre": "Assassin,Fighter",
+    "genre": "Asesino,Luchador",
     "skinCount": 9,
     "image": {
       "full": "Rengar.png",
@@ -2412,17 +2414,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "ixtal",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Riven",
     "name": "Riven",
     "title": "the Exile",
-    "resource": "None",
-    "genre": "Fighter,Assassin",
+    "resource": "Ninguno",
+    "genre": "Luchador,Asesino",
     "skinCount": 18,
     "image": {
       "full": "Riven.png",
@@ -2434,7 +2436,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "noxus",
     "lane": "top"
@@ -2444,7 +2446,7 @@
     "name": "Rumble",
     "title": "the Mechanized Menace",
     "resource": "Heat",
-    "genre": "Fighter,Mage",
+    "genre": "Luchador,Mago",
     "skinCount": 7,
     "image": {
       "full": "Rumble.png",
@@ -2456,7 +2458,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "bandle-city",
     "lane": "top"
@@ -2465,8 +2467,8 @@
     "id": "Ryze",
     "name": "Ryze",
     "title": "the Rune Mage",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 14,
     "image": {
       "full": "Ryze.png",
@@ -2478,7 +2480,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "runeterra",
     "lane": "mid"
@@ -2487,8 +2489,8 @@
     "id": "Samira",
     "name": "Samira",
     "title": "the Desert Rose",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 5,
     "image": {
       "full": "Samira.png",
@@ -2500,17 +2502,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2020,
     "region": "noxus",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Sejuani",
     "name": "Sejuani",
     "title": "Fury of the North",
-    "resource": "Mana",
-    "genre": "Tank",
+    "resource": "Maná",
+    "genre": "Tanque",
     "skinCount": 13,
     "image": {
       "full": "Sejuani.png",
@@ -2522,17 +2524,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "freljord",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Senna",
     "name": "Senna",
     "title": "the Redeemer",
-    "resource": "Mana",
-    "genre": "Support,Marksman",
+    "resource": "Maná",
+    "genre": "Soporte,Tirador",
     "skinCount": 10,
     "image": {
       "full": "Senna.png",
@@ -2544,17 +2546,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2019,
     "region": "runeterra",
-    "lane": "bottom,support"
+    "lane": "adc,supp"
   },
   {
     "id": "Seraphine",
     "name": "Seraphine",
     "title": "the Starry-Eyed Songstress",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 10,
     "image": {
       "full": "Seraphine.png",
@@ -2566,17 +2568,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2020,
     "region": "piltover",
-    "lane": "bottom,support"
+    "lane": "adc,supp"
   },
   {
     "id": "Sett",
     "name": "Sett",
     "title": "the Boss",
     "resource": "Grit",
-    "genre": "Fighter,Tank",
+    "genre": "Luchador,Tanque",
     "skinCount": 9,
     "image": {
       "full": "Sett.png",
@@ -2588,7 +2590,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2020,
     "region": "ionia",
     "lane": "top"
@@ -2597,8 +2599,8 @@
     "id": "Shaco",
     "name": "Shaco",
     "title": "the Demon Jester",
-    "resource": "Mana",
-    "genre": "Assassin",
+    "resource": "Maná",
+    "genre": "Asesino",
     "skinCount": 15,
     "image": {
       "full": "Shaco.png",
@@ -2610,17 +2612,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Shen",
     "name": "Shen",
     "title": "the Eye of Twilight",
-    "resource": "Energy",
-    "genre": "Tank",
+    "resource": "Energía",
+    "genre": "Tanque",
     "skinCount": 12,
     "image": {
       "full": "Shen.png",
@@ -2632,7 +2634,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "ionia",
     "lane": "top"
@@ -2641,8 +2643,8 @@
     "id": "Shyvana",
     "name": "Shyvana",
     "title": "the Half-Dragon",
-    "resource": "Fury",
-    "genre": "Fighter,Mage",
+    "resource": "Furia",
+    "genre": "Luchador,Mago",
     "skinCount": 9,
     "image": {
       "full": "Shyvana.png",
@@ -2654,17 +2656,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "demacia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Singed",
     "name": "Singed",
     "title": "the Mad Chemist",
-    "resource": "Mana",
-    "genre": "Tank,Mage",
+    "resource": "Maná",
+    "genre": "Tanque,Mago",
     "skinCount": 12,
     "image": {
       "full": "Singed.png",
@@ -2676,7 +2678,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "zaun",
     "lane": "top"
@@ -2685,8 +2687,8 @@
     "id": "Sion",
     "name": "Sion",
     "title": "The Undead Juggernaut",
-    "resource": "Mana",
-    "genre": "Tank,Fighter",
+    "resource": "Maná",
+    "genre": "Tanque,Luchador",
     "skinCount": 10,
     "image": {
       "full": "Sion.png",
@@ -2698,7 +2700,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "noxus",
     "lane": "top"
@@ -2707,8 +2709,8 @@
     "id": "Sivir",
     "name": "Sivir",
     "title": "the Battle Mistress",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 19,
     "image": {
       "full": "Sivir.png",
@@ -2720,17 +2722,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "shurima",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Skarner",
     "name": "Skarner",
     "title": "the Primordial Sovereign",
-    "resource": "Mana",
-    "genre": "Tank,Fighter",
+    "resource": "Maná",
+    "genre": "Tanque,Luchador",
     "skinCount": 6,
     "image": {
       "full": "Skarner.png",
@@ -2742,17 +2744,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "ixtal",
-    "lane": "top,jungle"
+    "lane": "top,jungla"
   },
   {
     "id": "Smolder",
     "name": "Smolder",
     "title": "the Fiery Fledgling",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 2,
     "image": {
       "full": "Smolder.png",
@@ -2764,17 +2766,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2024,
     "region": "runeterra",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Sona",
     "name": "Sona",
     "title": "Maven of the Strings",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 15,
     "image": {
       "full": "Sona.png",
@@ -2786,17 +2788,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "demacia",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Soraka",
     "name": "Soraka",
     "title": "the Starchild",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 17,
     "image": {
       "full": "Soraka.png",
@@ -2808,17 +2810,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "mount-targon",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Swain",
     "name": "Swain",
     "title": "the Noxian Grand General",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 10,
     "image": {
       "full": "Swain.png",
@@ -2830,17 +2832,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2010,
     "region": "noxus",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Sylas",
     "name": "Sylas",
     "title": "the Unshackled",
-    "resource": "Mana",
-    "genre": "Mage,Assassin",
+    "resource": "Maná",
+    "genre": "Mago,Asesino",
     "skinCount": 9,
     "image": {
       "full": "Sylas.png",
@@ -2852,7 +2854,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2019,
     "region": "demacia",
     "lane": "mid"
@@ -2861,8 +2863,8 @@
     "id": "Syndra",
     "name": "Syndra",
     "title": "the Dark Sovereign",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 13,
     "image": {
       "full": "Syndra.png",
@@ -2874,7 +2876,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "ionia",
     "lane": "mid"
@@ -2883,8 +2885,8 @@
     "id": "TahmKench",
     "name": "Tahm Kench",
     "title": "The River King",
-    "resource": "Mana",
-    "genre": "Tank,Support",
+    "resource": "Maná",
+    "genre": "Tanque,Soporte",
     "skinCount": 7,
     "image": {
       "full": "TahmKench.png",
@@ -2896,7 +2898,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2015,
     "region": "bilgewater",
     "lane": "top"
@@ -2905,8 +2907,8 @@
     "id": "Taliyah",
     "name": "Taliyah",
     "title": "the Stoneweaver",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 6,
     "image": {
       "full": "Taliyah.png",
@@ -2918,17 +2920,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2016,
     "region": "shurima",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Talon",
     "name": "Talon",
     "title": "the Blade's Shadow",
-    "resource": "Mana",
-    "genre": "Assassin",
+    "resource": "Maná",
+    "genre": "Asesino",
     "skinCount": 12,
     "image": {
       "full": "Talon.png",
@@ -2940,16 +2942,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
-    "region": "noxus"
+    "region": "noxus",
+    "lane": "mid,jungla"
   },
   {
     "id": "Taric",
     "name": "Taric",
     "title": "the Shield of Valoran",
-    "resource": "Mana",
-    "genre": "Support,Tank",
+    "resource": "Maná",
+    "genre": "Soporte,Tanque",
     "skinCount": 7,
     "image": {
       "full": "Taric.png",
@@ -2961,17 +2964,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "mount-targon",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Teemo",
     "name": "Teemo",
     "title": "the Swift Scout",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 15,
     "image": {
       "full": "Teemo.png",
@@ -2983,7 +2986,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "bandle-city",
     "lane": "top"
@@ -2992,8 +2995,8 @@
     "id": "Thresh",
     "name": "Thresh",
     "title": "the Chain Warden",
-    "resource": "Mana",
-    "genre": "Support,Tank",
+    "resource": "Maná",
+    "genre": "Soporte,Tanque",
     "skinCount": 17,
     "image": {
       "full": "Thresh.png",
@@ -3005,17 +3008,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2013,
     "region": "shadow-isles",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Tristana",
     "name": "Tristana",
     "title": "the Yordle Gunner",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 16,
     "image": {
       "full": "Tristana.png",
@@ -3027,17 +3030,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "bandle-city",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Trundle",
     "name": "Trundle",
     "title": "the Troll King",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 9,
     "image": {
       "full": "Trundle.png",
@@ -3049,7 +3052,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "freljord",
     "lane": "top"
@@ -3058,8 +3061,8 @@
     "id": "Tryndamere",
     "name": "Tryndamere",
     "title": "the Barbarian King",
-    "resource": "Fury",
-    "genre": "Fighter,Assassin",
+    "resource": "Furia",
+    "genre": "Luchador,Asesino",
     "skinCount": 13,
     "image": {
       "full": "Tryndamere.png",
@@ -3071,7 +3074,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "freljord",
     "lane": "top"
@@ -3080,8 +3083,8 @@
     "id": "TwistedFate",
     "name": "Twisted Fate",
     "title": "the Card Master",
-    "resource": "Mana",
-    "genre": "Mage,Marksman",
+    "resource": "Maná",
+    "genre": "Mago,Tirador",
     "skinCount": 16,
     "image": {
       "full": "TwistedFate.png",
@@ -3093,17 +3096,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "bilgewater",
-    "lane": "mid,bottom"
+    "lane": "mid,adc"
   },
   {
     "id": "Twitch",
     "name": "Twitch",
     "title": "the Plague Rat",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 14,
     "image": {
       "full": "Twitch.png",
@@ -3115,17 +3118,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "zaun",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Udyr",
     "name": "Udyr",
     "title": "the Spirit Walker",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 7,
     "image": {
       "full": "Udyr.png",
@@ -3137,17 +3140,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "freljord",
-    "lane": "top,jungle"
+    "lane": "top,jungla"
   },
   {
     "id": "Urgot",
     "name": "Urgot",
     "title": "the Dreadnought",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 7,
     "image": {
       "full": "Urgot.png",
@@ -3159,7 +3162,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "zaun",
     "lane": "top"
@@ -3168,8 +3171,8 @@
     "id": "Varus",
     "name": "Varus",
     "title": "the Arrow of Retribution",
-    "resource": "Mana",
-    "genre": "Marksman,Mage",
+    "resource": "Maná",
+    "genre": "Tirador,Mago",
     "skinCount": 14,
     "image": {
       "full": "Varus.png",
@@ -3181,17 +3184,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "ionia",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Vayne",
     "name": "Vayne",
     "title": "the Night Hunter",
-    "resource": "Mana",
-    "genre": "Marksman,Assassin",
+    "resource": "Maná",
+    "genre": "Tirador,Asesino",
     "skinCount": 18,
     "image": {
       "full": "Vayne.png",
@@ -3203,17 +3206,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "demacia",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Veigar",
     "name": "Veigar",
     "title": "the Tiny Master of Evil",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 16,
     "image": {
       "full": "Veigar.png",
@@ -3225,7 +3228,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "bandle-city",
     "lane": "mid"
@@ -3234,8 +3237,8 @@
     "id": "Velkoz",
     "name": "Vel'Koz",
     "title": "the Eye of the Void",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 7,
     "image": {
       "full": "Velkoz.png",
@@ -3247,17 +3250,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2014,
     "region": "void",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Vex",
     "name": "Vex",
     "title": "the Gloomist",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 3,
     "image": {
       "full": "Vex.png",
@@ -3269,7 +3272,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2021,
     "region": "shadow-isles",
     "lane": "mid"
@@ -3278,8 +3281,8 @@
     "id": "Vi",
     "name": "Vi",
     "title": "the Piltover Enforcer",
-    "resource": "Mana",
-    "genre": "Fighter,Assassin",
+    "resource": "Maná",
+    "genre": "Luchador,Asesino",
     "skinCount": 12,
     "image": {
       "full": "Vi.png",
@@ -3291,17 +3294,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "piltover",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Viego",
     "name": "Viego",
     "title": "The Ruined King",
-    "resource": "None",
-    "genre": "Fighter,Assassin",
+    "resource": "Ninguno",
+    "genre": "Luchador,Asesino",
     "skinCount": 7,
     "image": {
       "full": "Viego.png",
@@ -3313,17 +3316,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2021,
     "region": "shadow-isles",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Viktor",
     "name": "Viktor",
     "title": "the Machine Herald",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 7,
     "image": {
       "full": "Viktor.png",
@@ -3335,7 +3338,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "zaun",
     "lane": "mid"
@@ -3345,7 +3348,7 @@
     "name": "Vladimir",
     "title": "the Crimson Reaper",
     "resource": "Crimson Rush",
-    "genre": "Mage,Fighter",
+    "genre": "Mago,Luchador",
     "skinCount": 13,
     "image": {
       "full": "Vladimir.png",
@@ -3357,7 +3360,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "noxus",
     "lane": "mid"
@@ -3366,8 +3369,8 @@
     "id": "Volibear",
     "name": "Volibear",
     "title": "the Relentless Storm",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 10,
     "image": {
       "full": "Volibear.png",
@@ -3379,7 +3382,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "freljord",
     "lane": "top"
@@ -3388,8 +3391,8 @@
     "id": "Warwick",
     "name": "Warwick",
     "title": "the Uncaged Wrath of Zaun",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 15,
     "image": {
       "full": "Warwick.png",
@@ -3401,17 +3404,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2009,
     "region": "zaun",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Xayah",
     "name": "Xayah",
     "title": "the Rebel",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 12,
     "image": {
       "full": "Xayah.png",
@@ -3423,17 +3426,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2017,
     "region": "ionia",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Xerath",
     "name": "Xerath",
     "title": "the Magus Ascendant",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 9,
     "image": {
       "full": "Xerath.png",
@@ -3445,17 +3448,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2011,
     "region": "shurima",
-    "lane": "mid,support"
+    "lane": "mid,supp"
   },
   {
     "id": "XinZhao",
     "name": "Xin Zhao",
     "title": "the Seneschal of Demacia",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 11,
     "image": {
       "full": "XinZhao.png",
@@ -3467,17 +3470,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2010,
     "region": "demacia",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Yasuo",
     "name": "Yasuo",
     "title": "the Unforgiven",
     "resource": "Flow",
-    "genre": "Fighter,Assassin",
+    "genre": "Luchador,Asesino",
     "skinCount": 18,
     "image": {
       "full": "Yasuo.png",
@@ -3489,17 +3492,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2013,
     "region": "ionia",
-    "lane": "top,mid,bottom"
+    "lane": "top,mid,adc"
   },
   {
     "id": "Yone",
     "name": "Yone",
     "title": "the Unforgotten",
     "resource": "Flow",
-    "genre": "Fighter,Assassin",
+    "genre": "Luchador,Asesino",
     "skinCount": 10,
     "image": {
       "full": "Yone.png",
@@ -3511,7 +3514,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2020,
     "region": "ionia",
     "lane": "top,mid"
@@ -3520,8 +3523,8 @@
     "id": "Yorick",
     "name": "Yorick",
     "title": "Shepherd of Souls",
-    "resource": "Mana",
-    "genre": "Fighter,Tank",
+    "resource": "Maná",
+    "genre": "Luchador,Tanque",
     "skinCount": 9,
     "image": {
       "full": "Yorick.png",
@@ -3533,7 +3536,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2011,
     "region": "shadow-isles",
     "lane": "top"
@@ -3542,8 +3545,8 @@
     "id": "Yuumi",
     "name": "Yuumi",
     "title": "the Magical Cat",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 9,
     "image": {
       "full": "Yuumi.png",
@@ -3555,17 +3558,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2019,
     "region": "bandle-city",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Zac",
     "name": "Zac",
     "title": "the Secret Weapon",
-    "resource": "None",
-    "genre": "Tank,Fighter",
+    "resource": "Ninguno",
+    "genre": "Tanque,Luchador",
     "skinCount": 7,
     "image": {
       "full": "Zac.png",
@@ -3577,17 +3580,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2013,
     "region": "zaun",
-    "lane": "jungle"
+    "lane": "jungla"
   },
   {
     "id": "Zed",
     "name": "Zed",
     "title": "the Master of Shadows",
-    "resource": "Energy",
-    "genre": "Assassin",
+    "resource": "Energía",
+    "genre": "Asesino",
     "skinCount": 13,
     "image": {
       "full": "Zed.png",
@@ -3599,7 +3602,7 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "close",
+    "attackType": "melee",
     "releaseDate": 2012,
     "region": "ionia",
     "lane": "mid"
@@ -3608,8 +3611,8 @@
     "id": "Zeri",
     "name": "Zeri",
     "title": "The Spark of Zaun",
-    "resource": "Mana",
-    "genre": "Marksman",
+    "resource": "Maná",
+    "genre": "Tirador",
     "skinCount": 6,
     "image": {
       "full": "Zeri.png",
@@ -3621,17 +3624,17 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2022,
     "region": "zaun",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Ziggs",
     "name": "Ziggs",
     "title": "the Hexplosives Expert",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 12,
     "image": {
       "full": "Ziggs.png",
@@ -3643,17 +3646,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "zaun",
-    "lane": "bottom"
+    "lane": "adc"
   },
   {
     "id": "Zilean",
     "name": "Zilean",
     "title": "the Chronokeeper",
-    "resource": "Mana",
-    "genre": "Support,Mage",
+    "resource": "Maná",
+    "genre": "Soporte,Mago",
     "skinCount": 8,
     "image": {
       "full": "Zilean.png",
@@ -3665,17 +3668,17 @@
       "h": 48
     },
     "gender": "male",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2009,
     "region": "runeterra",
-    "lane": "support"
+    "lane": "supp"
   },
   {
     "id": "Zoe",
     "name": "Zoe",
     "title": "the Aspect of Twilight",
-    "resource": "Mana",
-    "genre": "Mage",
+    "resource": "Maná",
+    "genre": "Mago",
     "skinCount": 9,
     "image": {
       "full": "Zoe.png",
@@ -3687,7 +3690,7 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2017,
     "region": "mount-targon",
     "lane": "mid"
@@ -3696,8 +3699,8 @@
     "id": "Zyra",
     "name": "Zyra",
     "title": "Rise of the Thorns",
-    "resource": "Mana",
-    "genre": "Mage,Support",
+    "resource": "Maná",
+    "genre": "Mago,Soporte",
     "skinCount": 12,
     "image": {
       "full": "Zyra.png",
@@ -3709,9 +3712,9 @@
       "h": 48
     },
     "gender": "female",
-    "attackType": "range",
+    "attackType": "ranged",
     "releaseDate": 2012,
     "region": "ixtal",
-    "lane": "support"
+    "lane": "supp"
   }
 ]
