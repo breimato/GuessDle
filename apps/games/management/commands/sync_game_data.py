@@ -1,3 +1,4 @@
+import json
 import requests
 from django.core.management.base import BaseCommand, CommandError
 from apps.games.models import Game, GameItem
@@ -15,10 +16,10 @@ def deep_get(d, path, default=None):
 
 
 class Command(BaseCommand):
-    help = "Sincroniza los GameItems desde la API del juego usando el mapeo definido en admin"
+    help = "Sincroniza los GameItems desde una o dos APIs, según lo definido en admin"
 
     def add_arguments(self, parser):
-        parser.add_argument('slug', type=str, help="Slug del juego (ej: one-piece)")
+        parser.add_argument('slug', type=str, help="Slug del juego (ej: pokemon)")
 
     def handle(self, *args, **options):
         slug = options['slug']
@@ -28,16 +29,44 @@ class Command(BaseCommand):
             raise CommandError(f"No existe un juego con el slug '{slug}'")
 
         if not game.data_source_url:
-            raise CommandError("Este juego no tiene definida una URL de API para sincronizar datos.")
+            raise CommandError("Este juego no tiene definida una URL para sincronizar datos.")
 
-        self.stdout.write(self.style.NOTICE(f"🔄 Sincronizando '{game.name}' desde {game.data_source_url}"))
+        # 🔍 Soporta tanto string como lista de 2 URLs
+        try:
+            urls = json.loads(game.data_source_url)
+            if not isinstance(urls, list) or len(urls) != 2:
+                raise ValueError
+            list_url, detail_key = urls
+        except (json.JSONDecodeError, ValueError, TypeError):
+            urls = None
+            list_url = game.data_source_url
+
+        self.stdout.write(self.style.NOTICE(f"🔄 Sincronizando '{game.name}' desde {list_url}"))
 
         try:
-            response = requests.get(game.data_source_url)
+            response = requests.get(list_url)
             response.raise_for_status()
-            raw_items = response.json()
+            data = response.json()
         except Exception as e:
-            raise CommandError(f"Error al conectar con la API: {e}")
+            raise CommandError(f"Error al obtener datos de la URL: {e}")
+
+        # Si es doble API: usamos la clave para entrar a la lista, y llamamos a cada URL
+        if urls:
+            items = data.get(detail_key, [])
+            raw_items = []
+            for item in items:
+                url = item.get("url")
+                if not url:
+                    continue
+                try:
+                    detail_resp = requests.get(url)
+                    detail_resp.raise_for_status()
+                    raw_items.append(detail_resp.json())
+                except Exception as e:
+                    self.stderr.write(self.style.WARNING(f"⚠️ Error con {url}: {e}"))
+        else:
+            # Es un solo JSON plano o una lista directamente
+            raw_items = data if isinstance(data, list) else data.get("results", [])
 
         created_count = 0
         updated_count = 0

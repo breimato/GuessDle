@@ -2,51 +2,59 @@ import json
 import os
 
 from django.conf import settings
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from apps.games.models import Game, GameItem
-
-LOL_JSON_PATH = os.path.join(settings.BASE_DIR, "data", "league-of-legends.json")
 
 
 class Command(BaseCommand):
-    help = "Sync LoLdle champions data into the database"
+    help = "Sincroniza GameItems desde un JSON estático, usando el mapping y los defaults definidos en admin"
 
-    def handle(self, *args, **kwargs):
-        if not os.path.exists(LOL_JSON_PATH):
-            self.stderr.write(f"❌ JSON file not found at {LOL_JSON_PATH}")
-            return
+    def add_arguments(self, parser):
+        parser.add_argument('slug', type=str, help="Slug del juego (ej: league-of-legends)")
+        parser.add_argument('json_path', type=str, help="Ruta al archivo JSON con los datos")
 
-        with open(LOL_JSON_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
+    def handle(self, *args, **options):
+        slug = options["slug"]
+        json_path = options["json_path"]
+
+        # Resuelve la ruta completa si es relativa
+        full_path = os.path.abspath(os.path.join(settings.BASE_DIR, json_path))
+
+        if not os.path.exists(full_path):
+            raise CommandError(f"❌ No se encontró el archivo JSON en: {full_path}")
 
         try:
-            game = Game.objects.get(slug="league-of-legends")
+            game = Game.objects.get(slug=slug)
         except Game.DoesNotExist:
-            self.stderr.write("❌ Game with slug 'league-of-legends' not found. Please create it from the admin first.")
-            return
+            raise CommandError(f"❌ No existe el juego con slug '{slug}'")
+
+        with open(full_path, "r", encoding="utf-8") as f:
+            try:
+                data = json.load(f)
+            except json.JSONDecodeError:
+                raise CommandError("❌ El archivo JSON no es válido")
 
         field_mapping = game.field_mapping or {}
         defaults = game.defaults or {}
 
         count = 0
-
-        for champ in data:
-            name = champ.get("name")
+        for entry in data:
+            name = entry.get("name") or entry.get("nombre") or entry.get("Nombre")
             if not name:
                 continue
 
             structured_data = {
-                label: champ.get(field, defaults.get(field))
-                for field, label in field_mapping.items()
+                local_field: entry.get(remote_field, defaults.get(local_field))
+                for local_field, remote_field in field_mapping.items()
             }
 
             GameItem.objects.update_or_create(
                 game=game,
                 name=name,
-                defaults={
-                    "data": structured_data
-                }
+                defaults={"data": structured_data}
             )
             count += 1
 
-        self.stdout.write(self.style.SUCCESS(f"✅ {count} champions synced into game '{game.name}'"))
+        self.stdout.write(self.style.SUCCESS(
+            f"✅ {count} items sincronizados en el juego '{game.name}'"
+        ))
