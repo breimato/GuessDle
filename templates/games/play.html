@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Jugar - {{ game.name }}{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center
+bg-no-repeat bg-cover bg-fixed
+bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold text-yellow-100 mb-6">Adivina el personaje de {{ game.name }}</h1>
+
+<form method="post" class="mb-10 bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
+    {% csrf_token %}
+    <label for="guess" class="block font-semibold mb-2">Tu intento:</label>
+    <input type="text" name="guess" id="guess"
+           class="w-full p-2 rounded border border-yellow-400 mb-4"
+           placeholder="Ej: Luffy" required>
+
+    <button type="submit"
+            class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition w-full">
+        Probar
+    </button>
+</form>
+
+{% if intento %}
+    <div class="bg-amber-100 p-6 rounded-xl shadow-inner border-4 border-yellow-800 w-full max-w-xl text-gray-900">
+        <h2 class="text-xl font-semibold mb-4">Resultado para "{{ intento.name }}"</h2>
+        <ul class="space-y-2">
+            {% for r in resultado %}
+                <li>
+                    <strong>{{ r.campo }}:</strong>
+                    <span class="{% if r.correcto %}text-green-700{% else %}text-red-700{% endif %}">
+                        {{ r.valor_intento }} {% if not r.correcto %} (Esperado: {{ r.valor_objetivo }}){% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% endblock %}

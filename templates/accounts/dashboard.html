@@ -19,9 +19,9 @@ py-10 px-4 gap-10
     <h2 class="text-2xl text-yellow-800 mb-4">📊 Tus estadísticas</h2>
     <ul class="space-y-2">
         {% for juego in user_stats.juegos %}
-            <li class="border-b border-yellow-700 pb-2">
-                <span class="font-semibold">{{ juego.nombre }}:</span> Media de acierto: {{ juego.media_tiempo }} intentos
-            </li>
+        <li class="border-b border-yellow-700 pb-2">
+            <span class="font-semibold">{{ juego.nombre }}:</span> Media de acierto: {{ juego.media_tiempo }} intentos
+        </li>
         {% endfor %}
     </ul>
 </div>
@@ -31,10 +31,12 @@ py-10 px-4 gap-10
     <h2 class="text-2xl text-yellow-800 mb-4">🎮 Escoge un juego</h2>
     <div class="flex flex-wrap gap-4 justify-center">
         {% for juego in juegos_disponibles %}
-            <a href="#" class="bg-yellow-700 text-white px-6 py-3 rounded hover:bg-yellow-800 transition shadow text-lg">
-                {{ juego }}
-            </a>
+        <a href="{% url 'play' juego.slug %}"
+           class="bg-yellow-700 text-white px-6 py-3 rounded hover:bg-yellow-800 transition shadow text-lg">
+            🎮 Jugar a {{ juego.name }}
+        </a>
         {% endfor %}
+
     </div>
 </div>
 
@@ -48,7 +50,7 @@ py-10 px-4 gap-10
             <h3 class="text-xl text-yellow-800 mb-2 text-center">📅 Diario</h3>
             <ul class="list-decimal pl-6 space-y-1">
                 {% for player in ranking_diario %}
-                    <li><span class="font-semibold">{{ player.username }}</span> - {{ player.puntos }} pts</li>
+                <li><span class="font-semibold">{{ player.username }}</span> - {{ player.puntos }} pts</li>
                 {% endfor %}
             </ul>
         </div>
@@ -58,7 +60,7 @@ py-10 px-4 gap-10
             <h3 class="text-xl text-yellow-800 mb-2 text-center">🗓️ Semanal</h3>
             <ul class="list-decimal pl-6 space-y-1">
                 {% for player in ranking_semanal %}
-                    <li><span class="font-semibold">{{ player.username }}</span> - {{ player.puntos }} pts</li>
+                <li><span class="font-semibold">{{ player.username }}</span> - {{ player.puntos }} pts</li>
                 {% endfor %}
             </ul>
         </div>

@@ -4,10 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from apps.games.models import Game
+
 
 @login_required
 def dashboard_view(request):
     # Datos de ejemplo por ahora. Luego los conectamos a modelos.
+    available_games = Game.objects.filter(active=True)
+
     user_stats = {
         'juegos': [
             {'nombre': 'Palabra', 'media_tiempo': 4.5},
@@ -28,13 +32,11 @@ def dashboard_view(request):
         {'username': 'Hinata', 'puntos': 590},
     ]
 
-    juegos_disponibles = ['Palabra', 'País', 'Marca']
-
     return render(request, 'accounts/dashboard.html', {
         'user_stats': user_stats,
         'ranking_diario': ranking_diario,
         'ranking_semanal': ranking_semanal,
-        'juegos_disponibles': juegos_disponibles,
+        'juegos_disponibles': available_games,
     })
 
 
