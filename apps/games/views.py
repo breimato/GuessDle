@@ -42,7 +42,7 @@ def numeric_feedback(
     Returns feedback for numeric comparison between guess and target values.
     """
     if guess_val is None or target_val is None:
-        return {"arrow": "❌", "hint": "Incorrecto"}
+        return {"arrow": "", "hint": "Incorrecto"}
 
     if guess_val == target_val:
         return {"arrow": "", "hint": ""}
@@ -126,8 +126,8 @@ def build_attempts(
 
             # --- numéricos --------------------------------------------------
             if attr in numeric_fields:
-                guess_num = parse_to_float(guess_val)
-                target_num = parse_to_float(target_val)
+                guess_num = parse_to_float(guess_val) or 0
+                target_num = parse_to_float(target_val) or 0
 
                 is_match = guess_num == target_num
                 if not is_match:
