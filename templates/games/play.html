@@ -15,16 +15,13 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 
 {% if won %}
 <div class="bg-green-200 border-4 border-green-800 p-6 rounded-xl max-w-xl w-full text-center font-serif text-gray-900 shadow-inner">
-    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span>
-    </h2>
-    <a href="{% url 'dashboard' %}"
-       class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition">
+    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span></h2>
+    <a href="{% url 'dashboard' %}" class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition">
         Volver al Dashboard
     </a>
 </div>
 {% else %}
-<form method="post"
-      class="bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
+<form method="post" class="bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
     {% csrf_token %}
     <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
 
@@ -35,16 +32,16 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
     <input list="guesses" name="guess" id="guess"
            class="w-full p-2 rounded border border-yellow-400 mb-4"
            placeholder="Escribe un nombre" required>
+
     <datalist id="guesses">
         {% for item in game.items.all %}
-        {% if item not in previous_guesses %}
-        <option value="{{ item.name }}"></option>
-        {% endif %}
+            {% if item not in previous_guesses %}
+                <option value="{{ item.name }}"></option>
+            {% endif %}
         {% endfor %}
     </datalist>
 
-    <button type="submit"
-            class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition w-full">
+    <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition w-full">
         Probar
     </button>
 </form>
@@ -54,22 +51,22 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 <div class="mt-10 bg-amber-100 p-6 rounded-xl shadow-inner border-4 border-yellow-800 w-full max-w-xl text-gray-900 font-serif">
     <h2 class="text-xl font-semibold mb-4">📝 Tus intentos:</h2>
     <div class="space-y-4">
-        {% for intento in attempts %}
+        {% for attempt in attempts %}
         <div class="border-b border-yellow-400 pb-2">
             <h3 class="font-bold text-yellow-900">
-                {{ intento.name }} {% if intento.es_objetivo %}🏆{% endif %}
+                {{ attempt.name }} {% if attempt.is_correct %}🏆{% endif %}
             </h3>
             <ul class="text-sm mt-2">
-                {% for f in intento.feedback %}
+                {% for fb in attempt.feedback %}
                 <li>
-                    <strong>{{ f.atributo }}:</strong>
-                    {% if f.correcto %}
-                    <span class="text-green-700">{{ f.valor }} ✔️</span>
+                    <strong>{{ fb.attribute }}:</strong>
+                    {% if fb.correct %}
+                        <span class="text-green-700">{{ fb.value }} ✔️</span>
                     {% else %}
-                    <span class="text-red-700">{{ f.valor }} {{ f.arrow }}</span>
-                    <span class="text-yellow-700">
-                        {% if f.pista %}({{ f.pista }}){% endif %}
-                    </span>
+                        <span class="text-red-700">{{ fb.value }} {{ fb.arrow }}</span>
+                        <span class="text-yellow-700">
+                            {% if fb.hint %}({{ fb.hint }}){% endif %}
+                        </span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -79,5 +76,4 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
     </div>
 </div>
 {% endif %}
-
 {% endblock %}
