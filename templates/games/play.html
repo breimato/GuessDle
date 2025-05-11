@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load game_extras %}
 
-{% block title %}Jugar - {{ game.name }}{% endblock %}
+{% block title %}{{ game.name }}{% endblock %}
 
 {% block main_class %}
 min-h-screen flex flex-col items-center
@@ -10,36 +11,73 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 {% endblock %}
 
 {% block content %}
+<h1 class="text-3xl font-bold text-yellow-100 mb-6">🎮 {{ game.name }}</h1>
 
-<h1 class="text-3xl font-bold text-yellow-100 mb-6">Adivina el personaje de {{ game.name }}</h1>
-
-<form method="post" class="mb-10 bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
+{% if won %}
+<div class="bg-green-200 border-4 border-green-800 p-6 rounded-xl max-w-xl w-full text-center font-serif text-gray-900 shadow-inner">
+    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span>
+    </h2>
+    <a href="{% url 'dashboard' %}"
+       class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition">
+        Volver al Dashboard
+    </a>
+</div>
+{% else %}
+<form method="post"
+      class="bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
     {% csrf_token %}
-    <label for="guess" class="block font-semibold mb-2">Tu intento:</label>
-    <input type="text" name="guess" id="guess"
+    <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
+
+    {% if guess_error %}
+    <p class="text-red-700 font-bold mb-2">Ese personaje no existe o ya fue usado.</p>
+    {% endif %}
+
+    <input list="guesses" name="guess" id="guess"
            class="w-full p-2 rounded border border-yellow-400 mb-4"
-           placeholder="Ej: Luffy" required>
+           placeholder="Escribe un nombre" required>
+    <datalist id="guesses">
+        {% for item in game.items.all %}
+        {% if item not in previous_guesses %}
+        <option value="{{ item.name }}"></option>
+        {% endif %}
+        {% endfor %}
+    </datalist>
 
     <button type="submit"
             class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition w-full">
         Probar
     </button>
 </form>
+{% endif %}
 
-{% if intento %}
-    <div class="bg-amber-100 p-6 rounded-xl shadow-inner border-4 border-yellow-800 w-full max-w-xl text-gray-900">
-        <h2 class="text-xl font-semibold mb-4">Resultado para "{{ intento.name }}"</h2>
-        <ul class="space-y-2">
-            {% for r in resultado %}
+{% if attempts %}
+<div class="mt-10 bg-amber-100 p-6 rounded-xl shadow-inner border-4 border-yellow-800 w-full max-w-xl text-gray-900 font-serif">
+    <h2 class="text-xl font-semibold mb-4">📝 Tus intentos:</h2>
+    <div class="space-y-4">
+        {% for intento in attempts %}
+        <div class="border-b border-yellow-400 pb-2">
+            <h3 class="font-bold text-yellow-900">
+                {{ intento.name }} {% if intento.es_objetivo %}🏆{% endif %}
+            </h3>
+            <ul class="text-sm mt-2">
+                {% for f in intento.feedback %}
                 <li>
-                    <strong>{{ r.campo }}:</strong>
-                    <span class="{% if r.correcto %}text-green-700{% else %}text-red-700{% endif %}">
-                        {{ r.valor_intento }} {% if not r.correcto %} (Esperado: {{ r.valor_objetivo }}){% endif %}
+                    <strong>{{ f.atributo }}:</strong>
+                    {% if f.correcto %}
+                    <span class="text-green-700">{{ f.valor }} ✔️</span>
+                    {% else %}
+                    <span class="text-red-700">{{ f.valor }} {{ f.arrow }}</span>
+                    <span class="text-yellow-700">
+                        {% if f.pista %}({{ f.pista }}){% endif %}
                     </span>
+                    {% endif %}
                 </li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
     </div>
+</div>
 {% endif %}
 
 {% endblock %}
