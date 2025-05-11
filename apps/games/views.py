@@ -48,8 +48,8 @@ def numeric_feedback(
         return {"arrow": "", "hint": ""}
 
     if guess_val < target_val:
-        return {"arrow": "🔺", "hint": "Más"}
-    return {"arrow": "🔻", "hint": "Menos"}
+        return {"arrow": "▲", "hint": "Más"}
+    return {"arrow": "▼", "hint": "Menos"}
 
 
 def to_list(raw: Any) -> List[str]:
