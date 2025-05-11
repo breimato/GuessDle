@@ -1,113 +1,187 @@
 import random
-from django.shortcuts import render, get_object_or_404, redirect
-from apps.games.models import Game, GameItem
+import re
+from typing import Any, Dict, List, Optional
+
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_protect
 
+from apps.games.models import Game, GameItem
 
-import re
 
-def parse_number(value):
+# ----------------------------------------------------------------------------
+# Utils
+# ----------------------------------------------------------------------------
+
+def parse_number(value: Any) -> Optional[float]:
+    """Try to convert *value* to a float.
+
+    Removes any non‑numeric symbol except decimal separators ("," and ".") and
+    the minus sign. If multiple dots are present we assume they are thousands
+    separators and strip them. If the cleaned string still can’t be converted it
+    returns ``None``.
+    """
+    cleaned: str = re.sub(r"[^\d.,\-]", "", str(value))
+    if not cleaned:
+        return None
+
+    # Normalise decimal/thousand separators
+    if cleaned.count(",") == 1 and cleaned.count(".") > 1:
+        cleaned = cleaned.replace(".", "").replace(",", ".")
+    elif cleaned.count(".") > 1:
+        cleaned = cleaned.replace(".", "")
+
     try:
-        # Quitar todo lo que no sea número o coma/punto
-        cleaned = re.sub(r"[^\d.,\-]", "", str(value))
-
-        # Si hay más de un punto o más de una coma, probablemente son separadores de miles
-        # Eliminamos todos los puntos (.) si también hay coma (,) → formato europeo
-        if cleaned.count(",") == 1 and cleaned.count(".") > 1:
-            cleaned = cleaned.replace(".", "")
-            cleaned = cleaned.replace(",", ".")  # Convertir a float
-
-        # Eliminamos puntos si solo hay puntos y más de uno
-        elif cleaned.count(".") > 1:
-            cleaned = cleaned.replace(".", "")
-
         return float(cleaned)
-    except Exception:
+    except ValueError:
         return None
 
 
-@csrf_protect
-def play_view(request, slug):
-    game = get_object_or_404(Game, slug=slug)
-    all_items = list(game.items.all())
+def numeric_feedback(val: Optional[float], exp: Optional[float]) -> Dict[str, str]:
+    """Return tuple (arrow, hint) comparing *val* against *exp*.
 
-    # Setup de sesión
-    if 'target_id' not in request.session or request.session.get('target_game') != game.id:
-        target = random.choice(all_items)
-        request.session['target_id'] = target.id
-        request.session['target_game'] = game.id
-        request.session['guesses'] = []
-        request.session['won'] = False
-    else:
-        target = GameItem.objects.get(id=request.session['target_id'])
+    ``exp`` *could* be None in the database. Design choice: we treat it as 0 so
+    that the game keeps working and behaves just like the original implementation.
+    """
+    # Guard‑clause: both values must be valid numbers to give directional hints.
+    if val is None or exp is None:
+        return {"arrow": "❌", "hint": "Incorrecto"}
 
-    guesses_ids = request.session.get('guesses', [])
-    previous_guesses_raw = GameItem.objects.filter(id__in=guesses_ids)
-    previous_guesses = sorted(previous_guesses_raw, key=lambda x: guesses_ids.index(x.id), reverse=True)
-    won = request.session.get('won', False)
+    if val == exp:
+        return {"arrow": "", "hint": ""}
+    if val < exp:
+        return {"arrow": "🔺", "hint": "Más alto"}
+    return {"arrow": "🔻", "hint": "Más bajo"}
 
-    guess_error = False
-    guess_name = ""
-    guess_item = None
 
-    if request.method == 'POST' and not won:
-        guess_name = request.POST.get('guess', '').strip()
-        guess_item = game.items.filter(name__iexact=guess_name).first()
+# ----------------------------------------------------------------------------
+# Helpers for the view (keep logic out of the main handler)
+# ----------------------------------------------------------------------------
 
-        if not guess_item or guess_item.id in guesses_ids:
-            guess_error = True
-        else:
-            guesses_ids.append(guess_item.id)
-            request.session['guesses'] = guesses_ids
+def _reset_session(session, game: Game) -> GameItem:
+    """Initialise the session for a new game."""
+    target = random.choice(list(game.items.all()))
+    session.update({
+        "target_id": target.id,
+        "target_game": game.id,
+        "guesses": [],
+        "won": False,
+    })
+    # Return the selected target so the caller does not query again.
+    return target
 
-            if guess_item.name == target.name:
-                request.session['won'] = True
-                won = True
 
-    # Preparamos feedback ya calculado
-    formatted_attempts = []
-    for item in previous_guesses:
+def _ordered_items(ids: List[int]) -> List[GameItem]:
+    """Return GameItem queryset ordered as they appear in *ids* (latest on top)."""
+    items = list(GameItem.objects.filter(id__in=ids))
+    return sorted(items, key=lambda x: ids.index(x.id), reverse=True)
+
+
+def _build_attempts(game: Game, guesses: List[GameItem], target: GameItem) -> List[Dict[str, Any]]:
+    """Compose the structure expected by the template from *guesses*."""
+    attempts: List[Dict[str, Any]] = []
+    for item in guesses:
         attempt = {
-            'name': item.name,
-            'es_objetivo': item.name == target.name,
-            'feedback': []
+            "name": item.name,
+            "es_objetivo": item.name == target.name,
+            "feedback": [],
         }
+
         for atributo in game.attributes:
             valor = item.data.get(atributo)
             esperado = target.data.get(atributo)
-            correcto = valor == esperado
 
-            pista = ""
-            # Si no es correcto, generar pista
-            arrow = ""
-            if not correcto:
-                val = parse_number(valor)
-                esp = parse_number(esperado)
-                if val is not None and esp is not None:
-                    if val < esp:
-                        pista = "Más alto"
-                        arrow = "🔺"
-                    elif val > esp:
-                        pista = "Más bajo"
-                        arrow = "🔻"
-                else:
-                    pista = "Incorrecto"
-                    arrow = "❌"
+            val_num = parse_number(valor)
+            exp_num = parse_number(esperado) or 0  # Same trick as the original code
 
-            attempt['feedback'].append({
-                'atributo': atributo,
-                'valor': valor,
-                'correcto': correcto,
-                'pista': pista if not correcto else "",
-                'arrow': arrow if not correcto else ""
+            correcto = (val_num == exp_num) if (val_num is not None and exp_num is not None) else valor == esperado
+
+            fb = numeric_feedback(val_num, exp_num) if not correcto else {"arrow": "", "hint": ""}
+
+            attempt["feedback"].append({
+                "atributo": atributo,
+                "valor": valor,
+                "correcto": correcto,
+                "pista": fb["hint"],
+                "arrow": fb["arrow"],
             })
 
-        formatted_attempts.append(attempt)
+        attempts.append(attempt)
 
-    return render(request, 'games/play.html', {
-        'game': game,
-        'target': target,
-        'attempts': formatted_attempts,
-        'won': won,
-        'guess_error': guess_error,
-    })
+    return attempts
+
+
+def _handle_post(request, game: Game, target: GameItem) -> Optional[str]:
+    """Process a POST request and mutate the session accordingly.
+
+    Returns a redirect *slug* if we should short‑circuit the view afterwards.
+    """
+    session = request.session
+    won = session.get("won", False)
+    if won:
+        return "play"  # User has already won; don’t process more guesses.
+
+    guess_name: str = request.POST.get("guess", "").strip()
+    guess_item: Optional[GameItem] = game.items.filter(name__iexact=guess_name).first()
+
+    guesses_ids: List[int] = session.get("guesses", [])
+
+    if not guess_item or guess_item.id in guesses_ids:
+        session["guess_error"] = True
+    else:
+        guesses_ids.append(guess_item.id)
+        session["guesses"] = guesses_ids
+
+        if guess_item.name == target.name:
+            session["won"] = True
+
+    # After mutating state we always redirect to avoid POST‑redirect‑GET problems.
+    return "play"
+
+
+# ----------------------------------------------------------------------------
+# Main view
+# ----------------------------------------------------------------------------
+
+@csrf_protect
+def play_view(request, slug):
+    game: Game = get_object_or_404(Game, slug=slug)
+    session = request.session
+
+    # ---------------------------------------------------------------------
+    # Session bootstrap
+    # ---------------------------------------------------------------------
+    target: GameItem
+    if session.get("target_id") and session.get("target_game") == game.id:
+        target = GameItem.objects.get(id=session["target_id"])
+    else:
+        target = _reset_session(session, game)
+
+    guesses_ids: List[int] = session.get("guesses", [])
+    previous_guesses: List[GameItem] = _ordered_items(guesses_ids)
+    won: bool = session.get("won", False)
+
+    # ---------------------------------------------------------------------
+    # POST handling — always redirect afterwards (Post/Redirect/Get)
+    # ---------------------------------------------------------------------
+    if request.method == "POST":
+        slug_name = _handle_post(request, game, target)
+        return redirect(slug_name, slug=slug)
+
+    # ---------------------------------------------------------------------
+    # Context for GET
+    # ---------------------------------------------------------------------
+    attempts = _build_attempts(game, previous_guesses, target)
+    guess_error = session.pop("guess_error", False)
+
+    return render(
+        request,
+        "games/play.html",
+        {
+            "game": game,
+            "target": target,
+            "attempts": attempts,
+            "previous_guesses": previous_guesses,
+            "won": won,
+            "guess_error": guess_error,
+        },
+    )
