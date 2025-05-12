@@ -3,8 +3,8 @@
     "nombre": "bulbasaur",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 7,
-    "peso": 69,
+    "altura": 70,
+    "peso": 6.9,
     "etapa de evolucion": 1,
     "color": "green",
     "id": 1
@@ -13,8 +13,8 @@
     "nombre": "ivysaur",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 10,
-    "peso": 130,
+    "altura": 100,
+    "peso": 13.0,
     "etapa de evolucion": 2,
     "color": "green",
     "id": 2
@@ -23,8 +23,8 @@
     "nombre": "venusaur",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 20,
-    "peso": 1000,
+    "altura": 200,
+    "peso": 100.0,
     "etapa de evolucion": 3,
     "color": "green",
     "id": 3
@@ -33,9 +33,9 @@
     "nombre": "charmander",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 6,
-    "peso": 85,
-    "etapa de evolucion": 4,
+    "altura": 60,
+    "peso": 8.5,
+    "etapa de evolucion": 1,
     "color": "red",
     "id": 4
   },
@@ -43,9 +43,9 @@
     "nombre": "charmeleon",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 11,
-    "peso": 190,
-    "etapa de evolucion": 5,
+    "altura": 110,
+    "peso": 19.0,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 5
   },
@@ -53,9 +53,9 @@
     "nombre": "charizard",
     "tipo1": "fire",
     "tipo2": "flying",
-    "altura": 17,
-    "peso": 905,
-    "etapa de evolucion": 6,
+    "altura": 170,
+    "peso": 90.5,
+    "etapa de evolucion": 3,
     "color": "red",
     "id": 6
   },
@@ -63,9 +63,9 @@
     "nombre": "squirtle",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 5,
-    "peso": 90,
-    "etapa de evolucion": 7,
+    "altura": 50,
+    "peso": 9.0,
+    "etapa de evolucion": 1,
     "color": "blue",
     "id": 7
   },
@@ -73,9 +73,9 @@
     "nombre": "wartortle",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 10,
-    "peso": 225,
-    "etapa de evolucion": 8,
+    "altura": 100,
+    "peso": 22.5,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 8
   },
@@ -83,9 +83,9 @@
     "nombre": "blastoise",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 16,
-    "peso": 855,
-    "etapa de evolucion": 9,
+    "altura": 160,
+    "peso": 85.5,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 9
   },
@@ -93,9 +93,9 @@
     "nombre": "caterpie",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 3,
-    "peso": 29,
-    "etapa de evolucion": 10,
+    "altura": 30,
+    "peso": 2.9,
+    "etapa de evolucion": 1,
     "color": "green",
     "id": 10
   },
@@ -103,9 +103,9 @@
     "nombre": "metapod",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 7,
-    "peso": 99,
-    "etapa de evolucion": 11,
+    "altura": 70,
+    "peso": 9.9,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 11
   },
@@ -113,9 +113,9 @@
     "nombre": "butterfree",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 11,
-    "peso": 320,
-    "etapa de evolucion": 12,
+    "altura": 110,
+    "peso": 32.0,
+    "etapa de evolucion": 3,
     "color": "white",
     "id": 12
   },
@@ -123,9 +123,9 @@
     "nombre": "weedle",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 3,
-    "peso": 32,
-    "etapa de evolucion": 13,
+    "altura": 30,
+    "peso": 3.2,
+    "etapa de evolucion": 1,
     "color": "brown",
     "id": 13
   },
@@ -133,9 +133,9 @@
     "nombre": "kakuna",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 6,
-    "peso": 100,
-    "etapa de evolucion": 14,
+    "altura": 60,
+    "peso": 10.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
     "id": 14
   },
@@ -143,9 +143,9 @@
     "nombre": "beedrill",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 10,
-    "peso": 295,
-    "etapa de evolucion": 15,
+    "altura": 100,
+    "peso": 29.5,
+    "etapa de evolucion": 3,
     "color": "yellow",
     "id": 15
   },
@@ -153,9 +153,9 @@
     "nombre": "pidgey",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 3,
-    "peso": 18,
-    "etapa de evolucion": 16,
+    "altura": 30,
+    "peso": 1.8,
+    "etapa de evolucion": 1,
     "color": "brown",
     "id": 16
   },
@@ -163,9 +163,9 @@
     "nombre": "pidgeotto",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 11,
-    "peso": 300,
-    "etapa de evolucion": 17,
+    "altura": 110,
+    "peso": 30.0,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 17
   },
@@ -173,9 +173,9 @@
     "nombre": "pidgeot",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 15,
-    "peso": 395,
-    "etapa de evolucion": 18,
+    "altura": 150,
+    "peso": 39.5,
+    "etapa de evolucion": 3,
     "color": "brown",
     "id": 18
   },
@@ -183,9 +183,9 @@
     "nombre": "rattata",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 3,
-    "peso": 35,
-    "etapa de evolucion": 19,
+    "altura": 30,
+    "peso": 3.5,
+    "etapa de evolucion": 1,
     "color": "purple",
     "id": 19
   },
@@ -193,9 +193,9 @@
     "nombre": "raticate",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 7,
-    "peso": 185,
-    "etapa de evolucion": 20,
+    "altura": 70,
+    "peso": 18.5,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 20
   },
@@ -203,9 +203,9 @@
     "nombre": "spearow",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 3,
-    "peso": 20,
-    "etapa de evolucion": 21,
+    "altura": 30,
+    "peso": 2.0,
+    "etapa de evolucion": 1,
     "color": "brown",
     "id": 21
   },
@@ -213,9 +213,9 @@
     "nombre": "fearow",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 12,
-    "peso": 380,
-    "etapa de evolucion": 22,
+    "altura": 120,
+    "peso": 38.0,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 22
   },
@@ -223,9 +223,9 @@
     "nombre": "ekans",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 20,
-    "peso": 69,
-    "etapa de evolucion": 23,
+    "altura": 200,
+    "peso": 6.9,
+    "etapa de evolucion": 1,
     "color": "purple",
     "id": 23
   },
@@ -233,9 +233,9 @@
     "nombre": "arbok",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 35,
-    "peso": 650,
-    "etapa de evolucion": 24,
+    "altura": 350,
+    "peso": 65.0,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 24
   },
@@ -243,3610 +243,3610 @@
     "nombre": "pikachu",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 4,
-    "peso": 60,
-    "etapa de evolucion": 25,
+    "altura": 40,
+    "peso": 6.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 26
+    "id": 25
   },
   {
     "nombre": "raichu",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 8,
-    "peso": 300,
-    "etapa de evolucion": 26,
+    "altura": 80,
+    "peso": 30.0,
+    "etapa de evolucion": 3,
     "color": "yellow",
-    "id": 27
+    "id": 26
   },
   {
     "nombre": "sandshrew",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 6,
-    "peso": 120,
-    "etapa de evolucion": 27,
+    "altura": 60,
+    "peso": 12.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 28
+    "id": 27
   },
   {
     "nombre": "sandslash",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 10,
-    "peso": 295,
-    "etapa de evolucion": 28,
+    "altura": 100,
+    "peso": 29.5,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 29
+    "id": 28
   },
   {
     "nombre": "nidoran-f",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 4,
-    "peso": 70,
-    "etapa de evolucion": 29,
+    "altura": 40,
+    "peso": 7.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 30
+    "id": 29
   },
   {
     "nombre": "nidorina",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 8,
-    "peso": 200,
-    "etapa de evolucion": 30,
+    "altura": 80,
+    "peso": 20.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 31
+    "id": 30
   },
   {
     "nombre": "nidoqueen",
     "tipo1": "poison",
     "tipo2": "ground",
-    "altura": 13,
-    "peso": 600,
-    "etapa de evolucion": 31,
+    "altura": 130,
+    "peso": 60.0,
+    "etapa de evolucion": 3,
     "color": "blue",
-    "id": 32
+    "id": 31
   },
   {
     "nombre": "nidoran-m",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 5,
-    "peso": 90,
-    "etapa de evolucion": 32,
+    "altura": 50,
+    "peso": 9.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 33
+    "id": 32
   },
   {
     "nombre": "nidorino",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 9,
-    "peso": 195,
-    "etapa de evolucion": 33,
+    "altura": 90,
+    "peso": 19.5,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 34
+    "id": 33
   },
   {
     "nombre": "nidoking",
     "tipo1": "poison",
     "tipo2": "ground",
-    "altura": 14,
-    "peso": 620,
-    "etapa de evolucion": 34,
+    "altura": 140,
+    "peso": 62.0,
+    "etapa de evolucion": 3,
     "color": "purple",
-    "id": 35
+    "id": 34
   },
   {
     "nombre": "clefairy",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 6,
-    "peso": 75,
-    "etapa de evolucion": 35,
+    "altura": 60,
+    "peso": 7.5,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 37
+    "id": 35
   },
   {
     "nombre": "clefable",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 13,
-    "peso": 400,
-    "etapa de evolucion": 36,
+    "altura": 130,
+    "peso": 40.0,
+    "etapa de evolucion": 3,
     "color": "pink",
-    "id": 38
+    "id": 36
   },
   {
     "nombre": "vulpix",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 6,
-    "peso": 99,
-    "etapa de evolucion": 37,
+    "altura": 60,
+    "peso": 9.9,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 39
+    "id": 37
   },
   {
     "nombre": "ninetales",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 11,
-    "peso": 199,
-    "etapa de evolucion": 38,
+    "altura": 110,
+    "peso": 19.9,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 40
+    "id": 38
   },
   {
     "nombre": "jigglypuff",
     "tipo1": "normal",
     "tipo2": "fairy",
-    "altura": 5,
-    "peso": 55,
-    "etapa de evolucion": 39,
+    "altura": 50,
+    "peso": 5.5,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 42
+    "id": 39
   },
   {
     "nombre": "wigglytuff",
     "tipo1": "normal",
     "tipo2": "fairy",
-    "altura": 10,
-    "peso": 120,
-    "etapa de evolucion": 40,
+    "altura": 100,
+    "peso": 12.0,
+    "etapa de evolucion": 3,
     "color": "pink",
-    "id": 43
+    "id": 40
   },
   {
     "nombre": "zubat",
     "tipo1": "poison",
     "tipo2": "flying",
-    "altura": 8,
-    "peso": 75,
-    "etapa de evolucion": 41,
+    "altura": 80,
+    "peso": 7.5,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 44
+    "id": 41
   },
   {
     "nombre": "golbat",
     "tipo1": "poison",
     "tipo2": "flying",
-    "altura": 16,
-    "peso": 550,
-    "etapa de evolucion": 42,
+    "altura": 160,
+    "peso": 55.0,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 45
+    "id": 42
   },
   {
     "nombre": "oddish",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 5,
-    "peso": 54,
-    "etapa de evolucion": 43,
+    "altura": 50,
+    "peso": 5.4,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 47
+    "id": 43
   },
   {
     "nombre": "gloom",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 8,
-    "peso": 86,
-    "etapa de evolucion": 44,
+    "altura": 80,
+    "peso": 8.6,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 48
+    "id": 44
   },
   {
     "nombre": "vileplume",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 12,
-    "peso": 186,
-    "etapa de evolucion": 45,
+    "altura": 120,
+    "peso": 18.6,
+    "etapa de evolucion": 3,
     "color": "red",
-    "id": 49
+    "id": 45
   },
   {
     "nombre": "paras",
     "tipo1": "bug",
     "tipo2": "grass",
-    "altura": 3,
-    "peso": 54,
-    "etapa de evolucion": 46,
+    "altura": 30,
+    "peso": 5.4,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 51
+    "id": 46
   },
   {
     "nombre": "parasect",
     "tipo1": "bug",
     "tipo2": "grass",
-    "altura": 10,
-    "peso": 295,
-    "etapa de evolucion": 47,
+    "altura": 100,
+    "peso": 29.5,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 52
+    "id": 47
   },
   {
     "nombre": "venonat",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 10,
-    "peso": 300,
-    "etapa de evolucion": 48,
+    "altura": 100,
+    "peso": 30.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 53
+    "id": 48
   },
   {
     "nombre": "venomoth",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 15,
-    "peso": 125,
-    "etapa de evolucion": 49,
+    "altura": 150,
+    "peso": 12.5,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 54
+    "id": 49
   },
   {
     "nombre": "diglett",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 2,
-    "peso": 8,
-    "etapa de evolucion": 50,
+    "altura": 20,
+    "peso": 0.8,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 55
+    "id": 50
   },
   {
     "nombre": "dugtrio",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 7,
-    "peso": 333,
-    "etapa de evolucion": 51,
+    "altura": 70,
+    "peso": 33.3,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 56
+    "id": 51
   },
   {
     "nombre": "meowth",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 4,
-    "peso": 42,
-    "etapa de evolucion": 52,
+    "altura": 40,
+    "peso": 4.2,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 57
+    "id": 52
   },
   {
     "nombre": "persian",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 10,
-    "peso": 320,
-    "etapa de evolucion": 53,
+    "altura": 100,
+    "peso": 32.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 58
+    "id": 53
   },
   {
     "nombre": "psyduck",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 8,
-    "peso": 196,
-    "etapa de evolucion": 54,
+    "altura": 80,
+    "peso": 19.6,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 59
+    "id": 54
   },
   {
     "nombre": "golduck",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 17,
-    "peso": 766,
-    "etapa de evolucion": 55,
+    "altura": 170,
+    "peso": 76.6,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 60
+    "id": 55
   },
   {
     "nombre": "mankey",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 5,
-    "peso": 280,
-    "etapa de evolucion": 56,
+    "altura": 50,
+    "peso": 28.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 61
+    "id": 56
   },
   {
     "nombre": "primeape",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 10,
-    "peso": 320,
-    "etapa de evolucion": 57,
+    "altura": 100,
+    "peso": 32.0,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 62
+    "id": 57
   },
   {
     "nombre": "growlithe",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 7,
-    "peso": 190,
-    "etapa de evolucion": 58,
+    "altura": 70,
+    "peso": 19.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 63
+    "id": 58
   },
   {
     "nombre": "arcanine",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 19,
-    "peso": 1550,
-    "etapa de evolucion": 59,
+    "altura": 190,
+    "peso": 155.0,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 64
+    "id": 59
   },
   {
     "nombre": "poliwag",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 124,
-    "etapa de evolucion": 60,
+    "altura": 60,
+    "peso": 12.4,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 65
+    "id": 60
   },
   {
     "nombre": "poliwhirl",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 10,
-    "peso": 200,
-    "etapa de evolucion": 61,
+    "altura": 100,
+    "peso": 20.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 66
+    "id": 61
   },
   {
     "nombre": "poliwrath",
     "tipo1": "water",
     "tipo2": "fighting",
-    "altura": 13,
-    "peso": 540,
-    "etapa de evolucion": 62,
+    "altura": 130,
+    "peso": 54.0,
+    "etapa de evolucion": 3,
     "color": "blue",
-    "id": 67
+    "id": 62
   },
   {
     "nombre": "abra",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 9,
-    "peso": 195,
-    "etapa de evolucion": 63,
+    "altura": 90,
+    "peso": 19.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 69
+    "id": 63
   },
   {
     "nombre": "kadabra",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 13,
-    "peso": 565,
-    "etapa de evolucion": 64,
+    "altura": 130,
+    "peso": 56.5,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 70
+    "id": 64
   },
   {
     "nombre": "alakazam",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 15,
-    "peso": 480,
-    "etapa de evolucion": 65,
+    "altura": 150,
+    "peso": 48.0,
+    "etapa de evolucion": 3,
     "color": "brown",
-    "id": 71
+    "id": 65
   },
   {
     "nombre": "machop",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 8,
-    "peso": 195,
-    "etapa de evolucion": 66,
+    "altura": 80,
+    "peso": 19.5,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 72
+    "id": 66
   },
   {
     "nombre": "machoke",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 15,
-    "peso": 705,
-    "etapa de evolucion": 67,
+    "altura": 150,
+    "peso": 70.5,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 73
+    "id": 67
   },
   {
     "nombre": "machamp",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 16,
-    "peso": 1300,
-    "etapa de evolucion": 68,
+    "altura": 160,
+    "peso": 130.0,
+    "etapa de evolucion": 3,
     "color": "gray",
-    "id": 74
+    "id": 68
   },
   {
     "nombre": "bellsprout",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 7,
-    "peso": 40,
-    "etapa de evolucion": 69,
+    "altura": 70,
+    "peso": 4.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 75
+    "id": 69
   },
   {
     "nombre": "weepinbell",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 10,
-    "peso": 64,
-    "etapa de evolucion": 70,
+    "altura": 100,
+    "peso": 6.4,
+    "etapa de evolucion": 2,
     "color": "green",
-    "id": 76
+    "id": 70
   },
   {
     "nombre": "victreebel",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 17,
-    "peso": 155,
-    "etapa de evolucion": 71,
+    "altura": 170,
+    "peso": 15.5,
+    "etapa de evolucion": 3,
     "color": "green",
-    "id": 77
+    "id": 71
   },
   {
     "nombre": "tentacool",
     "tipo1": "water",
     "tipo2": "poison",
-    "altura": 9,
-    "peso": 455,
-    "etapa de evolucion": 72,
+    "altura": 90,
+    "peso": 45.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 78
+    "id": 72
   },
   {
     "nombre": "tentacruel",
     "tipo1": "water",
     "tipo2": "poison",
-    "altura": 16,
-    "peso": 550,
-    "etapa de evolucion": 73,
+    "altura": 160,
+    "peso": 55.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 79
+    "id": 73
   },
   {
     "nombre": "geodude",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 4,
-    "peso": 200,
-    "etapa de evolucion": 74,
+    "altura": 40,
+    "peso": 20.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 80
+    "id": 74
   },
   {
     "nombre": "graveler",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 10,
-    "peso": 1050,
-    "etapa de evolucion": 75,
+    "altura": 100,
+    "peso": 105.0,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 81
+    "id": 75
   },
   {
     "nombre": "golem",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 14,
-    "peso": 3000,
-    "etapa de evolucion": 76,
+    "altura": 140,
+    "peso": 300.0,
+    "etapa de evolucion": 3,
     "color": "brown",
-    "id": 82
+    "id": 76
   },
   {
     "nombre": "ponyta",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 10,
-    "peso": 300,
-    "etapa de evolucion": 77,
+    "altura": 100,
+    "peso": 30.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 83
+    "id": 77
   },
   {
     "nombre": "rapidash",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 17,
-    "peso": 950,
-    "etapa de evolucion": 78,
+    "altura": 170,
+    "peso": 95.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 84
+    "id": 78
   },
   {
     "nombre": "slowpoke",
     "tipo1": "water",
     "tipo2": "psychic",
-    "altura": 12,
-    "peso": 360,
-    "etapa de evolucion": 79,
+    "altura": 120,
+    "peso": 36.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 85
+    "id": 79
   },
   {
     "nombre": "slowbro",
     "tipo1": "water",
     "tipo2": "psychic",
-    "altura": 16,
-    "peso": 785,
-    "etapa de evolucion": 80,
+    "altura": 160,
+    "peso": 78.5,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 86
+    "id": 80
   },
   {
     "nombre": "magnemite",
     "tipo1": "electric",
     "tipo2": "steel",
-    "altura": 3,
-    "peso": 60,
-    "etapa de evolucion": 81,
+    "altura": 30,
+    "peso": 6.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 88
+    "id": 81
   },
   {
     "nombre": "magneton",
     "tipo1": "electric",
     "tipo2": "steel",
-    "altura": 10,
-    "peso": 600,
-    "etapa de evolucion": 82,
+    "altura": 100,
+    "peso": 60.0,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 89
+    "id": 82
   },
   {
     "nombre": "farfetchd",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 8,
-    "peso": 150,
-    "etapa de evolucion": 83,
+    "altura": 80,
+    "peso": 15.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 91
+    "id": 83
   },
   {
     "nombre": "doduo",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 14,
-    "peso": 392,
-    "etapa de evolucion": 84,
+    "altura": 140,
+    "peso": 39.2,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 92
+    "id": 84
   },
   {
     "nombre": "dodrio",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 18,
-    "peso": 852,
-    "etapa de evolucion": 85,
+    "altura": 180,
+    "peso": 85.2,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 93
+    "id": 85
   },
   {
     "nombre": "seel",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 11,
-    "peso": 900,
-    "etapa de evolucion": 86,
+    "altura": 110,
+    "peso": 90.0,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 94
+    "id": 86
   },
   {
     "nombre": "dewgong",
     "tipo1": "water",
     "tipo2": "ice",
-    "altura": 17,
-    "peso": 1200,
-    "etapa de evolucion": 87,
+    "altura": 170,
+    "peso": 120.0,
+    "etapa de evolucion": 2,
     "color": "white",
-    "id": 95
+    "id": 87
   },
   {
     "nombre": "grimer",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 9,
-    "peso": 300,
-    "etapa de evolucion": 88,
+    "altura": 90,
+    "peso": 30.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 96
+    "id": 88
   },
   {
     "nombre": "muk",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 12,
-    "peso": 300,
-    "etapa de evolucion": 89,
+    "altura": 120,
+    "peso": 30.0,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 97
+    "id": 89
   },
   {
     "nombre": "shellder",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 3,
-    "peso": 40,
-    "etapa de evolucion": 90,
+    "altura": 30,
+    "peso": 4.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 98
+    "id": 90
   },
   {
     "nombre": "cloyster",
     "tipo1": "water",
     "tipo2": "ice",
-    "altura": 15,
-    "peso": 1325,
-    "etapa de evolucion": 91,
+    "altura": 150,
+    "peso": 132.5,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 99
+    "id": 91
   },
   {
     "nombre": "gastly",
     "tipo1": "ghost",
     "tipo2": "poison",
-    "altura": 13,
-    "peso": 1,
-    "etapa de evolucion": 92,
+    "altura": 130,
+    "peso": 0.1,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 100
+    "id": 92
   },
   {
     "nombre": "haunter",
     "tipo1": "ghost",
     "tipo2": "poison",
-    "altura": 16,
-    "peso": 1,
-    "etapa de evolucion": 93,
+    "altura": 160,
+    "peso": 0.1,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 101
+    "id": 93
   },
   {
     "nombre": "gengar",
     "tipo1": "ghost",
     "tipo2": "poison",
-    "altura": 15,
-    "peso": 405,
-    "etapa de evolucion": 94,
+    "altura": 150,
+    "peso": 40.5,
+    "etapa de evolucion": 3,
     "color": "purple",
-    "id": 102
+    "id": 94
   },
   {
     "nombre": "onix",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 88,
-    "peso": 2100,
-    "etapa de evolucion": 95,
+    "altura": 880,
+    "peso": 210.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 103
+    "id": 95
   },
   {
     "nombre": "drowzee",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 10,
-    "peso": 324,
-    "etapa de evolucion": 96,
+    "altura": 100,
+    "peso": 32.4,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 105
+    "id": 96
   },
   {
     "nombre": "hypno",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 16,
-    "peso": 756,
-    "etapa de evolucion": 97,
+    "altura": 160,
+    "peso": 75.6,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 106
+    "id": 97
   },
   {
     "nombre": "krabby",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 4,
-    "peso": 65,
-    "etapa de evolucion": 98,
+    "altura": 40,
+    "peso": 6.5,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 107
+    "id": 98
   },
   {
     "nombre": "kingler",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 13,
-    "peso": 600,
-    "etapa de evolucion": 99,
+    "altura": 130,
+    "peso": 60.0,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 108
+    "id": 99
   },
   {
     "nombre": "voltorb",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 5,
-    "peso": 104,
-    "etapa de evolucion": 100,
+    "altura": 50,
+    "peso": 10.4,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 109
+    "id": 100
   },
   {
     "nombre": "electrode",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 12,
-    "peso": 666,
-    "etapa de evolucion": 101,
+    "altura": 120,
+    "peso": 66.6,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 110
+    "id": 101
   },
   {
     "nombre": "exeggcute",
     "tipo1": "grass",
     "tipo2": "psychic",
-    "altura": 4,
-    "peso": 25,
-    "etapa de evolucion": 102,
+    "altura": 40,
+    "peso": 2.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 111
+    "id": 102
   },
   {
     "nombre": "exeggutor",
     "tipo1": "grass",
     "tipo2": "psychic",
-    "altura": 20,
-    "peso": 1200,
-    "etapa de evolucion": 103,
+    "altura": 200,
+    "peso": 120.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 112
+    "id": 103
   },
   {
     "nombre": "cubone",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 4,
-    "peso": 65,
-    "etapa de evolucion": 104,
+    "altura": 40,
+    "peso": 6.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 113
+    "id": 104
   },
   {
     "nombre": "marowak",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 10,
-    "peso": 450,
-    "etapa de evolucion": 105,
+    "altura": 100,
+    "peso": 45.0,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 114
+    "id": 105
   },
   {
     "nombre": "hitmonlee",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 15,
-    "peso": 498,
-    "etapa de evolucion": 106,
+    "altura": 150,
+    "peso": 49.8,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 116
+    "id": 106
   },
   {
     "nombre": "hitmonchan",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 14,
-    "peso": 502,
-    "etapa de evolucion": 107,
+    "altura": 140,
+    "peso": 50.2,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 117
+    "id": 107
   },
   {
     "nombre": "lickitung",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 12,
-    "peso": 655,
-    "etapa de evolucion": 108,
+    "altura": 120,
+    "peso": 65.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 119
+    "id": 108
   },
   {
     "nombre": "koffing",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 6,
-    "peso": 10,
-    "etapa de evolucion": 109,
+    "altura": 60,
+    "peso": 1.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 121
+    "id": 109
   },
   {
     "nombre": "weezing",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 12,
-    "peso": 95,
-    "etapa de evolucion": 110,
+    "altura": 120,
+    "peso": 9.5,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 122
+    "id": 110
   },
   {
     "nombre": "rhyhorn",
     "tipo1": "ground",
     "tipo2": "rock",
-    "altura": 10,
-    "peso": 1150,
-    "etapa de evolucion": 111,
+    "altura": 100,
+    "peso": 115.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 123
+    "id": 111
   },
   {
     "nombre": "rhydon",
     "tipo1": "ground",
     "tipo2": "rock",
-    "altura": 19,
-    "peso": 1200,
-    "etapa de evolucion": 112,
+    "altura": 190,
+    "peso": 120.0,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 124
+    "id": 112
   },
   {
     "nombre": "chansey",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 11,
-    "peso": 346,
-    "etapa de evolucion": 113,
+    "altura": 110,
+    "peso": 34.6,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 127
+    "id": 113
   },
   {
     "nombre": "tangela",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 10,
-    "peso": 350,
-    "etapa de evolucion": 114,
+    "altura": 100,
+    "peso": 35.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 129
+    "id": 114
   },
   {
     "nombre": "kangaskhan",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 22,
-    "peso": 800,
-    "etapa de evolucion": 115,
+    "altura": 220,
+    "peso": 80.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 131
+    "id": 115
   },
   {
     "nombre": "horsea",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 4,
-    "peso": 80,
-    "etapa de evolucion": 116,
+    "altura": 40,
+    "peso": 8.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 132
+    "id": 116
   },
   {
     "nombre": "seadra",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 12,
-    "peso": 250,
-    "etapa de evolucion": 117,
+    "altura": 120,
+    "peso": 25.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 133
+    "id": 117
   },
   {
     "nombre": "goldeen",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 150,
-    "etapa de evolucion": 118,
+    "altura": 60,
+    "peso": 15.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 135
+    "id": 118
   },
   {
     "nombre": "seaking",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 13,
-    "peso": 390,
-    "etapa de evolucion": 119,
+    "altura": 130,
+    "peso": 39.0,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 136
+    "id": 119
   },
   {
     "nombre": "staryu",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 8,
-    "peso": 345,
-    "etapa de evolucion": 120,
+    "altura": 80,
+    "peso": 34.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 137
+    "id": 120
   },
   {
     "nombre": "starmie",
     "tipo1": "water",
     "tipo2": "psychic",
-    "altura": 11,
-    "peso": 800,
-    "etapa de evolucion": 121,
+    "altura": 110,
+    "peso": 80.0,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 138
+    "id": 121
   },
   {
     "nombre": "mr-mime",
     "tipo1": "psychic",
     "tipo2": "fairy",
-    "altura": 13,
-    "peso": 545,
-    "etapa de evolucion": 122,
+    "altura": 130,
+    "peso": 54.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 140
+    "id": 122
   },
   {
     "nombre": "scyther",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 15,
-    "peso": 560,
-    "etapa de evolucion": 123,
+    "altura": 150,
+    "peso": 56.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 141
+    "id": 123
   },
   {
     "nombre": "jynx",
     "tipo1": "ice",
     "tipo2": "psychic",
-    "altura": 14,
-    "peso": 406,
-    "etapa de evolucion": 124,
+    "altura": 140,
+    "peso": 40.6,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 144
+    "id": 124
   },
   {
     "nombre": "electabuzz",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 11,
-    "peso": 300,
-    "etapa de evolucion": 125,
+    "altura": 110,
+    "peso": 30.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 146
+    "id": 125
   },
   {
     "nombre": "magmar",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 13,
-    "peso": 445,
-    "etapa de evolucion": 126,
+    "altura": 130,
+    "peso": 44.5,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 149
+    "id": 126
   },
   {
     "nombre": "pinsir",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 15,
-    "peso": 550,
-    "etapa de evolucion": 127,
+    "altura": 150,
+    "peso": 55.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 151
+    "id": 127
   },
   {
     "nombre": "tauros",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 14,
-    "peso": 884,
-    "etapa de evolucion": 128,
+    "altura": 140,
+    "peso": 88.4,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 152
+    "id": 128
   },
   {
     "nombre": "magikarp",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 9,
-    "peso": 100,
-    "etapa de evolucion": 129,
+    "altura": 90,
+    "peso": 10.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 153
+    "id": 129
   },
   {
     "nombre": "gyarados",
     "tipo1": "water",
     "tipo2": "flying",
-    "altura": 65,
-    "peso": 2350,
-    "etapa de evolucion": 130,
+    "altura": 650,
+    "peso": 235.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 154
+    "id": 130
   },
   {
     "nombre": "lapras",
     "tipo1": "water",
     "tipo2": "ice",
-    "altura": 25,
-    "peso": 2200,
-    "etapa de evolucion": 131,
+    "altura": 250,
+    "peso": 220.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 155
+    "id": 131
   },
   {
     "nombre": "ditto",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 3,
-    "peso": 40,
-    "etapa de evolucion": 132,
+    "altura": 30,
+    "peso": 4.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 156
+    "id": 132
   },
   {
     "nombre": "eevee",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 3,
-    "peso": 65,
-    "etapa de evolucion": 133,
+    "altura": 30,
+    "peso": 6.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 157
+    "id": 133
   },
   {
     "nombre": "vaporeon",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 10,
-    "peso": 290,
-    "etapa de evolucion": 134,
+    "altura": 100,
+    "peso": 29.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 158
+    "id": 134
   },
   {
     "nombre": "jolteon",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 8,
-    "peso": 245,
-    "etapa de evolucion": 135,
+    "altura": 80,
+    "peso": 24.5,
+    "etapa de evolucion": 3,
     "color": "yellow",
-    "id": 159
+    "id": 135
   },
   {
     "nombre": "flareon",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 9,
-    "peso": 250,
-    "etapa de evolucion": 136,
+    "altura": 90,
+    "peso": 25.0,
+    "etapa de evolucion": 4,
     "color": "red",
-    "id": 160
+    "id": 136
   },
   {
     "nombre": "porygon",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 8,
-    "peso": 365,
-    "etapa de evolucion": 137,
+    "altura": 80,
+    "peso": 36.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 166
+    "id": 137
   },
   {
     "nombre": "omanyte",
     "tipo1": "rock",
     "tipo2": "water",
-    "altura": 4,
-    "peso": 75,
-    "etapa de evolucion": 138,
+    "altura": 40,
+    "peso": 7.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 169
+    "id": 138
   },
   {
     "nombre": "omastar",
     "tipo1": "rock",
     "tipo2": "water",
-    "altura": 10,
-    "peso": 350,
-    "etapa de evolucion": 139,
+    "altura": 100,
+    "peso": 35.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 170
+    "id": 139
   },
   {
     "nombre": "kabuto",
     "tipo1": "rock",
     "tipo2": "water",
-    "altura": 5,
-    "peso": 115,
-    "etapa de evolucion": 140,
+    "altura": 50,
+    "peso": 11.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 171
+    "id": 140
   },
   {
     "nombre": "kabutops",
     "tipo1": "rock",
     "tipo2": "water",
-    "altura": 13,
-    "peso": 405,
-    "etapa de evolucion": 141,
+    "altura": 130,
+    "peso": 40.5,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 172
+    "id": 141
   },
   {
     "nombre": "aerodactyl",
     "tipo1": "rock",
     "tipo2": "flying",
-    "altura": 18,
-    "peso": 590,
-    "etapa de evolucion": 142,
+    "altura": 180,
+    "peso": 59.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 173
+    "id": 142
   },
   {
     "nombre": "snorlax",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 21,
-    "peso": 4600,
-    "etapa de evolucion": 143,
+    "altura": 210,
+    "peso": 460.0,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 175
+    "id": 143
   },
   {
     "nombre": "articuno",
     "tipo1": "ice",
     "tipo2": "flying",
-    "altura": 17,
-    "peso": 554,
-    "etapa de evolucion": 144,
+    "altura": 170,
+    "peso": 55.4,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 176
+    "id": 144
   },
   {
     "nombre": "zapdos",
     "tipo1": "electric",
     "tipo2": "flying",
-    "altura": 16,
-    "peso": 526,
-    "etapa de evolucion": 145,
+    "altura": 160,
+    "peso": 52.6,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 177
+    "id": 145
   },
   {
     "nombre": "moltres",
     "tipo1": "fire",
     "tipo2": "flying",
-    "altura": 20,
-    "peso": 600,
-    "etapa de evolucion": 146,
+    "altura": 200,
+    "peso": 60.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 178
+    "id": 146
   },
   {
     "nombre": "dratini",
     "tipo1": "dragon",
     "tipo2": null,
-    "altura": 18,
-    "peso": 33,
-    "etapa de evolucion": 147,
+    "altura": 180,
+    "peso": 3.3,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 179
+    "id": 147
   },
   {
     "nombre": "dragonair",
     "tipo1": "dragon",
     "tipo2": null,
-    "altura": 40,
-    "peso": 165,
-    "etapa de evolucion": 148,
+    "altura": 400,
+    "peso": 16.5,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 180
+    "id": 148
   },
   {
     "nombre": "dragonite",
     "tipo1": "dragon",
     "tipo2": "flying",
-    "altura": 22,
-    "peso": 2100,
-    "etapa de evolucion": 149,
+    "altura": 220,
+    "peso": 210.0,
+    "etapa de evolucion": 3,
     "color": "brown",
-    "id": 181
+    "id": 149
   },
   {
     "nombre": "mewtwo",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 20,
-    "peso": 1220,
-    "etapa de evolucion": 150,
+    "altura": 200,
+    "peso": 122.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 182
+    "id": 150
   },
   {
     "nombre": "mew",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 4,
-    "peso": 40,
-    "etapa de evolucion": 151,
+    "altura": 40,
+    "peso": 4.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 183
+    "id": 151
   },
   {
     "nombre": "chikorita",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 9,
-    "peso": 64,
-    "etapa de evolucion": 152,
+    "altura": 90,
+    "peso": 6.4,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 184
+    "id": 152
   },
   {
     "nombre": "bayleef",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 12,
-    "peso": 158,
-    "etapa de evolucion": 153,
+    "altura": 120,
+    "peso": 15.8,
+    "etapa de evolucion": 2,
     "color": "green",
-    "id": 185
+    "id": 153
   },
   {
     "nombre": "meganium",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 18,
-    "peso": 1005,
-    "etapa de evolucion": 154,
+    "altura": 180,
+    "peso": 100.5,
+    "etapa de evolucion": 3,
     "color": "green",
-    "id": 186
+    "id": 154
   },
   {
     "nombre": "cyndaquil",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 5,
-    "peso": 79,
-    "etapa de evolucion": 155,
+    "altura": 50,
+    "peso": 7.9,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 187
+    "id": 155
   },
   {
     "nombre": "quilava",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 9,
-    "peso": 190,
-    "etapa de evolucion": 156,
+    "altura": 90,
+    "peso": 19.0,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 188
+    "id": 156
   },
   {
     "nombre": "typhlosion",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 17,
-    "peso": 795,
-    "etapa de evolucion": 157,
+    "altura": 170,
+    "peso": 79.5,
+    "etapa de evolucion": 3,
     "color": "yellow",
-    "id": 189
+    "id": 157
   },
   {
     "nombre": "totodile",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 95,
-    "etapa de evolucion": 158,
+    "altura": 60,
+    "peso": 9.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 190
+    "id": 158
   },
   {
     "nombre": "croconaw",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 11,
-    "peso": 250,
-    "etapa de evolucion": 159,
+    "altura": 110,
+    "peso": 25.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 191
+    "id": 159
   },
   {
     "nombre": "feraligatr",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 23,
-    "peso": 888,
-    "etapa de evolucion": 160,
+    "altura": 230,
+    "peso": 88.8,
+    "etapa de evolucion": 3,
     "color": "blue",
-    "id": 192
+    "id": 160
   },
   {
     "nombre": "sentret",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 8,
-    "peso": 60,
-    "etapa de evolucion": 161,
+    "altura": 80,
+    "peso": 6.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 193
+    "id": 161
   },
   {
     "nombre": "furret",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 18,
-    "peso": 325,
-    "etapa de evolucion": 162,
+    "altura": 180,
+    "peso": 32.5,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 194
+    "id": 162
   },
   {
     "nombre": "hoothoot",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 7,
-    "peso": 212,
-    "etapa de evolucion": 163,
+    "altura": 70,
+    "peso": 21.2,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 195
+    "id": 163
   },
   {
     "nombre": "noctowl",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 16,
-    "peso": 408,
-    "etapa de evolucion": 164,
+    "altura": 160,
+    "peso": 40.8,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 196
+    "id": 164
   },
   {
     "nombre": "ledyba",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 10,
-    "peso": 108,
-    "etapa de evolucion": 165,
+    "altura": 100,
+    "peso": 10.8,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 197
+    "id": 165
   },
   {
     "nombre": "ledian",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 14,
-    "peso": 356,
-    "etapa de evolucion": 166,
+    "altura": 140,
+    "peso": 35.6,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 198
+    "id": 166
   },
   {
     "nombre": "spinarak",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 5,
-    "peso": 85,
-    "etapa de evolucion": 167,
+    "altura": 50,
+    "peso": 8.5,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 199
+    "id": 167
   },
   {
     "nombre": "ariados",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 11,
-    "peso": 335,
-    "etapa de evolucion": 168,
+    "altura": 110,
+    "peso": 33.5,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 200
+    "id": 168
   },
   {
     "nombre": "crobat",
     "tipo1": "poison",
     "tipo2": "flying",
-    "altura": 18,
-    "peso": 750,
-    "etapa de evolucion": 169,
+    "altura": 180,
+    "peso": 75.0,
+    "etapa de evolucion": 3,
     "color": "purple",
-    "id": 46
+    "id": 169
   },
   {
     "nombre": "chinchou",
     "tipo1": "water",
     "tipo2": "electric",
-    "altura": 5,
-    "peso": 120,
-    "etapa de evolucion": 170,
+    "altura": 50,
+    "peso": 12.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 201
+    "id": 170
   },
   {
     "nombre": "lanturn",
     "tipo1": "water",
     "tipo2": "electric",
-    "altura": 12,
-    "peso": 225,
-    "etapa de evolucion": 171,
+    "altura": 120,
+    "peso": 22.5,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 202
+    "id": 171
   },
   {
     "nombre": "pichu",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 3,
-    "peso": 20,
-    "etapa de evolucion": 172,
+    "altura": 30,
+    "peso": 2.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 25
+    "id": 172
   },
   {
     "nombre": "cleffa",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 3,
-    "peso": 30,
-    "etapa de evolucion": 173,
+    "altura": 30,
+    "peso": 3.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 36
+    "id": 173
   },
   {
     "nombre": "igglybuff",
     "tipo1": "normal",
     "tipo2": "fairy",
-    "altura": 3,
-    "peso": 10,
-    "etapa de evolucion": 174,
+    "altura": 30,
+    "peso": 1.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 41
+    "id": 174
   },
   {
     "nombre": "togepi",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 3,
-    "peso": 15,
-    "etapa de evolucion": 175,
+    "altura": 30,
+    "peso": 1.5,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 203
+    "id": 175
   },
   {
     "nombre": "togetic",
     "tipo1": "fairy",
     "tipo2": "flying",
-    "altura": 6,
-    "peso": 32,
-    "etapa de evolucion": 176,
+    "altura": 60,
+    "peso": 3.2,
+    "etapa de evolucion": 2,
     "color": "white",
-    "id": 204
+    "id": 176
   },
   {
     "nombre": "natu",
     "tipo1": "psychic",
     "tipo2": "flying",
-    "altura": 2,
-    "peso": 20,
-    "etapa de evolucion": 177,
+    "altura": 20,
+    "peso": 2.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 206
+    "id": 177
   },
   {
     "nombre": "xatu",
     "tipo1": "psychic",
     "tipo2": "flying",
-    "altura": 15,
-    "peso": 150,
-    "etapa de evolucion": 178,
+    "altura": 150,
+    "peso": 15.0,
+    "etapa de evolucion": 2,
     "color": "green",
-    "id": 207
+    "id": 178
   },
   {
     "nombre": "mareep",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 6,
-    "peso": 78,
-    "etapa de evolucion": 179,
+    "altura": 60,
+    "peso": 7.8,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 208
+    "id": 179
   },
   {
     "nombre": "flaaffy",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 8,
-    "peso": 133,
-    "etapa de evolucion": 180,
+    "altura": 80,
+    "peso": 13.3,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 209
+    "id": 180
   },
   {
     "nombre": "ampharos",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 14,
-    "peso": 615,
-    "etapa de evolucion": 181,
+    "altura": 140,
+    "peso": 61.5,
+    "etapa de evolucion": 3,
     "color": "yellow",
-    "id": 210
+    "id": 181
   },
   {
     "nombre": "bellossom",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 4,
-    "peso": 58,
-    "etapa de evolucion": 182,
+    "altura": 40,
+    "peso": 5.8,
+    "etapa de evolucion": 3,
     "color": "green",
-    "id": 50
+    "id": 182
   },
   {
     "nombre": "marill",
     "tipo1": "water",
     "tipo2": "fairy",
-    "altura": 4,
-    "peso": 85,
-    "etapa de evolucion": 183,
+    "altura": 40,
+    "peso": 8.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 212
+    "id": 183
   },
   {
     "nombre": "azumarill",
     "tipo1": "water",
     "tipo2": "fairy",
-    "altura": 8,
-    "peso": 285,
-    "etapa de evolucion": 184,
+    "altura": 80,
+    "peso": 28.5,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 213
+    "id": 184
   },
   {
     "nombre": "sudowoodo",
     "tipo1": "rock",
     "tipo2": null,
-    "altura": 12,
-    "peso": 380,
-    "etapa de evolucion": 185,
+    "altura": 120,
+    "peso": 38.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 215
+    "id": 185
   },
   {
     "nombre": "politoed",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 11,
-    "peso": 339,
-    "etapa de evolucion": 186,
+    "altura": 110,
+    "peso": 33.9,
+    "etapa de evolucion": 3,
     "color": "green",
-    "id": 68
+    "id": 186
   },
   {
     "nombre": "hoppip",
     "tipo1": "grass",
     "tipo2": "flying",
-    "altura": 4,
-    "peso": 5,
-    "etapa de evolucion": 187,
+    "altura": 40,
+    "peso": 0.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 216
+    "id": 187
   },
   {
     "nombre": "skiploom",
     "tipo1": "grass",
     "tipo2": "flying",
-    "altura": 6,
-    "peso": 10,
-    "etapa de evolucion": 188,
+    "altura": 60,
+    "peso": 1.0,
+    "etapa de evolucion": 2,
     "color": "green",
-    "id": 217
+    "id": 188
   },
   {
     "nombre": "jumpluff",
     "tipo1": "grass",
     "tipo2": "flying",
-    "altura": 8,
-    "peso": 30,
-    "etapa de evolucion": 189,
+    "altura": 80,
+    "peso": 3.0,
+    "etapa de evolucion": 3,
     "color": "blue",
-    "id": 218
+    "id": 189
   },
   {
     "nombre": "aipom",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 8,
-    "peso": 115,
-    "etapa de evolucion": 190,
+    "altura": 80,
+    "peso": 11.5,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 219
+    "id": 190
   },
   {
     "nombre": "sunkern",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 3,
-    "peso": 18,
-    "etapa de evolucion": 191,
+    "altura": 30,
+    "peso": 1.8,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 221
+    "id": 191
   },
   {
     "nombre": "sunflora",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 8,
-    "peso": 85,
-    "etapa de evolucion": 192,
+    "altura": 80,
+    "peso": 8.5,
+    "etapa de evolucion": 2,
     "color": "yellow",
-    "id": 222
+    "id": 192
   },
   {
     "nombre": "yanma",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 12,
-    "peso": 380,
-    "etapa de evolucion": 193,
+    "altura": 120,
+    "peso": 38.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 223
+    "id": 193
   },
   {
     "nombre": "wooper",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 4,
-    "peso": 85,
-    "etapa de evolucion": 194,
+    "altura": 40,
+    "peso": 8.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 225
+    "id": 194
   },
   {
     "nombre": "quagsire",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 14,
-    "peso": 750,
-    "etapa de evolucion": 195,
+    "altura": 140,
+    "peso": 75.0,
+    "etapa de evolucion": 2,
     "color": "blue",
-    "id": 226
+    "id": 195
   },
   {
     "nombre": "espeon",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 9,
-    "peso": 265,
-    "etapa de evolucion": 196,
+    "altura": 90,
+    "peso": 26.5,
+    "etapa de evolucion": 5,
     "color": "purple",
-    "id": 161
+    "id": 196
   },
   {
     "nombre": "umbreon",
     "tipo1": "dark",
     "tipo2": null,
-    "altura": 10,
-    "peso": 270,
-    "etapa de evolucion": 197,
+    "altura": 100,
+    "peso": 27.0,
+    "etapa de evolucion": 6,
     "color": "black",
-    "id": 162
+    "id": 197
   },
   {
     "nombre": "murkrow",
     "tipo1": "dark",
     "tipo2": "flying",
-    "altura": 5,
-    "peso": 21,
-    "etapa de evolucion": 198,
+    "altura": 50,
+    "peso": 2.1,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 227
+    "id": 198
   },
   {
     "nombre": "slowking",
     "tipo1": "water",
     "tipo2": "psychic",
-    "altura": 20,
-    "peso": 795,
-    "etapa de evolucion": 199,
+    "altura": 200,
+    "peso": 79.5,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 87
+    "id": 199
   },
   {
     "nombre": "misdreavus",
     "tipo1": "ghost",
     "tipo2": null,
-    "altura": 7,
-    "peso": 10,
-    "etapa de evolucion": 200,
+    "altura": 70,
+    "peso": 1.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 229
+    "id": 200
   },
   {
     "nombre": "unown",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 5,
-    "peso": 50,
-    "etapa de evolucion": 201,
+    "altura": 50,
+    "peso": 5.0,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 231
+    "id": 201
   },
   {
     "nombre": "wobbuffet",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 13,
-    "peso": 285,
-    "etapa de evolucion": 202,
+    "altura": 130,
+    "peso": 28.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 233
+    "id": 202
   },
   {
     "nombre": "girafarig",
     "tipo1": "normal",
     "tipo2": "psychic",
-    "altura": 15,
-    "peso": 415,
-    "etapa de evolucion": 203,
+    "altura": 150,
+    "peso": 41.5,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 234
+    "id": 203
   },
   {
     "nombre": "pineco",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 6,
-    "peso": 72,
-    "etapa de evolucion": 204,
+    "altura": 60,
+    "peso": 7.2,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 235
+    "id": 204
   },
   {
     "nombre": "forretress",
     "tipo1": "bug",
     "tipo2": "steel",
-    "altura": 12,
-    "peso": 1258,
-    "etapa de evolucion": 205,
+    "altura": 120,
+    "peso": 125.8,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 236
+    "id": 205
   },
   {
     "nombre": "dunsparce",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 15,
-    "peso": 140,
-    "etapa de evolucion": 206,
+    "altura": 150,
+    "peso": 14.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 237
+    "id": 206
   },
   {
     "nombre": "gligar",
     "tipo1": "ground",
     "tipo2": "flying",
-    "altura": 11,
-    "peso": 648,
-    "etapa de evolucion": 207,
+    "altura": 110,
+    "peso": 64.8,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 238
+    "id": 207
   },
   {
     "nombre": "steelix",
     "tipo1": "steel",
     "tipo2": "ground",
-    "altura": 92,
-    "peso": 4000,
-    "etapa de evolucion": 208,
+    "altura": 920,
+    "peso": 400.0,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 104
+    "id": 208
   },
   {
     "nombre": "snubbull",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 6,
-    "peso": 78,
-    "etapa de evolucion": 209,
+    "altura": 60,
+    "peso": 7.8,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 240
+    "id": 209
   },
   {
     "nombre": "granbull",
     "tipo1": "fairy",
     "tipo2": null,
-    "altura": 14,
-    "peso": 487,
-    "etapa de evolucion": 210,
+    "altura": 140,
+    "peso": 48.7,
+    "etapa de evolucion": 2,
     "color": "purple",
-    "id": 241
+    "id": 210
   },
   {
     "nombre": "qwilfish",
     "tipo1": "water",
     "tipo2": "poison",
-    "altura": 5,
-    "peso": 39,
-    "etapa de evolucion": 211,
+    "altura": 50,
+    "peso": 3.9,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 242
+    "id": 211
   },
   {
     "nombre": "scizor",
     "tipo1": "bug",
     "tipo2": "steel",
-    "altura": 18,
-    "peso": 1180,
-    "etapa de evolucion": 212,
+    "altura": 180,
+    "peso": 118.0,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 142
+    "id": 212
   },
   {
     "nombre": "shuckle",
     "tipo1": "bug",
     "tipo2": "rock",
-    "altura": 6,
-    "peso": 205,
-    "etapa de evolucion": 213,
+    "altura": 60,
+    "peso": 20.5,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 243
+    "id": 213
   },
   {
     "nombre": "heracross",
     "tipo1": "bug",
     "tipo2": "fighting",
-    "altura": 15,
-    "peso": 540,
-    "etapa de evolucion": 214,
+    "altura": 150,
+    "peso": 54.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 244
+    "id": 214
   },
   {
     "nombre": "sneasel",
     "tipo1": "dark",
     "tipo2": "ice",
-    "altura": 9,
-    "peso": 280,
-    "etapa de evolucion": 215,
+    "altura": 90,
+    "peso": 28.0,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 245
+    "id": 215
   },
   {
     "nombre": "teddiursa",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 6,
-    "peso": 88,
-    "etapa de evolucion": 216,
+    "altura": 60,
+    "peso": 8.8,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 247
+    "id": 216
   },
   {
     "nombre": "ursaring",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 18,
-    "peso": 1258,
-    "etapa de evolucion": 217,
+    "altura": 180,
+    "peso": 125.8,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 248
+    "id": 217
   },
   {
     "nombre": "slugma",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 7,
-    "peso": 350,
-    "etapa de evolucion": 218,
+    "altura": 70,
+    "peso": 35.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 249
+    "id": 218
   },
   {
     "nombre": "magcargo",
     "tipo1": "fire",
     "tipo2": "rock",
-    "altura": 8,
-    "peso": 550,
-    "etapa de evolucion": 219,
+    "altura": 80,
+    "peso": 55.0,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 250
+    "id": 219
   },
   {
     "nombre": "swinub",
     "tipo1": "ice",
     "tipo2": "ground",
-    "altura": 4,
-    "peso": 65,
-    "etapa de evolucion": 220,
+    "altura": 40,
+    "peso": 6.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 251
+    "id": 220
   },
   {
     "nombre": "piloswine",
     "tipo1": "ice",
     "tipo2": "ground",
-    "altura": 11,
-    "peso": 558,
-    "etapa de evolucion": 221,
+    "altura": 110,
+    "peso": 55.8,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 252
+    "id": 221
   },
   {
     "nombre": "corsola",
     "tipo1": "water",
     "tipo2": "rock",
-    "altura": 6,
-    "peso": 50,
-    "etapa de evolucion": 222,
+    "altura": 60,
+    "peso": 5.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 254
+    "id": 222
   },
   {
     "nombre": "remoraid",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 120,
-    "etapa de evolucion": 223,
+    "altura": 60,
+    "peso": 12.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 255
+    "id": 223
   },
   {
     "nombre": "octillery",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 9,
-    "peso": 285,
-    "etapa de evolucion": 224,
+    "altura": 90,
+    "peso": 28.5,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 256
+    "id": 224
   },
   {
     "nombre": "delibird",
     "tipo1": "ice",
     "tipo2": "flying",
-    "altura": 9,
-    "peso": 160,
-    "etapa de evolucion": 225,
+    "altura": 90,
+    "peso": 16.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 257
+    "id": 225
   },
   {
     "nombre": "mantine",
     "tipo1": "water",
     "tipo2": "flying",
-    "altura": 21,
-    "peso": 2200,
-    "etapa de evolucion": 226,
+    "altura": 210,
+    "peso": 220.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 259
+    "id": 226
   },
   {
     "nombre": "skarmory",
     "tipo1": "steel",
     "tipo2": "flying",
-    "altura": 17,
-    "peso": 505,
-    "etapa de evolucion": 227,
+    "altura": 170,
+    "peso": 50.5,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 260
+    "id": 227
   },
   {
     "nombre": "houndour",
     "tipo1": "dark",
     "tipo2": "fire",
-    "altura": 6,
-    "peso": 108,
-    "etapa de evolucion": 228,
+    "altura": 60,
+    "peso": 10.8,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 261
+    "id": 228
   },
   {
     "nombre": "houndoom",
     "tipo1": "dark",
     "tipo2": "fire",
-    "altura": 14,
-    "peso": 350,
-    "etapa de evolucion": 229,
+    "altura": 140,
+    "peso": 35.0,
+    "etapa de evolucion": 2,
     "color": "black",
-    "id": 262
+    "id": 229
   },
   {
     "nombre": "kingdra",
     "tipo1": "water",
     "tipo2": "dragon",
-    "altura": 18,
-    "peso": 1520,
-    "etapa de evolucion": 230,
+    "altura": 180,
+    "peso": 152.0,
+    "etapa de evolucion": 3,
     "color": "blue",
-    "id": 134
+    "id": 230
   },
   {
     "nombre": "phanpy",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 5,
-    "peso": 335,
-    "etapa de evolucion": 231,
+    "altura": 50,
+    "peso": 33.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 263
+    "id": 231
   },
   {
     "nombre": "donphan",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 11,
-    "peso": 1200,
-    "etapa de evolucion": 232,
+    "altura": 110,
+    "peso": 120.0,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 264
+    "id": 232
   },
   {
     "nombre": "porygon2",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 6,
-    "peso": 325,
-    "etapa de evolucion": 233,
+    "altura": 60,
+    "peso": 32.5,
+    "etapa de evolucion": 2,
     "color": "red",
-    "id": 167
+    "id": 233
   },
   {
     "nombre": "stantler",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 14,
-    "peso": 712,
-    "etapa de evolucion": 234,
+    "altura": 140,
+    "peso": 71.2,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 265
+    "id": 234
   },
   {
     "nombre": "smeargle",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 12,
-    "peso": 580,
-    "etapa de evolucion": 235,
+    "altura": 120,
+    "peso": 58.0,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 266
+    "id": 235
   },
   {
     "nombre": "tyrogue",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 7,
-    "peso": 210,
-    "etapa de evolucion": 236,
+    "altura": 70,
+    "peso": 21.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 115
+    "id": 236
   },
   {
     "nombre": "hitmontop",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 14,
-    "peso": 480,
-    "etapa de evolucion": 237,
+    "altura": 140,
+    "peso": 48.0,
+    "etapa de evolucion": 2,
     "color": "brown",
-    "id": 118
+    "id": 237
   },
   {
     "nombre": "smoochum",
     "tipo1": "ice",
     "tipo2": "psychic",
-    "altura": 4,
-    "peso": 60,
-    "etapa de evolucion": 238,
+    "altura": 40,
+    "peso": 6.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 143
+    "id": 238
   },
   {
     "nombre": "elekid",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 6,
-    "peso": 235,
-    "etapa de evolucion": 239,
+    "altura": 60,
+    "peso": 23.5,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 145
+    "id": 239
   },
   {
     "nombre": "magby",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 7,
-    "peso": 214,
-    "etapa de evolucion": 240,
+    "altura": 70,
+    "peso": 21.4,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 148
+    "id": 240
   },
   {
     "nombre": "miltank",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 12,
-    "peso": 755,
-    "etapa de evolucion": 241,
+    "altura": 120,
+    "peso": 75.5,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 267
+    "id": 241
   },
   {
     "nombre": "blissey",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 15,
-    "peso": 468,
-    "etapa de evolucion": 242,
+    "altura": 150,
+    "peso": 46.8,
+    "etapa de evolucion": 2,
     "color": "pink",
-    "id": 128
+    "id": 242
   },
   {
     "nombre": "raikou",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 19,
-    "peso": 1780,
-    "etapa de evolucion": 243,
+    "altura": 190,
+    "peso": 178.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 268
+    "id": 243
   },
   {
     "nombre": "entei",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 21,
-    "peso": 1980,
-    "etapa de evolucion": 244,
+    "altura": 210,
+    "peso": 198.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 269
+    "id": 244
   },
   {
     "nombre": "suicune",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 20,
-    "peso": 1870,
-    "etapa de evolucion": 245,
+    "altura": 200,
+    "peso": 187.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 270
+    "id": 245
   },
   {
     "nombre": "larvitar",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 6,
-    "peso": 720,
-    "etapa de evolucion": 246,
+    "altura": 60,
+    "peso": 72.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 271
+    "id": 246
   },
   {
     "nombre": "pupitar",
     "tipo1": "rock",
     "tipo2": "ground",
-    "altura": 12,
-    "peso": 1520,
-    "etapa de evolucion": 247,
+    "altura": 120,
+    "peso": 152.0,
+    "etapa de evolucion": 2,
     "color": "gray",
-    "id": 272
+    "id": 247
   },
   {
     "nombre": "tyranitar",
     "tipo1": "rock",
     "tipo2": "dark",
-    "altura": 20,
-    "peso": 2020,
-    "etapa de evolucion": 248,
+    "altura": 200,
+    "peso": 202.0,
+    "etapa de evolucion": 3,
     "color": "green",
-    "id": 273
+    "id": 248
   },
   {
     "nombre": "lugia",
     "tipo1": "psychic",
     "tipo2": "flying",
-    "altura": 52,
-    "peso": 2160,
-    "etapa de evolucion": 249,
+    "altura": 520,
+    "peso": 216.0,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 274
+    "id": 249
   },
   {
     "nombre": "ho-oh",
     "tipo1": "fire",
     "tipo2": "flying",
-    "altura": 38,
-    "peso": 1990,
-    "etapa de evolucion": 250,
+    "altura": 380,
+    "peso": 199.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 275
+    "id": 250
   },
   {
     "nombre": "celebi",
     "tipo1": "psychic",
     "tipo2": "grass",
-    "altura": 6,
-    "peso": 50,
-    "etapa de evolucion": 251,
+    "altura": 60,
+    "peso": 5.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 276
+    "id": 251
   },
   {
     "nombre": "treecko",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 5,
-    "peso": 50,
-    "etapa de evolucion": 252,
+    "altura": 50,
+    "peso": 5.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 277
+    "id": 252
   },
   {
     "nombre": "grovyle",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 9,
-    "peso": 216,
-    "etapa de evolucion": 253,
+    "altura": 90,
+    "peso": 21.6,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 278
+    "id": 253
   },
   {
     "nombre": "sceptile",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 17,
-    "peso": 522,
-    "etapa de evolucion": 254,
+    "altura": 170,
+    "peso": 52.2,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 279
+    "id": 254
   },
   {
     "nombre": "torchic",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 4,
-    "peso": 25,
-    "etapa de evolucion": 255,
+    "altura": 40,
+    "peso": 2.5,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 280
+    "id": 255
   },
   {
     "nombre": "combusken",
     "tipo1": "fire",
     "tipo2": "fighting",
-    "altura": 9,
-    "peso": 195,
-    "etapa de evolucion": 256,
+    "altura": 90,
+    "peso": 19.5,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 281
+    "id": 256
   },
   {
     "nombre": "blaziken",
     "tipo1": "fire",
     "tipo2": "fighting",
-    "altura": 19,
-    "peso": 520,
-    "etapa de evolucion": 257,
+    "altura": 190,
+    "peso": 52.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 282
+    "id": 257
   },
   {
     "nombre": "mudkip",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 4,
-    "peso": 76,
-    "etapa de evolucion": 258,
+    "altura": 40,
+    "peso": 7.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 283
+    "id": 258
   },
   {
     "nombre": "marshtomp",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 7,
-    "peso": 280,
-    "etapa de evolucion": 259,
+    "altura": 70,
+    "peso": 28.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 284
+    "id": 259
   },
   {
     "nombre": "swampert",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 15,
-    "peso": 819,
-    "etapa de evolucion": 260,
+    "altura": 150,
+    "peso": 81.9,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 285
+    "id": 260
   },
   {
     "nombre": "poochyena",
     "tipo1": "dark",
     "tipo2": null,
-    "altura": 5,
-    "peso": 136,
-    "etapa de evolucion": 261,
+    "altura": 50,
+    "peso": 13.6,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 286
+    "id": 261
   },
   {
     "nombre": "mightyena",
     "tipo1": "dark",
     "tipo2": null,
-    "altura": 10,
-    "peso": 370,
-    "etapa de evolucion": 262,
+    "altura": 100,
+    "peso": 37.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 287
+    "id": 262
   },
   {
     "nombre": "zigzagoon",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 4,
-    "peso": 175,
-    "etapa de evolucion": 263,
+    "altura": 40,
+    "peso": 17.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 288
+    "id": 263
   },
   {
     "nombre": "linoone",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 5,
-    "peso": 325,
-    "etapa de evolucion": 264,
+    "altura": 50,
+    "peso": 32.5,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 289
+    "id": 264
   },
   {
     "nombre": "wurmple",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 3,
-    "peso": 36,
-    "etapa de evolucion": 265,
+    "altura": 30,
+    "peso": 3.6,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 290
+    "id": 265
   },
   {
     "nombre": "silcoon",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 6,
-    "peso": 100,
-    "etapa de evolucion": 266,
+    "altura": 60,
+    "peso": 10.0,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 291
+    "id": 266
   },
   {
     "nombre": "beautifly",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 10,
-    "peso": 284,
-    "etapa de evolucion": 267,
+    "altura": 100,
+    "peso": 28.4,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 292
+    "id": 267
   },
   {
     "nombre": "cascoon",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 7,
-    "peso": 115,
-    "etapa de evolucion": 268,
+    "altura": 70,
+    "peso": 11.5,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 293
+    "id": 268
   },
   {
     "nombre": "dustox",
     "tipo1": "bug",
     "tipo2": "poison",
-    "altura": 12,
-    "peso": 316,
-    "etapa de evolucion": 269,
+    "altura": 120,
+    "peso": 31.6,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 294
+    "id": 269
   },
   {
     "nombre": "lotad",
     "tipo1": "water",
     "tipo2": "grass",
-    "altura": 5,
-    "peso": 26,
-    "etapa de evolucion": 270,
+    "altura": 50,
+    "peso": 2.6,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 295
+    "id": 270
   },
   {
     "nombre": "lombre",
     "tipo1": "water",
     "tipo2": "grass",
-    "altura": 12,
-    "peso": 325,
-    "etapa de evolucion": 271,
+    "altura": 120,
+    "peso": 32.5,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 296
+    "id": 271
   },
   {
     "nombre": "ludicolo",
     "tipo1": "water",
     "tipo2": "grass",
-    "altura": 15,
-    "peso": 550,
-    "etapa de evolucion": 272,
+    "altura": 150,
+    "peso": 55.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 297
+    "id": 272
   },
   {
     "nombre": "seedot",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 5,
-    "peso": 40,
-    "etapa de evolucion": 273,
+    "altura": 50,
+    "peso": 4.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 298
+    "id": 273
   },
   {
     "nombre": "nuzleaf",
     "tipo1": "grass",
     "tipo2": "dark",
-    "altura": 10,
-    "peso": 280,
-    "etapa de evolucion": 274,
+    "altura": 100,
+    "peso": 28.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 299
+    "id": 274
   },
   {
     "nombre": "shiftry",
     "tipo1": "grass",
     "tipo2": "dark",
-    "altura": 13,
-    "peso": 596,
-    "etapa de evolucion": 275,
+    "altura": 130,
+    "peso": 59.6,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 300
+    "id": 275
   },
   {
     "nombre": "taillow",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 3,
-    "peso": 23,
-    "etapa de evolucion": 276,
+    "altura": 30,
+    "peso": 2.3,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 301
+    "id": 276
   },
   {
     "nombre": "swellow",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 7,
-    "peso": 198,
-    "etapa de evolucion": 277,
+    "altura": 70,
+    "peso": 19.8,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 302
+    "id": 277
   },
   {
     "nombre": "wingull",
     "tipo1": "water",
     "tipo2": "flying",
-    "altura": 6,
-    "peso": 95,
-    "etapa de evolucion": 278,
+    "altura": 60,
+    "peso": 9.5,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 303
+    "id": 278
   },
   {
     "nombre": "pelipper",
     "tipo1": "water",
     "tipo2": "flying",
-    "altura": 12,
-    "peso": 280,
-    "etapa de evolucion": 279,
+    "altura": 120,
+    "peso": 28.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 304
+    "id": 279
   },
   {
     "nombre": "ralts",
     "tipo1": "psychic",
     "tipo2": "fairy",
-    "altura": 4,
-    "peso": 66,
-    "etapa de evolucion": 280,
+    "altura": 40,
+    "peso": 6.6,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 305
+    "id": 280
   },
   {
     "nombre": "kirlia",
     "tipo1": "psychic",
     "tipo2": "fairy",
-    "altura": 8,
-    "peso": 202,
-    "etapa de evolucion": 281,
+    "altura": 80,
+    "peso": 20.2,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 306
+    "id": 281
   },
   {
     "nombre": "gardevoir",
     "tipo1": "psychic",
     "tipo2": "fairy",
-    "altura": 16,
-    "peso": 484,
-    "etapa de evolucion": 282,
+    "altura": 160,
+    "peso": 48.4,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 307
+    "id": 282
   },
   {
     "nombre": "surskit",
     "tipo1": "bug",
     "tipo2": "water",
-    "altura": 5,
-    "peso": 17,
-    "etapa de evolucion": 283,
+    "altura": 50,
+    "peso": 1.7,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 309
+    "id": 283
   },
   {
     "nombre": "masquerain",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 8,
-    "peso": 36,
-    "etapa de evolucion": 284,
+    "altura": 80,
+    "peso": 3.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 310
+    "id": 284
   },
   {
     "nombre": "shroomish",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 4,
-    "peso": 45,
-    "etapa de evolucion": 285,
+    "altura": 40,
+    "peso": 4.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 311
+    "id": 285
   },
   {
     "nombre": "breloom",
     "tipo1": "grass",
     "tipo2": "fighting",
-    "altura": 12,
-    "peso": 392,
-    "etapa de evolucion": 286,
+    "altura": 120,
+    "peso": 39.2,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 312
+    "id": 286
   },
   {
     "nombre": "slakoth",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 8,
-    "peso": 240,
-    "etapa de evolucion": 287,
+    "altura": 80,
+    "peso": 24.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 313
+    "id": 287
   },
   {
     "nombre": "vigoroth",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 14,
-    "peso": 465,
-    "etapa de evolucion": 288,
+    "altura": 140,
+    "peso": 46.5,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 314
+    "id": 288
   },
   {
     "nombre": "slaking",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 20,
-    "peso": 1305,
-    "etapa de evolucion": 289,
+    "altura": 200,
+    "peso": 130.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 315
+    "id": 289
   },
   {
     "nombre": "nincada",
     "tipo1": "bug",
     "tipo2": "ground",
-    "altura": 5,
-    "peso": 55,
-    "etapa de evolucion": 290,
+    "altura": 50,
+    "peso": 5.5,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 316
+    "id": 290
   },
   {
     "nombre": "ninjask",
     "tipo1": "bug",
     "tipo2": "flying",
-    "altura": 8,
-    "peso": 120,
-    "etapa de evolucion": 291,
+    "altura": 80,
+    "peso": 12.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 317
+    "id": 291
   },
   {
     "nombre": "shedinja",
     "tipo1": "bug",
     "tipo2": "ghost",
-    "altura": 8,
-    "peso": 12,
-    "etapa de evolucion": 292,
+    "altura": 80,
+    "peso": 1.2,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 318
+    "id": 292
   },
   {
     "nombre": "whismur",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 6,
-    "peso": 163,
-    "etapa de evolucion": 293,
+    "altura": 60,
+    "peso": 16.3,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 319
+    "id": 293
   },
   {
     "nombre": "loudred",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 10,
-    "peso": 405,
-    "etapa de evolucion": 294,
+    "altura": 100,
+    "peso": 40.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 320
+    "id": 294
   },
   {
     "nombre": "exploud",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 15,
-    "peso": 840,
-    "etapa de evolucion": 295,
+    "altura": 150,
+    "peso": 84.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 321
+    "id": 295
   },
   {
     "nombre": "makuhita",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 10,
-    "peso": 864,
-    "etapa de evolucion": 296,
+    "altura": 100,
+    "peso": 86.4,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 322
+    "id": 296
   },
   {
     "nombre": "hariyama",
     "tipo1": "fighting",
     "tipo2": null,
-    "altura": 23,
-    "peso": 2538,
-    "etapa de evolucion": 297,
+    "altura": 230,
+    "peso": 253.8,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 323
+    "id": 297
   },
   {
     "nombre": "azurill",
     "tipo1": "normal",
     "tipo2": "fairy",
-    "altura": 2,
-    "peso": 20,
-    "etapa de evolucion": 298,
+    "altura": 20,
+    "peso": 2.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 211
+    "id": 298
   },
   {
     "nombre": "nosepass",
     "tipo1": "rock",
     "tipo2": null,
-    "altura": 10,
-    "peso": 970,
-    "etapa de evolucion": 299,
+    "altura": 100,
+    "peso": 97.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 324
+    "id": 299
   },
   {
     "nombre": "skitty",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 6,
-    "peso": 110,
-    "etapa de evolucion": 300,
+    "altura": 60,
+    "peso": 11.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 326
+    "id": 300
   },
   {
     "nombre": "delcatty",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 11,
-    "peso": 326,
-    "etapa de evolucion": 301,
+    "altura": 110,
+    "peso": 32.6,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 327
+    "id": 301
   },
   {
     "nombre": "sableye",
     "tipo1": "dark",
     "tipo2": "ghost",
-    "altura": 5,
-    "peso": 110,
-    "etapa de evolucion": 302,
+    "altura": 50,
+    "peso": 11.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 328
+    "id": 302
   },
   {
     "nombre": "mawile",
     "tipo1": "steel",
     "tipo2": "fairy",
-    "altura": 6,
-    "peso": 115,
-    "etapa de evolucion": 303,
+    "altura": 60,
+    "peso": 11.5,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 329
+    "id": 303
   },
   {
     "nombre": "aron",
     "tipo1": "steel",
     "tipo2": "rock",
-    "altura": 4,
-    "peso": 600,
-    "etapa de evolucion": 304,
+    "altura": 40,
+    "peso": 60.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 330
+    "id": 304
   },
   {
     "nombre": "lairon",
     "tipo1": "steel",
     "tipo2": "rock",
-    "altura": 9,
-    "peso": 1200,
-    "etapa de evolucion": 305,
+    "altura": 90,
+    "peso": 120.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 331
+    "id": 305
   },
   {
     "nombre": "aggron",
     "tipo1": "steel",
     "tipo2": "rock",
-    "altura": 21,
-    "peso": 3600,
-    "etapa de evolucion": 306,
+    "altura": 210,
+    "peso": 360.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 332
+    "id": 306
   },
   {
     "nombre": "meditite",
     "tipo1": "fighting",
     "tipo2": "psychic",
-    "altura": 6,
-    "peso": 112,
-    "etapa de evolucion": 307,
+    "altura": 60,
+    "peso": 11.2,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 333
+    "id": 307
   },
   {
     "nombre": "medicham",
     "tipo1": "fighting",
     "tipo2": "psychic",
-    "altura": 13,
-    "peso": 315,
-    "etapa de evolucion": 308,
+    "altura": 130,
+    "peso": 31.5,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 334
+    "id": 308
   },
   {
     "nombre": "electrike",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 6,
-    "peso": 152,
-    "etapa de evolucion": 309,
+    "altura": 60,
+    "peso": 15.2,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 335
+    "id": 309
   },
   {
     "nombre": "manectric",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 15,
-    "peso": 402,
-    "etapa de evolucion": 310,
+    "altura": 150,
+    "peso": 40.2,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 336
+    "id": 310
   },
   {
     "nombre": "plusle",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 4,
-    "peso": 42,
-    "etapa de evolucion": 311,
+    "altura": 40,
+    "peso": 4.2,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 337
+    "id": 311
   },
   {
     "nombre": "minun",
     "tipo1": "electric",
     "tipo2": null,
-    "altura": 4,
-    "peso": 42,
-    "etapa de evolucion": 312,
+    "altura": 40,
+    "peso": 4.2,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 338
+    "id": 312
   },
   {
     "nombre": "volbeat",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 7,
-    "peso": 177,
-    "etapa de evolucion": 313,
+    "altura": 70,
+    "peso": 17.7,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 339
+    "id": 313
   },
   {
     "nombre": "illumise",
     "tipo1": "bug",
     "tipo2": null,
-    "altura": 6,
-    "peso": 177,
-    "etapa de evolucion": 314,
+    "altura": 60,
+    "peso": 17.7,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 340
+    "id": 314
   },
   {
     "nombre": "roselia",
     "tipo1": "grass",
     "tipo2": "poison",
-    "altura": 3,
-    "peso": 20,
-    "etapa de evolucion": 315,
+    "altura": 30,
+    "peso": 2.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 342
+    "id": 315
   },
   {
     "nombre": "gulpin",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 4,
-    "peso": 103,
-    "etapa de evolucion": 316,
+    "altura": 40,
+    "peso": 10.3,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 344
+    "id": 316
   },
   {
     "nombre": "swalot",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 17,
-    "peso": 800,
-    "etapa de evolucion": 317,
+    "altura": 170,
+    "peso": 80.0,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 345
+    "id": 317
   },
   {
     "nombre": "carvanha",
     "tipo1": "water",
     "tipo2": "dark",
-    "altura": 8,
-    "peso": 208,
-    "etapa de evolucion": 318,
+    "altura": 80,
+    "peso": 20.8,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 346
+    "id": 318
   },
   {
     "nombre": "sharpedo",
     "tipo1": "water",
     "tipo2": "dark",
-    "altura": 18,
-    "peso": 888,
-    "etapa de evolucion": 319,
+    "altura": 180,
+    "peso": 88.8,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 347
+    "id": 319
   },
   {
     "nombre": "wailmer",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 20,
-    "peso": 1300,
-    "etapa de evolucion": 320,
+    "altura": 200,
+    "peso": 130.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 348
+    "id": 320
   },
   {
     "nombre": "wailord",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 145,
-    "peso": 3980,
-    "etapa de evolucion": 321,
+    "altura": 1450,
+    "peso": 398.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 349
+    "id": 321
   },
   {
     "nombre": "numel",
     "tipo1": "fire",
     "tipo2": "ground",
-    "altura": 7,
-    "peso": 240,
-    "etapa de evolucion": 322,
+    "altura": 70,
+    "peso": 24.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 350
+    "id": 322
   },
   {
     "nombre": "camerupt",
     "tipo1": "fire",
     "tipo2": "ground",
-    "altura": 19,
-    "peso": 2200,
-    "etapa de evolucion": 323,
+    "altura": 190,
+    "peso": 220.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 351
+    "id": 323
   },
   {
     "nombre": "torkoal",
     "tipo1": "fire",
     "tipo2": null,
-    "altura": 5,
-    "peso": 804,
-    "etapa de evolucion": 324,
+    "altura": 50,
+    "peso": 80.4,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 352
+    "id": 324
   },
   {
     "nombre": "spoink",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 7,
-    "peso": 306,
-    "etapa de evolucion": 325,
+    "altura": 70,
+    "peso": 30.6,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 353
+    "id": 325
   },
   {
     "nombre": "grumpig",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 9,
-    "peso": 715,
-    "etapa de evolucion": 326,
+    "altura": 90,
+    "peso": 71.5,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 354
+    "id": 326
   },
   {
     "nombre": "spinda",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 11,
-    "peso": 50,
-    "etapa de evolucion": 327,
+    "altura": 110,
+    "peso": 5.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 355
+    "id": 327
   },
   {
     "nombre": "trapinch",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 7,
-    "peso": 150,
-    "etapa de evolucion": 328,
+    "altura": 70,
+    "peso": 15.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 356
+    "id": 328
   },
   {
     "nombre": "vibrava",
     "tipo1": "ground",
     "tipo2": "dragon",
-    "altura": 11,
-    "peso": 153,
-    "etapa de evolucion": 329,
+    "altura": 110,
+    "peso": 15.3,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 357
+    "id": 329
   },
   {
     "nombre": "flygon",
     "tipo1": "ground",
     "tipo2": "dragon",
-    "altura": 20,
-    "peso": 820,
-    "etapa de evolucion": 330,
+    "altura": 200,
+    "peso": 82.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 358
+    "id": 330
   },
   {
     "nombre": "cacnea",
     "tipo1": "grass",
     "tipo2": null,
-    "altura": 4,
-    "peso": 513,
-    "etapa de evolucion": 331,
+    "altura": 40,
+    "peso": 51.3,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 359
+    "id": 331
   },
   {
     "nombre": "cacturne",
     "tipo1": "grass",
     "tipo2": "dark",
-    "altura": 13,
-    "peso": 774,
-    "etapa de evolucion": 332,
+    "altura": 130,
+    "peso": 77.4,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 360
+    "id": 332
   },
   {
     "nombre": "swablu",
     "tipo1": "normal",
     "tipo2": "flying",
-    "altura": 4,
-    "peso": 12,
-    "etapa de evolucion": 333,
+    "altura": 40,
+    "peso": 1.2,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 361
+    "id": 333
   },
   {
     "nombre": "altaria",
     "tipo1": "dragon",
     "tipo2": "flying",
-    "altura": 11,
-    "peso": 206,
-    "etapa de evolucion": 334,
+    "altura": 110,
+    "peso": 20.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 362
+    "id": 334
   },
   {
     "nombre": "zangoose",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 13,
-    "peso": 403,
-    "etapa de evolucion": 335,
+    "altura": 130,
+    "peso": 40.3,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 363
+    "id": 335
   },
   {
     "nombre": "seviper",
     "tipo1": "poison",
     "tipo2": null,
-    "altura": 27,
-    "peso": 525,
-    "etapa de evolucion": 336,
+    "altura": 270,
+    "peso": 52.5,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 364
+    "id": 336
   },
   {
     "nombre": "lunatone",
     "tipo1": "rock",
     "tipo2": "psychic",
-    "altura": 10,
-    "peso": 1680,
-    "etapa de evolucion": 337,
+    "altura": 100,
+    "peso": 168.0,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 365
+    "id": 337
   },
   {
     "nombre": "solrock",
     "tipo1": "rock",
     "tipo2": "psychic",
-    "altura": 12,
-    "peso": 1540,
-    "etapa de evolucion": 338,
+    "altura": 120,
+    "peso": 154.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 366
+    "id": 338
   },
   {
     "nombre": "barboach",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 4,
-    "peso": 19,
-    "etapa de evolucion": 339,
+    "altura": 40,
+    "peso": 1.9,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 367
+    "id": 339
   },
   {
     "nombre": "whiscash",
     "tipo1": "water",
     "tipo2": "ground",
-    "altura": 9,
-    "peso": 236,
-    "etapa de evolucion": 340,
+    "altura": 90,
+    "peso": 23.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 368
+    "id": 340
   },
   {
     "nombre": "corphish",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 115,
-    "etapa de evolucion": 341,
+    "altura": 60,
+    "peso": 11.5,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 369
+    "id": 341
   },
   {
     "nombre": "crawdaunt",
     "tipo1": "water",
     "tipo2": "dark",
-    "altura": 11,
-    "peso": 328,
-    "etapa de evolucion": 342,
+    "altura": 110,
+    "peso": 32.8,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 370
+    "id": 342
   },
   {
     "nombre": "baltoy",
     "tipo1": "ground",
     "tipo2": "psychic",
-    "altura": 5,
-    "peso": 215,
-    "etapa de evolucion": 343,
+    "altura": 50,
+    "peso": 21.5,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 371
+    "id": 343
   },
   {
     "nombre": "claydol",
     "tipo1": "ground",
     "tipo2": "psychic",
-    "altura": 15,
-    "peso": 1080,
-    "etapa de evolucion": 344,
+    "altura": 150,
+    "peso": 108.0,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 372
+    "id": 344
   },
   {
     "nombre": "lileep",
     "tipo1": "rock",
     "tipo2": "grass",
-    "altura": 10,
-    "peso": 238,
-    "etapa de evolucion": 345,
+    "altura": 100,
+    "peso": 23.8,
+    "etapa de evolucion": 1,
     "color": "purple",
-    "id": 373
+    "id": 345
   },
   {
     "nombre": "cradily",
     "tipo1": "rock",
     "tipo2": "grass",
-    "altura": 15,
-    "peso": 604,
-    "etapa de evolucion": 346,
+    "altura": 150,
+    "peso": 60.4,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 374
+    "id": 346
   },
   {
     "nombre": "anorith",
     "tipo1": "rock",
     "tipo2": "bug",
-    "altura": 7,
-    "peso": 125,
-    "etapa de evolucion": 347,
+    "altura": 70,
+    "peso": 12.5,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 375
+    "id": 347
   },
   {
     "nombre": "armaldo",
     "tipo1": "rock",
     "tipo2": "bug",
-    "altura": 15,
-    "peso": 682,
-    "etapa de evolucion": 348,
+    "altura": 150,
+    "peso": 68.2,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 376
+    "id": 348
   },
   {
     "nombre": "feebas",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 74,
-    "etapa de evolucion": 349,
+    "altura": 60,
+    "peso": 7.4,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 377
+    "id": 349
   },
   {
     "nombre": "milotic",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 62,
-    "peso": 1620,
-    "etapa de evolucion": 350,
+    "altura": 620,
+    "peso": 162.0,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 378
+    "id": 350
   },
   {
     "nombre": "castform",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 3,
-    "peso": 8,
-    "etapa de evolucion": 351,
+    "altura": 30,
+    "peso": 0.8,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 379
+    "id": 351
   },
   {
     "nombre": "kecleon",
     "tipo1": "normal",
     "tipo2": null,
-    "altura": 10,
-    "peso": 220,
-    "etapa de evolucion": 352,
+    "altura": 100,
+    "peso": 22.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 380
+    "id": 352
   },
   {
     "nombre": "shuppet",
     "tipo1": "ghost",
     "tipo2": null,
-    "altura": 6,
-    "peso": 23,
-    "etapa de evolucion": 353,
+    "altura": 60,
+    "peso": 2.3,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 381
+    "id": 353
   },
   {
     "nombre": "banette",
     "tipo1": "ghost",
     "tipo2": null,
-    "altura": 11,
-    "peso": 125,
-    "etapa de evolucion": 354,
+    "altura": 110,
+    "peso": 12.5,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 382
+    "id": 354
   },
   {
     "nombre": "duskull",
     "tipo1": "ghost",
     "tipo2": null,
-    "altura": 8,
-    "peso": 150,
-    "etapa de evolucion": 355,
+    "altura": 80,
+    "peso": 15.0,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 383
+    "id": 355
   },
   {
     "nombre": "dusclops",
     "tipo1": "ghost",
     "tipo2": null,
-    "altura": 16,
-    "peso": 306,
-    "etapa de evolucion": 356,
+    "altura": 160,
+    "peso": 30.6,
+    "etapa de evolucion": 1,
     "color": "black",
-    "id": 384
+    "id": 356
   },
   {
     "nombre": "tropius",
     "tipo1": "grass",
     "tipo2": "flying",
-    "altura": 20,
-    "peso": 1000,
-    "etapa de evolucion": 357,
+    "altura": 200,
+    "peso": 100.0,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 386
+    "id": 357
   },
   {
     "nombre": "chimecho",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 6,
-    "peso": 10,
-    "etapa de evolucion": 358,
+    "altura": 60,
+    "peso": 1.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 388
+    "id": 358
   },
   {
     "nombre": "absol",
     "tipo1": "dark",
     "tipo2": null,
-    "altura": 12,
-    "peso": 470,
-    "etapa de evolucion": 359,
+    "altura": 120,
+    "peso": 47.0,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 389
+    "id": 359
   },
   {
     "nombre": "wynaut",
     "tipo1": "psychic",
     "tipo2": null,
-    "altura": 6,
-    "peso": 140,
-    "etapa de evolucion": 360,
+    "altura": 60,
+    "peso": 14.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 232
+    "id": 360
   },
   {
     "nombre": "snorunt",
     "tipo1": "ice",
     "tipo2": null,
-    "altura": 7,
-    "peso": 168,
-    "etapa de evolucion": 361,
+    "altura": 70,
+    "peso": 16.8,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 390
+    "id": 361
   },
   {
     "nombre": "glalie",
     "tipo1": "ice",
     "tipo2": null,
-    "altura": 15,
-    "peso": 2565,
-    "etapa de evolucion": 362,
+    "altura": 150,
+    "peso": 256.5,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 391
+    "id": 362
   },
   {
     "nombre": "spheal",
     "tipo1": "ice",
     "tipo2": "water",
-    "altura": 8,
-    "peso": 395,
-    "etapa de evolucion": 363,
+    "altura": 80,
+    "peso": 39.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 393
+    "id": 363
   },
   {
     "nombre": "sealeo",
     "tipo1": "ice",
     "tipo2": "water",
-    "altura": 11,
-    "peso": 876,
-    "etapa de evolucion": 364,
+    "altura": 110,
+    "peso": 87.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 394
+    "id": 364
   },
   {
     "nombre": "walrein",
     "tipo1": "ice",
     "tipo2": "water",
-    "altura": 14,
-    "peso": 1506,
-    "etapa de evolucion": 365,
+    "altura": 140,
+    "peso": 150.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 395
+    "id": 365
   },
   {
     "nombre": "clamperl",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 4,
-    "peso": 525,
-    "etapa de evolucion": 366,
+    "altura": 40,
+    "peso": 52.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 396
+    "id": 366
   },
   {
     "nombre": "huntail",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 17,
-    "peso": 270,
-    "etapa de evolucion": 367,
+    "altura": 170,
+    "peso": 27.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 397
+    "id": 367
   },
   {
     "nombre": "gorebyss",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 18,
-    "peso": 226,
-    "etapa de evolucion": 368,
+    "altura": 180,
+    "peso": 22.6,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 398
+    "id": 368
   },
   {
     "nombre": "relicanth",
     "tipo1": "water",
     "tipo2": "rock",
-    "altura": 10,
-    "peso": 234,
-    "etapa de evolucion": 369,
+    "altura": 100,
+    "peso": 23.4,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 399
+    "id": 369
   },
   {
     "nombre": "luvdisc",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 6,
-    "peso": 87,
-    "etapa de evolucion": 370,
+    "altura": 60,
+    "peso": 8.7,
+    "etapa de evolucion": 1,
     "color": "pink",
-    "id": 400
+    "id": 370
   },
   {
     "nombre": "bagon",
     "tipo1": "dragon",
     "tipo2": null,
-    "altura": 6,
-    "peso": 421,
-    "etapa de evolucion": 371,
+    "altura": 60,
+    "peso": 42.1,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 401
+    "id": 371
   },
   {
     "nombre": "shelgon",
     "tipo1": "dragon",
     "tipo2": null,
-    "altura": 11,
-    "peso": 1105,
-    "etapa de evolucion": 372,
+    "altura": 110,
+    "peso": 110.5,
+    "etapa de evolucion": 1,
     "color": "white",
-    "id": 402
+    "id": 372
   },
   {
     "nombre": "salamence",
     "tipo1": "dragon",
     "tipo2": "flying",
-    "altura": 15,
-    "peso": 1026,
-    "etapa de evolucion": 373,
+    "altura": 150,
+    "peso": 102.6,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 403
+    "id": 373
   },
   {
     "nombre": "beldum",
     "tipo1": "steel",
     "tipo2": "psychic",
-    "altura": 6,
-    "peso": 952,
-    "etapa de evolucion": 374,
+    "altura": 60,
+    "peso": 95.2,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 404
+    "id": 374
   },
   {
     "nombre": "metang",
     "tipo1": "steel",
     "tipo2": "psychic",
-    "altura": 12,
-    "peso": 2025,
-    "etapa de evolucion": 375,
+    "altura": 120,
+    "peso": 202.5,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 405
+    "id": 375
   },
   {
     "nombre": "metagross",
     "tipo1": "steel",
     "tipo2": "psychic",
-    "altura": 16,
-    "peso": 5500,
-    "etapa de evolucion": 376,
+    "altura": 160,
+    "peso": 550.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 406
+    "id": 376
   },
   {
     "nombre": "regirock",
     "tipo1": "rock",
     "tipo2": null,
-    "altura": 17,
-    "peso": 2300,
-    "etapa de evolucion": 377,
+    "altura": 170,
+    "peso": 230.0,
+    "etapa de evolucion": 1,
     "color": "brown",
-    "id": 407
+    "id": 377
   },
   {
     "nombre": "regice",
     "tipo1": "ice",
     "tipo2": null,
-    "altura": 18,
-    "peso": 1750,
-    "etapa de evolucion": 378,
+    "altura": 180,
+    "peso": 175.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 408
+    "id": 378
   },
   {
     "nombre": "registeel",
     "tipo1": "steel",
     "tipo2": null,
-    "altura": 19,
-    "peso": 2050,
-    "etapa de evolucion": 379,
+    "altura": 190,
+    "peso": 205.0,
+    "etapa de evolucion": 1,
     "color": "gray",
-    "id": 409
+    "id": 379
   },
   {
     "nombre": "latias",
     "tipo1": "dragon",
     "tipo2": "psychic",
-    "altura": 14,
-    "peso": 400,
-    "etapa de evolucion": 380,
+    "altura": 140,
+    "peso": 40.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 410
+    "id": 380
   },
   {
     "nombre": "latios",
     "tipo1": "dragon",
     "tipo2": "psychic",
-    "altura": 20,
-    "peso": 600,
-    "etapa de evolucion": 381,
+    "altura": 200,
+    "peso": 60.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 411
+    "id": 381
   },
   {
     "nombre": "kyogre",
     "tipo1": "water",
     "tipo2": null,
-    "altura": 45,
-    "peso": 3520,
-    "etapa de evolucion": 382,
+    "altura": 450,
+    "peso": 352.0,
+    "etapa de evolucion": 1,
     "color": "blue",
-    "id": 412
+    "id": 382
   },
   {
     "nombre": "groudon",
     "tipo1": "ground",
     "tipo2": null,
-    "altura": 35,
-    "peso": 9500,
-    "etapa de evolucion": 383,
+    "altura": 350,
+    "peso": 950.0,
+    "etapa de evolucion": 1,
     "color": "red",
-    "id": 413
+    "id": 383
   },
   {
     "nombre": "rayquaza",
     "tipo1": "dragon",
     "tipo2": "flying",
-    "altura": 70,
-    "peso": 2065,
-    "etapa de evolucion": 384,
+    "altura": 700,
+    "peso": 206.5,
+    "etapa de evolucion": 1,
     "color": "green",
-    "id": 414
+    "id": 384
   },
   {
     "nombre": "jirachi",
     "tipo1": "steel",
     "tipo2": "psychic",
-    "altura": 3,
-    "peso": 11,
-    "etapa de evolucion": 385,
+    "altura": 30,
+    "peso": 1.1,
+    "etapa de evolucion": 1,
     "color": "yellow",
-    "id": 415
+    "id": 385
   }
 ]
