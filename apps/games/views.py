@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Avg, Count
 from apps.games.models import Game, GameItem, GameResult
@@ -224,6 +225,8 @@ def handle_post_guess(request, game: Game, target: GameItem) -> str:
 # Main view
 # ----------------------------------------------------------------------
 
+@never_cache
+@login_required
 @csrf_protect
 def play_view(request, slug):
     """
@@ -267,7 +270,7 @@ def play_view(request, slug):
         },
     )
 
-
+@never_cache
 @login_required  # opcional: quítalo si quieres ranking público
 def ranking_view(request, slug: str | None = None):
     """

@@ -11,6 +11,14 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 {% endblock %}
 
 {% block content %}
+
+<div class="mb-4">
+    <a href="{% url 'dashboard' %}"
+       class="bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-500 transition">
+      🏠 Dashboard
+    </a>
+</div>
+
 <h1 class="text-3xl font-bold text-yellow-100 mb-6">🎮 {{ game.name }}</h1>
 
 {% if won %}

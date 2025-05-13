@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views.decorators.cache import never_cache
+
 from apps.games.models import Game
 
 
+@never_cache
 @login_required
 def dashboard_view(request):
     # Datos de ejemplo por ahora. Luego los conectamos a modelos.
