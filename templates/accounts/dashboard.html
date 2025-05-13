@@ -11,13 +11,29 @@ pt-24 pb-12 px-4
 {% endblock %}
 
 {% block content %}
+
+
 <!-- ================= HERO ================= -->
-<section class="container mx-auto text-center">
-  <h1 class="text-4xl md:text-5xl text-yellow-200 font-bold drop-shadow"
-      style="font-family:var(--font-lol);">
-    ¡Bienvenido, {{ user.username }}!
+<!-- ================= HERO ================= -->
+<section class="container mx-auto text-center drop-shadow">
+  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
+      style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
+    🛡️ ¡Bienvenido, <span class="text-white">{{ user.username }}</span>!
   </h1>
+  <p class="mt-4 text-yellow-100 text-lg tracking-wider" style="font-family:var(--font-lol);">
+    Elige tu próximo desafío...
+  </p>
+
+  <div class="flex justify-end mt-4">
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+        🔓 Cerrar sesión
+      </button>
+    </form>
+  </div>
 </section>
+
 
 <!-- ================= STATS + JUEGOS ================= -->
 <section class="container mx-auto grid lg:grid-cols-3 gap-8">

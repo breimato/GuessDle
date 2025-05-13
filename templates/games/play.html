@@ -12,24 +12,37 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 
 {% block content %}
 
+<!-- ===== DASHBOARD BUTTON ===== -->
 <div class="mb-4">
     <a href="{% url 'dashboard' %}"
-       class="bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-500 transition">
-      🏠 Dashboard
+       class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+        🏠 Dashboard
     </a>
 </div>
 
-<h1 class="text-3xl font-bold text-yellow-100 mb-6">🎮 {{ game.name }}</h1>
+<!-- ===== GAME TITLE ===== -->
 
+<section class="container mx-auto text-center drop-shadow">
+  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
+      style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
+    🛡️ {{ game.name }}
+  </h1>
+</section>
+
+
+<!-- ===== RESULT OR FORM ===== -->
 {% if won %}
-<div class="bg-green-200 border-4 border-green-800 p-6 rounded-xl max-w-xl w-full text-center font-serif text-gray-900 shadow-inner">
-    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span></h2>
-    <a href="{% url 'dashboard' %}" class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800 transition">
+<div class="bg-green-200/90 backdrop-blur p-6 rounded-3xl max-w-xl w-full text-center font-serif text-gray-900 border-4 border-green-800 shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span>
+    </h2>
+    <a href="{% url 'dashboard' %}"
+       class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-800 transition shadow">
         Volver al Dashboard
     </a>
 </div>
 {% else %}
-<form method="post" class="bg-amber-100 p-6 rounded-xl shadow-xl border-4 border-yellow-800 w-full max-w-xl text-gray-900">
+<form method="post"
+      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900">
     {% csrf_token %}
     <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
 
@@ -37,69 +50,111 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
     <p class="text-red-700 font-bold mb-2">Ese personaje no existe o ya fue usado.</p>
     {% endif %}
 
-    <input list="guesses" name="guess" id="guess"
-           class="w-full p-2 rounded border border-yellow-400 mb-4"
-           placeholder="Escribe un nombre" required>
+    <!-- Wrapper para input + sugerencias -->
+    <div class="relative">
+        <input type="text" name="guess" id="guess"
+               class="w-full p-2 rounded-t border border-yellow-400 focus:outline-none"
+               placeholder="Escribe un nombre" autocomplete="off" required>
 
-    <datalist id="guesses">
-        {% for item in game.items.all %}
-            {% if item not in previous_guesses %}
-                <option value="{{ item.name }}"></option>
-            {% endif %}
-        {% endfor %}
-    </datalist>
+        <!-- Contenedor de sugerencias -->
+        <ul id="suggestions"
+            class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>
+    </div>
 
-    <button type="submit" class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition w-full">
+    <button type="submit"
+            class="mt-4 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full transition w-full shadow">
         Probar
     </button>
 </form>
 {% endif %}
 
+<!-- ===== ATTEMPTS TABLE ===== -->
 {% if attempts %}
-<table class="gd-table mx-auto">
-  <thead>
-    <tr>
-      <th class="gd-header">Campeón</th>
-      {% for attr in game.attributes %}
-        <th class="gd-header">{{ attr|title }}</th>
-      {% endfor %}
+<table class="gd-table w-full max-w-5xl mx-auto text-sm mt-8">
+    <thead>
+    <tr class="bg-black/50 text-yellow-100 text-base" style="font-family:var(--font-lol); letter-spacing:.07em;">
+        <th class="rounded-l-2xl px-4 py-2 whitespace-normal break-words text-center">
+            Personaje
+        </th>
+
+        {% for attr in game.attributes %}
+        <th class="px-4 py-2 whitespace-normal break-words text-center {% if forloop.last %}rounded-r-2xl{% endif %}">
+            {{ attr|title }}
+        </th>
+
+        {% endfor %}
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     {% for attempt in attempts %}
-    <tr>
-      <!-- Campeón -->
-      <td class="gd-champ-cell">
-        {% if attempt.icon %}
-          <img src="{{ attempt.icon }}" alt="{{ attempt.name }}">
-        {% endif %}
-        <div style="padding:0 .25rem">{{ attempt.name }}</div>
-      </td>
+    <tr class="hover:brightness-110 transition">
+        <!-- Campeón -->
+        <td class="gd-champ-cell rounded-l-xl">
+            {% if attempt.icon %}
+            <img src="{{ attempt.icon }}" alt="{{ attempt.name }}">
+            {% endif %}
+            <div style="padding:.25rem 0">{{ attempt.name }}</div>
+        </td>
 
-      <!-- Atributos -->
-      {% for fb in attempt.feedback %}
-      <td class="gd-cell {% if fb.correct %}gd-cell--ok
-                          {% elif fb.partial %}gd-cell--part
-                          {% else %}gd-cell--wrong{% endif %}">
-        <div style="position:relative; width:100%; height:100%;">
-          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:.25rem;">
-            {{ fb.value }}
-          </div>
-          {% if fb.arrow %}
-            <span class="gd-emoji">{{ fb.arrow }}</span>
-          {% endif %}
-        </div>
-      </td>
-      {% endfor %}
+        <!-- Atributos -->
+        {% for fb in attempt.feedback %}
+        <td class="gd-cell {% if fb.correct %}gd-cell--ok{% elif fb.partial %}gd-cell--part{% else %}gd-cell--wrong{% endif %} {% if forloop.last %}rounded-r-xl{% endif %}">
+            <div class="relative w-full h-full flex items-center justify-center p-1">
+                {{ fb.value }}
+                {% if fb.arrow %}<span class="gd-emoji">{{ fb.arrow }}</span>{% endif %}
+            </div>
+        </td>
+        {% endfor %}
     </tr>
     {% endfor %}
-  </tbody>
+    </tbody>
 </table>
-
 {% endif %}
 
+<!-- ===== AUTOCOMPLETE JS (sin cambios) ===== -->
+{% comment %} el script es el mismo que la versión anterior {% endcomment %}
+<script>
+    (()=>{
+      const input=document.getElementById('guess');
+      if(!input) return;
+      const box=document.getElementById('suggestions');
+      const names=[{% for item in game.items.all %}{% if item not in previous_guesses %}'{{ item.name|escapejs }}',{% endif %}{% endfor %}];
+      let hl=-1;
 
-
+      const close=()=>{box.classList.add('hidden');hl=-1;};
+      const setVal=v=>{input.value=v;close();input.focus();};
+      const paint=(q)=>{
+        box.innerHTML='';hl=-1;
+        const res=q?names.filter(n=>n.toLowerCase().includes(q)).slice(0,15):[];
+        if(!res.length){close();return;}
+        res.forEach(n=>{
+          const li=document.createElement('li');li.textContent=n;
+          li.className='px-4 py-2 cursor-pointer hover:bg-yellow-700 hover:text-white';
+          li.onclick=()=>setVal(n);
+          box.appendChild(li);
+        });
+        box.classList.remove('hidden');
+      };
+      const move=d=>{
+        const items=[...box.children];if(!items.length)return;
+        items.forEach(i=>i.classList.remove('suggestion-active'));
+        hl=(hl+d+items.length)%items.length;items[hl].classList.add('suggestion-active');
+        items[hl].scrollIntoView({block:'nearest'});
+      };
+      input.oninput=()=>paint(input.value.toLowerCase());
+      input.onkeydown=e=>{
+        if(box.classList.contains('hidden'))return;
+        switch(e.key){
+          case'ArrowDown':e.preventDefault();move(1);break;
+          case'ArrowUp':e.preventDefault();move(-1);break;
+          case'Tab':e.preventDefault();if(hl===-1)move(0);setVal(box.children[hl].textContent);break;
+          case'Enter':if(hl>-1){e.preventDefault();setVal(box.children[hl].textContent);}break;
+          case'Escape':close();break;
+        }
+      };
+      document.addEventListener('click',e=>{if(!box.contains(e.target)&&e.target!==input)close();});
+    })();
+</script>
 
 {% endblock %}
