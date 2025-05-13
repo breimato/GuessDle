@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-
-{% block title %}Ranking{% if game %} – {{ game.name }}{% endif %}{% endblock %}
 {% load static %}
+
+{% block title %}
+  🏆 Ranking{% if game %} – {{ game.name }}{% else %} global{% endif %}
+{% endblock %}
+
 {% block main_class %}
 min-h-screen flex flex-col items-center
 bg-no-repeat bg-cover bg-fixed
@@ -10,53 +13,70 @@ py-10 px-4 gap-10
 {% endblock %}
 
 {% block content %}
-  <a href="{% url 'dashboard' %}"
-     class="inline-block mb-6 bg-yellow-600 text-white font-bold px-5 py-2 rounded-full shadow-xl hover:bg-yellow-700 transition">
-    ← Volver al Dashboard
-  </a>
-  <!-- … resto del ranking … -->
+  <div class="flex items-center gap-4 mb-6">
+    <!-- Volver al Dashboard -->
+    <a href="{% url 'dashboard' %}"
+       class="inline-block bg-yellow-600 text-white font-bold px-5 py-2 rounded-full shadow-xl hover:bg-yellow-700 transition">
+      ← Dashboard
+    </a>
 
-
-<h1 class="text-3xl font-bold text-center text-yellow-100 mb-8 drop-shadow">
-  🏆 Ranking{% if game %} – {{ game.name }}{% else %} global{% endif %}
-</h1>
-
-<table class="w-full max-w-3xl text-sm gd-table">
-  <thead>
-    <tr class="gd-header">
-      <th>#</th>
-      <th>Jugador</th>
-      <th>Media de intentos</th>
-      <th>Partidas</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in stats %}
-    <tr>
-      <td class="gd-cell">{{ forloop.counter }}</td>
-      <td class="gd-cell">{{ row.user__username }}</td>
-      <td class="gd-cell">{{ row.avg_attempts|floatformat:2 }}</td>
-      <td class="gd-cell">{{ row.games_played }}</td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="4" class="gd-cell">Aún no hay datos 😢</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-{% if not game %}
-  <h2 class="text-xl text-center text-yellow-100 mt-12 mb-4 drop-shadow">
-    Rankings por juego
-  </h2>
-  <div class="flex flex-wrap gap-4 justify-center">
-    {% for g in games %}
-      <a href="{% url 'ranking_game' g.slug %}"
-         class="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-800 transition shadow">
-        {{ g.name }}
+    {% if game %}
+      <!-- Ir al ranking global -->
+      <a href="{% url 'ranking_global' %}"
+         class="inline-block bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-full shadow hover:bg-gray-300 transition">
+        🌐 Global
       </a>
-    {% endfor %}
+    {% endif %}
   </div>
-{% endif %}
+
+  <h1 class="text-3xl font-bold text-center text-yellow-100 mb-8 drop-shadow">
+    🏆 Ranking{% if game %} – {{ game.name }}{% else %} global{% endif %}
+  </h1>
+
+  <!-- Tabla de ranking -->
+  <table class="w-full max-w-3xl text-sm gd-table">
+    <thead>
+      <tr class="gd-header">
+        <th>#</th>
+        <th>Jugador</th>
+        <th>Media de intentos</th>
+        <th>Partidas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in stats %}
+      <tr>
+        <td class="gd-cell">{{ forloop.counter }}</td>
+        <td class="gd-cell">{{ row.user__username }}</td>
+        <td class="gd-cell">{{ row.avg_attempts|floatformat:2 }}</td>
+        <td class="gd-cell">{{ row.games_played }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="gd-cell">Aún no hay datos 😢</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Listado de juegos -->
+  <div class="mt-12 w-full max-w-3xl">
+    <h2 class="text-xl text-yellow-100 mb-4 text-center drop-shadow">
+      {% if game %}Ver otros rankings{% else %}Rankings por juego{% endif %}
+    </h2>
+    <div class="flex flex-wrap gap-4 justify-center">
+      {% for g in games %}
+        <a href="{% url 'ranking_game' g.slug %}"
+           class="px-4 py-2 rounded-full font-semibold
+                  {% if game and game.slug == g.slug %}
+                  bg-yellow-500 text-gray-900 shadow-inner
+                  {% else %}
+                  bg-yellow-700 text-white hover:bg-yellow-800 shadow
+                  {% endif %}
+                  transition">
+          {{ g.name }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
