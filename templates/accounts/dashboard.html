@@ -26,16 +26,32 @@ pt-24 pb-12 px-4
     <h2 class="text-2xl mb-4 text-yellow-900 font-bold" style="font-family:var(--font-lol);">
       📊 Tus estadísticas
     </h2>
-    <ul class="divide-y divide-yellow-400/60">
-      {% for j in user_stats.juegos %}
-      <li class="py-2 flex justify-between text-gray-900">
-        <span>{{ j.nombre }}</span>
-        <span class="font-semibold">{{ j.media_tiempo }} int.</span>
-      </li>
-      {% empty %}
-      <li class="py-2 text-gray-600 italic">Aún no has jugado 💤</li>
-      {% endfor %}
-    </ul>
+
+    <!-- Tabla de estadísticas con estética de rankings -->
+    <table class="w-full text-sm border-separate border-spacing-y-2">
+      <thead>
+        <tr class="bg-black/50 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
+          <th class="rounded-l-2xl">Juego</th>
+          <th class="rounded-r-2xl">Media&nbsp;intentos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for j in user_stats.juegos %}
+        <tr class="hover:brightness-110 transition">
+          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+            {{ j.nombre }}
+          </td>
+          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
+            {{ j.media_tiempo }} int.
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="2" class="py-4 text-center text-black">Aún no has jugado 💤</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
   <!-- Selector de juegos -->
@@ -117,7 +133,7 @@ pt-24 pb-12 px-4
         </tr>
         {% endwith %}
         {% empty %}
-        <tr><td colspan="4" class="py-4 text-center text-gray-300">Sin datos 😢</td></tr>
+        <tr><td colspan="4" class="py-4 text-center text-black">Sin datos 😢</td></tr>
         {% endfor %}
       </tbody>
     </table>
@@ -160,7 +176,7 @@ pt-24 pb-12 px-4
         </tr>
         {% endwith %}
         {% empty %}
-        <tr><td colspan="4" class="py-4 text-center text-gray-300">Sin datos 😢</td></tr>
+        <tr><td colspan="4" class="py-4 text-center text-black">Sin datos 😢</td></tr>
         {% endfor %}
       </tbody>
     </table>
