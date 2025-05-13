@@ -46,7 +46,7 @@ pt-24 pb-12 px-4
     <!-- Tabla de estadísticas con estética de rankings -->
     <table class="w-full text-sm border-separate border-spacing-y-2">
       <thead>
-        <tr class="bg-black/50 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
+        <tr class="bg-black/80 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
           <th class="rounded-l-2xl">Juego</th>
           <th class="rounded-r-2xl">Media&nbsp;intentos</th>
         </tr>
@@ -54,10 +54,10 @@ pt-24 pb-12 px-4
       <tbody>
         {% for j in user_stats.juegos %}
         <tr class="hover:brightness-110 transition">
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
             {{ j.nombre }}
           </td>
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
             {{ j.media_tiempo }} int.
           </td>
         </tr>
@@ -114,9 +114,11 @@ pt-24 pb-12 px-4
 
   <!-- Panel GLOBAL -->
   <div id="tab-global" class="rank-panel">
-    <table class="w-full max-w-3xl mx-auto text-sm border-separate border-spacing-y-2">
+    <table class="w-full max-w-8xl mx-auto text-sm border-separate border-spacing-y-2">
       <thead>
-        <tr class="bg-black/50 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
+        <tr class="bg-black/80 text-yellow-100 text-lg"
+    style="font-family:var(--font-lol); letter-spacing:.08em;">
+
           <th class="rounded-l-2xl"></th>
           <th>Jugador</th>
           <th>Media</th>
@@ -137,13 +139,13 @@ pt-24 pb-12 px-4
               {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
             </div>
           </td>
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
             {{ row.user__username }}
           </td>
-          <td class="bg-black/40 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
             {{ row.media|floatformat:2 }}
           </td>
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
             {{ row.partidas }}
           </td>
         </tr>
@@ -158,9 +160,10 @@ pt-24 pb-12 px-4
   <!-- Panel POR JUEGO -->
   {% for juego in juegos_disponibles %}
   <div id="tab-{{ juego.slug }}" class="rank-panel hidden">
-    <table class="w-full max-w-3xl mx-auto text-sm border-separate border-spacing-y-2">
+    <table class="w-full max-w-8xl mx-auto text-sm border-separate border-spacing-y-2">
       <thead>
-        <tr class="bg-black/50 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
+                <tr class="bg-black/80 text-yellow-100 text-lg"
+    style="font-family:var(--font-lol); letter-spacing:.08em;">
           <th class="rounded-l-2xl"></th>
           <th>Jugador</th>
           <th>Media</th>
@@ -180,13 +183,13 @@ pt-24 pb-12 px-4
               {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
             </div>
           </td>
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
             {{ row.user__username }}
           </td>
-          <td class="bg-black/40 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
             {{ row.media|floatformat:2 }}
           </td>
-          <td class="bg-black/40 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
+          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
             {{ row.partidas }}
           </td>
         </tr>

@@ -269,37 +269,3 @@ def play_view(request, slug):
             "guess_error": guess_error,
         },
     )
-
-@never_cache
-@login_required
-def ranking_view(request, slug: str | None = None):
-    """
-    Si slug==None → ranking global.
-    Si slug tiene valor → ranking de ese juego.
-    En ambos casos añadimos 'games' para listar todos los juegos.
-    """
-    # Lista de todos los juegos activos
-    games = Game.objects.filter(active=True).order_by("name")
-
-    if slug:
-        game = get_object_or_404(Game, slug=slug, active=True)
-        qs = GameResult.objects.filter(game=game)
-    else:
-        game = None
-        qs = GameResult.objects.all()
-
-    # Calculamos media de intentos por usuario
-    per_user = (
-        qs.values("user__username")
-          .annotate(
-              avg_attempts=Avg("attempts"),
-              games_played=Count("id"),
-          )
-          .order_by("avg_attempts", "user__username")
-    )
-
-    return render(request, "games/ranking.html", {
-        "games": games,
-        "game": game,
-        "stats": list(per_user),
-    })
