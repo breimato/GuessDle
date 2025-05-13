@@ -15,24 +15,41 @@ from apps.games.models import Game, GameItem, GameResult
 
 def parse_to_float(value: Any) -> Optional[float]:
     """
-    Tries to convert a value into a float, handling various formatting cases:
-    - Removes non-numeric characters except '.', ',', and '-'.
-    - Normalizes thousands and decimal separators.
-    Returns None if parsing fails.
+    Intenta convertir un valor a float, ignorando unidades como 'años', 'cm', etc.
+    Soporta formatos con separadores de miles ('.' o ',') y decimales.
     """
-    cleaned = re.sub(r"[^\d.,\-]", "", str(value))
-    if not cleaned:
+    if value is None:
         return None
 
-    if cleaned.count(",") == 1 and cleaned.count(".") > 1:
-        cleaned = cleaned.replace(".", "").replace(",", ".")
-    elif cleaned.count(".") > 1:
-        cleaned = cleaned.replace(".", "")
+    # Buscar el primer número con posible separador de miles y decimales
+    match = re.search(r"[-+]?\d[\d.,]*", str(value))
+    if not match:
+        return None
+
+    num_str = match.group()
+
+    # Heurística: si hay más de un punto y ninguna coma, es formato europeo con puntos como miles
+    if num_str.count(".") > 1 and num_str.count(",") == 0:
+        num_str = num_str.replace(".", "")
+    # Si hay más de una coma y ningún punto, es europeo con coma como miles
+    elif num_str.count(",") > 1 and num_str.count(".") == 0:
+        num_str = num_str.replace(",", "")
+    # Si tiene un solo punto y una coma, hay que ver cuál es el decimal
+    elif "." in num_str and "," in num_str:
+        if num_str.rfind(",") > num_str.rfind("."):
+            num_str = num_str.replace(".", "").replace(",", ".")
+        else:
+            num_str = num_str.replace(",", "")
+    # Si solo hay coma, se asume decimal europeo
+    elif "," in num_str:
+        num_str = num_str.replace(",", ".")
 
     try:
-        return float(cleaned)
+        return float(num_str)
     except ValueError:
         return None
+
+
 
 
 def numeric_feedback(
@@ -112,7 +129,6 @@ def build_attempts(
     for item in guesses:
         attempt_data: Dict[str, Any] = {
             "name": item.name,
-            "icon": getattr(item, "icon_url", None),  # <= o el campo que uses
             "is_correct": item.name == target.name,
             "feedback": [],
         }
@@ -121,14 +137,20 @@ def build_attempts(
             guess_val = item.data.get(attr)
             target_val = target_data.get(attr)
 
+            if guess_val in [None, ""]:
+                guess_val = game.defaults.get(attr)
+
+            if target_val in [None, ""]:
+                target_val = game.defaults.get(attr)
+
             is_match = False
             partial_match = False
             fb = {"arrow": "", "hint": ""}
 
             # --- numéricos --------------------------------------------------
             if attr in numeric_fields:
-                guess_num = parse_to_float(guess_val) or 0
-                target_num = parse_to_float(target_val) or 0
+                guess_num = parse_to_float(guess_val)
+                target_num = parse_to_float(target_val)
 
                 is_match = guess_num == target_num
                 if not is_match:
@@ -153,7 +175,7 @@ def build_attempts(
             attempt_data["feedback"].append(
                 {
                     "attribute": attr,
-                    "value": guess_val or "—",
+                    "value": guess_val,
                     "correct": is_match,
                     "partial": partial_match,
                     "hint": fb["hint"],
