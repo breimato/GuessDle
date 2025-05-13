@@ -1,5 +1,5 @@
 from django.db.models import JSONField
-
+from django.conf import settings
 from django.db import models
 
 class Game(models.Model):
@@ -35,3 +35,29 @@ class GameItem(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.game.slug})"
+
+
+
+class GameResult(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="game_results",
+    )
+    game = models.ForeignKey(
+        "games.Game",
+        on_delete=models.CASCADE,
+        related_name="results",
+    )
+    attempts = models.PositiveIntegerField()
+    played_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["game", "user"]),
+        ]
+        verbose_name = "resultado de partida"
+        verbose_name_plural = "resultados de partidas"
+
+    def __str__(self):
+        return f"{self.user} – {self.game} – {self.attempts} intentos"

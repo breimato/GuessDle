@@ -2,10 +2,11 @@ import random
 import re
 from typing import Any, Dict, List, Optional
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_protect
-
-from apps.games.models import Game, GameItem
+from django.db.models import Avg, Count
+from apps.games.models import Game, GameItem, GameResult
 
 
 # ----------------------------------------------------------------------
@@ -186,6 +187,13 @@ def handle_post_guess(request, game: Game, target: GameItem) -> str:
 
         if guess_item.name == target.name:
             session["won"] = True
+            # ↳ si el jugador está logueado, grabamos el resultado
+            if request.user.is_authenticated:
+                GameResult.objects.create(
+                    user=request.user,
+                    game=game,
+                    attempts=len(guess_ids),
+                )
 
     return "play"
 
@@ -234,5 +242,41 @@ def play_view(request, slug):
             "previous_guesses": previous_guesses,
             "won": has_won,
             "guess_error": guess_error,
+        },
+    )
+
+
+@login_required  # opcional: quítalo si quieres ranking público
+def ranking_view(request, slug: str | None = None):
+    """
+    - Si viene slug → ranking sólo de ese juego.
+    - Si no viene → ranking global con la media de todos los juegos.
+    """
+    if slug:
+        game = get_object_or_404(Game, slug=slug)
+        qs = GameResult.objects.filter(game=game)
+    else:
+        game = None
+        qs = GameResult.objects.all()
+
+    # media de intentos y partidas jugadas por usuario
+    per_user = (
+        qs.values("user__username")
+        .annotate(
+            avg_attempts=Avg("attempts"),
+            games_played=Count("id"),
+        )
+        .order_by("avg_attempts", "user__username")
+    )
+
+    # por comodidad lo pasamos como lista de dicts
+    stats = list(per_user)
+
+    return render(
+        request,
+        "games/ranking.html",
+        {
+            "stats": stats,
+            "game": game,
         },
     )
