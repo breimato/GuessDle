@@ -23,10 +23,10 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 <!-- ===== GAME TITLE ===== -->
 
 <section class="container mx-auto text-center drop-shadow">
-  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
-      style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
-    🛡️ {{ game.name }}
-  </h1>
+    <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
+        style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
+        🛡️ {{ game.name }}
+    </h1>
 </section>
 
 
@@ -116,45 +116,89 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
 {% comment %} el script es el mismo que la versión anterior {% endcomment %}
 <script>
     (()=>{
-      const input=document.getElementById('guess');
-      if(!input) return;
-      const box=document.getElementById('suggestions');
-      const names=[{% for item in game.items.all %}{% if item not in previous_guesses %}'{{ item.name|escapejs }}',{% endif %}{% endfor %}];
-      let hl=-1;
+  const input = document.getElementById('guess');
+  const box = document.getElementById('suggestions');
+  const names = [{% for item in game.items.all %}{% if item not in previous_guesses %}'{{ item.name|escapejs }}',{% endif %}{% endfor %}];
+  let hl = -1;
 
-      const close=()=>{box.classList.add('hidden');hl=-1;};
-      const setVal=v=>{input.value=v;close();input.focus();};
-      const paint=(q)=>{
-        box.innerHTML='';hl=-1;
-        const res=q?names.filter(n=>n.toLowerCase().includes(q)).slice(0,15):[];
-        if(!res.length){close();return;}
-        res.forEach(n=>{
-          const li=document.createElement('li');li.textContent=n;
-          li.className='px-4 py-2 cursor-pointer hover:bg-yellow-700 hover:text-white';
-          li.onclick=()=>setVal(n);
-          box.appendChild(li);
-        });
-        box.classList.remove('hidden');
-      };
-      const move=d=>{
-        const items=[...box.children];if(!items.length)return;
-        items.forEach(i=>i.classList.remove('suggestion-active'));
-        hl=(hl+d+items.length)%items.length;items[hl].classList.add('suggestion-active');
-        items[hl].scrollIntoView({block:'nearest'});
-      };
-      input.oninput=()=>paint(input.value.toLowerCase());
-      input.onkeydown=e=>{
-        if(box.classList.contains('hidden'))return;
-        switch(e.key){
-          case'ArrowDown':e.preventDefault();move(1);break;
-          case'ArrowUp':e.preventDefault();move(-1);break;
-          case'Tab':e.preventDefault();if(hl===-1)move(0);setVal(box.children[hl].textContent);break;
-          case'Enter':if(hl>-1){e.preventDefault();setVal(box.children[hl].textContent);}break;
-          case'Escape':close();break;
+  const close = () => {
+    box.classList.add('hidden');
+    hl = -1;
+  };
+
+  const setVal = v => {
+    input.value = v;
+    close();
+    input.focus();
+  };
+
+  const paint = q => {
+    box.innerHTML = '';
+    hl = -1;
+    const res = q ? names.filter(n => n.toLowerCase().includes(q)).slice(0, 15) : [];
+    if (!res.length) {
+      close();
+      return;
+    }
+    res.forEach((n, i) => {
+      const li = document.createElement('li');
+      li.textContent = n;
+      li.className = 'px-4 py-2 cursor-pointer hover:bg-yellow-700 hover:text-white';
+      li.onclick = () => setVal(n);
+      box.appendChild(li);
+    });
+    box.classList.remove('hidden');
+  };
+
+  const move = d => {
+    const items = [...box.children];
+    if (!items.length) return;
+    items.forEach(i => i.classList.remove('suggestion-active'));
+    hl = (hl + d + items.length) % items.length;
+    const active = items[hl];
+    active.classList.add('suggestion-active');
+    active.scrollIntoView({ block: 'nearest' });
+  };
+
+  input.oninput = () => paint(input.value.toLowerCase());
+
+  input.onkeydown = e => {
+    if (box.classList.contains('hidden')) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        move(1);
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        move(-1);
+        break;
+      case 'Tab':
+        if (hl === -1) {
+          hl = 0;
+          box.children[0].classList.add('suggestion-active');
         }
-      };
-      document.addEventListener('click',e=>{if(!box.contains(e.target)&&e.target!==input)close();});
-    })();
+        setVal(box.children[hl].textContent);
+        e.preventDefault();
+        break;
+      case 'Enter':
+        if (hl > -1) {
+          e.preventDefault();
+          setVal(box.children[hl].textContent);
+        }
+        break;
+      case 'Escape':
+        close();
+        break;
+    }
+  };
+
+  document.addEventListener('click', e => {
+    if (!box.contains(e.target) && e.target !== input) close();
+  });
+})();
+
 </script>
 
 {% endblock %}
