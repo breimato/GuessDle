@@ -1,114 +1,25 @@
-<!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
-
-    {% load static %}
-
-    <!-- ====================  ESTILOS GLOBALes  ==================== -->
-    <style>
-        /* ───── Tipografía LoL ──────────────────────────────────────────── */
-        @font-face {
-          font-family: 'BeaufortLOL';
-          src: url("{% static 'fonts/BeaufortforLOL-Bold.ttf' %}") format('truetype');
-          font-weight: 700;
-        }
-        :root {
-          --font-lol: 'BeaufortLOL', 'Cinzel Decorative', serif;
-        }
-
-        /* ───── Tablas GuessDle ─────────────────────────────────────────── */
-        .gd-table{border-collapse:separate;border-spacing:.5rem;table-layout:fixed;}
-
-        /* Celda genérica de atributo (verde / amarillo / rojo mediante modifiers) */
-        .gd-cell{
-          width:7rem;height:7rem;
-          border:3px solid #c9aa71;           /* marco dorado */
-          box-shadow:inset 0 0 4px #c9aa71;
-          overflow:hidden;
-          vertical-align:middle;
-          text-align:center;
-          font:700 1.1rem/1.2 var(--font-lol);
-          text-transform:uppercase;
-          letter-spacing:.05em;
-          color:#fff;
-          word-break:break-word;
-        }
-
-        /* Celda con el nombre / icono del campeón */
-        .gd-champ-cell {
-          width: 7rem;
-          height: 7rem;
-          border: 3px solid #c9aa71;
-          background: rgba(0, 0, 0, .45);
-          backdrop-filter: blur(4px);
-          text-align: center;
-          vertical-align: middle;
-          font: 700 11px/1.2 var(--font-lol);
-          text-transform: uppercase;
-          letter-spacing: .05em;
-          color: #fff;
-          word-break: break-word;
-          font-size: 1.1rem;
-          overflow: hidden;
-        }
-
-
-        .gd-champ-cell img{width:3.5rem;height:3.5rem;object-fit:cover;border-radius:.25rem;margin-top:.25rem;}
-
-        /* Estados de color (fondo con patrón sutil) */
-        .gd-cell--ok   {background:linear-gradient(#34d399,#059669),url("{% static 'img/grid.png' %}") repeat;}
-        .gd-cell--part {background:linear-gradient(#fcd34d,#d97706),url("{% static 'img/grid.png' %}") repeat;}
-        .gd-cell--wrong{background:linear-gradient(#f87171,#b91c1c),url("{% static 'img/grid.png' %}") repeat;}
-
-        /* Emoji flecha interior */
-        .gd-emoji{
-          position:absolute;right:2px;bottom:1px;
-          font-size:1.4rem;line-height:1;
-          pointer-events:none;
-        }
-
-        /* Cabeceras de tabla GuessDle */
-        .gd-header{
-          font:700 .625rem/1 var(--font-lol);
-          color:#e5e7eb;
-          text-transform:uppercase;
-          letter-spacing:.07em;
-          padding-bottom:.25rem;
-        }
-
-        .suggestion-active,
-        .suggestion:hover {
-          background-color: #b45309; /* tailwind yellow-700 */
-          color: white;
-        }
-
-
-    </style>
-
-    <!-- ====================  CURSORES  ============================ -->
-    <style>
-        /* Cursor base (espada LoL) */
-        *,*:hover{cursor:url("{% static 'cursors/lol.cur' %}"),auto;}
-        /* Cursor al hacer clic */
-        button:active,a:active,input:active,textarea:active,select:active,label:active,[role="button"]:active,[type="submit"]:active,[type="button"]:active{cursor:url("{% static 'cursors/blade.cur' %}"),auto;}
-    </style>
-
     <meta charset="UTF-8">
     <title>{% block title %}GuessDle{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Tailwind CDN -->
+    {#  ➜  CSS global y cursores #}
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cursors.css' %}">
+
+    {#  ➜  Tailwind: primero la lib, luego la config (mantenemos el orden original) #}
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config={darkMode:'class'}</script>
-
+    <script src="{% static 'js/tailwind-config.js' %}"></script>
 </head>
+
 <body class="text-gray-100 min-h-screen flex flex-col bg-gray-900">
 
-<!-- Main Content -->
-<main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
-    {% block content %}{% endblock %}
-</main>
+    <main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
 
 </body>
 </html>

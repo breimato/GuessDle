@@ -24,11 +24,11 @@ class GameSession:
 
     # ---------- getters ----------
     @property
-    def target_id(self) -> int | None:
+    def target_id(self):
         return self._s.get(self.TARGET_ID)
 
     @property
-    def target_game(self) -> int | None:
+    def target_game(self):
         return self._s.get(self.TARGET_GAME)
 
     @property
