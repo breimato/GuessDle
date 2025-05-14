@@ -1,25 +1,20 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}GuessDle{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>{% block title %}GuessDle{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {#  ➜  CSS global y cursores #}
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <link rel="stylesheet" href="{% static 'css/cursors.css' %}">
-
-    {#  ➜  Tailwind: primero la lib, luego la config (mantenemos el orden original) #}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="{% static 'js/tailwind-config.js' %}"></script>
+  {# Tailwind (compilado) + tus estilos #}
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {# Si NO metiste global/cursors dentro de app.css, añade estas dos líneas: #}
+  {# <link rel="stylesheet" href="{% static 'css/global.css' %}"> #}
+  {# <link rel="stylesheet" href="{% static 'css/cursors.css' %}"> #}
 </head>
 
 <body class="text-gray-100 min-h-screen flex flex-col bg-gray-900">
-
-    <main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
-        {% block content %}{% endblock %}
-    </main>
-
+  <main class="{% block main_class %}flex-1 container mx-auto px-4 py-8{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>

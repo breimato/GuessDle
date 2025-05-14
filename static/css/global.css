@@ -83,3 +83,11 @@
   background-color:#b45309;
   color:#fff;
 }
+
+/* Fondo específico de la pantalla de login */
+.login-bg{
+  background-image: url('/static/img/login.png'); /* ruta absoluta = vale en dev y prod */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}

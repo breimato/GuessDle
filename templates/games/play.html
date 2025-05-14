@@ -2,13 +2,13 @@
 {% load static %}
 {% load game_extras %}
 
-{% block title %}{{ game.name }}{% endblock %}
-
 {% block main_class %}
 min-h-screen flex flex-col items-center
 bg-no-repeat bg-cover bg-fixed
-bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
+login-bg   {#  <<< NUEVA CLASE  #}
+py-10 px-4 gap-10
 {% endblock %}
+
 
 {% block content %}
 
@@ -53,8 +53,10 @@ bg-[url('{% static "img/login.png" %}')] py-10 px-4 gap-10
     <!-- Wrapper para input + sugerencias -->
     <div class="relative">
         <input type="text" name="guess" id="guess"
-               class="w-full p-2 rounded-t border border-yellow-400 focus:outline-none"
-               placeholder="Escribe un nombre" autocomplete="off" required>
+       class="w-full p-2 rounded-t border border-yellow-400 bg-white
+              focus:outline-none"
+       placeholder="Escribe un nombre" autocomplete="off" required autofocus>
+
 
         <!-- Contenedor de sugerencias -->
         <ul id="suggestions"

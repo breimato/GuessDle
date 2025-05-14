@@ -1,0 +1,11 @@
+@import "tailwindcss";         /* ya no se usan las @tailwind xxx */
+@import "../css/global.css";
+@import "../css/cursors.css";
+
+/* Ejemplo de tema “CSS-first” (opcional) */
+@theme {
+  --font-lol: 'BeaufortLOL', 'Cinzel Decorative', serif;
+}
+
+/* Si quieres limitar el escaneo a tus plantillas Django: */
+@source "../templates/**/*.html";
