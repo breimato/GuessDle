@@ -22,25 +22,29 @@ def dashboard_view(request):
 
 
 def register_view(request):
-    if request.method == "POST":
-        username   = request.POST.get("username")
-        first_name = request.POST.get("first_name")
-        email = request.POST.get("email")
-        password1  = request.POST.get("password1")
-        password2  = request.POST.get("password2")
+    if request.method != "POST":
+        return render(request, "accounts/register.html")
 
-        if password1 != password2:
-            messages.error(request, "Las contraseñas no coinciden.")
-        elif User.objects.filter(username=username).exists():
-            messages.error(request, "Este nickname ya está en uso.")
-        else:
-            User.objects.create_user(
-                username=username,
-                first_name=first_name,
-                email=email,
-                password=password1
-            )
-            messages.success(request, "¡Registro completado! Ahora inicia sesión.")
-            return redirect("login")
+    username   = request.POST.get("username")
+    first_name = request.POST.get("first_name")
+    email      = request.POST.get("email")
+    password1  = request.POST.get("password1")
+    password2  = request.POST.get("password2")
 
-    return render(request, "accounts/register.html")
+    if password1 != password2:
+        messages.error(request, "Las contraseñas no coinciden.")
+        return render(request, "accounts/register.html")
+
+    if User.objects.filter(username=username).exists():
+        messages.error(request, "Este nickname ya está en uso.")
+        return render(request, "accounts/register.html")
+
+    User.objects.create_user(
+        username=username,
+        first_name=first_name,
+        email=email,
+        password=password1
+    )
+    messages.success(request, "¡Registro completado! Ahora inicia sesión.")
+    return redirect("login")
+
