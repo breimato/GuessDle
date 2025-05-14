@@ -1,21 +1,16 @@
-{# templates/accounts/dashboard.html #}
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static game_extras %}
 
 {% block title %}Dashboard – GuessDle{% endblock %}
 
 {% block main_class %}
-min-h-screen flex flex-col gap-12
-bg-[url('{% static "img/login.png" %}')] bg-cover bg-center bg-fixed
-pt-24 pb-12 px-4
-login-bg
+min-h-screen flex flex-col gap-12 pt-24 pb-12 px-4
+bg-no-repeat bg-cover bg-fixed
+bg-[url('/static/img/login.png')]
 {% endblock %}
 
 {% block content %}
-
-
-<!-- ================= HERO ================= -->
-<!-- ================= HERO ================= -->
+<!-- ========== HERO ========== -->
 <section class="container mx-auto text-center drop-shadow">
   <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
       style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
@@ -28,15 +23,15 @@ login-bg
   <div class="flex justify-end mt-4">
     <form action="{% url 'logout' %}" method="post">
       {% csrf_token %}
-      <button class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+      <button type="submit"
+              class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
         🔓 Cerrar sesión
       </button>
     </form>
   </div>
 </section>
 
-
-<!-- ================= STATS + JUEGOS ================= -->
+<!-- ========== STATS + JUEGOS ========== -->
 <section class="container mx-auto grid lg:grid-cols-3 gap-8">
   <!-- Stats -->
   <div class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
@@ -44,7 +39,6 @@ login-bg
       📊 Tus estadísticas
     </h2>
 
-    <!-- Tabla de estadísticas con estética de rankings -->
     <table class="w-full text-sm border-separate border-spacing-y-2">
       <thead>
         <tr class="bg-black/80 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
@@ -54,18 +48,18 @@ login-bg
       </thead>
       <tbody>
         {% for j in user_stats.juegos %}
-        <tr class="hover:brightness-110 transition">
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-            {{ j.nombre }}
-          </td>
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
-            {{ j.media_tiempo }} int.
-          </td>
-        </tr>
+          <tr class="hover:brightness-110 transition duration-150">
+            <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+              {{ j.nombre }}
+            </td>
+            <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
+              {{ j.media_tiempo }} int.
+            </td>
+          </tr>
         {% empty %}
-        <tr>
-          <td colspan="2" class="py-4 text-center text-black">Aún no has jugado 💤</td>
-        </tr>
+          <tr>
+            <td colspan="2" class="py-4 text-center text-black">Aún no has jugado 💤</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
@@ -78,22 +72,22 @@ login-bg
     </h2>
     <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
       {% for j in juegos_disponibles %}
-      <a href="{% url 'play' j.slug %}"
-         class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition">
-        {% if j.image %}
-          <img src="{{ j.image.url }}" alt="{{ j.name }}"
-               class="w-10 h-10 object-cover rounded-full border-2 border-yellow-300">
-        {% else %}
-          <span class="text-2xl">🎲</span>
-        {% endif %}
-        <span class="font-semibold">Jugar a {{ j.name }}</span>
-      </a>
+        <a href="{% url 'play' j.slug %}"
+           class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition">
+          {% if j.image %}
+            <img src="{{ j.image.url }}" alt="{{ j.name }}"
+                 class="w-10 h-10 object-cover rounded-full border-2 border-yellow-300">
+          {% else %}
+            <span class="text-2xl">🎲</span>
+          {% endif %}
+          <span class="font-semibold">Jugar a {{ j.name }}</span>
+        </a>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- ================= RANKINGS ================= -->
+<!-- ========== RANKINGS ========== -->
 <section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
   <h2 class="text-2xl text-yellow-900 font-bold mb-6" style="font-family:var(--font-lol);">
     🏆 Rankings
@@ -106,106 +100,27 @@ login-bg
       🌐 Global
     </button>
     {% for juego in juegos_disponibles %}
-    <button data-tab="{{ juego.slug }}"
-            class="rank-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
-      {{ juego.name }}
-    </button>
+      <button data-tab="{{ juego.slug }}"
+              class="rank-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
+        {{ juego.name }}
+      </button>
     {% endfor %}
   </div>
 
-  <!-- Panel GLOBAL -->
+  <!-- Paneles -->
   <div id="tab-global" class="rank-panel">
-    <table class="w-full max-w-8xl mx-auto text-sm border-separate border-spacing-y-2">
-      <thead>
-        <tr class="bg-black/80 text-yellow-100 text-lg"
-    style="font-family:var(--font-lol); letter-spacing:.08em;">
-
-          <th class="rounded-l-2xl"></th>
-          <th>Jugador</th>
-          <th>Media</th>
-          <th class="rounded-r-2xl">Partidas</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in ranking_global %}
-        {% with pos=forloop.counter %}
-        <tr class="hover:brightness-110 transition">
-          <!-- Posición -->
-          <td class="px-0">
-            <div class="w-9 h-9 flex items-center justify-center rounded-full mx-auto
-              {% if pos == 1 %}bg-yellow-400 text-gray-900 font-bold
-              {% elif pos == 2 %}bg-gray-300 text-gray-900 font-bold
-              {% elif pos == 3 %}bg-amber-700 text-white font-bold
-              {% else %}bg-gray-700 text-white text-xs{% endif %}">
-              {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
-            </div>
-          </td>
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-            {{ row.user__username }}
-          </td>
-          <td class="bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
-            {{ row.media|floatformat:2 }}
-          </td>
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
-            {{ row.partidas }}
-          </td>
-        </tr>
-        {% endwith %}
-        {% empty %}
-        <tr><td colspan="4" class="py-4 text-center text-black">Sin datos 😢</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {% include "partials/ranking_table.html" with rows=ranking_global %}
   </div>
 
-  <!-- Panel POR JUEGO -->
   {% for juego in juegos_disponibles %}
-  <div id="tab-{{ juego.slug }}" class="rank-panel hidden">
-    <table class="w-full max-w-8xl mx-auto text-sm border-separate border-spacing-y-2">
-      <thead>
-                <tr class="bg-black/80 text-yellow-100 text-lg"
-    style="font-family:var(--font-lol); letter-spacing:.08em;">
-          <th class="rounded-l-2xl"></th>
-          <th>Jugador</th>
-          <th>Media</th>
-          <th class="rounded-r-2xl">Partidas</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in ranking_por_juego|get_item:juego.slug %}
-        {% with pos=forloop.counter %}
-        <tr class="hover:brightness-110 transition">
-          <td class="px-0">
-            <div class="w-9 h-9 flex items-center justify-center rounded-full mx-auto
-              {% if pos == 1 %}bg-yellow-400 text-gray-900 font-bold
-              {% elif pos == 2 %}bg-gray-300 text-gray-900 font-bold
-              {% elif pos == 3 %}bg-amber-700 text-white font-bold
-              {% else %}bg-gray-700 text-white text-xs{% endif %}">
-              {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
-            </div>
-          </td>
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-            {{ row.user__username }}
-          </td>
-          <td class="bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
-            {{ row.media|floatformat:2 }}
-          </td>
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
-            {{ row.partidas }}
-          </td>
-        </tr>
-        {% endwith %}
-        {% empty %}
-        <tr><td colspan="4" class="py-4 text-center text-black">Sin datos 😢</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+    <div id="tab-{{ juego.slug }}" class="rank-panel hidden">
+      {% include "partials/ranking_table.html" with rows=ranking_por_juego|get_item:juego.slug %}
+    </div>
   {% endfor %}
 </section>
 
-<!-- ================= JS conmutador ================= -->
-<script>
+<!-- ========== JS conmutador ========== -->
+<script defer>
 document.querySelectorAll('#ranking-tabs .rank-tab').forEach(btn=>{
   btn.addEventListener('click',()=>{
     const target = 'tab-' + btn.dataset.tab;

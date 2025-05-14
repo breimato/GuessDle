@@ -1,73 +1,72 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Registro - GuessDle{% endblock %}
+{% block title %}Registro – GuessDle{% endblock %}
 
 {% block main_class %}
-min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-fixed
-bg-[url('{% static "img/login.png" %}')] py-16 px-4
-login-bg
+min-h-screen flex items-center justify-center py-16 px-4
+bg-no-repeat bg-cover bg-fixed
+bg-[url('/static/img/login.png')]
 {% endblock %}
 
 {% block content %}
-<div class="bg-amber-100 text-gray-900 font-serif border-4 border-yellow-800 rounded-[32px] shadow-inner p-10 w-full max-w-md relative">
+<div class="bg-amber-100 text-gray-900 font-serif border-4 border-yellow-800 rounded-[32px] shadow-inner p-10 w-full max-w-md">
 
-    <h2 class="text-3xl font-bold text-center text-yellow-900 mb-6 drop-shadow">Crear cuenta</h2>
+  <h2 class="text-3xl font-bold text-center text-yellow-900 mb-6 drop-shadow">Crear cuenta</h2>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
 
-    <form method="post" novalidate>
-        {% csrf_token %}
+  <form method="post" novalidate>
+    {% csrf_token %}
 
-        <div class="mb-4">
-            <label for="username" class="block text-yellow-900 mb-1">Nickname</label>
-            <input type="text" name="username" id="username"
-                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                   required>
-        </div>
+    <div class="mb-4">
+      <label for="username" class="block text-yellow-900 mb-1">Nickname</label>
+      <input  type="text" name="username" id="username" required autofocus
+              class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+              autocomplete="username">
+    </div>
 
-        <div class="mb-4">
-            <label for="first_name" class="block text-yellow-900 mb-1">Tu nombre real</label>
-            <input type="text" name="first_name" id="first_name"
-                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                   required>
-        </div>
+    <div class="mb-4">
+      <label for="first_name" class="block text-yellow-900 mb-1">Tu nombre real</label>
+      <input type="text" name="first_name" id="first_name" required
+             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+             autocomplete="given-name">
+    </div>
 
-        <div class="mb-4">
-            <label for="email" class="block text-yellow-900 mb-1">Tu email (por si pierdes la pass)</label>
-            <input type="email" name="email" id="email"
-                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                   required>
-        </div>
+    <div class="mb-4">
+      <label for="email" class="block text-yellow-900 mb-1">Tu email</label>
+      <input type="email" name="email" id="email" required
+             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+             autocomplete="email">
+    </div>
 
-        <div class="mb-4">
-            <label for="password1" class="block text-yellow-900 mb-1">Contraseña</label>
-            <input type="password" name="password1" id="password1"
-                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                   required>
-        </div>
+    <div class="mb-4">
+      <label for="password1" class="block text-yellow-900 mb-1">Contraseña</label>
+      <input type="password" name="password1" id="password1" required
+             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+             autocomplete="new-password">
+    </div>
 
-        <div class="mb-6">
-            <label for="password2" class="block text-yellow-900 mb-1">Repite la contraseña</label>
-            <input type="password" name="password2" id="password2"
-                   class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-                   required>
-        </div>
+    <div class="mb-6">
+      <label for="password2" class="block text-yellow-900 mb-1">Repite la contraseña</label>
+      <input type="password" name="password2" id="password2" required
+             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
+             autocomplete="new-password">
+    </div>
 
-        <button type="submit"
-                class="w-full bg-yellow-700 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-800 transition">
-            Registrar
-        </button>
-    </form>
+    <button type="submit"
+            class="w-full bg-yellow-700 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-800 transition">
+      Registrar
+    </button>
+  </form>
 
-    <p class="mt-6 text-sm text-center text-yellow-800">
-        ¿Ya tienes cuenta? <a href="{% url 'login' %}" class="text-yellow-700 hover:underline">Inicia sesión</a>
-    </p>
+  <p class="mt-6 text-sm text-center text-yellow-800">
+    ¿Ya tienes cuenta?
+    <a href="{% url 'login' %}" class="text-yellow-700 hover:underline">Inicia sesión</a>
+  </p>
 </div>
 {% endblock %}
