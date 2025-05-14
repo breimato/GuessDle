@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static game_extras %}
 
 {% block title %}Dashboard – GuessDle{% endblock %}
@@ -6,7 +6,7 @@
 {% block main_class %}
 min-h-screen flex flex-col gap-12 pt-24 pb-12 px-4
 bg-no-repeat bg-cover bg-fixed
-bg-[url('/static/img/login.png')]
+login-bg
 {% endblock %}
 
 {% block content %}
@@ -57,7 +57,7 @@ bg-[url('/static/img/login.png')]
             </td>
           </tr>
         {% empty %}
-          <tr>
+          <tr class="hover:brightness-110 transition duration-150">
             <td colspan="2" class="py-4 text-center text-black">Aún no has jugado 💤</td>
           </tr>
         {% endfor %}
@@ -118,25 +118,8 @@ bg-[url('/static/img/login.png')]
     </div>
   {% endfor %}
 </section>
+{% endblock %}
 
-<!-- ========== JS conmutador ========== -->
-<script defer>
-document.querySelectorAll('#ranking-tabs .rank-tab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const target = 'tab-' + btn.dataset.tab;
-    // botones
-    document.querySelectorAll('#ranking-tabs .rank-tab').forEach(b=>{
-      const active = b === btn;
-      b.classList.toggle('bg-yellow-500', active);
-      b.classList.toggle('text-gray-900', active);
-      b.classList.toggle('bg-yellow-700', !active);
-      b.classList.toggle('text-white', !active);
-    });
-    // paneles
-    document.querySelectorAll('.rank-panel').forEach(p=>{
-      p.classList.toggle('hidden', p.id !== target);
-    });
-  });
-});
-</script>
+{% block extra_scripts %}
+  <script src="{% static 'js/ranking-tabs.js' %}" defer></script>
 {% endblock %}
