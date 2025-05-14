@@ -2,6 +2,7 @@
 venv/
 env/
 ENV/
+node_modules/
 
 # Database
 db.sqlite3
