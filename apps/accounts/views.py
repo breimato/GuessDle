@@ -1,4 +1,6 @@
 # apps/accounts/views.py
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
@@ -31,6 +33,17 @@ def register_view(request):
     password1  = request.POST.get("password1")
     password2  = request.POST.get("password2")
 
+    for field in [username, first_name, email, password1, password2]:
+        if not field or field.strip() == "":
+            messages.error(request, "Todos los campos son obligatorios.")
+            return render(request, "accounts/register.html")
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        messages.error(request, "El email no tiene un formato válido.")
+        return render(request, "accounts/register.html")
+
     if password1 != password2:
         messages.error(request, "Las contraseñas no coinciden.")
         return render(request, "accounts/register.html")
@@ -39,12 +52,17 @@ def register_view(request):
         messages.error(request, "Este nickname ya está en uso.")
         return render(request, "accounts/register.html")
 
+    if User.objects.filter(email=email).exists():
+        messages.error(request, "Ya existe una cuenta con este email.")
+        return render(request, "accounts/register.html")
+
     User.objects.create_user(
         username=username,
         first_name=first_name,
         email=email,
         password=password1
     )
+
     messages.success(request, "¡Registro completado! Ahora inicia sesión.")
     return redirect("login")
 

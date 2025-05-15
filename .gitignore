@@ -4,6 +4,7 @@ env/
 ENV/
 node_modules/
 
+.env
 # Database
 db.sqlite3
 db.sqlite3-journal

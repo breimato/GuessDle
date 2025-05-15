@@ -13,9 +13,9 @@ login-bg
     <h2 class="text-3xl font-bold text-center text-yellow-900 mb-6 drop-shadow">Iniciar sesión</h2>
 
     {% if form.errors %}
-        <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
-            Usuario y/o contraseña, incorrectos
-        </div>
+    <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">
+        Usuario y/o contraseña, incorrectos
+    </div>
     {% endif %}
 
     <form method="post" novalidate>
@@ -42,8 +42,12 @@ login-bg
     </form>
 
     <p class="mt-6 text-sm text-center text-yellow-800">
-    ¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-yellow-700 hover:underline">Regístrate</a>
+        ¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-yellow-700 hover:underline">Regístrate</a>
     </p>
+    <p class="mt-4 text-sm text-center text-yellow-800">
+        <a href="{% url 'password_reset' %}" class="text-yellow-700 hover:underline">¿Olvidaste tu contraseña?</a>
+    </p>
+
 </div>
 
 
