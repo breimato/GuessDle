@@ -30,4 +30,10 @@ def play_view(request, slug):
 
     # --- GET → solo construir contexto y renderizar --------------------
     ctx = build_context(game, sess, target)
+
+    # añade la URL del fondo del juego (o None)
+    ctx["background_url"] = game.background_image.url if game.background_image else None
+
     return render(request, "games/play.html", ctx)
+
+

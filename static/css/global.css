@@ -91,3 +91,15 @@
   background-size: cover;
   background-attachment: fixed;
 }
+
+.game-bg {
+  background-image: url('/static/img/login.png');
+  background-repeat:   no-repeat;
+  background-size:     cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+html, body {
+  height: 100%;
+}

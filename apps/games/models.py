@@ -6,7 +6,8 @@ class Game(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, help_text="URL del juego (ej: 'one-piece')")
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='game_icons/', blank=True, null=True)
+    icon_image = models.ImageField(upload_to='game_icons/', blank=True, null=True)
+    background_image = models.ImageField(upload_to='game_background/', blank=True, null=True)
     numeric_fields = JSONField(default=list, blank=True, help_text="Atributos que deben compararse como números")
 
     # Configuración de API
