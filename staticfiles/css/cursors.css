@@ -1,0 +1,17 @@
+/* Cursor base (espada LoL) */
+*,*:hover{
+  cursor:url('/static/cursors/lol.cur'),auto;
+}
+
+/* Cursor “clic” */
+button:active,
+a:active,
+input:active,
+textarea:active,
+select:active,
+label:active,
+[role="button"]:active,
+[type="submit"]:active,
+[type="button"]:active{
+  cursor:url('/static/cursors/blade.cur'),auto;
+}
