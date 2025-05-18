@@ -1125,7 +1125,7 @@
     "tipo2": null,
     "altura": 110,
     "peso": 34.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "pink",
     "id": 113
   },
@@ -1215,7 +1215,7 @@
     "tipo2": "fairy",
     "altura": 130,
     "peso": 54.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "pink",
     "id": 122
   },
@@ -1345,7 +1345,7 @@
     "tipo2": null,
     "altura": 80,
     "peso": 24.5,
-    "etapa de evolucion": 3,
+    "etapa de evolucion": 2,
     "color": "yellow",
     "id": 135
   },
@@ -1355,7 +1355,7 @@
     "tipo2": null,
     "altura": 90,
     "peso": 25.0,
-    "etapa de evolucion": 4,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 136
   },
@@ -1425,7 +1425,7 @@
     "tipo2": null,
     "altura": 210,
     "peso": 460.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "black",
     "id": 143
   },
@@ -1825,7 +1825,7 @@
     "tipo2": "fairy",
     "altura": 40,
     "peso": 8.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 183
   },
@@ -1835,7 +1835,7 @@
     "tipo2": "fairy",
     "altura": 80,
     "peso": 28.5,
-    "etapa de evolucion": 2,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 184
   },
@@ -1845,7 +1845,7 @@
     "tipo2": null,
     "altura": 120,
     "peso": 38.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 185
   },
@@ -1955,7 +1955,7 @@
     "tipo2": null,
     "altura": 90,
     "peso": 26.5,
-    "etapa de evolucion": 5,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 196
   },
@@ -1965,7 +1965,7 @@
     "tipo2": null,
     "altura": 100,
     "peso": 27.0,
-    "etapa de evolucion": 6,
+    "etapa de evolucion": 2,
     "color": "black",
     "id": 197
   },
@@ -2015,7 +2015,7 @@
     "tipo2": null,
     "altura": 130,
     "peso": 28.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 202
   },
@@ -2255,7 +2255,7 @@
     "tipo2": "flying",
     "altura": 210,
     "peso": 220.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 226
   },
@@ -2415,7 +2415,7 @@
     "tipo2": null,
     "altura": 150,
     "peso": 46.8,
-    "etapa de evolucion": 2,
+    "etapa de evolucion": 3,
     "color": "pink",
     "id": 242
   },
@@ -2525,7 +2525,7 @@
     "tipo2": null,
     "altura": 90,
     "peso": 21.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 253
   },
@@ -2535,7 +2535,7 @@
     "tipo2": null,
     "altura": 170,
     "peso": 52.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "green",
     "id": 254
   },
@@ -2555,7 +2555,7 @@
     "tipo2": "fighting",
     "altura": 90,
     "peso": 19.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 256
   },
@@ -2565,7 +2565,7 @@
     "tipo2": "fighting",
     "altura": 190,
     "peso": 52.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "red",
     "id": 257
   },
@@ -2585,7 +2585,7 @@
     "tipo2": "ground",
     "altura": 70,
     "peso": 28.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 259
   },
@@ -2595,7 +2595,7 @@
     "tipo2": "ground",
     "altura": 150,
     "peso": 81.9,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 260
   },
@@ -2615,7 +2615,7 @@
     "tipo2": null,
     "altura": 100,
     "peso": 37.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "gray",
     "id": 262
   },
@@ -2635,7 +2635,7 @@
     "tipo2": null,
     "altura": 50,
     "peso": 32.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "white",
     "id": 264
   },
@@ -2655,7 +2655,7 @@
     "tipo2": null,
     "altura": 60,
     "peso": 10.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "white",
     "id": 266
   },
@@ -2665,7 +2665,7 @@
     "tipo2": "flying",
     "altura": 100,
     "peso": 28.4,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "yellow",
     "id": 267
   },
@@ -2675,7 +2675,7 @@
     "tipo2": null,
     "altura": 70,
     "peso": 11.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 268
   },
@@ -2685,7 +2685,7 @@
     "tipo2": "poison",
     "altura": 120,
     "peso": 31.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "green",
     "id": 269
   },
@@ -2705,7 +2705,7 @@
     "tipo2": "grass",
     "altura": 120,
     "peso": 32.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 271
   },
@@ -2715,7 +2715,7 @@
     "tipo2": "grass",
     "altura": 150,
     "peso": 55.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "green",
     "id": 272
   },
@@ -2735,7 +2735,7 @@
     "tipo2": "dark",
     "altura": 100,
     "peso": 28.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 274
   },
@@ -2745,7 +2745,7 @@
     "tipo2": "dark",
     "altura": 130,
     "peso": 59.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "brown",
     "id": 275
   },
@@ -2765,7 +2765,7 @@
     "tipo2": "flying",
     "altura": 70,
     "peso": 19.8,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 277
   },
@@ -2785,7 +2785,7 @@
     "tipo2": "flying",
     "altura": 120,
     "peso": 28.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "yellow",
     "id": 279
   },
@@ -2805,7 +2805,7 @@
     "tipo2": "fairy",
     "altura": 80,
     "peso": 20.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "white",
     "id": 281
   },
@@ -2815,7 +2815,7 @@
     "tipo2": "fairy",
     "altura": 160,
     "peso": 48.4,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "white",
     "id": 282
   },
@@ -2835,7 +2835,7 @@
     "tipo2": "flying",
     "altura": 80,
     "peso": 3.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 284
   },
@@ -2855,7 +2855,7 @@
     "tipo2": "fighting",
     "altura": 120,
     "peso": 39.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 286
   },
@@ -2875,7 +2875,7 @@
     "tipo2": null,
     "altura": 140,
     "peso": 46.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "white",
     "id": 288
   },
@@ -2885,7 +2885,7 @@
     "tipo2": null,
     "altura": 200,
     "peso": 130.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "brown",
     "id": 289
   },
@@ -2905,7 +2905,7 @@
     "tipo2": "flying",
     "altura": 80,
     "peso": 12.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "yellow",
     "id": 291
   },
@@ -2915,7 +2915,7 @@
     "tipo2": "ghost",
     "altura": 80,
     "peso": 1.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 292
   },
@@ -2935,7 +2935,7 @@
     "tipo2": null,
     "altura": 100,
     "peso": 40.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 294
   },
@@ -2945,7 +2945,7 @@
     "tipo2": null,
     "altura": 150,
     "peso": 84.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 295
   },
@@ -2965,7 +2965,7 @@
     "tipo2": null,
     "altura": 230,
     "peso": 253.8,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "brown",
     "id": 297
   },
@@ -3005,7 +3005,7 @@
     "tipo2": null,
     "altura": 110,
     "peso": 32.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 301
   },
@@ -3045,7 +3045,7 @@
     "tipo2": "rock",
     "altura": 90,
     "peso": 120.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "gray",
     "id": 305
   },
@@ -3055,7 +3055,7 @@
     "tipo2": "rock",
     "altura": 210,
     "peso": 360.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "gray",
     "id": 306
   },
@@ -3075,7 +3075,7 @@
     "tipo2": "psychic",
     "altura": 130,
     "peso": 31.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 308
   },
@@ -3095,7 +3095,7 @@
     "tipo2": null,
     "altura": 150,
     "peso": 40.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "yellow",
     "id": 310
   },
@@ -3145,7 +3145,7 @@
     "tipo2": "poison",
     "altura": 30,
     "peso": 2.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 315
   },
@@ -3165,7 +3165,7 @@
     "tipo2": null,
     "altura": 170,
     "peso": 80.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 317
   },
@@ -3185,7 +3185,7 @@
     "tipo2": "dark",
     "altura": 180,
     "peso": 88.8,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 319
   },
@@ -3205,7 +3205,7 @@
     "tipo2": null,
     "altura": 1450,
     "peso": 398.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 321
   },
@@ -3225,7 +3225,7 @@
     "tipo2": "ground",
     "altura": 190,
     "peso": 220.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 323
   },
@@ -3255,7 +3255,7 @@
     "tipo2": null,
     "altura": 90,
     "peso": 71.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "purple",
     "id": 326
   },
@@ -3285,7 +3285,7 @@
     "tipo2": "dragon",
     "altura": 110,
     "peso": 15.3,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 329
   },
@@ -3295,7 +3295,7 @@
     "tipo2": "dragon",
     "altura": 200,
     "peso": 82.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "green",
     "id": 330
   },
@@ -3315,7 +3315,7 @@
     "tipo2": "dark",
     "altura": 130,
     "peso": 77.4,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 332
   },
@@ -3335,7 +3335,7 @@
     "tipo2": "flying",
     "altura": 110,
     "peso": 20.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 334
   },
@@ -3395,7 +3395,7 @@
     "tipo2": "ground",
     "altura": 90,
     "peso": 23.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 340
   },
@@ -3415,7 +3415,7 @@
     "tipo2": "dark",
     "altura": 110,
     "peso": 32.8,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "red",
     "id": 342
   },
@@ -3435,7 +3435,7 @@
     "tipo2": "psychic",
     "altura": 150,
     "peso": 108.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "black",
     "id": 344
   },
@@ -3455,7 +3455,7 @@
     "tipo2": "grass",
     "altura": 150,
     "peso": 60.4,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "green",
     "id": 346
   },
@@ -3475,7 +3475,7 @@
     "tipo2": "bug",
     "altura": 150,
     "peso": 68.2,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "gray",
     "id": 348
   },
@@ -3495,7 +3495,7 @@
     "tipo2": null,
     "altura": 620,
     "peso": 162.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "pink",
     "id": 350
   },
@@ -3535,7 +3535,7 @@
     "tipo2": null,
     "altura": 110,
     "peso": 12.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "black",
     "id": 354
   },
@@ -3555,7 +3555,7 @@
     "tipo2": null,
     "altura": 160,
     "peso": 30.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "black",
     "id": 356
   },
@@ -3575,7 +3575,7 @@
     "tipo2": null,
     "altura": 60,
     "peso": 1.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 358
   },
@@ -3615,7 +3615,7 @@
     "tipo2": null,
     "altura": 150,
     "peso": 256.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "gray",
     "id": 362
   },
@@ -3635,7 +3635,7 @@
     "tipo2": "water",
     "altura": 110,
     "peso": 87.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 364
   },
@@ -3645,7 +3645,7 @@
     "tipo2": "water",
     "altura": 140,
     "peso": 150.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 365
   },
@@ -3665,7 +3665,7 @@
     "tipo2": null,
     "altura": 170,
     "peso": 27.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 367
   },
@@ -3675,7 +3675,7 @@
     "tipo2": null,
     "altura": 180,
     "peso": 22.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "pink",
     "id": 368
   },
@@ -3715,7 +3715,7 @@
     "tipo2": null,
     "altura": 110,
     "peso": 110.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "white",
     "id": 372
   },
@@ -3725,7 +3725,7 @@
     "tipo2": "flying",
     "altura": 150,
     "peso": 102.6,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 373
   },
@@ -3745,7 +3745,7 @@
     "tipo2": "psychic",
     "altura": 120,
     "peso": 202.5,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 2,
     "color": "blue",
     "id": 375
   },
@@ -3755,7 +3755,7 @@
     "tipo2": "psychic",
     "altura": 160,
     "peso": 550.0,
-    "etapa de evolucion": 1,
+    "etapa de evolucion": 3,
     "color": "blue",
     "id": 376
   },
