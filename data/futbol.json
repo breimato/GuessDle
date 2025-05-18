@@ -1,0 +1,866 @@
+[
+    {
+        "nombre": "Real Madrid C.F.",
+        "estadio": "Santiago Bernabéu",
+        "fundacion": 1902,
+        "champions": 15,
+        "ligas": 36,
+        "colores": "Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "FC Barcelona",
+        "estadio": "Camp Nou",
+        "fundacion": 1899,
+        "champions": 5,
+        "ligas": 28,
+        "colores": "Azul, Grana",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Atlético de Madrid",
+        "estadio": "Cívitas Metropolitano",
+        "fundacion": 1903,
+        "champions": 0,
+        "ligas": 11,
+        "colores": "Rojo, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Sevilla FC",
+        "estadio": "Ramón Sánchez-Pizjuán",
+        "fundacion": 1890,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Blanco, Rojo",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Real Sociedad",
+        "estadio": "Reale Arena",
+        "fundacion": 1909,
+        "champions": 0,
+        "ligas": 2,
+        "colores": "Azul, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Athletic Club",
+        "estadio": "San Mamés",
+        "fundacion": 1898,
+        "champions": 0,
+        "ligas": 8,
+        "colores": "Rojo, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Valencia CF",
+        "estadio": "Mestalla",
+        "fundacion": 1919,
+        "champions": 0,
+        "ligas": 6,
+        "colores": "Blanco, Negro",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Villarreal CF",
+        "estadio": "Estadio de la Cerámica",
+        "fundacion": 1923,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Amarillo",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Real Betis",
+        "estadio": "Benito Villamarín",
+        "fundacion": 1907,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Verde, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "RC Celta de Vigo",
+        "estadio": "Abanca-Balaídos",
+        "fundacion": 1923,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Celeste, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "CA Osasuna",
+        "estadio": "El Sadar",
+        "fundacion": 1920,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Azul",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Rayo Vallecano",
+        "estadio": "Campo de Fútbol de Vallecas",
+        "fundacion": 1924,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Rojo",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Getafe CF",
+        "estadio": "Coliseum Alfonso Pérez",
+        "fundacion": 1983,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "RCD Mallorca",
+        "estadio": "Son Moix",
+        "fundacion": 1916,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Negro",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "UD Almería",
+        "estadio": "Power Horse Stadium",
+        "fundacion": 1989,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Granada CF",
+        "estadio": "Nuevo Estadio de Los Cármenes",
+        "fundacion": 1931,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Cádiz CF",
+        "estadio": "Nuevo Mirandilla",
+        "fundacion": 1910,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Amarillo, Azul",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "UD Las Palmas",
+        "estadio": "Estadio de Gran Canaria",
+        "fundacion": 1949,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Amarillo, Azul",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Deportivo Alavés",
+        "estadio": "Mendizorroza",
+        "fundacion": 1921,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "RCD Espanyol",
+        "estadio": "RCDE Stadium",
+        "fundacion": 1900,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Azul",
+        "competicion": "La Liga"
+    },
+    {
+        "nombre": "Arsenal FC",
+        "estadio": "Emirates Stadium",
+        "fundacion": 1886,
+        "champions": 0,
+        "ligas": 13,
+        "colores": "Rojo, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Aston Villa FC",
+        "estadio": "Villa Park",
+        "fundacion": 1874,
+        "champions": 1,
+        "ligas": 7,
+        "colores": "Granate, Azul",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "AFC Bournemouth",
+        "estadio": "Vitality Stadium",
+        "fundacion": 1899,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Negro",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Brentford FC",
+        "estadio": "Gtech Community Stadium",
+        "fundacion": 1889,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Brighton & Hove Albion FC",
+        "estadio": "Amex Stadium",
+        "fundacion": 1901,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Chelsea FC",
+        "estadio": "Stamford Bridge",
+        "fundacion": 1905,
+        "champions": 2,
+        "ligas": 6,
+        "colores": "Azul",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Crystal Palace FC",
+        "estadio": "Selhurst Park",
+        "fundacion": 1905,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Azul",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Everton FC",
+        "estadio": "Goodison Park",
+        "fundacion": 1878,
+        "champions": 0,
+        "ligas": 9,
+        "colores": "Azul",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Fulham FC",
+        "estadio": "Craven Cottage",
+        "fundacion": 1879,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Negro",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Ipswich Town FC",
+        "estadio": "Portman Road",
+        "fundacion": 1878,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Azul, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Leicester City FC",
+        "estadio": "King Power Stadium",
+        "fundacion": 1884,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Azul, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Liverpool FC",
+        "estadio": "Anfield",
+        "fundacion": 1892,
+        "champions": 6,
+        "ligas": 20,
+        "colores": "Rojo",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Manchester City FC",
+        "estadio": "Etihad Stadium",
+        "fundacion": 1880,
+        "champions": 1,
+        "ligas": 10,
+        "colores": "Celeste, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Manchester United FC",
+        "estadio": "Old Trafford",
+        "fundacion": 1878,
+        "champions": 3,
+        "ligas": 20,
+        "colores": "Rojo, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Newcastle United FC",
+        "estadio": "St James' Park",
+        "fundacion": 1892,
+        "champions": 0,
+        "ligas": 4,
+        "colores": "Negro, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Nottingham Forest FC",
+        "estadio": "City Ground",
+        "fundacion": 1865,
+        "champions": 2,
+        "ligas": 1,
+        "colores": "Rojo, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Southampton FC",
+        "estadio": "St Mary's Stadium",
+        "fundacion": 1885,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Tottenham Hotspur FC",
+        "estadio": "Tottenham Hotspur Stadium",
+        "fundacion": 1882,
+        "champions": 0,
+        "ligas": 2,
+        "colores": "Blanco, Azul Marino",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "West Ham United FC",
+        "estadio": "London Stadium",
+        "fundacion": 1895,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Granate, Azul Claro",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "Wolverhampton Wanderers FC",
+        "estadio": "Molineux Stadium",
+        "fundacion": 1877,
+        "champions": 0,
+        "ligas": 3,
+        "colores": "Oro, Negro",
+        "competicion": "Premier"
+    },
+    {
+        "nombre": "FC Bayern München",
+        "estadio": "Allianz Arena",
+        "fundacion": 1900,
+        "champions": 6,
+        "ligas": 34,
+        "colores": "Rojo, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Borussia Dortmund",
+        "estadio": "Signal Iduna Park",
+        "fundacion": 1909,
+        "champions": 1,
+        "ligas": 8,
+        "colores": "Amarillo, Negro",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "RB Leipzig",
+        "estadio": "Red Bull Arena",
+        "fundacion": 2009,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Rojo",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Bayer 04 Leverkusen",
+        "estadio": "BayArena",
+        "fundacion": 1904,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Negro",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Eintracht Frankfurt",
+        "estadio": "Deutsche Bank Park",
+        "fundacion": 1899,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Blanco, Negro",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "SC Freiburg",
+        "estadio": "Europa-Park Stadion",
+        "fundacion": 1904,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "1. FSV Mainz 05",
+        "estadio": "Mewa Arena",
+        "fundacion": 1905,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "TSG 1899 Hoffenheim",
+        "estadio": "PreZero Arena",
+        "fundacion": 1899,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "VfB Stuttgart",
+        "estadio": "MHPArena",
+        "fundacion": 1893,
+        "champions": 0,
+        "ligas": 5,
+        "colores": "Blanco, Rojo",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Werder Bremen",
+        "estadio": "Weserstadion",
+        "fundacion": 1899,
+        "champions": 0,
+        "ligas": 4,
+        "colores": "Verde, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Borussia Mönchengladbach",
+        "estadio": "Borussia-Park",
+        "fundacion": 1900,
+        "champions": 0,
+        "ligas": 5,
+        "colores": "Blanco, Negro",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "VfL Wolfsburg",
+        "estadio": "Volkswagen Arena",
+        "fundacion": 1945,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Verde, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "1. FC Union Berlin",
+        "estadio": "Stadion An der Alten Försterei",
+        "fundacion": 1966,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "FC Augsburg",
+        "estadio": "WWK Arena",
+        "fundacion": 1907,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Verde",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "1. FC Heidenheim 1846",
+        "estadio": "Voith-Arena",
+        "fundacion": 1846,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "VfL Bochum",
+        "estadio": "Vonovia Ruhrstadion",
+        "fundacion": 1848,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "FC St. Pauli",
+        "estadio": "Millerntor-Stadion",
+        "fundacion": 1910,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Marrón, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Holstein Kiel",
+        "estadio": "Holstein-Stadion",
+        "fundacion": 1900,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "Bundesliga"
+    },
+    {
+        "nombre": "Atalanta B.C.",
+        "estadio": "Gewiss Stadium",
+        "fundacion": 1907,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Negro, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Bologna F.C. 1909",
+        "estadio": "Stadio Renato Dall'Ara",
+        "fundacion": 1909,
+        "champions": 0,
+        "ligas": 7,
+        "colores": "Rojo, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Cagliari Calcio",
+        "estadio": "Unipol Domus",
+        "fundacion": 1920,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Rojo, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Como 1907",
+        "estadio": "Stadio Giuseppe Sinigaglia",
+        "fundacion": 1907,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Blanco",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Empoli F.C.",
+        "estadio": "Stadio Carlo Castellani",
+        "fundacion": 1920,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "ACF Fiorentina",
+        "estadio": "Stadio Artemio Franchi",
+        "fundacion": 1926,
+        "champions": 0,
+        "ligas": 2,
+        "colores": "Púrpura",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Genoa C.F.C.",
+        "estadio": "Stadio Luigi Ferraris",
+        "fundacion": 1893,
+        "champions": 0,
+        "ligas": 9,
+        "colores": "Rojo, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Hellas Verona F.C.",
+        "estadio": "Stadio Marcantonio Bentegodi",
+        "fundacion": 1903,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Amarillo, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Inter de Milán",
+        "estadio": "Giuseppe Meazza",
+        "fundacion": 1908,
+        "champions": 3,
+        "ligas": 19,
+        "colores": "Negro, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Juventus F.C.",
+        "estadio": "Allianz Stadium",
+        "fundacion": 1897,
+        "champions": 2,
+        "ligas": 36,
+        "colores": "Blanco, Negro",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "S.S. Lazio",
+        "estadio": "Stadio Olímpico",
+        "fundacion": 1900,
+        "champions": 0,
+        "ligas": 2,
+        "colores": "Celeste, Blanco",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "U.S. Lecce",
+        "estadio": "Stadio Via del Mare",
+        "fundacion": 1908,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Amarillo",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "AC Milan",
+        "estadio": "San Siro",
+        "fundacion": 1899,
+        "champions": 7,
+        "ligas": 19,
+        "colores": "Rojo, Negro",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "AC Monza",
+        "estadio": "U-Power Stadium",
+        "fundacion": 1912,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "S.S.C. Napoli",
+        "estadio": "Stadio Diego Armando Maradona",
+        "fundacion": 1926,
+        "champions": 0,
+        "ligas": 3,
+        "colores": "Celeste, Blanco",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Parma Calcio 1913",
+        "estadio": "Stadio Ennio Tardini",
+        "fundacion": 1913,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Amarillo, Azul",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "AS Roma",
+        "estadio": "Stadio Olímpico",
+        "fundacion": 1927,
+        "champions": 0,
+        "ligas": 3,
+        "colores": "Rojo, Amarillo",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Torino F.C.",
+        "estadio": "Stadio Olímpico Grande Torino",
+        "fundacion": 1906,
+        "champions": 0,
+        "ligas": 7,
+        "colores": "Granate",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Udinese Calcio",
+        "estadio": "Dacia Arena",
+        "fundacion": 1896,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Negro",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Venezia F.C.",
+        "estadio": "Stadio Pier Luigi Penzo",
+        "fundacion": 1907,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Naranja, Verde, Negro",
+        "competicion": "Serie A"
+    },
+    {
+        "nombre": "Paris Saint-Germain FC",
+        "estadio": "Parc des Princes",
+        "fundacion": 1970,
+        "champions": 0,
+        "ligas": 13,
+        "colores": "Azul, Rojo",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Olympique de Marseille",
+        "estadio": "Stade Vélodrome",
+        "fundacion": 1899,
+        "champions": 1,
+        "ligas": 9,
+        "colores": "Blanco, Azul",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "AS Monaco FC",
+        "estadio": "Stade Louis II",
+        "fundacion": 1924,
+        "champions": 0,
+        "ligas": 8,
+        "colores": "Rojo, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Olympique Lyonnais",
+        "estadio": "Parc Olympique Lyonnais",
+        "fundacion": 1950,
+        "champions": 0,
+        "ligas": 7,
+        "colores": "Blanco, Rojo, Azul",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "LOSC Lille",
+        "estadio": "Stade Pierre-Mauroy",
+        "fundacion": 1944,
+        "champions": 0,
+        "ligas": 4,
+        "colores": "Rojo, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Stade Rennais FC",
+        "estadio": "Roazhon Park",
+        "fundacion": 1901,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Negro",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "OGC Nice",
+        "estadio": "Allianz Riviera",
+        "fundacion": 1904,
+        "champions": 0,
+        "ligas": 4,
+        "colores": "Rojo, Negro",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "RC Lens",
+        "estadio": "Stade Bollaert-Delelis",
+        "fundacion": 1906,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Rojo, Amarillo",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "FC Nantes",
+        "estadio": "Stade de la Beaujoire",
+        "fundacion": 1943,
+        "champions": 0,
+        "ligas": 8,
+        "colores": "Amarillo, Verde",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Stade Brestois 29",
+        "estadio": "Stade Francis-Le Blé",
+        "fundacion": 1950,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Rojo, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Stade de Reims",
+        "estadio": "Stade Auguste Delaune",
+        "fundacion": 1931,
+        "champions": 0,
+        "ligas": 6,
+        "colores": "Rojo, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "RC Strasbourg Alsace",
+        "estadio": "Stade de la Meinau",
+        "fundacion": 1906,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Azul, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Montpellier HSC",
+        "estadio": "Stade de la Mosson",
+        "fundacion": 1974,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Naranja, Azul",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Toulouse FC",
+        "estadio": "Stadium de Toulouse",
+        "fundacion": 1970,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Violeta, Blanco",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Le Havre AC",
+        "estadio": "Stade Océane",
+        "fundacion": 1872,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Azul, Celeste",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "AJ Auxerre",
+        "estadio": "Stade de l'Abbé-Deschamps",
+        "fundacion": 1905,
+        "champions": 0,
+        "ligas": 1,
+        "colores": "Blanco, Azul",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "Angers SCO",
+        "estadio": "Stade Raymond Kopa",
+        "fundacion": 1919,
+        "champions": 0,
+        "ligas": 0,
+        "colores": "Blanco, Negro",
+        "competicion": "Ligue 1"
+    },
+    {
+        "nombre": "AS Saint-Étienne",
+        "estadio": "Stade Geoffroy-Guichard",
+        "fundacion": 1919,
+        "champions": 0,
+        "ligas": 10,
+        "colores": "Verde, Blanco",
+        "competicion": "Ligue 1"
+    }
+]
