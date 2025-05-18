@@ -3360,7 +3360,7 @@
       "h": 48
     }, 
     "gender": "male", 
-    "attackType": "melee", 
+    "attackType": "ranged",
     "releaseDate": 2010, 
     "region": "noxus", 
     "lane": "mid"
