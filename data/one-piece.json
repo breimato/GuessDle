@@ -62,7 +62,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Baratie",
     "capítulo": 43,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Tony-Tony Chopper",
@@ -127,7 +127,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Impel Down",
     "capítulo": 528,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Zeus",
@@ -153,7 +153,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 704,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Bartolomeo",
@@ -163,19 +163,6 @@
     "estatura": "220cm",
     "edad": "24 años",
     "fruta": "Paramecia",
-    "estado": "vivo",
-    "arco de primera aparición": "Dressrosa",
-    "capítulo": 705,
-    "haki": ""
-  },
-  {
-    "nombre": "Gambia",
-    "Afiliacion": "Gran Flota de Sombrero de Paja",
-    "rol": "Consejero",
-    "recompensa": "67.0000.000",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 705,
@@ -192,7 +179,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 704,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Leo",
@@ -283,7 +270,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Villa Syrup",
     "capítulo": 23,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Sham",
@@ -426,7 +413,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Bepo",
@@ -465,7 +452,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Capone Bege",
@@ -500,7 +487,7 @@
     "recompensa": "140.000.000",
     "estatura": "174cm",
     "edad": "24 años",
-    "fruta": "Ninguna",
+    "fruta": "Paramecia",
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
@@ -513,7 +500,7 @@
     "recompensa": "108.000.000",
     "estatura": "388cm",
     "edad": "47 años",
-    "fruta": "Ninguna",
+    "fruta": "Paramecia",
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
@@ -543,7 +530,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Amazon Lily",
     "capítulo": 516,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Boa Marigold",
@@ -556,20 +543,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Amazon Lily",
     "capítulo": 516,
-    "haki": "Kenbunshoku, Busoshoku"
-  },
-  {
-    "nombre": "Margaret",
-    "Afiliacion": "Piratas Kuja",
-    "rol": "",
-    "recompensa": "",
-    "estatura": "178cm",
-    "edad": "18 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Amazon Lily",
-    "capítulo": 514,
-    "haki": ""
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Shiki",
@@ -624,19 +598,6 @@
     "haki": ""
   },
   {
-    "nombre": "Aladdin",
-    "Afiliacion": "Piratas del Sol",
-    "rol": "Vicecapitán",
-    "recompensa": "",
-    "estatura": "627cm",
-    "edad": "46 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Isla Gyojin",
-    "capítulo": 620,
-    "haki": ""
-  },
-  {
     "nombre": "Dracule Mihawk",
     "Afiliacion": "Shichibukai",
     "rol": "",
@@ -647,7 +608,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Baratie",
     "capítulo": 49,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Crocodile",
@@ -656,20 +617,20 @@
     "recompensa": "1.965.000.000",
     "estatura": "253cm",
     "edad": "46 años",
-    "fruta": "Ninguna",
+    "fruta": "Logia",
     "estado": "vivo",
     "arco de primera aparición": "Little Garden",
     "capítulo": 126,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Das Bones",
+    "nombre": "Daz Bones",
     "Afiliacion": "",
     "rol": "",
     "recompensa": "75.000.000",
     "estatura": "212cm",
     "edad": "31 años",
-    "fruta": "Ninguna",
+    "fruta": "Paramecia",
     "estado": "vivo",
     "arco de primera aparición": "Arabasta",
     "capítulo": 160,
@@ -686,7 +647,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Zou",
     "capítulo": 802,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Shanks",
@@ -790,7 +751,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Whole Cake Island",
     "capítulo": 846,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Charlotte Cracker",
@@ -803,7 +764,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Whole Cake Island",
     "capítulo": 835,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Charlotte Daifuku",
@@ -816,7 +777,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Whole Cake Island",
     "capítulo": 861,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Charlotte Oven",
@@ -829,7 +790,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Whole Cake Island",
     "capítulo": 861,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Charlotte Brulee",
@@ -881,33 +842,20 @@
     "estado": "vivo",
     "arco de primera aparición": "Isla Gyojin",
     "capítulo": 651,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Streusen",
+    "nombre": "Charlotte Perospero",
     "Afiliacion": "Piratas de Big Mom",
-    "rol": "Cocinero",
-    "recompensa": "",
-    "estatura": "140cm",
-    "edad": "92 años",
+    "rol": "Teniente",
+    "recompensa": "700.000.000",
+    "estatura": "333cm",
+    "edad": "50 años",
     "fruta": "Paramecia",
     "estado": "vivo",
     "arco de primera aparición": "Whole Cake Island",
-    "capítulo": 858,
-    "haki": ""
-  },
-  {
-    "nombre": "Kingbaum",
-    "Afiliacion": "Piratas de Big Mom",
-    "rol": "Homie",
-    "recompensa": "",
-    "estatura": "2 340cm",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "fallecido",
-    "arco de primera aparición": "Whole Cake Island",
-    "capítulo": 836,
-    "haki": "Kenbunshoku, Busoshoku"
+    "capítulo": 834,
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kaido",
@@ -933,7 +881,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 920,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Queen",
@@ -946,7 +894,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 920,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Jack",
@@ -959,7 +907,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 801,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Page One",
@@ -972,7 +920,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 929,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Ulti",
@@ -985,7 +933,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 977,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Black Maria",
@@ -998,7 +946,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 977,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Sasaki",
@@ -1011,7 +959,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 977,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Basil Hawkins",
@@ -1024,7 +972,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Scratchmen Apoo",
@@ -1037,7 +985,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 498,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Marshall D. Teach",
@@ -1050,7 +998,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 146,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Jesus Burgess",
@@ -1063,7 +1011,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 222,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Shiryu",
@@ -1258,7 +1206,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Marineford",
     "capítulo": 552,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Hody Jones",
@@ -1280,7 +1228,7 @@
     "recompensa": "",
     "estatura": "352cm",
     "edad": "35 años",
-    "fruta": "Ninguna",
+    "fruta": "Paramecia",
     "estado": "desconocido",
     "arco de primera aparición": "Isla Gyojin",
     "capítulo": 606,
@@ -1310,7 +1258,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 700,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Diamante",
@@ -1323,7 +1271,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 700,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Pica",
@@ -1336,7 +1284,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Dressrosa",
     "capítulo": 700,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Vergo",
@@ -1349,7 +1297,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Punk Hazard",
     "capítulo": 671,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Senor Pink",
@@ -1388,12 +1336,12 @@
     "estado": "vivo",
     "arco de primera aparición": "Water 7",
     "capítulo": 323,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Spandam",
     "Afiliacion": "Cipher Pol 9",
-    "rol": "",
+    "rol": "Jefe",
     "recompensa": "",
     "estatura": "192cm",
     "edad": "41 años",
@@ -1417,7 +1365,7 @@
     "haki": ""
   },
   {
-    "nombre": "Sakazuki",
+    "nombre": "Akainu (Sakazuki)",
     "Afiliacion": "Marina",
     "rol": "Almirante de Flota",
     "recompensa": "",
@@ -1427,10 +1375,10 @@
     "estado": "vivo",
     "arco de primera aparición": "Enies Lobby",
     "capítulo": 397,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Borsalino",
+    "nombre": "Kizaru (Borsalino)",
     "Afiliacion": "Marina",
     "rol": "Almirante",
     "recompensa": "",
@@ -1440,10 +1388,10 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 504,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Fujitora",
+    "nombre": "Fujitora (Issho)",
     "Afiliacion": "Marina",
     "rol": "Almirante",
     "recompensa": "",
@@ -1456,17 +1404,17 @@
     "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Ryokugyu",
+    "nombre": "Ryokugyu (Aramaki)",
     "Afiliacion": "Marina",
     "rol": "Almirante",
     "recompensa": "",
     "estatura": "",
     "edad": "",
-    "fruta": "Ninguna",
+    "fruta": "Logia",
     "estado": "vivo",
     "arco de primera aparición": "Reverie",
     "capítulo": 905,
-    "haki": ""
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Monkey D. Garp",
@@ -1492,20 +1440,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 234,
-    "haki": "Kenbunshoku, Busoshoku"
-  },
-  {
-    "nombre": "Yamakaji",
-    "Afiliacion": "Marina",
-    "rol": "Vicealmirante",
-    "recompensa": "",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Enies Lobby",
-    "capítulo": 420,
-    "haki": ""
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Bastille",
@@ -1518,7 +1453,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Marineford",
     "capítulo": 553,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Smoker",
@@ -1531,7 +1466,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Loguetown",
     "capítulo": 97,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Tashigi",
@@ -1544,7 +1479,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Loguetown",
     "capítulo": 96,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kobby",
@@ -1557,7 +1492,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Romance Dawn",
     "capítulo": 2,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Helmeppo",
@@ -1622,7 +1557,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Archipiélago Sabaody",
     "capítulo": 497,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Makino",
@@ -1817,7 +1752,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Reverse Mountain",
     "capítulo": 102,
-    "haki": "Busoshoku"
+    "haki": ""
   },
   {
     "nombre": "Dorry",
@@ -1846,13 +1781,13 @@
     "haki": ""
   },
   {
-    "nombre": "Dolton",
+    "nombre": "Dalton",
     "Afiliacion": "Isla Drum",
     "rol": "Soberano",
     "recompensa": "",
     "estatura": "218cm",
     "edad": "35 años",
-    "fruta": "Ninguna",
+    "fruta": "Zoan",
     "estado": "vivo",
     "arco de primera aparición": "Isla Drum",
     "capítulo": 132,
@@ -1872,7 +1807,7 @@
     "haki": ""
   },
   {
-    "nombre": "Hiluluk",
+    "nombre": "Hiruluk",
     "Afiliacion": "Isla Drum",
     "rol": "Médico",
     "recompensa": "",
@@ -1882,32 +1817,6 @@
     "estado": "fallecido",
     "arco de primera aparición": "Isla Drum",
     "capítulo": 141,
-    "haki": ""
-  },
-  {
-    "nombre": "Chess",
-    "Afiliacion": "Isla Drum",
-    "rol": "Jefe de Estado Mayor",
-    "recompensa": "",
-    "estatura": "194cm",
-    "edad": "32 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Isla Drum",
-    "capítulo": 131,
-    "haki": ""
-  },
-  {
-    "nombre": "Kuromarimo",
-    "Afiliacion": "Isla Drum",
-    "rol": "Director",
-    "recompensa": "",
-    "estatura": "186cm",
-    "edad": "30 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Isla Drum",
-    "capítulo": 131,
     "haki": ""
   },
   {
@@ -1921,19 +1830,6 @@
     "estado": "vivo",
     "arco de primera aparición": "Isla Drum",
     "capítulo": 142,
-    "haki": ""
-  },
-  {
-    "nombre": "Nefertari Titi",
-    "Afiliacion": "Alabasta",
-    "rol": "Queen",
-    "recompensa": "",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "fallecido",
-    "arco de primera aparición": "Arabasta",
-    "capítulo": 215,
     "haki": ""
   },
   {
@@ -2002,59 +1898,7 @@
     "haki": ""
   },
   {
-    "nombre": "Toto",
-    "Afiliacion": "Alabasta",
-    "rol": "Residente",
-    "recompensa": "",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Arabasta",
-    "capítulo": 163,
-    "haki": ""
-  },
-  {
-    "nombre": "Tonjit",
-    "Afiliacion": "Long Ring Long Land",
-    "rol": "Nomad",
-    "recompensa": "",
-    "estatura": "110cm",
-    "edad": "63 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Long Ring Long Land",
-    "capítulo": 304,
-    "haki": ""
-  },
-  {
-    "nombre": "Shelly",
-    "Afiliacion": "Long Ring Long Land",
-    "rol": "Residente",
-    "recompensa": "",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Long Ring Long Land",
-    "capítulo": 304,
-    "haki": ""
-  },
-  {
-    "nombre": "Gedatsu",
-    "Afiliacion": "Source de l'insouciance",
-    "rol": "Employee",
-    "recompensa": "",
-    "estatura": "220cm",
-    "edad": "31 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Skypiea",
-    "capítulo": 241,
-    "haki": "Kenbunshoku"
-  },
-  {
-    "nombre": "Icebarg",
+    "nombre": "Iceberg",
     "Afiliacion": "Water Seven",
     "rol": "Galley-La Company (manager)",
     "recompensa": "",
@@ -2090,7 +1934,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Water 7",
     "capítulo": 352,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kokoro",
@@ -2119,19 +1963,6 @@
     "haki": ""
   },
   {
-    "nombre": "Disco",
-    "Afiliacion": "Archipel des Sabaody",
-    "rol": "Residente",
-    "recompensa": "",
-    "estatura": "",
-    "edad": "",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Archipiélago Sabaody",
-    "capítulo": 500,
-    "haki": ""
-  },
-  {
     "nombre": "Duval",
     "Afiliacion": "Archipel des Sabaody",
     "rol": "Residente",
@@ -2146,9 +1977,9 @@
   },
   {
     "nombre": "Loki",
-    "Afiliacion": "Erbaf",
+    "Afiliacion": "Elbaf",
     "rol": "Prince",
-    "recompensa": "",
+    "recompensa": "2.600.000.000",
     "estatura": "",
     "edad": "63 años",
     "fruta": "Ninguna",
@@ -2159,7 +1990,7 @@
   },
   {
     "nombre": "Jorl",
-    "Afiliacion": "Erbaf",
+    "Afiliacion": "Elbaf",
     "rol": "Residente",
     "recompensa": "",
     "estatura": "2 150cm",
@@ -2172,7 +2003,7 @@
   },
   {
     "nombre": "Jarl",
-    "Afiliacion": "Erbaf",
+    "Afiliacion": "Elbaf",
     "rol": "Residente",
     "recompensa": "",
     "estatura": "2 050cm",
@@ -2185,7 +2016,7 @@
   },
   {
     "nombre": "Oimo",
-    "Afiliacion": "Erbaf",
+    "Afiliacion": "Elbaf",
     "rol": "Residente",
     "recompensa": "",
     "estatura": "1 600cm",
@@ -2198,7 +2029,7 @@
   },
   {
     "nombre": "Kaashii",
-    "Afiliacion": "Erbaf",
+    "Afiliacion": "Elbaf",
     "rol": "Residente",
     "recompensa": "",
     "estatura": "1 700cm",
@@ -2220,7 +2051,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Wano",
     "capítulo": 920,
-    "haki": ""
+    "haki": "Haoshoku, Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Denjiro",
@@ -2233,7 +2064,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 919,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Izo",
@@ -2246,7 +2077,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Marineford",
     "capítulo": 553,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kikunojo",
@@ -2259,7 +2090,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 913,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Raizo",
@@ -2272,7 +2103,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Zou",
     "capítulo": 817,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Ashura Doji",
@@ -2285,7 +2116,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Wano",
     "capítulo": 920,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kawamatsu",
@@ -2298,7 +2129,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 920,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Shinobu",
@@ -2350,7 +2181,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Wano",
     "capítulo": 926,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Yamato",
@@ -2441,7 +2272,7 @@
     "estado": "fallecido",
     "arco de primera aparición": "Zou",
     "capítulo": 805,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Judge Vinsmoke",
@@ -2519,7 +2350,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 234,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Enel",
@@ -2558,7 +2389,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Post-Guerra",
     "capítulo": 583,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Emporio Ivankov",
@@ -2584,7 +2415,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Reverie",
     "capítulo": 904,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Morley",
@@ -2597,7 +2428,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Reverie",
     "capítulo": 904,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Lindbergh",
@@ -2610,7 +2441,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Reverie",
     "capítulo": 904,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Inazuma",
@@ -2666,7 +2497,7 @@
   },
   {
     "nombre": "Jabura",
-    "Afiliacion": "Anciens membres du Cipher Pol",
+    "Afiliacion": "Cipher Pol",
     "rol": "Cipher Pol n°9",
     "recompensa": "",
     "estatura": "212cm",
@@ -2675,11 +2506,11 @@
     "estado": "vivo",
     "arco de primera aparición": "Enies Lobby",
     "capítulo": 375,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Blueno",
-    "Afiliacion": "Anciens membres du Cipher Pol",
+    "Afiliacion": "Cipher Pol",
     "rol": "Cipher Pol n°9",
     "recompensa": "",
     "estatura": "258cm",
@@ -2688,37 +2519,11 @@
     "estado": "vivo",
     "arco de primera aparición": "Water 7",
     "capítulo": 325,
-    "haki": "Kenbunshoku, Busoshoku"
-  },
-  {
-    "nombre": "Kumadori",
-    "Afiliacion": "Anciens membres du Cipher Pol",
-    "rol": "Cipher Pol n°9",
-    "recompensa": "",
-    "estatura": "338cm",
-    "edad": "36 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Enies Lobby",
-    "capítulo": 375,
-    "haki": "Kenbunshoku, Busoshoku"
-  },
-  {
-    "nombre": "Fukuro",
-    "Afiliacion": "Anciens membres du Cipher Pol",
-    "rol": "Cipher Pol n°9",
-    "recompensa": "",
-    "estatura": "331cm",
-    "edad": "31 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Enies Lobby",
-    "capítulo": 375,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Kalifa",
-    "Afiliacion": "Anciens membres du Cipher Pol",
+    "Afiliacion": "Cipher Pol",
     "rol": "Cipher Pol n°9",
     "recompensa": "",
     "estatura": "185cm",
@@ -2727,37 +2532,24 @@
     "estado": "vivo",
     "arco de primera aparición": "Water 7",
     "capítulo": 323,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
-    "nombre": "Nero",
-    "Afiliacion": "Anciens membres du Cipher Pol",
-    "rol": "Cipher Pol n°9",
-    "recompensa": "",
-    "estatura": "202cm",
-    "edad": "22 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Water 7",
-    "capítulo": 367,
-    "haki": ""
+      "nombre": "Kaku",
+      "Afiliacion": "Cipher Pol",
+      "rol": "Cipher Pol n°9",
+      "recompensa": "",
+      "estatura": "193cm",
+      "edad": "25 años",
+      "fruta": "Zoan",
+      "estado": "vivo",
+      "arco de primera aparición": "Water 7",
+      "capítulo": 323,
+      "haki": ""
   },
   {
-    "nombre": "Spandine",
-    "Afiliacion": "Anciens membres du Cipher Pol",
-    "rol": "Cipher Pol n°9",
-    "recompensa": "",
-    "estatura": "275cm",
-    "edad": "66 años",
-    "fruta": "Ninguna",
-    "estado": "vivo",
-    "arco de primera aparición": "Enies Lobby",
-    "capítulo": 392,
-    "haki": ""
-  },
-  {
-    "nombre": "Aokiji",
-    "Afiliacion": "Anciens membres de la Marine",
+    "nombre": "Aokiji (Kuzan)",
+    "Afiliacion": "Marina",
     "rol": "Almirante",
     "recompensa": "",
     "estatura": "298cm",
@@ -2770,8 +2562,8 @@
   },
   {
     "nombre": "Morgan",
-    "Afiliacion": "Anciens membres de la Marine",
-    "rol": "Coronel",
+    "Afiliacion": "Marina",
+    "rol": "Capitán",
     "recompensa": "",
     "estatura": "285cm",
     "edad": "44 años",
@@ -2792,7 +2584,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 222,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Bartholomew Kuma",
@@ -2805,7 +2597,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Jaya",
     "capítulo": 233,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Cesar Clown",
@@ -2870,7 +2662,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Egghead",
     "capítulo": 1059,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "S-Hawk",
@@ -2883,7 +2675,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Egghead",
     "capítulo": 1059,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "S-Bear",
@@ -2896,7 +2688,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Egghead",
     "capítulo": 1062,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "S-Shark",
@@ -2909,7 +2701,7 @@
     "estado": "vivo",
     "arco de primera aparición": "Egghead",
     "capítulo": 1065,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   },
   {
     "nombre": "Karazu",
@@ -2918,10 +2710,10 @@
     "recompensa": "",
     "estatura": "",
     "edad": "",
-    "fruta": "Ninguna",
+    "fruta": "Paramecia",
     "estado": "vivo",
     "arco de primera aparición": "Reverie",
     "capítulo": 904,
-    "haki": "Kenbunshoku, Busoshoku"
+    "haki": "Busoshoku, Kenbunshoku"
   }
 ]

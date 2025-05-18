@@ -51,8 +51,7 @@ bg-no-repeat bg-cover bg-fixed
               aria-controls="suggestions"
               aria-expanded="false"
               required
-              data-names='[{% for item in game.items.all %}{% if item not in previous_guesses %}"{{ item.name|escapejs }}"{% if not forloop.last %},{% endif %}{% endif %}{% endfor %}]'>
-
+              data-names="{{ remaining_names_json|escape }}">
       <ul id="suggestions" role="listbox"
           class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl
                  border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>

@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import time, timedelta
 from django.db.models import JSONField
 from django.conf import settings
 from django.db import models
@@ -38,27 +41,55 @@ class GameItem(models.Model):
         return f"{self.name} ({self.game.slug})"
 
 
-
-class GameResult(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="game_results",
-    )
-    game = models.ForeignKey(
-        "games.Game",
-        on_delete=models.CASCADE,
-        related_name="results",
-    )
-    attempts = models.PositiveIntegerField()
-    played_at = models.DateTimeField(auto_now_add=True)
+class DailyTarget(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    target = models.ForeignKey(GameItem, on_delete=models.CASCADE)
+    date = models.DateField()
 
     class Meta:
-        indexes = [
-            models.Index(fields=["game", "user"]),
-        ]
-        verbose_name = "resultado de partida"
-        verbose_name_plural = "resultados de partidas"
+        unique_together = (("game", "date"),)
 
-    def __str__(self):
-        return f"{self.user} – {self.game} – {self.attempts} intentos"
+    @classmethod
+    def get_current(cls, game):
+        now = timezone.now()
+        cutoff = time(23, 0)
+        target_date = now.date()
+        if now.time() >= cutoff:
+            target_date = now.date() + timedelta(days=1)
+
+        daily, _ = cls.objects.get_or_create(
+            game=game,
+            date=target_date,
+            defaults={
+                'target': GameItem.objects.filter(game=game).order_by("?").first()
+            }
+        )
+        return daily
+
+class GameResult(models.Model):
+    user         = models.ForeignKey(User, on_delete=models.CASCADE)
+    game         = models.ForeignKey(Game, on_delete=models.CASCADE)
+    daily_target = models.ForeignKey(
+        DailyTarget,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    attempts     = models.PositiveIntegerField()
+    completed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'daily_target')
+
+
+
+class GameAttempt(models.Model):
+    user         = models.ForeignKey(User, on_delete=models.CASCADE)
+    game         = models.ForeignKey(Game, on_delete=models.CASCADE)
+    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE)
+    guess        = models.ForeignKey(GameItem, on_delete=models.CASCADE)
+    is_correct   = models.BooleanField()
+    attempted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['attempted_at']
