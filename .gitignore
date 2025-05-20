@@ -3,6 +3,7 @@ venv/
 env/
 ENV/
 node_modules/
+staticfiles/
 
 .env
 # Database
