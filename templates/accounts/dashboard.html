@@ -53,7 +53,7 @@ login-bg
               {{ j.nombre }}
             </td>
             <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
-              {{ j.media_tiempo }} int.
+              {{ j.media_tiempo|floatformat:2 }} int.
             </td>
           </tr>
         {% empty %}
