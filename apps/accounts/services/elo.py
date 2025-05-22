@@ -1,3 +1,4 @@
+# apps/accounts/services/elo.py
 from __future__ import annotations
 
 from django.db.models import Avg
@@ -22,13 +23,13 @@ class Elo:
         """Actualiza el rating tras la partida recién jugada."""
         self._add_played_game()
 
-        if not self._has_historical_average():
-            return                              # primerísima partida del juego
+        if not self._has_historical_average():          # primerísima partida del juego
+            return
 
         result = self._did_win(attempts_this_game)
         opponent_rating = self._opponent_rating()
 
-        if opponent_rating is None:             # todavía sin rivales
+        if opponent_rating is None:                    # todavía sin rivales
             return
 
         self._apply_elo_change(result, opponent_rating, k)
@@ -79,3 +80,18 @@ class Elo:
         self.elo_obj.elo += k * (result - expected)
         self.elo_obj.save(update_fields=("elo",))
     # -------------------------------------------
+
+    # ---------- Elo global del usuario ----------
+    @staticmethod
+    def global_elo_for_user(user):
+        """
+        Promedio ponderado de Elo del usuario en todos los juegos.
+        Devuelve BASE_RATING (1200) si aún no tiene partidas puntuadas.
+        """
+        records = GameElo.objects.filter(user=user)
+        total_games = sum(r.partidas for r in records)
+        if total_games == 0:
+            return Elo.BASE_RATING
+
+        weighted_sum = sum(r.elo * r.partidas for r in records)
+        return weighted_sum / total_games
