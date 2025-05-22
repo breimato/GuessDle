@@ -1,66 +1,100 @@
-# apps/accounts/management/commands/recalcular_elo.py
-
+from collections import defaultdict, deque
 from django.core.management.base import BaseCommand
 from django.db.models import Avg
-from collections import defaultdict
-
 from apps.games.models import GameResult
 from apps.accounts.models import GameElo
 
 
 class Command(BaseCommand):
-    help = "Recalculates ELOs using historical averages per game (based on results prior to each match)."
+    """
+    Recalcula el Elo por juego.
+    • Guarda partidas del primer jugador en una cola.
+    • Cuando aparece el segundo jugador, puntúa esas partidas pendientes.
+    """
 
-    def expected_score(self, player_rating, opponent_rating):
-        return 1 / (1 + 10 ** ((opponent_rating - player_rating) / 400))
+    # ------------- Fórmula Elo -------------
+    @staticmethod
+    def _expected(r_player, r_opponent):
+        return 1 / (1 + 10 ** ((r_opponent - r_player) / 400))
 
-    def update_rating(self, current_rating, result, opponent_rating, k=32):
-        expected = self.expected_score(current_rating, opponent_rating)
-        return current_rating + k * (result - expected)
+    def _update(self, rating, result, opp_rating, k=32):
+        exp = self._expected(rating, opp_rating)
+        return rating + k * (result - exp)
+    # ---------------------------------------
 
-    def handle(self, *args, **options):
-        self.stdout.write("🧠 Deleting existing ELOs...")
+    def handle(self, *args, **opts):
+        self.stdout.write("🧨  Borrando ELOs…")
         GameElo.objects.all().delete()
 
-        self.stdout.write("🔁 Processing historical results with dynamic averages...")
+        # (user_id, game_id) -> dict(elo, games)
+        elos = defaultdict(lambda: {"elo": 1200.0, "games": 0})
+        # game_id -> deque de partidas pendientes [(user_id, attempts, hist_avg)]
+        pending = defaultdict(deque)
+
         results = (
             GameResult.objects
             .select_related("user", "game")
             .order_by("completed_at")
         )
 
-        elos = defaultdict(lambda: {"elo": 1200.0, "games": 0})
-
         for res in results:
             key = (res.user_id, res.game_id)
-            current = elos[key]
+            cur = elos[key]
+            cur["games"] += 1                      # 👍 siempre contamos la partida
 
-            # 💡 Calculamos la media histórica hasta ese punto
-            past_results = GameResult.objects.filter(
-                game=res.game,
-                completed_at__lt=res.completed_at
+            # media histórica previa (sin esta partida)
+            prev_avg = (
+                GameResult.objects
+                .filter(game=res.game, completed_at__lt=res.completed_at)
+                .aggregate(avg=Avg("attempts"))["avg"]
             )
-
-            historical_avg = past_results.aggregate(avg=Avg("attempts"))["avg"]
-
-            if historical_avg is None:
+            if prev_avg is None:
+                # Primera partida absoluta → se apila y se continúa
+                pending[res.game_id].append((res.user_id, res.attempts, None))
                 continue
 
-            match_result = 1 if res.attempts < historical_avg else 0
+            # ---------------- Rival actual ----------------
+            other_elos = [
+                data["elo"] for (u, g), data in elos.items()
+                if g == res.game_id and u != res.user_id and data["games"] > 0
+            ]
+            if not other_elos:
+                # Sigue sin rival real: apilar y continuar
+                pending[res.game_id].append((res.user_id, res.attempts, prev_avg))
+                continue
 
-            updated_rating = self.update_rating(current["elo"], match_result, historical_avg)
+            opp_rating = sum(other_elos) / len(other_elos)
 
-            current["elo"] = updated_rating
-            current["games"] += 1
+            # ------------ Puntuar la partida actual ------------
+            result_flag = 1 if res.attempts < prev_avg else 0
+            cur["elo"] = self._update(cur["elo"], result_flag, opp_rating)
 
-        self.stdout.write("💾 Saving updated ELOs...")
+            # ------------ Procesar pendientes de este juego ------------
+            if pending[res.game_id]:
+                new_other = [
+                    data["elo"] for (u, g), data in elos.items()
+                    if g == res.game_id and data["games"] > 0
+                ]
+                new_opp = sum(new_other) / len(new_other)
 
-        for (user_id, game_id), data in elos.items():
+                while pending[res.game_id]:
+                    uid, att, hist = pending[res.game_id].popleft()
+                    k2 = (uid, res.game_id)
+                    player = elos[k2]
+
+                    # media histórica que teníamos guardada (si era None, usa prev_avg)
+                    base_avg = hist if hist is not None else prev_avg
+                    res_flag = 1 if att < base_avg else 0
+                    player["elo"] = self._update(player["elo"], res_flag, new_opp)
+
+        # ---------- Persistir en BD ----------
+        self.stdout.write("💾 Guardando ELOs…")
+        for (uid, gid), data in elos.items():
             GameElo.objects.create(
-                user_id=user_id,
-                game_id=game_id,
+                user_id=uid,
+                game_id=gid,
                 elo=data["elo"],
                 partidas=data["games"]
             )
 
-        self.stdout.write(self.style.SUCCESS("✅ ELO recalculated using historical averages."))
+        self.stdout.write(self.style.SUCCESS("✅ Recalculo completado: primeras partidas valoradas al aparecer rivales."))
