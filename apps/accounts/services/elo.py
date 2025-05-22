@@ -13,18 +13,27 @@ class Elo:
         return 1 / (1 + 10 ** ((opponent_rating - player_rating) / 400))
 
     def update(self, k: int = 32):
+        now_ts = now()
+
+        # Promedio global del juego, sin contar la partida que acaba de ocurrir
+        global_avg = GameResult.objects.filter(
+            game=self.game,
+            completed_at__lt=now_ts
+        ).aggregate(avg=Avg("attempts"))["avg"]
+
+        if global_avg is None:
+            # No hay con qué comparar: no actualizar ELO
+            return
+
+        # Promedio del usuario en este juego (también histórico)
         user_avg = GameResult.objects.filter(
             user=self.user,
-            game=self.game
+            game=self.game,
+            completed_at__lt=now_ts
         ).aggregate(avg=Avg("attempts"))["avg"]
-        if user_avg is None:
-            user_avg = 0
 
-        global_avg = GameResult.objects.filter(
-            game=self.game
-        ).aggregate(avg=Avg("attempts"))["avg"]
-        if global_avg is None:
-            global_avg = 0
+        if user_avg is None:
+            return
 
         result = 1 if user_avg < global_avg else 0
         expected = self.expected_score(self.elo_obj.elo, global_avg)
