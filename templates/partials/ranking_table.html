@@ -1,58 +1,54 @@
-{# tabla reutilizable de rankings #}
 <table class="w-full text-sm border-separate border-spacing-y-2">
-  <thead>
+    <thead>
     <tr class="bg-black/80 text-yellow-100 text-lg"
         style="font-family:var(--font-lol); letter-spacing:.08em;">
-      {# Columna de posición solo si HAY filas #}
-      {% if rows %}
+        {% if rows %}
         <th class="rounded-l-2xl w-10"></th>
-      {% endif %}
-      <th {% if not rows %}class="rounded-l-2xl"{% endif %}>Jugador</th>
-      <th>Media</th>
-      <th class="rounded-r-2xl">Partidas</th>
+        {% endif %}
+        <th {% if not rows %}class="rounded-l-2xl" {% endif %}>Jugador</th>
+        <th>ELO</th>
+        <th>Media</th>
+        <th class="rounded-r-2xl">Partidas</th>
     </tr>
-  </thead>
-
-  <tbody>
-    {# ===== CUANDO HAY DATOS ===== #}
+    </thead>
+    <tbody>
     {% if rows %}
-      {% for row in rows %}
-        {% with pos=forloop.counter %}
-        <tr class="hover:brightness-110 transition duration-150">
-          <!-- Posición -->
-          <td class="px-0">
+    {% for row in rows %}
+    {% with pos=forloop.counter %}
+    <tr class="hover:brightness-110 transition duration-150">
+        <td class="px-0">
             <div class="w-9 h-9 flex items-center justify-center rounded-full mx-auto
               {% if pos == 1 %}bg-yellow-400 text-gray-900 font-bold
               {% elif pos == 2 %}bg-gray-300 text-gray-900 font-bold
               {% elif pos == 3 %}bg-amber-700 text-white font-bold
               {% else %}bg-gray-700 text-white text-xs{% endif %}">
-              {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
+                {% if pos == 1 %}🥇{% elif pos == 2 %}🥈{% elif pos == 3 %}🥉{% else %}{{ pos }}{% endif %}
             </div>
-          </td>
+        </td>
 
-          <!-- Jugador -->
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-            {{ row.user__username }}
-          </td>
+        <td class="text-center align-middle bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
+            {{ row.username }}
+        </td>
 
-          <!-- Media -->
-          <td class="bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
-            {{ row.media|floatformat:2 }}
-          </td>
+        <td class="text-center align-middle bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2 font-semibold">
+            {{ row.elo|floatformat:0 }}
+        </td>
 
-          <!-- Partidas -->
-          <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
+        <td class="text-center align-middle bg-black/60 text-gray-100 border-y-2 border-yellow-600 px-4 py-2">
+            {{ row.media|default:"–"|floatformat:2 }}
+        </td>
+
+        <td class="text-center align-middle bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
             {{ row.partidas }}
-          </td>
-        </tr>
-        {% endwith %}
-      {% endfor %}
+        </td>
 
-    {# ===== CUANDO NO HAY DATOS ===== #}
+    </tr>
+    {% endwith %}
+    {% endfor %}
     {% else %}
-      <tr class="hover:brightness-110 transition duration-150">
-        <td colspan="3" class="py-4 text-center text-black">Sin datos 😢</td>
-      </tr>
+    <tr class="hover:brightness-110 transition duration-150">
+        <td colspan="4" class="py-4 text-center text-black">Sin datos 😢</td>
+    </tr>
     {% endif %}
-  </tbody>
+    </tbody>
 </table>
