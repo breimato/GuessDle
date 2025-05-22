@@ -41,10 +41,9 @@ class Command(BaseCommand):
                 completed_at__lt=res.completed_at
             )
 
-            historical_avg = past_results.aggregate(avg=Avg("attempts"))["avg"] or 0
+            historical_avg = past_results.aggregate(avg=Avg("attempts"))["avg"]
 
-            # Si no hay historial previo, lo dejamos sin actualizar
-            if historical_avg == 0:
+            if historical_avg is None:
                 continue
 
             match_result = 1 if res.attempts < historical_avg else 0
