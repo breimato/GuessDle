@@ -1,5 +1,9 @@
 
 import json
+
+from django.db.models import Avg
+
+from apps.accounts.services.elo import Elo
 from apps.games.models import (
     DailyTarget,
     GameAttempt,
@@ -18,24 +22,18 @@ def get_current_target(game):
 
 
 def process_guess(request, game, daily_target):
-    """
-    1) Valida que el nombre enviado exista en game.items y no se haya intentado ya hoy.
-    2) Crea un GameAttempt.
-    3) Si acierta, crea un GameResult (solo uno por user/daily_target).
-       Devuelve (valido: bool, acierto: bool).
-    """
     guess_name = request.POST.get("guess", "").strip()
     item = game.items.filter(name__iexact=guess_name).first()
     if not item:
-        return False, False  # nombre inválido
+        return False, False
 
-    already = GameAttempt.objects.filter(
+    already_guessed = GameAttempt.objects.filter(
         user=request.user,
         daily_target=daily_target,
         guess=item
     ).exists()
-    if already:
-        return False, False  # repetido
+    if already_guessed:
+        return False, False
 
     is_correct = (item.pk == daily_target.target.pk)
     GameAttempt.objects.create(
@@ -47,18 +45,23 @@ def process_guess(request, game, daily_target):
     )
 
     if is_correct:
-        # Solo uno por día
-        GameResult.objects.get_or_create(
+        result, created = GameResult.objects.get_or_create(
             user=request.user,
             game=game,
             daily_target=daily_target,
-            defaults={"attempts": GameAttempt.objects.filter(
-                user=request.user,
-                daily_target=daily_target
-            ).count()}
+            defaults={
+                "attempts": GameAttempt.objects.filter(
+                    user=request.user,
+                    daily_target=daily_target
+                ).count()
+            }
         )
 
+        if created:
+            Elo(request.user, game).update()
+
     return True, is_correct
+
 
 
 

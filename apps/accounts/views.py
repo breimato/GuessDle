@@ -16,11 +16,15 @@ def dashboard_view(request):
     stats = DashboardStats(request.user)
     context = {
         "juegos_disponibles": stats.available_games(),
-        "user_stats": {"juegos": stats.user_stats()},
+        "user_stats": {
+            "juegos": stats.user_stats(),
+            "elo_global": stats.elo_global(),
+        },
         "ranking_global": stats.ranking_global(),
         "ranking_por_juego": stats.ranking_per_game(),
     }
     return render(request, "accounts/dashboard.html", context)
+
 
 
 def register_view(request):

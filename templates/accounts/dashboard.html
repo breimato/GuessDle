@@ -16,9 +16,10 @@ login-bg
       style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
     🛡️ ¡Bienvenido, <span class="text-white">{{ user.username }}</span>!
   </h1>
-  <p class="mt-4 text-yellow-100 text-lg tracking-wider" style="font-family:var(--font-lol);">
-    Elige tu próximo desafío...
+  <p class="mt-2 text-white font-semibold text-lg tracking-wider" style="font-family:var(--font-lol); padding-top: 25px">
+  🔢 Tu ELO global: <span class="text-yellow-300">{{ user_stats.elo_global|floatformat:0 }}</span>
   </p>
+
 
   <div class="flex justify-end mt-4">
     <form action="{% url 'logout' %}" method="post">
@@ -43,7 +44,8 @@ login-bg
       <thead>
         <tr class="bg-black/80 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
           <th class="rounded-l-2xl">Juego</th>
-          <th class="rounded-r-2xl">Media&nbsp;intentos</th>
+          <th>Media&nbsp;intentos</th>
+          <th class="rounded-r-2xl">ELO</th>
         </tr>
       </thead>
       <tbody>
@@ -52,13 +54,12 @@ login-bg
             <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
               {{ j.nombre }}
             </td>
-            <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2 font-semibold">
+            <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 px-4 py-2">
               {{ j.media_tiempo|floatformat:2 }} int.
             </td>
-          </tr>
-        {% empty %}
-          <tr class="hover:brightness-110 transition duration-150">
-            <td colspan="2" class="py-4 text-center text-black">Aún no has jugado 💤</td>
+            <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
+              {{ j.elo|floatformat:0 }}
+            </td>
           </tr>
         {% endfor %}
       </tbody>
