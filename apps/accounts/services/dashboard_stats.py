@@ -69,9 +69,9 @@ class DashboardStats:
 
             rows.append({
                 "username": username,
-                "elo": e["elo_global"],
-                "media": media,
-                "partidas": partidas,
+                "elo": e["elo_global"] or 1200,
+                "media": result_map.get(username, {}).get("media", None),
+                "partidas": result_map.get(username, {}).get("partidas", 0),
             })
 
         # Ordenamos por ELO descendente

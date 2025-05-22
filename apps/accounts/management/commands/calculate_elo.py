@@ -9,7 +9,7 @@ from apps.accounts.models import GameElo
 
 
 class Command(BaseCommand):
-    help = "Recalculates all user ELOs retroactively based on existing GameResults."
+    help = "Recalculates ELOs using historical averages per game (based on results prior to each match)."
 
     def expected_score(self, player_rating, opponent_rating):
         return 1 / (1 + 10 ** ((opponent_rating - player_rating) / 400))
@@ -22,13 +22,7 @@ class Command(BaseCommand):
         self.stdout.write("🧠 Deleting existing ELOs...")
         GameElo.objects.all().delete()
 
-        self.stdout.write("📊 Calculating global averages per game...")
-        global_averages = {
-            game_id: GameResult.objects.filter(game_id=game_id).aggregate(avg=Avg("attempts"))["avg"] or 0
-            for game_id in GameResult.objects.values_list("game_id", flat=True).distinct()
-        }
-
-        self.stdout.write("🔁 Processing historical results...")
+        self.stdout.write("🔁 Processing historical results with dynamic averages...")
         results = (
             GameResult.objects
             .select_related("user", "game")
@@ -37,19 +31,30 @@ class Command(BaseCommand):
 
         elos = defaultdict(lambda: {"elo": 1200.0, "games": 0})
 
-        for result in results:
-            key = (result.user_id, result.game_id)
+        for res in results:
+            key = (res.user_id, res.game_id)
             current = elos[key]
 
-            global_avg = global_averages[result.game_id]
-            match_result = 1 if result.attempts < global_avg else 0
+            # 💡 Calculamos la media histórica hasta ese punto
+            past_results = GameResult.objects.filter(
+                game=res.game,
+                completed_at__lt=res.completed_at
+            )
 
-            updated_rating = self.update_rating(current["elo"], match_result, global_avg)
+            historical_avg = past_results.aggregate(avg=Avg("attempts"))["avg"] or 0
+
+            # Si no hay historial previo, lo dejamos sin actualizar
+            if historical_avg == 0:
+                continue
+
+            match_result = 1 if res.attempts < historical_avg else 0
+
+            updated_rating = self.update_rating(current["elo"], match_result, historical_avg)
 
             current["elo"] = updated_rating
             current["games"] += 1
 
-        self.stdout.write("💾 Saving recalculated ELOs...")
+        self.stdout.write("💾 Saving updated ELOs...")
 
         for (user_id, game_id), data in elos.items():
             GameElo.objects.create(
@@ -59,4 +64,4 @@ class Command(BaseCommand):
                 partidas=data["games"]
             )
 
-        self.stdout.write(self.style.SUCCESS("✅ ELO recalculation complete."))
+        self.stdout.write(self.style.SUCCESS("✅ ELO recalculated using historical averages."))
