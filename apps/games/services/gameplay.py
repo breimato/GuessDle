@@ -18,6 +18,8 @@ def get_current_target(game):
     (hasta las 23:00), o para mañana si ya ha pasado la hora de corte.
     """
     daily = DailyTarget.get_current(game)
+    if not daily or not daily.target:
+        return None, None
     return daily.target, daily
 
 

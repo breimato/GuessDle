@@ -52,19 +52,8 @@ class DailyTarget(models.Model):
     @classmethod
     def get_current(cls, game):
         now = timezone.now()
-        cutoff = time(23, 0)
         target_date = now.date()
-        if now.time() >= cutoff:
-            target_date = now.date() + timedelta(days=1)
-
-        daily, _ = cls.objects.get_or_create(
-            game=game,
-            date=target_date,
-            defaults={
-                'target': GameItem.objects.filter(game=game).order_by("?").first()
-            }
-        )
-        return daily
+        return cls.objects.filter(game=game, date=target_date).select_related("target").first()
 
 class GameResult(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE)

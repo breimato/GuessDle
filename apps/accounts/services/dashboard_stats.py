@@ -1,9 +1,7 @@
-# services/dashboard_stats.py
 from apps.accounts.models import GameElo
 from apps.games.models import Game, GameResult
 from apps.accounts.services.elo import Elo
 from django.db.models import Avg, Count, F, Subquery, OuterRef, Sum, ExpressionWrapper, FloatField
-from django.db import models
 
 
 class DashboardStats:
@@ -64,8 +62,6 @@ class DashboardStats:
         rows = []
         for e in user_elos:
             username = e["user__username"]
-            media = result_map.get(username, {}).get("media", None)
-            partidas = result_map.get(username, {}).get("partidas", 0)
 
             rows.append({
                 "username": username,

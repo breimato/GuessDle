@@ -93,6 +93,18 @@ bg-no-repeat bg-cover bg-fixed
   </tbody>
 </table>
 {% endif %}
+
+
+
+{% if yesterday_target_name %}
+  <p class="text-center text-yellow-200 text-lg font-semibold mt-4">
+    🕐 El personaje de ayer fue: <span class="text-white">{{ yesterday_target_name }}</span>
+  </p>
+{% endif %}
+
+
+
+
 {% endblock %}
 
 {% block extra_scripts %}
