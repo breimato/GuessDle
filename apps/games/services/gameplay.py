@@ -60,7 +60,9 @@ def process_guess(request, game, daily_target):
         )
 
         if created:
-            Elo(request.user, game).update()
+            attempts_this_game = result.attempts
+            elo_service = Elo(request.user, game)
+            elo_service.update(attempts_this_game)
 
     return True, is_correct
 
