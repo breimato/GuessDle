@@ -57,7 +57,7 @@ class DailyTarget(models.Model):
         if now.time() >= time(23, 0):
             target_date += timedelta(days=1)
 
-        is_team = getattr(user.profile, "is_team_account", False)
+        is_team = getattr(getattr(user, "profile", None), "is_team_account", False)
 
         return (
             cls.objects
