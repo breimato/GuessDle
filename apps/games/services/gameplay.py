@@ -12,12 +12,12 @@ from apps.games.models import (
 from apps.games.attempts import build_attempts
 
 
-def get_current_target(game):
+def get_current_target(game, user):
     """
     Devuelve la tupla (GameItem target, DailyTarget daily) para el día actual
     (hasta las 23:00), o para mañana si ya ha pasado la hora de corte.
     """
-    daily = DailyTarget.get_current(game)
+    daily = DailyTarget.get_current(game, user)
     if not daily or not daily.target:
         return None, None
     return daily.target, daily

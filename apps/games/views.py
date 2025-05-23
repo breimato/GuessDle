@@ -15,7 +15,7 @@ from apps.games.services.gameplay import get_current_target, process_guess, buil
 @csrf_protect
 def play_view(request, slug):
     game = get_object_or_404(Game, slug=slug)
-    target, daily = get_current_target(game)
+    target, daily = get_current_target(game, request.user)
 
     # ⚠️ Safety: si no existe el DailyTarget (por error o falta del cron)
     if not daily:

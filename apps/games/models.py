@@ -45,23 +45,27 @@ class DailyTarget(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     target = models.ForeignKey(GameItem, on_delete=models.CASCADE)
     date = models.DateField()
+    is_team = models.BooleanField(default=False, help_text="¿Es un target de equipo?")
 
     class Meta:
-        unique_together = (("game", "date"),)
+        unique_together = (("game", "date", "is_team"),)
 
     @classmethod
-    def get_current(cls, game):
-        now = timezone.localtime()  # ⬅️  hora local (Europe/Madrid)
+    def get_current(cls, game, user):
+        now = timezone.localtime()
         target_date = now.date()
         if now.time() >= time(23, 0):
             target_date += timedelta(days=1)
 
+        is_team = getattr(user.profile, "is_team_account", False)
+
         return (
             cls.objects
-            .filter(game=game, date=target_date)
+            .filter(game=game, date=target_date, is_team=is_team)
             .select_related("target")
             .first()
         )
+
 
 class GameResult(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE)
