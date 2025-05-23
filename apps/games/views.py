@@ -33,11 +33,23 @@ def play_view(request, slug):
     ctx = build_context(request, game, daily)
     ctx["background_url"] = game.background_image.url if game.background_image else None
 
-    # 👈 Agregar personaje de ayer (si lo hay)
+    # 👈 Mostrar el personaje de ayer, respetando si es una cuenta de equipo
     yesterday_date = daily.date - timedelta(days=1)
+
+    profile = getattr(request.user, "profile", None)
+    is_team = getattr(profile, "is_team_account", False)
+
     yesterday_target = (
-        DailyTarget.objects.filter(game=game, date=yesterday_date).select_related("target").first()
+        DailyTarget.objects
+        .filter(
+            game=game,
+            date=yesterday_date,
+            is_team=is_team  # 👈 clave: que coincida con la lógica de ese día
+        )
+        .select_related("target")
+        .first()
     )
+
     if yesterday_target:
         ctx["yesterday_target_name"] = yesterday_target.target.name
 
