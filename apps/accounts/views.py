@@ -7,6 +7,7 @@ from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.contrib.auth.models import User
 
+from apps.accounts.models import UserProfile
 from apps.accounts.services.dashboard_stats import DashboardStats
 
 
@@ -36,6 +37,7 @@ def register_view(request):
     email      = request.POST.get("email")
     password1  = request.POST.get("password1")
     password2  = request.POST.get("password2")
+    is_team_account = request.POST.get("is_team_account") == "on"
 
     for field in [username, first_name, email, password1, password2]:
         if not field or field.strip() == "":
@@ -60,13 +62,17 @@ def register_view(request):
         messages.error(request, "Ya existe una cuenta con este email.")
         return render(request, "accounts/register.html")
 
-    User.objects.create_user(
+    user = User.objects.create_user(
         username=username,
         first_name=first_name,
         email=email,
         password=password1
     )
 
+    user.profile.is_team_account = is_team_account
+    user.profile.save()
+
     messages.success(request, "¡Registro completado! Ahora inicia sesión.")
     return redirect("login")
+
 
