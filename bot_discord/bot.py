@@ -4,6 +4,8 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Cargar .env
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
