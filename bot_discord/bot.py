@@ -1,4 +1,6 @@
 import os
+import sys
+
 import django
 import discord
 from discord.ext import commands
