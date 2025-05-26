@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 
+from apps.accounts.models import Challenge
 from apps.games.models import Game, DailyTarget
 from apps.games.services.gameplay import get_current_target, process_guess, build_context
 
@@ -54,3 +55,27 @@ def play_view(request, slug):
         ctx["yesterday_target_name"] = yesterday_target.target.name
 
     return render(request, "games/play.html", ctx)
+
+
+@never_cache
+@login_required
+@csrf_protect
+# VISTA PARA JUGAR EL RETO
+def play_challenge(request, challenge_id):
+    challenge = get_object_or_404(Challenge, id=challenge_id)
+
+    # Solo el oponente puede aceptar el reto si no ha sido aceptado aún
+    if not challenge.accepted and challenge.opponent == request.user:
+        challenge.accepted = True
+        challenge.save()
+
+    # Restringir el acceso solo a los participantes
+    if request.user != challenge.challenger and request.user != challenge.opponent:
+        return redirect("dashboard")
+
+    game = challenge.game
+    return render(request, 'games/play.html', {
+        'game': game,
+        'is_challenge': True,
+        'challenge_id': challenge.id
+    })

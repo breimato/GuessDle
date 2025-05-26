@@ -1139,3 +1139,21 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
     }
   }
 }
+
+
+.challenge-button {
+    animation: pulse 2s infinite;
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 5px #ffcc00; }
+    50% { box-shadow: 0 0 20px #ffcc00; }
+    100% { box-shadow: 0 0 5px #ffcc00; }
+  }

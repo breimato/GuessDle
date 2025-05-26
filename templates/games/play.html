@@ -9,6 +9,14 @@ bg-no-repeat bg-cover bg-fixed
 {% endblock %}
 
 {% block content %}
+
+{% if is_challenge %}
+<audio autoplay loop>
+  <source src="{{ game.audio_file.url }}" type="audio/mpeg">
+</audio>
+<div class="epic-aura"></div>
+{% endif %}
+
 <div class="mb-4">
   <a href="{% url 'dashboard' %}"
      class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">

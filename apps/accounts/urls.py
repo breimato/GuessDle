@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import dashboard_view, register_view
+from .views import dashboard_view, register_view, complete_challenge, create_challenge
 from django.contrib.auth import views as auth_views
+
+from ..games.views import play_challenge
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),
@@ -22,5 +24,7 @@ urlpatterns = [
     path("reset/done/", auth_views.PasswordResetCompleteView.as_view(
         template_name="accounts/password_reset_complete.html"
     ), name="password_reset_complete"),
-
+    path("challenges/create/", create_challenge, name="create_challenge"),
+    path("challenges/<int:challenge_id>/play/", play_challenge, name="play_challenge"),
+    path("challenges/<int:challenge_id>/complete/", complete_challenge, name="complete_challenge"),
 ]

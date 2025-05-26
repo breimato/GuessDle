@@ -87,6 +87,54 @@ login-bg
     </div>
   </div>
 </section>
+<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg mt-10">
+  <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
+    ⚔️ Retar a un jugador
+  </h2>
+
+  <form method="post" action="challenges/create/" class="mb-6 flex flex-col gap-4">
+    {% csrf_token %}
+
+    <div>
+      <label for="opponent" class="block font-bold text-yellow-900 mb-1">Jugador</label>
+      <select id="opponent" name="opponent"
+          class="w-full p-2 rounded-t border border-yellow-400 bg-white text-black focus:outline-none">
+          {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+          {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="game" class="block font-bold text-yellow-900 mb-1">Juego</label>
+      <select id="game" name="game"
+              class="w-full p-2 rounded-t border border-yellow-400 text-black bg-white focus:outline-none">
+        {% for game in juegos_disponibles %}
+          <option value="{{ game.id }}">{{ game.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit"
+            class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+      ⚔️ Enviar reto
+    </button>
+  </form>
+
+  <h3 class="text-xl text-yellow-900 font-bold mb-2" style="font-family:var(--font-lol);">
+    📬 Retos pendientes
+  </h3>
+  <div class="space-y-3">
+    {% for challenge in pending_challenges %}
+      <div class="flex justify-between items-center p-3 bg-yellow-200 rounded-xl">
+        <span>{{ challenge.challenger.username }} te ha retado en <strong>{{ challenge.game.name }}</strong></span>
+        <a href="challenges/{{ challenge.id }}/play/" class="challenge-button">Aceptar</a>
+      </div>
+    {% empty %}
+      <p class="text-black">No tienes retos pendientes.</p>
+    {% endfor %}
+  </div>
+</section>
 
 <!-- ========== RANKINGS ========== -->
 <section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">

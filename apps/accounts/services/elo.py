@@ -95,3 +95,7 @@ class Elo:
 
         weighted_sum = sum(r.elo * r.partidas for r in records)
         return weighted_sum / total_games
+
+    def update_vs_opponent(self, result: int, opponent_rating: float, k: int = 32) -> None:
+        self._add_played_game()
+        self._apply_elo_change(result, opponent_rating, k)

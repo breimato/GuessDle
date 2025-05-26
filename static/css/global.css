@@ -103,3 +103,18 @@
 html, body {
   height: 100%;
 }
+
+
+.epic-aura {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, rgba(255,215,0,0.1), transparent);
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}

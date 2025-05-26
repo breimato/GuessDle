@@ -12,6 +12,8 @@ class Game(models.Model):
     icon_image = models.ImageField(upload_to='game_icons/', blank=True, null=True)
     background_image = models.ImageField(upload_to='game_background/', blank=True, null=True)
     numeric_fields = JSONField(default=list, blank=True, help_text="Atributos que deben compararse como números")
+    audio_file = models.FileField(upload_to='game_audios/', null=True, blank=True)
+
 
     # Configuración de API
     data_source_url = models.URLField(blank=True, null=True, help_text="URL de la API para sincronizar los datos")

@@ -14,6 +14,18 @@ class GameElo(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.game.slug}: {int(self.elo)}"
 
+class Challenge(models.Model):
+    challenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_sent')
+    opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_received')
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    accepted = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
+    winner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='won_challenges')
+    elo_exchanged = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.challenger.username} vs {self.opponent.username}"
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
