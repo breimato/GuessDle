@@ -1188,8 +1188,8 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
   display:flex;align-items:center;justify-content:center;
   border:2px solid #555;border-radius:12px;
   height:3.5rem;min-width:3.5rem;
-  font-weight:600;font-size:.875rem;text-align:center;
-  padding:50px;
+  font-weight:600;font-size:0.9rem;text-align:center;
+  padding:65px;
   background:#222;color:#fff;
   box-shadow:0 2px 4px rgb(0 0 0 / .5);
   visibility: hidden; /* por defecto */
@@ -1200,7 +1200,7 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
 .square-part     {background:#eab308;border-color:#a16207;color:#000;}   /* amarillo*/
 .square-bad      {background:#b91c1c;border-color:#7f1d1d;color:#fff;}   /* rojo    */
 .square-superior {background:#7c3aed;border-color:#4c1d95;color:#fff;}   /* púrpura */
-.champion-icon-name{font-size:.65rem;margin-top:.15rem;white-space:nowrap;}
+.champion-icon-name{font-size:1rem;margin-top:.15rem;white-space:nowrap;}
 
 .square.show{                  /* sólo se añade vía JS */
   visibility: visible;

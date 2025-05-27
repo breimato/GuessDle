@@ -37,7 +37,7 @@ def ajax_guess(request, slug):
     if not ctx["attempts"]:
         return JsonResponse({"error": "No hay intentos registrados"}, status=500)
 
-    last_attempt = ctx["attempts"][-1]
+    last_attempt = ctx["attempts"][0]
 
     data = {
         "won": correct,
