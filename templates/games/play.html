@@ -10,7 +10,7 @@ bg-no-repeat bg-cover bg-fixed
 
 {% block content %}
 
-{# ───────────────── AUDIO SI ES RETO ───────────────── #}
+{# ——— Audio reto ——— #}
 {% if is_challenge %}
   <audio autoplay loop>
     <source src="{{ game.audio_file.url }}" type="audio/mpeg">
@@ -18,7 +18,7 @@ bg-no-repeat bg-cover bg-fixed
   <div class="epic-aura"></div>
 {% endif %}
 
-{# ───────────────── BOTÓN DASHBOARD ───────────────── #}
+{# ——— Botón dashboard ——— #}
 <div class="mb-4">
   <a href="{% url 'dashboard' %}"
      class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
@@ -26,7 +26,7 @@ bg-no-repeat bg-cover bg-fixed
   </a>
 </div>
 
-{# ───────────────── TÍTULO DEL JUEGO ───────────────── #}
+{# ——— Título ——— #}
 <section class="container mx-auto text-center drop-shadow">
   <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
       style="font-family:var(--font-lol); text-shadow:2px 2px #000;">
@@ -34,16 +34,17 @@ bg-no-repeat bg-cover bg-fixed
   </h1>
 </section>
 
-{# ───────────────── FLAG DE VICTORIA PARA JS ───────────────── #}
+{# ——— Flag de victoria (para JS) ——— #}
 {% if won %}
   <script id="won-flag" data-champ="{{ target.name|escapejs }}"></script>
 {% endif %}
 
-{# ───────────────── FORMULARIO (desactivado si won) ───────────────── #}
+{# ——— Formulario siempre presente, pero desactivado si won ——— #}
 <form id="guess-form"
       action="{% url 'ajax_guess' game.slug %}"
       method="post"
-      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900 {% if won %}opacity-50 pointer-events-none{% endif %}"
+      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900
+             {% if won %}opacity-50 pointer-events-none{% endif %}"
       novalidate>
 
   {% csrf_token %}
@@ -54,16 +55,13 @@ bg-no-repeat bg-cover bg-fixed
   {% endif %}
 
   <div class="relative">
-    <input type="text" name="guess" id="guess" autofocus
-           class="w-full p-2 rounded-t border border-yellow-400 bg-white focus:outline-none"
-           placeholder="Escribe un nombre"
-           autocomplete="off"
-           aria-autocomplete="list"
-           aria-controls="suggestions"
-           aria-expanded="false"
-           required
-           {% if won %}disabled{% endif %}
-           data-names="{{ remaining_names_json|escape }}">
+    <input  type="text" name="guess" id="guess" autofocus
+            class="w-full p-2 rounded-t border border-yellow-400 bg-white focus:outline-none"
+            placeholder="Escribe un nombre"
+            autocomplete="off"
+            required
+            data-names="{{ remaining_names_json|escape }}"
+            {% if won %}disabled{% endif %}>
     <ul id="suggestions" role="listbox"
         class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl
                border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>
@@ -76,7 +74,7 @@ bg-no-repeat bg-cover bg-fixed
   </button>
 </form>
 
-{# ───────────────── CABECERA DE ATRIBUTOS ───────────────── #}
+{# ——— Cabecera de atributos ——— #}
 {% if game.attributes %}
   <div id="attempts-header"
        class="grid max-w-3xl mx-auto"
@@ -91,16 +89,16 @@ bg-no-repeat bg-cover bg-fixed
   </div>
 {% endif %}
 
-{# ───────────────── CONTENEDOR DE INTENTOS ───────────────── #}
+{# ——— Contenedor de intentos ——— #}
 <div id="attempts-container"
      class="flex flex-col w-full max-w-3xl mx-auto mt-8"></div>
 
-{# ───────────────── HISTORIAL JSON ───────────────── #}
+{# ——— Historial JSON para JS ——— #}
 {% if attempts %}
   {{ attempts|json_script:"initial-attempts" }}
 {% endif %}
 
-{# ───────────────── PERSONAJE DE AYER ───────────────── #}
+{# ——— Personaje de ayer ——— #}
 {% if yesterday_target_name %}
   <div class="mt-6 mx-auto max-w-xl bg-black/60 text-white border-2 border-yellow-600 rounded-xl px-4 py-3 shadow-lg backdrop-blur">
     <p class="text-lg text-yellow-200 font-semibold text-center"
@@ -112,7 +110,6 @@ bg-no-repeat bg-cover bg-fixed
 
 {% endblock %}
 
-{# ───────────────── SCRIPTS ───────────────── #}
 {% block extra_scripts %}
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
   <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
@@ -121,13 +118,10 @@ bg-no-repeat bg-cover bg-fixed
 
 <style>
   @import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
-
-  .square {
-    @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;
-  }
-  .square-good     { @apply bg-green-600 text-white border-green-800; }
-  .square-part     { @apply bg-yellow-400 text-black border-yellow-600; }
-  .square-bad      { @apply bg-red-700 text-white border-red-800; }
-  .square-content  { @apply w-full h-full flex items-center justify-center p-1; }
-  .champion-icon-name { @apply text-xs mt-1; }
+  .square{ @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;}
+  .square-good { @apply bg-green-600 text-white border-green-800;}
+  .square-part { @apply bg-yellow-400 text-black border-yellow-600;}
+  .square-bad  { @apply bg-red-700   text-white border-red-800;}
+  .square-content{ @apply w-full h-full flex items-center justify-center p-1;}
+  .champion-icon-name{ @apply text-xs mt-1;}
 </style>

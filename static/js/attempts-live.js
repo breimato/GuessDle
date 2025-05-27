@@ -92,14 +92,24 @@ document.addEventListener("DOMContentLoaded", () => {
     return row;
   }
 
-  /* ───────── helpers de celda ───────── */
-  function makeCell({isStatic=false,state=null,html=""}) {
-    const d=document.createElement("div");
-    d.className="square"+(isStatic?" square--static":"")+(state?" square-"+map(state):"");
-    d.innerHTML=`<div class="square-content">${html}</div>`;
-    return d;
-  }
-  const map = fb => fb.correct?"good":fb.partial?"part":fb.superior?"superior":"bad";
+  /* ───────── helpers de estado ───────── */
+function mapState(fb) {
+  if (fb.correct)  return "good";
+  if (fb.partial)  return "part";
+  if (fb.superior) return "superior";
+  return "bad";
+}
+
+/* ───────── helpers de celda ───────── */
+function makeCell({ isStatic = false, state = null, html = "" }) {
+  const d = document.createElement("div");
+  d.className = "square" +
+                (isStatic ? " square--static" : "") +
+                (state ? " square-" + mapState(state) : "");
+  d.innerHTML = `<div class="square-content">${html}</div>`;
+  return d;
+}
+
 
   /* ───────── desactiva input/botón ───────── */
   function disableForm(){
@@ -109,32 +119,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ───────── modal de victoria ───────── */
   function showVictoryModal(name){
-    injectKeyframes();
+  injectKeyframes();
 
-    const overlay=document.createElement("div");
-    overlay.style=`
-      position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;
-      align-items:center;justify-content:center;z-index:1000;`;
+  /* --- overlay gris claro y sin bloquear la vista --- */
+  const overlay = document.createElement("div");
+  overlay.style = `
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.25);           /* menos opaco 0.25 */
+    display:flex;align-items:center;justify-content:center;
+    z-index:1000;
+    pointer-events:none;                  /* ¡ojo! desactiva clicks en overlay */
+  `;
 
-    const modal=document.createElement("div");
-    modal.className="animate-bounceInCenter";
-    modal.style=`
-      background:#fff;border-radius:1rem;padding:2rem 3rem;text-align:center;
-      box-shadow:0 8px 20px rgba(0,0,0,.4);max-width:90vw;`;
+  /* --- modal centrado con rebote, sí recibe clicks --- */
+  const modal = document.createElement("div");
+  modal.className = "animate-bounceInCenter";
+  modal.style = `
+    background:#fff;border-radius:1rem;padding:2rem 3rem;text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);max-width:90vw;
+    pointer-events:auto;                  /* el modal SÍ capta clicks */
+  `;
 
-    modal.innerHTML=`
-      <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:1rem;color:#15803d">
-        ¡Correcto! Has adivinado: <span>${name}</span>
-      </h2>
-      <a href="/accounts"
-         style="display:inline-block;background:#15803d;color:#fff;padding:.6rem 1.5rem;
-                border-radius:9999px;font-weight:600;text-decoration:none">
-        Volver al Dashboard
-      </a>`;
+  modal.innerHTML = `
+    <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:1rem;color:#15803d">
+      ¡Correcto! Has adivinado: <span>${name}</span>
+    </h2>
+    <a href="/accounts"
+       style="display:inline-block;background:#15803d;color:#fff;padding:.6rem 1.5rem;
+              border-radius:9999px;font-weight:600;text-decoration:none">
+      Volver al Dashboard
+    </a>`;
 
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-  }
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
+
 
   function injectKeyframes(){
     if(document.getElementById("bounce-modal-style")) return;
