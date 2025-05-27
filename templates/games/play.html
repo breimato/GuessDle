@@ -10,72 +10,73 @@ bg-no-repeat bg-cover bg-fixed
 
 {% block content %}
 
+{# ───────────────── AUDIO SI ES RETO ───────────────── #}
 {% if is_challenge %}
-<audio autoplay loop>
+  <audio autoplay loop>
     <source src="{{ game.audio_file.url }}" type="audio/mpeg">
-</audio>
-<div class="epic-aura"></div>
+  </audio>
+  <div class="epic-aura"></div>
 {% endif %}
 
+{# ───────────────── BOTÓN DASHBOARD ───────────────── #}
 <div class="mb-4">
-    <a href="{% url 'dashboard' %}"
-       class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
-        🏠 Dashboard
-    </a>
+  <a href="{% url 'dashboard' %}"
+     class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+    🏠 Dashboard
+  </a>
 </div>
 
+{# ───────────────── TÍTULO DEL JUEGO ───────────────── #}
 <section class="container mx-auto text-center drop-shadow">
-    <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
-        style="font-family:var(--font-lol); text-shadow:2px 2px #000;">
-        🛡️ {{ game.name }}
-    </h1>
+  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
+      style="font-family:var(--font-lol); text-shadow:2px 2px #000;">
+    🛡️ {{ game.name }}
+  </h1>
 </section>
 
+{# ───────────────── FLAG DE VICTORIA PARA JS ───────────────── #}
 {% if won %}
-<div class="bg-green-200/90 backdrop-blur p-6 rounded-3xl max-w-xl w-full text-center font-serif text-gray-900 border-4 border-green-800 shadow-lg">
-    <h2 class="text-2xl font-bold mb-4">¡Correcto! Has adivinado: <span class="text-green-800">{{ target.name }}</span>
-    </h2>
-    <a href="{% url 'dashboard' %}"
-       class="inline-block mt-4 bg-green-700 text-white px-6 py-2 rounded-full hover:bg-green-800 transition shadow">
-        Volver al Dashboard
-    </a>
-</div>
-{% else %}
+  <script id="won-flag" data-champ="{{ target.name|escapejs }}"></script>
+{% endif %}
+
+{# ───────────────── FORMULARIO (desactivado si won) ───────────────── #}
 <form id="guess-form"
       action="{% url 'ajax_guess' game.slug %}"
       method="post"
-      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900"
+      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900 {% if won %}opacity-50 pointer-events-none{% endif %}"
       novalidate>
 
-    {% csrf_token %}
-    <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
+  {% csrf_token %}
+  <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
 
-    {% if guess_error %}
+  {% if guess_error %}
     <p class="text-red-700 font-bold mb-2">Ese personaje no existe o ya fue usado.</p>
-    {% endif %}
+  {% endif %}
 
-    <div class="relative">
-        <input type="text" name="guess" id="guess" autofocus
-               class="w-full p-2 rounded-t border border-yellow-400 bg-white focus:outline-none"
-               placeholder="Escribe un nombre"
-               autocomplete="off"
-               aria-autocomplete="list"
-               aria-controls="suggestions"
-               aria-expanded="false"
-               required
-               data-names="{{ remaining_names_json|escape }}">
-        <ul id="suggestions" role="listbox"
-            class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl
-                 border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>
-    </div>
+  <div class="relative">
+    <input type="text" name="guess" id="guess" autofocus
+           class="w-full p-2 rounded-t border border-yellow-400 bg-white focus:outline-none"
+           placeholder="Escribe un nombre"
+           autocomplete="off"
+           aria-autocomplete="list"
+           aria-controls="suggestions"
+           aria-expanded="false"
+           required
+           {% if won %}disabled{% endif %}
+           data-names="{{ remaining_names_json|escape }}">
+    <ul id="suggestions" role="listbox"
+        class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl
+               border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>
+  </div>
 
-    <button type="submit"
-            class="mt-4 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full transition w-full shadow">
-        Probar
-    </button>
+  <button type="submit"
+          class="mt-4 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full transition w-full shadow"
+          {% if won %}disabled{% endif %}>
+    Probar
+  </button>
 </form>
-{% endif %}
-{# ---------- Cabecera (empieza oculta) ---------- #}
+
+{# ───────────────── CABECERA DE ATRIBUTOS ───────────────── #}
 {% if game.attributes %}
   <div id="attempts-header"
        class="grid max-w-3xl mx-auto"
@@ -90,37 +91,36 @@ bg-no-repeat bg-cover bg-fixed
   </div>
 {% endif %}
 
-{# ---------- Contenedor donde JS pintará todo ---------- #}
+{# ───────────────── CONTENEDOR DE INTENTOS ───────────────── #}
 <div id="attempts-container"
      class="flex flex-col w-full max-w-3xl mx-auto mt-8"></div>
 
-{# ---------- JSON con el historial (solo si hay intentos) ---------- #}
+{# ───────────────── HISTORIAL JSON ───────────────── #}
 {% if attempts %}
   {{ attempts|json_script:"initial-attempts" }}
 {% endif %}
 
-
+{# ───────────────── PERSONAJE DE AYER ───────────────── #}
 {% if yesterday_target_name %}
-<div class="mt-6 mx-auto max-w-xl bg-black/60 text-white border-2 border-yellow-600 rounded-xl px-4 py-3 shadow-lg backdrop-blur">
+  <div class="mt-6 mx-auto max-w-xl bg-black/60 text-white border-2 border-yellow-600 rounded-xl px-4 py-3 shadow-lg backdrop-blur">
     <p class="text-lg text-yellow-200 font-semibold text-center"
        style="font-family: var(--font-lol); text-shadow: 1px 1px #000;">
-        🕐 El personaje de ayer fue: <span class="text-white">{{ yesterday_target_name }}</span>
+      🕐 El personaje de ayer fue: <span class="text-white">{{ yesterday_target_name }}</span>
     </p>
-</div>
+  </div>
 {% endif %}
 
 {% endblock %}
 
+{# ───────────────── SCRIPTS ───────────────── #}
 {% block extra_scripts %}
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
   <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
   <script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% endblock %}
 
-
 <style>
-
-    @import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
+  @import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
 
   .square {
     @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;
@@ -130,8 +130,4 @@ bg-no-repeat bg-cover bg-fixed
   .square-bad      { @apply bg-red-700 text-white border-red-800; }
   .square-content  { @apply w-full h-full flex items-center justify-center p-1; }
   .champion-icon-name { @apply text-xs mt-1; }
-
-
 </style>
-
-
