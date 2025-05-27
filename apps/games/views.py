@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+import json
 
 from django.views.decorators.http import require_POST
 
@@ -18,7 +19,7 @@ from apps.games.services.gameplay import get_current_target, process_guess, buil
 @never_cache
 @csrf_protect
 def ajax_guess(request, slug):
-    game = get_object_or_404(Game, slug=slug)
+    game   = get_object_or_404(Game, slug=slug)
     target, daily = get_current_target(game, request.user)
 
     if not daily:
@@ -32,7 +33,7 @@ def ajax_guess(request, slug):
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
-    # reconstruir el contexto con el nuevo intento incluido
+    # reconstruir contexto con el nuevo intento
     ctx = build_context(request, game, daily)
     if not ctx["attempts"]:
         return JsonResponse({"error": "No hay intentos registrados"}, status=500)
@@ -42,10 +43,11 @@ def ajax_guess(request, slug):
     data = {
         "won": correct,
         "attempt": {
-            "name": last_attempt["name"],
-            "icon": last_attempt["icon"],
+            "name":     last_attempt["name"],
+            "icon":     last_attempt["icon"],
             "feedback": last_attempt["feedback"],
-        }
+        },
+        "remaining_names": json.loads(ctx["remaining_names_json"])  # ← lista actualizada
     }
     return JsonResponse(data)
 

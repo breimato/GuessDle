@@ -49,6 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
     form.reset();
     const row = renderAttempt(data.attempt, true);
 
+    // 🔁 actualizar lista de sugerencias
+    const guessInput = document.getElementById("guess");
+    if (guessInput && data.remaining_names) {
+      guessInput.dataset.names = JSON.stringify(data.remaining_names);
+    }
+
+
     if (data.won) {
       const cells = row.querySelectorAll(".square");
       const last  = cells[cells.length - 1];
@@ -148,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <h2 class="text-2xl font-bold mb-4">
         ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
       </h2>
-      <a href="/dashboard"
+      <a href="/accounts"
          class="inline-block mt-4 bg-yellow-700 hover:bg-yellow-800 text-white
                 px-6 py-2 rounded-full transition shadow">
         Volver al Dashboard

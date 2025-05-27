@@ -79,7 +79,7 @@ bg-no-repeat bg-cover bg-fixed
   {# ——— CABECERA + INTENTOS CON SCROLL LATERAL ——— #}
 <div class="attempts-scroll-wrapper">
   <div id="attempts-header"
-       class="header-grid hidden"
+       {% if attempts %}class="header-grid"{% else %}class="header-grid" style="display:none;"{% endif %}
        data-cols="{{ game.attributes|length|add:'1' }}">
     <div class="header-cell">Personaje</div>
     {% for attr in game.attributes %}

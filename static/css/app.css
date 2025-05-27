@@ -1209,11 +1209,10 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
   font-weight: bold;
   font-size: 1.15rem;
   line-height: 1.2;
-  color: #fde68a;
+  color: #ffffff;
   text-align: center;
   text-decoration: underline;
   text-underline-offset: 6px;
-  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
   border: 2px solid transparent;
   box-sizing: border-box;
   white-space: normal;
@@ -1232,12 +1231,12 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
   border: 2px solid #555;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   background: #222;
   color: #fff;
   visibility: hidden;
   box-sizing: border-box;
-  padding: 0.5rem;
+  padding: 0.2rem;
   aspect-ratio: 1 / 1;
 }
 .square.show { visibility: visible; }
@@ -1253,14 +1252,18 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
   gap: 6px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 1rem;
 }
 
 /* ————— TEXTO PEQUEÑO BAJO ICONO ————— */
 .champion-icon-name {
   font-size: 0.8rem;
   margin-top: 0.15rem;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
 }
+
 
 /* ————— RESPONSIVE BACKGROUND FIX ————— */
 body, html {
@@ -1283,3 +1286,24 @@ body, html {
     font-size: 1rem;
   }
 }
+
+.square-content {
+  display: flex;
+  flex-direction: column; /* para colocar icono y texto apilados */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;       /* <-- 🔥 permite saltos */
+  overflow-wrap: anywhere;  /* <-- 🔥 rompe palabras largas */
+  word-break: break-word;   /* <-- 🔥 extra protección */
+  padding: 0.25rem;
+}
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const paint = q => {
     box.innerHTML = ''; hl = -1;
-    const res = q ? names.filter(n => n.toLowerCase().includes(q)).slice(0, 15) : [];
+    let fresh = [];
+    try { fresh = JSON.parse(input.dataset.names || '[]'); } catch {}
+    const res = q ? fresh.filter(n => n.toLowerCase().includes(q)).slice(0, 15) : [];
+
     if (!res.length) { close(); return; }
 
     res.forEach((n, i) => {
