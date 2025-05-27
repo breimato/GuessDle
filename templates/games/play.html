@@ -112,10 +112,11 @@ bg-no-repeat bg-cover bg-fixed
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
-<script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
-<script src="{% static 'js/attempts-live.js' %}" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+  <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+  <script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% endblock %}
+
 
 <style>
 
