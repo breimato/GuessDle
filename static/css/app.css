@@ -1178,81 +1178,108 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
 
 
 
-
-
-
-
-
-/* cuadrado genérico */
-.square{
-  display:flex;align-items:center;justify-content:center;
-  border:2px solid #555;border-radius:12px;
-  height:3.5rem;min-width:3.5rem;
-  font-weight:600;font-size:0.9rem;text-align:center;
-  padding:65px;
-  background:#222;color:#fff;
-  box-shadow:0 2px 4px rgb(0 0 0 / .5);
-  visibility: hidden; /* por defecto */
-  aspect-ratio: 1 / 1; /* cuadrado */
-}
-/* estados */
-.square-good     {background:#16a34a;border-color:#14532d;color:#fff;}   /* verde   */
-.square-part     {background:#eab308;border-color:#a16207;color:#000;}   /* amarillo*/
-.square-bad      {background:#b91c1c;border-color:#7f1d1d;color:#fff;}   /* rojo    */
-.square-superior {background:#7c3aed;border-color:#4c1d95;color:#fff;}   /* púrpura */
-.champion-icon-name{font-size:1rem;margin-top:.15rem;white-space:nowrap;}
-
-.square.show{                  /* sólo se añade vía JS */
-  visibility: visible;
+/* ————— PARÁMETROS GLOBALES ————— */
+:root {
+  --cell: 110px;  /* más grande para texto */
 }
 
-/* contenedor de cada fila de intentos */
-.attempt-row{
-  display:grid;
-  gap:2px;            /* separación columnas */
-  margin-bottom:6px;  /* separación filas    */
-}
-
-.header-cell {
-  @apply font-bold text-lg md:text-xl text-yellow-200 text-center leading-snug break-words;
-  text-decoration: underline;
-  text-underline-offset: 6px;
-  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
-  word-break: break-word;
-}
-
-/* El JS añadirá grid-template-columns y gap dinámico */
-.header-grid{ width:100%; }
-
-.header-row {
-  display: grid;
-  margin-top: 2rem;
+/* ————— SCROLL WRAPPER ————— */
+.attempts-scroll-wrapper {
+  overflow-x: auto;
   width: 100%;
+  padding-bottom: 1rem;
+}
+
+/* ————— CABECERA ————— */
+.header-grid {
+  display: grid;
+  width: fit-content;
+  gap: 6px;
+  margin: 0 auto;
 }
 
 .header-cell {
   display: flex;
-  justify-content: left;
-  align-items: left;
-
-  text-align: left;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  min-width: var(--cell);
+  min-height: 4rem;
+  padding: 0.5rem;
   font-weight: bold;
   font-size: 1.15rem;
-  color: #ffffff;
   line-height: 1.2;
+  color: #fde68a;
+  text-align: center;
   text-decoration: underline;
   text-underline-offset: 6px;
-  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
-
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+  border: 2px solid transparent;
+  box-sizing: border-box;
   white-space: normal;
   overflow-wrap: anywhere;
-  padding: 0.5rem;
-  height: auto;
-  min-height: 3.5rem;
 }
 
+/* ————— CELDAS DE INTENTO ————— */
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  min-width: var(--cell);
+  height: var(--cell);
+  min-height: var(--cell);
+  border: 2px solid #555;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: #222;
+  color: #fff;
+  visibility: hidden;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  aspect-ratio: 1 / 1;
+}
+.square.show { visibility: visible; }
+.square-good     { background: #16a34a; border-color: #14532d; }
+.square-part     { background: #eab308; border-color: #a16207; color: #000; }
+.square-bad      { background: #b91c1c; border-color: #7f1d1d; }
+.square-superior { background: #7c3aed; border-color: #4c1d95; }
 
+/* ————— FILA DE INTENTOS ————— */
+.attempt-row {
+  display: grid;
+  width: fit-content;
+  gap: 6px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+/* ————— TEXTO PEQUEÑO BAJO ICONO ————— */
+.champion-icon-name {
+  font-size: 0.8rem;
+  margin-top: 0.15rem;
+  white-space: nowrap;
+}
 
+/* ————— RESPONSIVE BACKGROUND FIX ————— */
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
 
+.bg-fixed {
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+}
 
+@media (max-width: 768px) {
+  :root {
+    --cell: 90px;
+  }
+  .header-cell, .square {
+    font-size: 1rem;
+  }
+}

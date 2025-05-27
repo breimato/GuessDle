@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const row = document.createElement("div");
     row.className = "attempt-row";
-    row.style.cssText = `display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));gap:${gap}`;
+    /* ⬇️ cambio clave: usamos var(--cell) para ancho fijo, no 1fr */
+    row.style.cssText = `display:grid;grid-template-columns:repeat(${cols},var(--cell));gap:${gap}`;
 
     row.append(makeCell({
       isStatic:true,
@@ -95,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
       header.style.gridTemplateColumns = row.style.gridTemplateColumns;
       header.style.gap = gap;
     }
-
 
     /* animación flip */
     const cells = row.querySelectorAll(".square");
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <h2 class="text-2xl font-bold mb-4">
         ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
       </h2>
-      <a href="/accounts"
+      <a href="/dashboard"
          class="inline-block mt-4 bg-yellow-700 hover:bg-yellow-800 text-white
                 px-6 py-2 rounded-full transition shadow">
         Volver al Dashboard

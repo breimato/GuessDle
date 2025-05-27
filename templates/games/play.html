@@ -76,29 +76,26 @@ bg-no-repeat bg-cover bg-fixed
 
 {# ---------- Cabecera de atributos ---------- #}
 {% if game.attributes %}
-  {% comment %}
-    Si ya hay intentos en el servidor mostramos la cabecera desde el principio;
-    si no, la dejamos oculta y el JS la mostrará cuando llegue el primer intento.
-  {% endcomment %}
+  {# ——— CABECERA + INTENTOS CON SCROLL LATERAL ——— #}
+<div class="attempts-scroll-wrapper">
   <div id="attempts-header"
-     class="header-row hidden max-w-3xl mx-auto"
-     data-cols="{{ game.attributes|length|add:'1' }}">
-  <div class="header-cell">Personaje</div>
-  {% for attr in game.attributes %}
-    <div class="header-cell">{{ attr|title }}</div>
-  {% endfor %}
+       class="header-grid hidden"
+       data-cols="{{ game.attributes|length|add:'1' }}">
+    <div class="header-cell">Personaje</div>
+    {% for attr in game.attributes %}
+      <div class="header-cell">{{ attr|title }}</div>
+    {% endfor %}
+  </div>
+
+  <div id="attempts-container"></div>
 </div>
 
-{% endif %}
-
-{# ——— Contenedor de intentos ——— #}
-<div id="attempts-container"
-     class="flex flex-col w-full max-w-3xl mx-auto mt-8"></div>
-
-{# ——— Historial JSON para JS ——— #}
+{# ——— HISTORIAL JSON ——— #}
 {% if attempts %}
   {{ attempts|json_script:"initial-attempts" }}
 {% endif %}
+{% endif %}
+
 
 {# ——— Personaje de ayer ——— #}
 {% if yesterday_target_name %}
