@@ -40,9 +40,12 @@ bg-no-repeat bg-cover bg-fixed
     </a>
   </div>
 {% else %}
-  <form method="post"
-        class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900"
-        novalidate>
+  <form id="guess-form"
+      action="{% url 'ajax_guess' game.slug %}"
+      method="post"
+      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900"
+      novalidate>
+
     {% csrf_token %}
     <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
 
@@ -71,35 +74,26 @@ bg-no-repeat bg-cover bg-fixed
     </button>
   </form>
 {% endif %}
+{% if game.attributes %}
+  <div id="attempts-header"
+       class="grid gap-[2px] max-w-3xl mx-auto"
+       style="grid-template-columns:repeat({{ game.attributes|length|add:'1' }},minmax(0,1fr));">
+    <div class="square square--static font-bold bg-black/70 text-yellow-300 border-yellow-500">🧠</div>
+    {% for attr in game.attributes %}
+      <div class="square square--static font-bold bg-black/70 text-yellow-300 border-yellow-500">
+        {{ attr|title }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 
 {% if attempts %}
-<table class="gd-table mx-auto text-sm mt-8" style="max-width:100%;">
-  <thead>
-    <tr class="bg-black/50 text-yellow-100 text-base" style="font-family:var(--font-lol); letter-spacing:.07em;">
-      <th class="px-4 py-3 rounded-xl text-yellow-100 bg-black/40 border-2 border-yellow-600 font-semibold text-sm text-center">Personaje</th>
-      {% for attr in game.attributes %}
-        <th class="px-4 py-3 rounded-xl text-yellow-100 bg-black/40 border-2 border-yellow-600 font-semibold text-sm text-center">{{ attr|title }}</th>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for attempt in attempts %}
-      <tr class="hover:brightness-110 transition">
-        <td class="gd-champ-cell rounded-l-xl w-24">
-          {% if attempt.icon %}<img src="{{ attempt.icon }}" alt="{{ attempt.name }}">{% endif %}
-          <div style="padding:.25rem 0">{{ attempt.name }}</div>
-        </td>
-        {% for fb in attempt.feedback %}
-          <td class="gd-cell {% if fb.correct %}gd-cell--ok{% elif fb.partial %}gd-cell--part{% else %}gd-cell--wrong{% endif %} {% if forloop.last %}rounded-r-xl{% endif %}">
-            <div class="relative w-full h-full flex items-center justify-center p-1">
-              {{ fb.value }}{% if fb.arrow %}<span class="gd-emoji">{{ fb.arrow }}</span>{% endif %}
-            </div>
-          </td>
-        {% endfor %}
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+
+
+<div id="attempts-container"
+     class="flex flex-col gap-2 w-full max-w-3xl mx-auto mt-8"></div>
+
 {% endif %}
 
 {% if yesterday_target_name %}
@@ -114,4 +108,24 @@ bg-no-repeat bg-cover bg-fixed
 
 {% block extra_scripts %}
   <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+  <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+  <script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% endblock %}
+
+<style>
+
+  @import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
+
+.square {
+  @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;
+}
+.square-good     { @apply bg-green-600 text-white border-green-800; }
+.square-part     { @apply bg-yellow-400 text-black border-yellow-600; }
+.square-bad      { @apply bg-red-700 text-white border-red-800; }
+.square-content  { @apply w-full h-full flex items-center justify-center p-1; }
+.champion-icon-name { @apply text-xs mt-1; }
+
+
+</style>
+
+

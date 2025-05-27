@@ -1,4 +1,11 @@
 /*! tailwindcss v4.1.6 | MIT License | https://tailwindcss.com */
+:root{
+  --animate-delay: 0s;       /* sin delay interno extra */
+  --animate-duration: 0.9s;  /* valor por defecto */
+}
+
+
+
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -1157,3 +1164,51 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
     50% { box-shadow: 0 0 20px #ffcc00; }
     100% { box-shadow: 0 0 5px #ffcc00; }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* cuadrado genérico */
+.square{
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #555;border-radius:12px;
+  height:3.5rem;min-width:3.5rem;
+  font-weight:600;font-size:.875rem;text-align:center;
+  padding:50px;
+  background:#222;color:#fff;
+  box-shadow:0 2px 4px rgb(0 0 0 / .5);
+  visibility: hidden; /* por defecto */
+  aspect-ratio: 1 / 1; /* cuadrado */
+}
+/* estados */
+.square-good     {background:#16a34a;border-color:#14532d;color:#fff;}   /* verde   */
+.square-part     {background:#eab308;border-color:#a16207;color:#000;}   /* amarillo*/
+.square-bad      {background:#b91c1c;border-color:#7f1d1d;color:#fff;}   /* rojo    */
+.square-superior {background:#7c3aed;border-color:#4c1d95;color:#fff;}   /* púrpura */
+.champion-icon-name{font-size:.65rem;margin-top:.15rem;white-space:nowrap;}
+
+.square.show{                  /* sólo se añade vía JS */
+  visibility: visible;
+}
+
+/* contenedor de cada fila de intentos */
+.attempt-row{
+  display:grid;
+  gap:2px;            /* separación columnas */
+  margin-bottom:6px;  /* separación filas    */
+}

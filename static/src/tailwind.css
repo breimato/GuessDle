@@ -9,3 +9,15 @@
 
 /* Si quieres limitar el escaneo a tus plantillas Django: */
 @source "../templates/**/*.html";
+
+
+@import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
+
+.square {
+  @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;
+}
+.square-good     { @apply bg-green-600 text-white border-green-800; }
+.square-part     { @apply bg-yellow-400 text-black border-yellow-600; }
+.square-bad      { @apply bg-red-700 text-white border-red-800; }
+.square-content  { @apply w-full h-full flex items-center justify-center p-1; }
+.champion-icon-name { @apply text-xs mt-1; }
