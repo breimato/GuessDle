@@ -118,41 +118,39 @@ function makeCell({ isStatic = false, state = null, html = "" }) {
   }
 
   /* ───────── modal de victoria ───────── */
-  function showVictoryModal(name){
-  injectKeyframes();
+  function showVictoryModal(name) {
+  injectKeyframes();                           // agrega keyframes si faltan
 
-  /* --- overlay gris claro y sin bloquear la vista --- */
+  /* ── overlay semitransparente ── */
   const overlay = document.createElement("div");
   overlay.style = `
-    position:fixed;inset:0;
-    background:rgba(0,0,0,.25);           /* menos opaco 0.25 */
+    position:fixed;inset:0;background:rgba(0,0,0,.4);
     display:flex;align-items:center;justify-content:center;
-    z-index:1000;
-    pointer-events:none;                  /* ¡ojo! desactiva clicks en overlay */
-  `;
+    z-index:1000;`;
 
-  /* --- modal centrado con rebote, sí recibe clicks --- */
+  /* ── modal con la misma clase que tu formulario ── */
   const modal = document.createElement("div");
-  modal.className = "animate-bounceInCenter";
-  modal.style = `
-    background:#fff;border-radius:1rem;padding:2rem 3rem;text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.4);max-width:90vw;
-    pointer-events:auto;                  /* el modal SÍ capta clicks */
-  `;
+  modal.className = `
+  bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800
+  shadow-lg text-gray-900 w-full max-w-xl animate-bounceInCenter mx-4
+  flex flex-col items-center text-center`;
+
 
   modal.innerHTML = `
-    <h2 style="font-size:1.6rem;font-weight:700;margin-bottom:1rem;color:#15803d">
-      ¡Correcto! Has adivinado: <span>${name}</span>
+    <h2 class="text-2xl font-bold mb-4">
+      ¡Correcto! Has adivinado:
+      <span class="text-green-800">${name}</span>
     </h2>
     <a href="/accounts"
-       style="display:inline-block;background:#15803d;color:#fff;padding:.6rem 1.5rem;
-              border-radius:9999px;font-weight:600;text-decoration:none">
+       class="inline-block mt-4 bg-yellow-700 hover:bg-yellow-800 text-white
+              px-6 py-2 rounded-full transition shadow">
       Volver al Dashboard
     </a>`;
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
 }
+
 
 
   function injectKeyframes(){
