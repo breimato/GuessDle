@@ -74,19 +74,21 @@ bg-no-repeat bg-cover bg-fixed
   </button>
 </form>
 
-{# ——— Cabecera de atributos ——— #}
+{# ---------- Cabecera de atributos ---------- #}
 {% if game.attributes %}
+  {% comment %}
+    Si ya hay intentos en el servidor mostramos la cabecera desde el principio;
+    si no, la dejamos oculta y el JS la mostrará cuando llegue el primer intento.
+  {% endcomment %}
   <div id="attempts-header"
-       class="grid max-w-3xl mx-auto"
-       style="display:none;"
-       data-cols="{{ game.attributes|length|add:'1' }}">
-    <div class="square square--static font-bold bg-black/70 text-yellow-300 border-yellow-500">🧠</div>
-    {% for attr in game.attributes %}
-      <div class="square square--static font-bold bg-black/70 text-yellow-300 border-yellow-500">
-        {{ attr|title }}
-      </div>
-    {% endfor %}
-  </div>
+     class="header-row hidden max-w-3xl mx-auto"
+     data-cols="{{ game.attributes|length|add:'1' }}">
+  <div class="header-cell">Personaje</div>
+  {% for attr in game.attributes %}
+    <div class="header-cell">{{ attr|title }}</div>
+  {% endfor %}
+</div>
+
 {% endif %}
 
 {# ——— Contenedor de intentos ——— #}

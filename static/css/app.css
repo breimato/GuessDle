@@ -1212,3 +1212,47 @@ button:active, a:active, input:active, textarea:active, select:active, label:act
   gap:2px;            /* separación columnas */
   margin-bottom:6px;  /* separación filas    */
 }
+
+.header-cell {
+  @apply font-bold text-lg md:text-xl text-yellow-200 text-center leading-snug break-words;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+  word-break: break-word;
+}
+
+/* El JS añadirá grid-template-columns y gap dinámico */
+.header-grid{ width:100%; }
+
+.header-row {
+  display: grid;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.header-cell {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #ffffff;
+  line-height: 1.2;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
+
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding: 0.5rem;
+  height: auto;
+  min-height: 3.5rem;
+}
+
+
+
+
+
+
