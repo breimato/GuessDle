@@ -2,7 +2,7 @@ from django.urls import path
 from .views import dashboard_view, register_view, complete_challenge, create_challenge
 from django.contrib.auth import views as auth_views
 
-from ..games.views import play_challenge
+from ..games.views import play_challenge, ajax_guess_challenge
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),
@@ -27,4 +27,5 @@ urlpatterns = [
     path("challenges/create/", create_challenge, name="create_challenge"),
     path("challenges/<int:challenge_id>/play/", play_challenge, name="play_challenge"),
     path("challenges/<int:challenge_id>/complete/", complete_challenge, name="complete_challenge"),
+    path("challenges/<int:challenge_id>/guess/", ajax_guess_challenge, name="ajax_guess_challenge"),
 ]

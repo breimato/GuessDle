@@ -5,6 +5,7 @@ from django.db.models import JSONField
 from django.conf import settings
 from django.db import models
 
+
 class Game(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, help_text="URL del juego (ej: 'one-piece')")
@@ -13,7 +14,6 @@ class Game(models.Model):
     background_image = models.ImageField(upload_to='game_background/', blank=True, null=True)
     numeric_fields = JSONField(default=list, blank=True, help_text="Atributos que deben compararse como números")
     audio_file = models.FileField(upload_to='game_audios/', null=True, blank=True)
-
 
     # Configuración de API
     data_source_url = models.URLField(blank=True, null=True, help_text="URL de la API para sincronizar los datos")
@@ -70,29 +70,34 @@ class DailyTarget(models.Model):
 
 
 class GameResult(models.Model):
-    user         = models.ForeignKey(User, on_delete=models.CASCADE)
-    game         = models.ForeignKey(Game, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     daily_target = models.ForeignKey(
         DailyTarget,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
-    attempts     = models.PositiveIntegerField()
+    attempts = models.PositiveIntegerField()
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('user', 'daily_target')
 
 
-
 class GameAttempt(models.Model):
-    user         = models.ForeignKey(User, on_delete=models.CASCADE)
-    game         = models.ForeignKey(Game, on_delete=models.CASCADE)
-    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE)
-    guess        = models.ForeignKey(GameItem, on_delete=models.CASCADE)
-    is_correct   = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE, null=True, blank=True)
+    guess = models.ForeignKey(GameItem, on_delete=models.CASCADE)
+    is_correct = models.BooleanField()
     attempted_at = models.DateTimeField(auto_now_add=True)
+    challenge = models.ForeignKey(
+        'accounts.Challenge',  # referencia perezosa
+        on_delete=models.CASCADE,
+        null=True, blank=True,
+        related_name="attempts"
+    )
 
     class Meta:
         ordering = ['attempted_at']

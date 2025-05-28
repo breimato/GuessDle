@@ -12,9 +12,16 @@ bg-no-repeat bg-cover bg-fixed
 
 {# ——— Audio reto ——— #}
 {% if is_challenge %}
+<script>
+  const IS_CHALLENGE          = "{{ is_challenge_js }}";           // "true"
+  const CHALLENGE_REPORT_URL  = "{{ challenge_report_url }}";
+  const CSRF_TOKEN            = "{{ csrf_token }}";
+</script>
+  {% if game.audio_file %}
   <audio autoplay loop>
     <source src="{{ game.audio_file.url }}" type="audio/mpeg">
   </audio>
+  {% endif %}
   <div class="epic-aura"></div>
 {% endif %}
 
@@ -41,7 +48,7 @@ bg-no-repeat bg-cover bg-fixed
 
 {# ——— Formulario siempre presente, pero desactivado si won ——— #}
 <form id="guess-form"
-      action="{% url 'ajax_guess' game.slug %}"
+      action="{{ guess_url }}"
       method="post"
       class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900
              {% if won %}opacity-50 pointer-events-none{% endif %}"
@@ -113,6 +120,31 @@ bg-no-repeat bg-cover bg-fixed
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
   <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
   <script src="{% static 'js/attempts-live.js' %}" defer></script>
+
+
+{% if is_challenge %}
+<form id="challenge-report-form" method="POST" action="{% url 'play_challenge' challenge_id %}">
+  {% csrf_token %}
+  <input type="hidden" name="attempts" id="challenge-attempts-input">
+</form>
+
+<script>
+  function reportChallengeResult(attempts) {
+    const input = document.getElementById("challenge-attempts-input");
+    input.value = attempts;
+    document.getElementById("challenge-report-form").submit();
+  }
+
+  // Hook automático si ganaste
+  const wonFlag = document.getElementById("won-flag");
+  if (wonFlag) {
+    // Contar los intentos jugados
+    const attempts = document.querySelectorAll("#attempts-container > *").length;
+    reportChallengeResult(attempts);
+  }
+</script>
+{% endif %}
+
 {% endblock %}
 
 <style>

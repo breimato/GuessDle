@@ -7,18 +7,26 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db import models, transaction
+from django.views.decorators.csrf import csrf_protect
 
 from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.accounts.services.elo import Elo
 from apps.games.models import Game
+from apps.games.services.gameplay import get_random_item
 
 
 @never_cache
 @login_required
 def dashboard_view(request):
     stats = DashboardStats(request.user)
+    from django.contrib.auth.models import User
     pending_challenges = Challenge.objects.filter(opponent=request.user, accepted=False)
+    active_challenges = Challenge.objects.filter(
+        accepted=True,
+        completed=False
+    ).filter(models.Q(challenger=request.user) | models.Q(opponent=request.user))
     users = User.objects.exclude(id=request.user.id)
 
     context = {
@@ -30,6 +38,7 @@ def dashboard_view(request):
         "ranking_global": stats.ranking_global(),
         "ranking_por_juego": stats.ranking_per_game(),
         "pending_challenges": pending_challenges,
+        "active_challenges": active_challenges,
         "users": users,
     }
     return render(request, "accounts/dashboard.html", context)
@@ -115,23 +124,36 @@ def complete_challenge(request, challenge_id):
     })
 
 
+@login_required
+@csrf_protect
 def create_challenge(request):
-    if request.method == "POST":
-        opponent_id = request.POST.get("opponent")
-        game_id = request.POST.get("game")
+    if request.method != "POST":
+        return redirect("dashboard")
 
-        opponent = get_object_or_404(User, pk=opponent_id)
-        game = get_object_or_404(Game, pk=game_id)
+    opponent_id = request.POST.get("opponent")
+    game_id     = request.POST.get("game")
 
-        # Evitar duplicados de retos no aceptados entre los mismos jugadores y juego
-        if Challenge.objects.filter(challenger=request.user, opponent=opponent, game=game, accepted=False).exists():
-            return redirect("dashboard")
+    opponent = get_object_or_404(User, pk=opponent_id)
+    game     = get_object_or_404(Game, pk=game_id)
 
-        Challenge.objects.create(
+    # Evitar duplicados de retos activos entre los mismos jugadores
+    already_exists = Challenge.objects.filter(
+        challenger=request.user,
+        opponent=opponent,
+        game=game,
+        accepted=False,
+        completed=False
+    ).exists()
+
+    if already_exists:
+        return redirect("dashboard")
+
+    with transaction.atomic():
+        challenge = Challenge.objects.create(
             challenger=request.user,
             opponent=opponent,
-            game=game
+            game=game,
+            target=get_random_item(game)  # 👈 asigna el objetivo al crearlo
         )
-        return redirect("dashboard")
 
     return redirect("dashboard")

@@ -167,6 +167,40 @@ login-bg
     </div>
   {% endfor %}
 </section>
+
+<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg mt-10">
+  <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
+    🕹️ Retos activos
+  </h2>
+
+  <div class="space-y-4">
+    {% for challenge in active_challenges %}
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center p-4 bg-yellow-100 border-2 border-yellow-700 rounded-2xl shadow-lg gap-4">
+        <div class="text-yellow-900 font-semibold text-lg" style="font-family:var(--font-lol);">
+          {% if challenge.challenger == user %}
+            Has retado a <strong>{{ challenge.opponent.username }}</strong> en <strong>{{ challenge.game.name }}</strong>
+          {% else %}
+            <strong>{{ challenge.challenger.username }}</strong> te ha retado en <strong>{{ challenge.game.name }}</strong>
+          {% endif %}
+        </div>
+
+        <a href="{% url 'play_challenge' challenge.id %}"
+           class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition font-semibold">
+          {% if challenge.game.icon_image %}
+            <img src="{{ challenge.game.icon_image.url }}" alt="{{ challenge.game.name }}" class="w-10 h-10 object-cover rounded-full">
+          {% else %}
+            <span class="text-2xl">🎮</span>
+          {% endif %}
+          <span>Jugar</span>
+        </a>
+      </div>
+    {% empty %}
+      <p class="text-black">No tienes retos activos todavía.</p>
+    {% endfor %}
+  </div>
+</section>
+
+
 {% endblock %}
 
 {% block extra_scripts %}

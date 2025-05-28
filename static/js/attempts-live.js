@@ -72,6 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
           showVictoryModal(data.attempt.name);
         }, 500);
       }
+
+      if (IS_CHALLENGE === "true") {
+        const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
+
+        fetch(CHALLENGE_REPORT_URL, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": CSRF_TOKEN,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({ attempts: attemptsPlayed }),
+        }).catch(err => console.error("Error al reportar intento:", err));
+      }
     }
   });
 
