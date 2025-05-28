@@ -39,7 +39,7 @@ def ajax_guess(request, slug):
     if not ctx["can_play"]:
         return JsonResponse({"error": "No puedes jugar más."}, status=403)
 
-    valid, correct = process_guess(request, game, daily_target)  # sigue ok
+    valid, correct = process_guess(request, game, daily_target=daily_target)  # sigue ok
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
@@ -82,17 +82,21 @@ def play_view(request, slug):
         ctx = build_context(request, game, daily_target=daily_target)
 
         if ctx["can_play"]:
-            valid, correct = process_guess(request, game, daily_target)
+            valid, correct = process_guess(request, game, daily_target=daily_target)
+
             if is_ajax:
                 if not valid:
                     return JsonResponse({"error": "Intento inválido"}, status=400)
 
-                last_attempt = ctx["attempts"][-1]
+                # reconstruir contexto con el nuevo intento incluido
+                ctx = build_context(request, game, daily_target=daily_target)
+                last_attempt = ctx["attempts"][0]  # 🔥 lo correcto
+
                 return JsonResponse({
                     "won": correct,
                     "attempt": {
-                        "name":     last_attempt["name"],
-                        "icon":     last_attempt["icon"],
+                        "name": last_attempt["name"],
+                        "icon": last_attempt["icon"],
                         "feedback": last_attempt["feedback"],
                     }
                 })
