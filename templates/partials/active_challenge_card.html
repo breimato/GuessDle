@@ -1,0 +1,16 @@
+<div class="p-6 bg-yellow-100/90 border-2 border-yellow-700 rounded-2xl shadow flex flex-col justify-between gap-4">
+  <div class="text-yellow-900 font-semibold leading-snug" style="font-family:var(--font-lol);">
+    {% if challenge.challenger == user %}
+      Has retado a <strong>{{ challenge.opponent.username }}</strong> en
+      <strong>{{ challenge.game.name }}</strong>
+    {% else %}
+      <strong>{{ challenge.challenger.username }}</strong> te ha retado en
+      <strong>{{ challenge.game.name }}</strong>
+    {% endif %}
+  </div>
+
+  <a href="{% url 'play_challenge' challenge.id %}"
+     class="mt-2 flex items-center justify-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full shadow transition font-semibold">
+    <span> Jugar</span>
+  </a>
+</div>

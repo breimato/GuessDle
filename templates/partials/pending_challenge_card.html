@@ -1,0 +1,13 @@
+<div
+  class="p-6 bg-yellow-50/90 border-2 border-yellow-700 rounded-2xl shadow flex flex-col justify-between gap-4">
+  <div class="text-yellow-900 font-semibold leading-snug"
+       style="font-family:var(--font-lol);">
+    {{ challenge.challenger.username }} te ha retado en
+    <strong>{{ challenge.game.name }}</strong>
+  </div>
+
+  <a href="{% url 'play_challenge' challenge.id %}"
+     class="mt-2 flex items-center justify-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full shadow transition font-semibold">
+    <span> Aceptar</span>
+  </a>
+</div>

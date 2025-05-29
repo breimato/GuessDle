@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% load static game_extras %}
 
+{# ----------------------------  HEAD  ---------------------------- #}
 {% block title %}Dashboard – GuessDle{% endblock %}
 
+{# ----------------------  CLASE PRINCIPAL  ----------------------- #}
 {% block main_class %}
 min-h-screen flex flex-col gap-12 pt-24 pb-12 px-4
 bg-no-repeat bg-cover bg-fixed
 login-bg
 {% endblock %}
 
+{# ---------------------------  BODY  ----------------------------- #}
 {% block content %}
 <!-- ========== HERO ========== -->
 <section class="container mx-auto text-center drop-shadow">
@@ -16,10 +19,11 @@ login-bg
       style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
     🛡️ ¡Bienvenido, <span class="text-white">{{ user.username }}</span>!
   </h1>
-  <p class="mt-2 text-white font-semibold text-lg tracking-wider" style="font-family:var(--font-lol); padding-top: 25px">
-  🔢 Tu ELO global: <span class="text-yellow-300">{{ user_stats.elo_global|floatformat:0 }}</span>
+  <p class="mt-2 text-white font-semibold text-lg tracking-wider"
+     style="font-family:var(--font-lol); padding-top: 25px">
+    🔢 Tu ELO global:
+    <span class="text-yellow-300">{{ user_stats.elo_global|floatformat:0 }}</span>
   </p>
-
 
   <div class="flex justify-end mt-4">
     <form action="{% url 'logout' %}" method="post">
@@ -42,7 +46,8 @@ login-bg
 
     <table class="w-full text-sm border-separate border-spacing-y-2">
       <thead>
-        <tr class="bg-black/80 text-yellow-100" style="font-family:var(--font-lol); letter-spacing:.05em;">
+        <tr class="bg-black/80 text-yellow-100"
+            style="font-family:var(--font-lol); letter-spacing:.05em;">
           <th class="rounded-l-2xl">Juego</th>
           <th>Media&nbsp;intentos</th>
           <th class="rounded-r-2xl">ELO</th>
@@ -67,10 +72,12 @@ login-bg
   </div>
 
   <!-- Selector de juegos -->
-  <div class="lg:col-span-2 bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
+  <div
+    class="lg:col-span-2 bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
     <h2 class="text-2xl mb-4 text-yellow-900 font-bold" style="font-family:var(--font-lol);">
       🎮 Escoge un juego
     </h2>
+
     <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
       {% for j in juegos_disponibles %}
         <a href="{% url 'play' j.slug %}"
@@ -87,58 +94,155 @@ login-bg
     </div>
   </div>
 </section>
-<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg mt-10">
-  <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
-    ⚔️ Retar a un jugador
-  </h2>
 
-  <form method="post" action="challenges/create/" class="mb-6 flex flex-col gap-4">
-    {% csrf_token %}
+<!-- ========== RETAR + PENDIENTES + ACTIVOS (MISMA FILA) ========== -->
+<section class="container mx-auto grid lg:grid-cols-3 gap-8 mt-10">
+  <!-- ⚔️ Retar a un jugador + 📬 Retos pendientes -->
+  <div class="lg:col-span-2 bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
+    <h2 class="text-2xl text-yellow-900 font-bold mb-4"
+        style="font-family:var(--font-lol);">
+      ⚔️ Retar a un jugador
+    </h2>
 
-    <div>
-      <label for="opponent" class="block font-bold text-yellow-900 mb-1">Jugador</label>
-      <select id="opponent" name="opponent"
-          class="w-full p-2 rounded-t border border-yellow-400 bg-white text-black focus:outline-none">
+    <form method="post" action="{% url 'create_challenge' %}" class="flex flex-col gap-8">
+      {% csrf_token %}
+
+      <!-- SELECT de jugador -->
+      <div>
+        <label for="opponent" class="block font-bold text-yellow-900 mb-2">Selecciona un jugador</label>
+        <select id="opponent" name="opponent"
+                class="w-full bg-white text-black border border-yellow-400 px-4 py-2 shadow-sm focus:outline-none rounded-none">
           {% for user in users %}
             <option value="{{ user.id }}">{{ user.username }}</option>
           {% endfor %}
-      </select>
-    </div>
-
-    <div>
-      <label for="game" class="block font-bold text-yellow-900 mb-1">Juego</label>
-      <select id="game" name="game"
-              class="w-full p-2 rounded-t border border-yellow-400 text-black bg-white focus:outline-none">
-        {% for game in juegos_disponibles %}
-          <option value="{{ game.id }}">{{ game.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <button type="submit"
-            class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
-      ⚔️ Enviar reto
-    </button>
-  </form>
-
-  <h3 class="text-xl text-yellow-900 font-bold mb-2" style="font-family:var(--font-lol);">
-    📬 Retos pendientes
-  </h3>
-  <div class="space-y-3">
-    {% for challenge in pending_challenges %}
-      <div class="flex justify-between items-center p-3 bg-yellow-200 rounded-xl">
-        <span>{{ challenge.challenger.username }} te ha retado en <strong>{{ challenge.game.name }}</strong></span>
-        <a href="challenges/{{ challenge.id }}/play/" class="challenge-button">Aceptar</a>
+        </select>
       </div>
-    {% empty %}
-      <p class="text-black">No tienes retos pendientes.</p>
+
+      <!-- SELECT de juego -->
+      <div>
+        <label for="game" class="block font-bold text-yellow-900 mb-2">Selecciona un juego</label>
+        <select id="game" name="game"
+                class="w-full bg-white text-black border border-yellow-400 px-4 py-2 shadow-sm focus:outline-none rounded-none">
+          {% for game in juegos_disponibles %}
+            <option value="{{ game.id }}">{{ game.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- BOTÓN -->
+      <div>
+        <button type="submit"
+                class="w-full bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-6 py-3 rounded-full shadow transition">
+          ⚔️ Enviar reto
+        </button>
+      </div>
+    </form>
+
+    {# -------------------- RETOS PENDIENTES ------------------- #}
+    <h3 class="text-xl text-yellow-900 font-bold mb-4 mt-8"
+        style="font-family:var(--font-lol);">
+      📬 Retos pendientes
+    </h3>
+
+    <!-- BOTONERA -->
+    <div id="pending-tabs" class="flex flex-wrap gap-3 mb-6">
+      <button data-tab="all"
+              class="pending-tab bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full shadow">
+        🌐 Global
+      </button>
+      {% for juego in juegos_disponibles %}
+        <button data-tab="{{ juego.slug }}"
+                class="pending-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
+          {{ juego.name }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- PANEL “Todos” -->
+    <div id="tab-all"
+         class="pending-panel grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {% for challenge in pending_challenges %}
+        {% include "partials/pending_challenge_card.html" with challenge=challenge %}
+      {% empty %}
+        <p class="text-yellow-900 text-center font-medium col-span-full">
+          No tienes retos pendientes.
+        </p>
+      {% endfor %}
+    </div>
+
+    <!-- PANELES POR JUEGO -->
+    {% for juego in juegos_disponibles %}
+      <div id="tab-{{ juego.slug }}"
+           class="pending-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for challenge in pending_challenges %}
+          {% if challenge.game == juego %}
+            {% include "partials/pending_challenge_card.html" with challenge=challenge %}
+          {% endif %}
+        {% endfor %}
+        {% if not pending_challenges|dictsort:"game"|yesno:"dummy,None" %}
+          <p class="text-yellow-900 text-center font-medium col-span-full">
+            No tienes retos de {{ juego.name }} pendientes.
+          </p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- 🕹️ Retos activos (ocupa 2/3) -->
+  <div class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
+    <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
+      🕹️ Retos activos
+    </h2>
+
+    {# --- BOTONERA --- #}
+    <div id="active-tabs" class="flex flex-wrap gap-3 mb-6">
+      <button data-tab="all"
+              class="active-tab bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full shadow">
+        🌐 Global
+      </button>
+      {% for juego in juegos_disponibles %}
+        <button data-tab="{{ juego.slug }}"
+                class="active-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
+          {{ juego.name }}
+        </button>
+      {% endfor %}
+    </div>
+
+    {# --- PANEL “Todos” --- #}
+    <div id="tab-active-all"
+         class="active-panel grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {% for challenge in active_challenges %}
+        {% include "partials/active_challenge_card.html" with challenge=challenge %}
+      {% empty %}
+        <p class="text-black text-center col-span-full">No tienes retos activos todavía.</p>
+      {% endfor %}
+    </div>
+
+    {# --- PANELES POR JUEGO --- #}
+    {% for juego in juegos_disponibles %}
+      <div id="tab-active-{{ juego.slug }}"
+           class="active-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for challenge in active_challenges %}
+          {% if challenge.game == juego %}
+            {% include "partials/active_challenge_card.html" with challenge=challenge %}
+          {% endif %}
+        {% endfor %}
+        {% if not active_challenges|dictsort:"game"|yesno:"dummy,None" %}
+          <p class="text-black text-center col-span-full">
+            No tienes retos activos de {{ juego.name }}.
+          </p>
+        {% endif %}
+      </div>
     {% endfor %}
   </div>
 </section>
 
 <!-- ========== RANKINGS ========== -->
-<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
-  <h2 class="text-2xl text-yellow-900 font-bold mb-6" style="font-family:var(--font-lol);">
+<section
+  class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
+
+  <h2 class="text-2xl text-yellow-900 font-bold mb-6"
+      style="font-family:var(--font-lol);">
     🏆 Rankings
   </h2>
 
@@ -167,42 +271,36 @@ login-bg
     </div>
   {% endfor %}
 </section>
-
-<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg mt-10">
-  <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
-    🕹️ Retos activos
-  </h2>
-
-  <div class="space-y-4">
-    {% for challenge in active_challenges %}
-      <div class="flex flex-col sm:flex-row justify-between sm:items-center p-4 bg-yellow-100 border-2 border-yellow-700 rounded-2xl shadow-lg gap-4">
-        <div class="text-yellow-900 font-semibold text-lg" style="font-family:var(--font-lol);">
-          {% if challenge.challenger == user %}
-            Has retado a <strong>{{ challenge.opponent.username }}</strong> en <strong>{{ challenge.game.name }}</strong>
-          {% else %}
-            <strong>{{ challenge.challenger.username }}</strong> te ha retado en <strong>{{ challenge.game.name }}</strong>
-          {% endif %}
-        </div>
-
-        <a href="{% url 'play_challenge' challenge.id %}"
-           class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition font-semibold">
-          {% if challenge.game.icon_image %}
-            <img src="{{ challenge.game.icon_image.url }}" alt="{{ challenge.game.name }}" class="w-10 h-10 object-cover rounded-full">
-          {% else %}
-            <span class="text-2xl">🎮</span>
-          {% endif %}
-          <span>Jugar</span>
-        </a>
-      </div>
-    {% empty %}
-      <p class="text-black">No tienes retos activos todavía.</p>
-    {% endfor %}
-  </div>
-</section>
-
-
 {% endblock %}
 
 {% block extra_scripts %}
   <script src="{% static 'js/ranking-tabs.js' %}" defer></script>
+  <script src="{% static 'js/pending-tabs.js' %}" defer></script>
+  <script src="{% static 'js/active-tabs.js' %}" defer></script>
+
+  <script>
+    // Selección de jugador
+    const playerButtons = document.querySelectorAll('.player-btn');
+    const opponentInput = document.getElementById('opponent-input');
+
+    playerButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        playerButtons.forEach(b => b.classList.remove('bg-yellow-500', 'text-gray-900'));
+        btn.classList.add('bg-yellow-500', 'text-gray-900');
+        opponentInput.value = btn.dataset.id;
+      });
+    });
+
+    // Selección de juego
+    const gameButtons = document.querySelectorAll('.game-btn');
+    const gameInput = document.getElementById('game-input');
+
+    gameButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        gameButtons.forEach(b => b.classList.remove('bg-yellow-500', 'text-gray-900'));
+        btn.classList.add('bg-yellow-500', 'text-gray-900');
+        gameInput.value = btn.dataset.id;
+      });
+    });
+  </script>
 {% endblock %}
