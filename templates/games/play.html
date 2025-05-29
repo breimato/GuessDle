@@ -51,7 +51,7 @@ bg-no-repeat bg-cover bg-fixed
       action="{{ guess_url }}"
       method="post"
       class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900
-             {% if won %}opacity-50 pointer-events-none{% endif %}"
+             {% if won %}opacity-50 pointer-events-none{% endif %}" style="margin-bottom: 100px"
       novalidate>
 
   {% csrf_token %}
@@ -146,13 +146,3 @@ bg-no-repeat bg-cover bg-fixed
 {% endif %}
 
 {% endblock %}
-
-<style>
-  @import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
-  .square{ @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;}
-  .square-good { @apply bg-green-600 text-white border-green-800;}
-  .square-part { @apply bg-yellow-400 text-black border-yellow-600;}
-  .square-bad  { @apply bg-red-700   text-white border-red-800;}
-  .square-content{ @apply w-full h-full flex items-center justify-center p-1;}
-  .champion-icon-name{ @apply text-xs mt-1;}
-</style>
