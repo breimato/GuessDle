@@ -5,6 +5,7 @@ import django
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from asgiref.sync import sync_to_async  # 👈 Importante
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -68,14 +69,14 @@ def formatear_ranking(game_slug=None):
 # Comando global
 @bot.command(name="ranking")
 async def ranking_global(ctx):
-    mensaje = formatear_ranking()
+    mensaje = await sync_to_async(formatear_ranking)()
     await ctx.send(mensaje)
 
 
 # Generar comandos por juego
 def crear_comando_ranking(slug):
     async def ranking_especifico(ctx):
-        mensaje = formatear_ranking(slug)
+        mensaje = await sync_to_async(formatear_ranking)(slug)
         await ctx.send(mensaje)
 
     ranking_especifico.__name__ = f"ranking_{slug.replace('-', '_')}"
