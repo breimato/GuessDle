@@ -5,7 +5,7 @@ import django
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from asgiref.sync import sync_to_async  # 👈 Importante
+from asgiref.sync import sync_to_async
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -43,8 +43,18 @@ def formatear_ranking(game_slug=None):
             return f"❗ No se encontró el juego '{game_slug}'"
         game_elos = GameElo.objects.filter(game=juego).order_by("-elo")[:10]
         titulo = f"🏆 Ranking de {juego.name}"
+
+        if not game_elos:
+            return "❗ No hay jugadores registrados aún."
+
+        mensaje = f"**{titulo}**\n\n"
+        mensaje += "```\n"
+        mensaje += f"{'Usuario':<16} | {'ELO':<5}\n"
+        mensaje += "-" * 26 + "\n"
+        for idx, obj in enumerate(game_elos, start=1):
+            mensaje += f"{idx:<2} {obj.user.username:<15} | {int(obj.elo):<5}\n"
+        mensaje += "```"
     else:
-        # Ranking global basado en promedio de elo
         game_elos = (
             GameElo.objects
             .values("user__username")
@@ -53,15 +63,16 @@ def formatear_ranking(game_slug=None):
         )
         titulo = "🌍 Ranking Global (Media ELO)"
 
-    if not game_elos:
-        return "❗ No hay jugadores registrados aún."
+        if not game_elos:
+            return "❗ No hay jugadores registrados aún."
 
-    mensaje = f"**{titulo}**\n\n"
-    for idx, obj in enumerate(game_elos, start=1):
-        if game_slug:
-            mensaje += f"{idx}. {obj.user.username} - {int(obj.elo)} ELO\n"
-        else:
-            mensaje += f"{idx}. {obj['user__username']} - {int(obj['avg_elo'])} ELO\n"
+        mensaje = f"**{titulo}**\n\n"
+        mensaje += "```\n"
+        mensaje += f"{'Usuario':<16} | {'ELO':<5}\n"
+        mensaje += "-" * 26 + "\n"
+        for idx, obj in enumerate(game_elos, start=1):
+            mensaje += f"{idx:<2} {obj['user__username']:<15} | {int(obj['avg_elo']):<5}\n"
+        mensaje += "```"
 
     return mensaje
 
