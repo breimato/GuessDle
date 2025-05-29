@@ -341,7 +341,7 @@
   },
   {
     "nombre": "clefairy",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": null,
     "altura": 60,
     "peso": 7.5,
@@ -351,7 +351,7 @@
   },
   {
     "nombre": "clefable",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": null,
     "altura": 130,
     "peso": 40.0,
@@ -382,7 +382,7 @@
   {
     "nombre": "jigglypuff",
     "tipo1": "normal",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 50,
     "peso": 5.5,
     "etapa de evolucion": 2,
@@ -392,7 +392,7 @@
   {
     "nombre": "wigglytuff",
     "tipo1": "normal",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 100,
     "peso": 12.0,
     "etapa de evolucion": 3,
@@ -1212,7 +1212,7 @@
   {
     "nombre": "mr-mime",
     "tipo1": "psychic",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 130,
     "peso": 54.5,
     "etapa de evolucion": 2,
@@ -1721,7 +1721,7 @@
   },
   {
     "nombre": "cleffa",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": null,
     "altura": 30,
     "peso": 3.0,
@@ -1732,7 +1732,7 @@
   {
     "nombre": "igglybuff",
     "tipo1": "normal",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 30,
     "peso": 1.0,
     "etapa de evolucion": 1,
@@ -1741,7 +1741,7 @@
   },
   {
     "nombre": "togepi",
-    "tipo1": "fairy",
+    "tipo1": null,
     "tipo2": null,
     "altura": 30,
     "peso": 1.5,
@@ -1751,7 +1751,7 @@
   },
   {
     "nombre": "togetic",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": "flying",
     "altura": 60,
     "peso": 3.2,
@@ -1822,7 +1822,7 @@
   {
     "nombre": "marill",
     "tipo1": "water",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 40,
     "peso": 8.5,
     "etapa de evolucion": 2,
@@ -1832,7 +1832,7 @@
   {
     "nombre": "azumarill",
     "tipo1": "water",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 80,
     "peso": 28.5,
     "etapa de evolucion": 3,
@@ -2081,7 +2081,7 @@
   },
   {
     "nombre": "snubbull",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": null,
     "altura": 60,
     "peso": 7.8,
@@ -2091,7 +2091,7 @@
   },
   {
     "nombre": "granbull",
-    "tipo1": "fairy",
+    "tipo1": "normal",
     "tipo2": null,
     "altura": 140,
     "peso": 48.7,
@@ -2792,7 +2792,7 @@
   {
     "nombre": "ralts",
     "tipo1": "psychic",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 40,
     "peso": 6.6,
     "etapa de evolucion": 1,
@@ -2802,7 +2802,7 @@
   {
     "nombre": "kirlia",
     "tipo1": "psychic",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 80,
     "peso": 20.2,
     "etapa de evolucion": 2,
@@ -2812,7 +2812,7 @@
   {
     "nombre": "gardevoir",
     "tipo1": "psychic",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 160,
     "peso": 48.4,
     "etapa de evolucion": 3,
@@ -2972,7 +2972,7 @@
   {
     "nombre": "azurill",
     "tipo1": "normal",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 20,
     "peso": 2.0,
     "etapa de evolucion": 1,
@@ -3022,7 +3022,7 @@
   {
     "nombre": "mawile",
     "tipo1": "steel",
-    "tipo2": "fairy",
+    "tipo2": null,
     "altura": 60,
     "peso": 11.5,
     "etapa de evolucion": 1,
