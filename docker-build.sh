@@ -3,8 +3,10 @@
 CONTAINER_NAME=guessdle
 IMAGE_NAME=guessdle:latest
 
-CREATE_VOLUME=false
+CREATE_DB_PATH=false
 DB_PATH=""
+CREATE_MEDIA_PATH=false
+MEDIA_PATH=""
 
 DEFAULT_PORT=8000
 PORT=${1:-$DEFAULT_PORT}
@@ -17,7 +19,7 @@ while [[ "$#" -gt 0 ]]; do
             shift 2
             ;;
         -v|--volume)
-            CREATE_VOLUME=true
+            CREATE_DB_PATH=true
             if [[ -n "$2" && ! "$2" =~ ^- ]]; then
                 DB_PATH="$2"
                 shift 2
@@ -27,9 +29,20 @@ while [[ "$#" -gt 0 ]]; do
                 shift 1
             fi
             ;;
+        -m|--media)
+            CREATE_MEDIA_PATH=true
+            if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+                MEDIA_PATH="$2"
+                shift 2
+            else
+                MEDIA_PATH="$(pwd)/media"
+                mkdir -p "$MEDIA_PATH"
+                shift 1
+            fi
+            ;;
         *)
             echo "❌ Unknown argument: $1"
-            echo "Usage: $0 [-p|--port <port>] [-v|--volume [<path>]]"
+            echo "Usage: $0 [-p|--port <port>] [-v|--volume [<path>]] [-m|--media [<path>]]"
             exit 1
             ;;
     esac
@@ -53,12 +66,13 @@ if docker build -t $IMAGE_NAME .; then
     fi
 
     echo "🚀 Running the container..."
-    if [ "$CREATE_VOLUME" = true ]; then
+    if [ "$CREATE_DB_PATH" = true ] && [ "$CREATE_MEDIA_PATH" = true ]; then
         docker run -d \
             --name $CONTAINER_NAME \
             -p $PORT:8000 \
             --env-file .env \
             --restart unless-stopped \
+            -v "$MEDIA_PATH:/app/media" \
             -v "$DB_PATH:/app/db.sqlite3" \
             $IMAGE_NAME
     else
