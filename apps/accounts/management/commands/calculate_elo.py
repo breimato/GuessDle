@@ -2,7 +2,7 @@ from collections import defaultdict, deque
 from django.core.management.base import BaseCommand
 from django.db.models import Avg
 from apps.games.models import GameResult
-from apps.accounts.models import GameElo
+from apps.accounts.models import GameElo, Challenge
 
 
 class Command(BaseCommand):
@@ -10,6 +10,7 @@ class Command(BaseCommand):
     Recalcula el Elo por juego.
     • Guarda partidas del primer jugador en una cola.
     • Cuando aparece el segundo jugador, puntúa esas partidas pendientes.
+    • Ahora también se incluyen los Challenges.
     """
 
     # ------------- Fórmula Elo -------------
@@ -40,36 +41,29 @@ class Command(BaseCommand):
         for res in results:
             key = (res.user_id, res.game_id)
             cur = elos[key]
-            cur["games"] += 1                      # 👍 siempre contamos la partida
+            cur["games"] += 1
 
-            # media histórica previa (sin esta partida)
             prev_avg = (
                 GameResult.objects
                 .filter(game=res.game, completed_at__lt=res.completed_at)
                 .aggregate(avg=Avg("attempts"))["avg"]
             )
             if prev_avg is None:
-                # Primera partida absoluta → se apila y se continúa
                 pending[res.game_id].append((res.user_id, res.attempts, None))
                 continue
 
-            # ---------------- Rival actual ----------------
             other_elos = [
                 data["elo"] for (u, g), data in elos.items()
                 if g == res.game_id and u != res.user_id and data["games"] > 0
             ]
             if not other_elos:
-                # Sigue sin rival real: apilar y continuar
                 pending[res.game_id].append((res.user_id, res.attempts, prev_avg))
                 continue
 
             opp_rating = sum(other_elos) / len(other_elos)
-
-            # ------------ Puntuar la partida actual ------------
             result_flag = 1 if res.attempts < prev_avg else 0
             cur["elo"] = self._update(cur["elo"], result_flag, opp_rating)
 
-            # ------------ Procesar pendientes de este juego ------------
             if pending[res.game_id]:
                 new_other = [
                     data["elo"] for (u, g), data in elos.items()
@@ -82,10 +76,46 @@ class Command(BaseCommand):
                     k2 = (uid, res.game_id)
                     player = elos[k2]
 
-                    # media histórica que teníamos guardada (si era None, usa prev_avg)
                     base_avg = hist if hist is not None else prev_avg
                     res_flag = 1 if att < base_avg else 0
                     player["elo"] = self._update(player["elo"], res_flag, new_opp)
+
+        # 🔥 Añadir ELO de Challenges
+        self.stdout.write("🎯 Procesando Challenges…")
+
+        challenges = Challenge.objects.filter(
+            accepted=True,
+            completed=True,
+            winner__isnull=False,
+            challenger_attempts__isnull=False,
+            opponent_attempts__isnull=False
+        ).select_related('challenger', 'opponent', 'game')
+
+        for ch in challenges:
+            game_id = ch.game_id
+
+            c_key = (ch.challenger_id, game_id)
+            o_key = (ch.opponent_id, game_id)
+
+            c_elo = elos[c_key]
+            o_elo = elos[o_key]
+
+            # Incrementar partidas
+            c_elo["games"] += 1
+            o_elo["games"] += 1
+
+            r1 = c_elo["elo"]
+            r2 = o_elo["elo"]
+
+            expected_c = self._expected(r1, r2)
+            expected_o = self._expected(r2, r1)
+
+            winner_id = ch.winner_id
+            result_c = 1 if ch.challenger_id == winner_id else 0
+            result_o = 1 if ch.opponent_id == winner_id else 0
+
+            c_elo["elo"] = self._update(r1, result_c, r2)
+            o_elo["elo"] = self._update(r2, result_o, r1)
 
         # ---------- Persistir en BD ----------
         self.stdout.write("💾 Guardando ELOs…")
@@ -97,4 +127,4 @@ class Command(BaseCommand):
                 partidas=data["games"]
             )
 
-        self.stdout.write(self.style.SUCCESS("✅ Recalculo completado: primeras partidas valoradas al aparecer rivales."))
+        self.stdout.write(self.style.SUCCESS("✅ Recalculo completado: GameResults y Challenges valorados."))
