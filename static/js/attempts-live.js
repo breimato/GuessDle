@@ -204,4 +204,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Date.now() < end) requestAnimationFrame(frame);
     })();
   }
+
+  function reportChallengeResult(attempts) {
+    const input = document.getElementById("challenge-attempts-input");
+    input.value = attempts;
+    document.getElementById("challenge-report-form").submit();
+  }
+
+  // Hook automático si ganaste
+  const wonFlag = document.getElementById("won-flag");
+  if (wonFlag) {
+    // Contar los intentos jugados
+    const attempts = document.querySelectorAll("#attempts-container > *").length;
+    reportChallengeResult(attempts);
+  }
 });

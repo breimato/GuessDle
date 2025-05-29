@@ -14,7 +14,7 @@ from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.accounts.services.elo import Elo
 from apps.games.models import Game
-from apps.games.services.gameplay import get_random_item
+from apps.games.services.gameplay.target_service import TargetService
 
 
 @never_cache
@@ -136,7 +136,6 @@ def create_challenge(request):
     opponent = get_object_or_404(User, pk=opponent_id)
     game     = get_object_or_404(Game, pk=game_id)
 
-    # Evitar duplicados de retos activos entre los mismos jugadores
     already_exists = Challenge.objects.filter(
         challenger=request.user,
         opponent=opponent,
@@ -149,11 +148,14 @@ def create_challenge(request):
         return redirect("dashboard")
 
     with transaction.atomic():
-        challenge = Challenge.objects.create(
+        target = TargetService(game).get_random_item()
+
+        Challenge.objects.create(
             challenger=request.user,
             opponent=opponent,
             game=game,
-            target=get_random_item(game)  # 👈 asigna el objetivo al crearlo
+            target=target
         )
 
     return redirect("dashboard")
+

@@ -1,25 +1,24 @@
+# apps/games/views.py
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
-import json
 from django.urls import reverse
-
-
-from django.views.decorators.http import require_POST
+import json
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.elo import Elo
-from apps.games.models import Game, DailyTarget
-from apps.games.services.gameplay import (
-    get_current_target,
-    process_guess,
-    build_context
-)
+from apps.games.models import Game
+from apps.games.services.gameplay.challenger_manager import ChallengeManager
+from apps.games.services.gameplay.context_builder import ContextBuilder
+from apps.games.services.gameplay.target_service import TargetService
+from apps.games.services.gameplay.guess_processor import GuessProcessor
 
 # ------------------------------------------------------------------ #
 # 1) AJAX – partida diaria
@@ -30,21 +29,22 @@ from apps.games.services.gameplay import (
 @csrf_protect
 def ajax_guess(request, slug):
     game = get_object_or_404(Game, slug=slug)
-    target_item, daily_target = get_current_target(game, request.user)
+    target_service = TargetService(game, request.user)
+    daily_target = target_service.get_target_for_today()
 
     if not daily_target:
         return JsonResponse({"error": "No hay objetivo diario."}, status=400)
 
-    ctx = build_context(request, game, daily_target=daily_target)
+    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     if not ctx["can_play"]:
         return JsonResponse({"error": "No puedes jugar más."}, status=403)
 
-    valid, correct = process_guess(request, game, daily_target=daily_target)  # sigue ok
+    valid, correct = GuessProcessor(game, request.user).process(request, daily_target=daily_target)
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
     # reconstruir contexto con el nuevo intento
-    ctx = build_context(request, game, daily_target=daily_target)
+    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     if not ctx["attempts"]:
         return JsonResponse({"error": "No hay intentos registrados"}, status=500)
 
@@ -69,7 +69,8 @@ def ajax_guess(request, slug):
 @csrf_protect
 def play_view(request, slug):
     game = get_object_or_404(Game, slug=slug)
-    target_item, daily_target = get_current_target(game, request.user)
+    target_service = TargetService(game, request.user)
+    daily_target = target_service.get_target_for_today()
 
     if not daily_target:
         messages.error(request, "Todavía no se ha generado el personaje del día.")
@@ -79,54 +80,38 @@ def play_view(request, slug):
 
     # ------------------- POST ------------------- #
     if request.method == "POST":
-        ctx = build_context(request, game, daily_target=daily_target)
+        ctx = ContextBuilder(request, game, daily_target=daily_target).build()
 
-        if ctx["can_play"]:
-            valid, correct = process_guess(request, game, daily_target=daily_target)
-
+        if not ctx["can_play"]:
             if is_ajax:
-                if not valid:
-                    return JsonResponse({"error": "Intento inválido"}, status=400)
+                return JsonResponse({"error": "No puedes jugar más."}, status=403)
+            messages.error(request, "No puedes jugar más.")
+            return render(request, "games/play.html", ctx)
 
-                # reconstruir contexto con el nuevo intento incluido
-                ctx = build_context(request, game, daily_target=daily_target)
-                last_attempt = ctx["attempts"][0]  # 🔥 lo correcto
+        valid, correct = GuessProcessor(game, request.user).process(request, daily_target=daily_target)
 
-                return JsonResponse({
-                    "won": correct,
-                    "attempt": {
-                        "name": last_attempt["name"],
-                        "icon": last_attempt["icon"],
-                        "feedback": last_attempt["feedback"],
-                    }
-                })
+        if not valid:
+            if is_ajax:
+                return JsonResponse({"error": "Intento inválido"}, status=400)
+            messages.error(request, "Intento inválido o repetido.")
+            return render(request, "games/play.html", ctx)
 
-            if not valid:
-                messages.error(request, "Intento inválido o repetido.")
+        if is_ajax:
+            ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+            last_attempt = ctx["attempts"][0]
+            return JsonResponse({
+                "won": correct,
+                "attempt": {
+                    "name": last_attempt["name"],
+                    "icon": last_attempt["icon"],
+                    "feedback": last_attempt["feedback"],
+                }
+            })
 
-        ctx["guess_url"] = reverse("ajax_guess", args=[game.slug])
         return render(request, "games/play.html", ctx)
 
     # ------------------- GET ------------------- #
-    ctx = build_context(request, game, daily_target=daily_target)
-    ctx["background_url"] = (
-        game.background_image.url if game.background_image else None
-    )
-
-    # Personaje de ayer
-    yesterday_date = daily_target.date - timedelta(days=1)
-    profile = getattr(request.user, "profile", None)
-    is_team = getattr(profile, "is_team_account", False)
-
-    yesterday_target = (
-        DailyTarget.objects
-        .filter(game=game, date=yesterday_date, is_team=is_team)
-        .select_related("target")
-        .first()
-    )
-    if yesterday_target:
-        ctx["yesterday_target_name"] = yesterday_target.target.name
-
+    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     return render(request, "games/play.html", ctx)
 
 
@@ -138,113 +123,65 @@ def play_view(request, slug):
 @csrf_protect
 def play_challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, id=challenge_id)
+    manager = ChallengeManager(request, challenge)
 
-    # Solo el oponente puede aceptar el reto si no ha sido aceptado aún
-    if not challenge.accepted and challenge.opponent == request.user:
-        challenge.accepted = True
-        challenge.save()
-
-    # Restringir acceso
-    if request.user not in (challenge.challenger, challenge.opponent):
+    manager.accept_if_needed()
+    if not manager.ensure_participant():
         return redirect("dashboard")
 
-    # Generar target si no lo tiene
+    # Crear target si falta
     if not challenge.target:
-        from apps.games.services.gameplay import get_random_item
-        challenge.target = get_random_item(challenge.game)
+        challenge.target = TargetService(challenge.game).get_random_item()
         challenge.save()
 
-    ctx = build_context(request, challenge.game, challenge=challenge)
+    # POST: guardar intentos
+    if request.method == "POST":
+        if not manager.assign_attempts_from_post():
+            return redirect("play_challenge", challenge_id=challenge.id)
+        manager.resolve_if_ready()
+        return redirect("dashboard")
+
+    # GET: construir contexto y renderizar
+    ctx = ContextBuilder(request, challenge.game, challenge=challenge).build()
     ctx.update({
         "game": challenge.game,
         "is_challenge": True,
         "challenge_id": challenge.id,
         "background_url": (
-            challenge.game.background_image.url
-            if challenge.game.background_image else None
+            challenge.game.background_image.url if challenge.game.background_image else None
         ),
-    })
-
-    # ------------------- POST – guardar intentos ------------------- #
-    if request.method == "POST":
-        try:
-            attempts = int(request.POST.get("attempts"))
-        except (TypeError, ValueError):
-            messages.error(request, "Número de intentos inválido.")
-            return redirect("play_challenge", challenge_id=challenge.id)
-
-        if request.user == challenge.challenger:
-            challenge.challenger_attempts = attempts
-        else:
-            challenge.opponent_attempts = attempts
-
-        challenge.save()
-
-        # Resolver reto cuando ambos jugaron
-        if (
-            challenge.challenger_attempts is not None and
-            challenge.opponent_attempts is not None and
-            not challenge.completed
-        ):
-            if challenge.challenger_attempts < challenge.opponent_attempts:
-                winner, loser = challenge.challenger, challenge.opponent
-            elif challenge.opponent_attempts < challenge.challenger_attempts:
-                winner, loser = challenge.opponent, challenge.challenger
-            else:
-                winner = loser = None   # empate
-
-            if winner:
-                Elo(winner, challenge.game).update_vs_opponent(
-                    result=1,
-                    opponent_rating=Elo(loser, challenge.game).elo_obj.elo
-                )
-                Elo(loser, challenge.game).update_vs_opponent(
-                    result=0,
-                    opponent_rating=Elo(winner, challenge.game).elo_obj.elo
-                )
-                challenge.winner = winner
-                challenge.elo_exchanged = True
-
-            challenge.completed = True
-            challenge.save()
-
-        return redirect("dashboard")
-
-    from django.urls import reverse
-
-    ctx.update({
         "guess_url": reverse("ajax_guess_challenge", args=[challenge.id]),
         "challenge_report_url": reverse("play_challenge", args=[challenge.id]),
-        "is_challenge_js": "true",  # importante para el JS
+        "is_challenge_js": "true",
     })
 
     return render(request, "games/play.html", ctx)
 
 
+
+# ------------------------------------------------------------------ #
+# 4) AJAX – reto 1 v 1
+# ------------------------------------------------------------------ #
 @require_POST
 @login_required
 @never_cache
 @csrf_protect
 def ajax_guess_challenge(request, challenge_id):
-    """
-    Recibe un intento dentro de un reto 1 v 1.
-    """
     challenge = get_object_or_404(Challenge, pk=challenge_id)
     if request.user not in (challenge.challenger, challenge.opponent):
         return JsonResponse({"error": "No autorizado."}, status=403)
 
     game = challenge.game
 
-    ctx = build_context(request, game, challenge=challenge)
+    ctx = ContextBuilder(request, game, challenge=challenge).build()
     if not ctx["can_play"]:
         return JsonResponse({"error": "No puedes jugar más."}, status=403)
 
-    valid, correct = process_guess(request, game, challenge=challenge)
+    valid, correct = GuessProcessor(game, request.user).process(request, challenge=challenge)
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
-    # Reconstruir contexto con el nuevo intento
-    ctx = build_context(request, game, challenge=challenge)
+    ctx = ContextBuilder(request, game, challenge=challenge).build()
     last_attempt = ctx["attempts"][0]
 
     return JsonResponse({

@@ -13,7 +13,7 @@ bg-no-repeat bg-cover bg-fixed
 {# ——— Audio reto ——— #}
 {% if is_challenge %}
 <script>
-  const IS_CHALLENGE          = "{{ is_challenge_js }}";           // "true"
+  const IS_CHALLENGE          = "{{ is_challenge_js }}";
   const CHALLENGE_REPORT_URL  = "{{ challenge_report_url }}";
   const CSRF_TOKEN            = "{{ csrf_token }}";
 </script>
@@ -127,22 +127,6 @@ bg-no-repeat bg-cover bg-fixed
   {% csrf_token %}
   <input type="hidden" name="attempts" id="challenge-attempts-input">
 </form>
-
-<script>
-  function reportChallengeResult(attempts) {
-    const input = document.getElementById("challenge-attempts-input");
-    input.value = attempts;
-    document.getElementById("challenge-report-form").submit();
-  }
-
-  // Hook automático si ganaste
-  const wonFlag = document.getElementById("won-flag");
-  if (wonFlag) {
-    // Contar los intentos jugados
-    const attempts = document.querySelectorAll("#attempts-container > *").length;
-    reportChallengeResult(attempts);
-  }
-</script>
 {% endif %}
 
 {% endblock %}

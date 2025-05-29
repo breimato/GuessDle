@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from datetime import timedelta
 from apps.games.models import Game, DailyTarget, GameItem
+import secrets
 
 
 class Command(BaseCommand):
@@ -15,11 +16,12 @@ class Command(BaseCommand):
             self.stdout.write(f"✔️ Ya existe target ({tipo}) para {game.name} ({date})")
             return False
 
-        item = GameItem.objects.filter(game=game).order_by("?").first()
-        if not item:
+        items = list(GameItem.objects.filter(game=game))
+        if not items:
             self.stdout.write(f"⚠️ {game.name} no tiene ítems para generar target ({tipo}) ({date})")
             return False
 
+        item = secrets.choice(items)
         DailyTarget.objects.create(
             game=game,
             date=date,
