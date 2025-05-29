@@ -148,7 +148,7 @@ def create_challenge(request):
         return redirect("dashboard")
 
     with transaction.atomic():
-        target = TargetService(game).get_random_item()
+        target = TargetService(game, request.user).get_random_item()
 
         Challenge.objects.create(
             challenger=request.user,
