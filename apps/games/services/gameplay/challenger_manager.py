@@ -33,11 +33,8 @@ class ChallengeManager:
         return True
 
     def resolve_if_ready(self):
-        if (
-            self.challenge.challenger_attempts is not None and
-            self.challenge.opponent_attempts is not None and
-            not self.challenge.completed
-        ):
+        if (self.challenge.challenger_attempts is not None and self.challenge.opponent_attempts
+                is not None and not self.challenge.completed):
             self._calculate_winner()
             self.challenge.completed = True
             self.challenge.save()
