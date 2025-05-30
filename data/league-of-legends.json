@@ -918,7 +918,7 @@
       "h": 48
     }, 
     "gender": "male", 
-    "attackType": "melee", 
+    "attackType": "ranged",
     "releaseDate": 2011, 
     "region": "bilgewater", 
     "lane": "jungla"
