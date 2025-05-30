@@ -72,17 +72,30 @@ class DailyTarget(models.Model):
 class GameResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    daily_target = models.ForeignKey(
-        DailyTarget,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
+
+    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE, null=True, blank=True)
+    extra_play = models.ForeignKey("ExtraDailyPlay", on_delete=models.CASCADE, null=True, blank=True)
+    challenge = models.ForeignKey("accounts.Challenge", on_delete=models.CASCADE, null=True, blank=True)
+
     attempts = models.PositiveIntegerField()
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'daily_target')
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "daily_target"],
+                name="unique_result_per_daily"
+            ),
+            models.UniqueConstraint(
+                fields=["user", "extra_play"],
+                name="unique_result_per_extra"
+            ),
+            models.UniqueConstraint(
+                fields=["user", "challenge"],
+                name="unique_result_per_challenge"
+            ),
+        ]
+
 
 
 class GameAttempt(models.Model):
@@ -93,11 +106,26 @@ class GameAttempt(models.Model):
     is_correct = models.BooleanField()
     attempted_at = models.DateTimeField(auto_now_add=True)
     challenge = models.ForeignKey(
-        'accounts.Challenge',  # referencia perezosa
+        'accounts.Challenge',
         on_delete=models.CASCADE,
         null=True, blank=True,
         related_name="attempts"
     )
+    extra_play = models.ForeignKey("ExtraDailyPlay", null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['attempted_at']
+
+
+class ExtraDailyPlay(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    target = models.ForeignKey('games.GameItem', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    bet_amount = models.FloatField(default=0) 
+
+    class Meta:
+        unique_together = ('user', 'game', 'created_at')
+
+    def __str__(self):
+        return f"ExtraDailyPlay: {self.user.username} - {self.game.name} - {self.target.name}"

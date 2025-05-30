@@ -1,5 +1,6 @@
 # apps/games/views.py
 
+from tkinter import E
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -14,9 +15,10 @@ import json
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.elo import Elo
-from apps.games.models import Game
+from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
 from apps.games.services.gameplay.context_builder import ContextBuilder
+from apps.games.services.gameplay.result_updater import ResultUpdater
 from apps.games.services.gameplay.target_service import TargetService
 from apps.games.services.gameplay.guess_processor import GuessProcessor
 
@@ -131,7 +133,7 @@ def play_challenge(request, challenge_id):
 
     # Crear target si falta
     if not challenge.target:
-        challenge.target = TargetService(challenge.game).get_random_item()
+        challenge.target = TargetService(challenge.game, request.user).get_random_item()
         challenge.save()
 
     # POST: guardar intentos
@@ -189,6 +191,102 @@ def ajax_guess_challenge(request, challenge_id):
         "attempt": {
             "name":     last_attempt["name"],
             "icon":     last_attempt["icon"],
+            "feedback": last_attempt["feedback"],
+        },
+        "remaining_names": json.loads(ctx["remaining_names_json"]),
+    })
+
+
+@login_required
+@csrf_protect
+def start_extra_daily(request, slug):
+    game = get_object_or_404(Game, slug=slug)
+    user = request.user
+
+    try:
+        bet = float(request.POST.get("bet", "0"))
+    except ValueError:
+        bet = 0
+
+    elo = Elo(user, game)
+
+    if bet <= 0 or elo.elo_obj.elo < bet:
+        messages.error(request, "Apuesta inválida o sin suficiente ELO.")
+        return redirect("dashboard")
+
+    # 💰 Restamos el ELO
+    elo.elo_obj.elo -= bet
+    elo.elo_obj.save(update_fields=["elo"])
+
+    target = TargetService(game, user).get_random_item()
+
+    # 🔐 Guardamos la apuesta directamente en la BBDD
+    extra = ExtraDailyPlay.objects.create(user=user, game=game, target=target, bet_amount=bet)
+
+    return redirect("play_extra_daily", extra_id=extra.id)
+
+
+@login_required
+@csrf_protect
+def play_extra_daily(request, extra_id):
+    extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
+    game = extra.game
+
+    session_key = f"extra_bet_{extra.id}"
+
+    # Verifica si ya ha ganado
+    valid, correct = GuessProcessor(game, request.user).process(request, extra_play=extra)
+    if valid and correct:
+        ResultUpdater(game, request.user).update_for_game(extra_play=extra)
+
+        bet = ExtraDailyPlay.objects.filter(pk=extra.id, user=request.user).get().bet_amount
+
+        # ➕ lógica de apuesta personalizada
+        if bet:
+            gain = float(bet) + (float(bet) * 0.5)
+            elo = Elo(request.user, game)
+            elo.elo_obj.elo += gain
+            elo.elo_obj.save(update_fields=["elo"])
+
+    # 🧠 Aquí usamos extra_play=extra explícitamente
+    ctx = ContextBuilder(request, game, extra_play=extra).build()
+    ctx["target"] = extra.target
+    ctx["guess_url"] = reverse("ajax_guess_extra", args=[extra.id])
+    return render(request, "games/play.html", ctx)
+
+
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def ajax_guess_extra(request, extra_id):
+    extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
+    game = extra.game
+
+    ctx = ContextBuilder(request, game, extra_play=extra).build()
+    ctx["target"] = extra.target
+
+    if not ctx["can_play"]:
+        return JsonResponse({"error": "No puedes jugar más."}, status=403)
+
+    valid, correct = GuessProcessor(game, request.user).process(
+        request, extra_play=extra
+    )
+    if not valid:
+        return JsonResponse({"error": "Intento inválido"}, status=400)
+
+    ctx = ContextBuilder(request, game, extra_play=extra).build()
+    ctx["target"] = extra.target
+
+    last_attempt = ctx["attempts"][0]
+
+    return JsonResponse({
+        "won": correct,
+        "attempt": {
+            "name": last_attempt["name"],
+            "icon": last_attempt["icon"],
             "feedback": last_attempt["feedback"],
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),

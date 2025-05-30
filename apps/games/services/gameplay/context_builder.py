@@ -7,20 +7,27 @@ from .target_service import TargetService
 
 
 class ContextBuilder:
-    def __init__(self, request, game, daily_target=None, challenge=None):
-        if daily_target is None and challenge is None:
-            raise ValueError("Debes indicar daily_target o challenge.")
+    def __init__(self, request, game, daily_target=None, challenge=None, extra_play=None):
+        if daily_target is None and challenge is None and extra_play is None:
+            raise ValueError("Debes indicar daily_target o challenge o extra.")
         
         self.request = request
         self.game = game
         self.daily_target = daily_target
         self.challenge = challenge
+        self.extra_play = extra_play
 
     def build(self):
-        if self.daily_target:
-            qs = GameAttempt.objects.filter(user=self.request.user, daily_target=self.daily_target).order_by("-attempted_at")
+        if self.extra_play:
+            # 👈 PRIORIDAD A `extra_play` si existe
+            qs = GameAttempt.objects.filter(user=self.request.user, extra_play=self.extra_play).order_by(
+                "-attempted_at")
+            target_item = self.extra_play.target
+        elif self.daily_target:
+            qs = GameAttempt.objects.filter(user=self.request.user, daily_target=self.daily_target).order_by(
+                "-attempted_at")
             target_item = self.daily_target.target
-        else:
+        elif self.challenge:
             qs = GameAttempt.objects.filter(user=self.request.user, challenge=self.challenge).order_by("-attempted_at")
             target_item = self.challenge.target
 
@@ -42,15 +49,15 @@ class ContextBuilder:
             "remaining_names_json": json.dumps(remaining_names),
         }
 
-        if self.daily_target:
-            # Solo aplicable para partidas diarias
+        if self.daily_target or self.extra_play:
             ctx["guess_url"] = self._get_guess_url()
-            ctx["background_url"] = (self.game.background_image.url if self.game.background_image else None)
+            ctx["background_url"] = self.game.background_image.url if self.game.background_image else None
 
-            yesterday_target = TargetService(self.game, self.request.user).get_yesterday_target(today_date=self.daily_target.date)
-
-            if yesterday_target:
-                ctx["yesterday_target_name"] = yesterday_target.target.name
+            if self.daily_target:
+                yesterday_target = TargetService(self.game, self.request.user).get_yesterday_target(
+                    today_date=self.daily_target.date)
+                if yesterday_target:
+                    ctx["yesterday_target_name"] = yesterday_target.target.name
 
         return ctx
 
