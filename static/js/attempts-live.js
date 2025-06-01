@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const slug = gameData?.dataset.slug;
   const extraId = gameData?.dataset.extraId;
   const startExtraURL = slug ? `/games/start-extra/${slug}/` : null;
+  const maxExtrasReached = document.getElementById("game-data")?.dataset.maxExtrasReached === "true";
+
 
 
 
@@ -172,34 +174,40 @@ document.addEventListener("DOMContentLoaded", () => {
     flex flex-col items-center text-center`;
 
   modal.innerHTML = `
-    <h2 class="text-2xl font-bold mb-4">
-      ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
-    </h2>
-    <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
-      <a href="/accounts"
-         class="bg-yellow-700 hover:bg-yellow-800 text-white px-6 py-2 rounded-full transition shadow text-center block">
-        🏠 Volver al Dashboard
-      </a>
-      ${startExtraURL ? `
-        <div id="extra-play-wrapper" class="flex flex-col gap-2">
-          <button id="show-bet-form"
-                  class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition shadow w-full">
-            💰 Apostar y jugar partida extra
+  <h2 class="text-2xl font-bold mb-4">
+    ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
+  </h2>
+  <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
+    <a href="/accounts"
+       class="bg-yellow-700 hover:bg-yellow-800 text-white px-6 py-2 rounded-full transition shadow text-center block">
+      🏠 Volver al Dashboard
+    </a>
+
+    ${maxExtrasReached ? `
+      <div class="bg-red-100 text-red-800 px-4 py-3 rounded-xl text-center border-2 border-red-300 font-semibold">
+        🔒 Ya has jugado tus 2 partidas extra hoy en este juego.
+      </div>` : startExtraURL ? `
+      <div id="extra-play-wrapper" class="flex flex-col gap-2">
+        <button id="show-bet-form"
+                class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition shadow w-full">
+          💰 Apostar y jugar partida extra
+        </button>
+        <form method="post" action="${startExtraURL}" id="bet-form" class="flex flex-col gap-2 hidden">
+          <input type="hidden" name="csrfmiddlewaretoken" value="${csrf}">
+          <label for="bet" class="text-lg font-semibold text-gray-800">
+            ¿Cuánto quieres apostar para jugar una partida extra?
+          </label>
+          <input type="number" name="bet" min="10" step="1" required
+            class="w-full px-4 py-2 border-0 border-green-600 rounded-xl text-center text-lg focus:outline-none focus:ring-green-500 bg-white text-black" style="margin-top: 0.5rem;" />
+          <button type="submit"
+                  class="bg-green-700 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-full transition shadow w-full" style="margin-top: 1rem;">
+            🎰 ¡Jugar ahora!
           </button>
-          <form method="post" action="${startExtraURL}" id="bet-form" class="flex flex-col gap-2 hidden">
-            <input type="hidden" name="csrfmiddlewaretoken" value="${csrf}">
-            <label for="bet" class="text-lg font-semibold text-gray-800">
-              ¿Cuánto quieres apostar para jugar una partida extra?
-            <input type="number" name="bet" min="10" step="1" required
-              class="w-full px-4 py-2 border-0 border-green-600 rounded-xl text-center text-lg focus:outline-none focus:ring-green-500 bg-white text-black" style="margin-top: 0.5rem;" />
-            <button type="submit"
-                    class="bg-green-700 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-full transition shadow w-full" style="margin-top: 1rem;">
-              🎰 ¡Jugar ahora!
-            </button>
-          </form>
-        </div>` : ''}
-    </div>
-  `;
+        </form>
+      </div>` : ''
+    }
+  </div>`;
+
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);

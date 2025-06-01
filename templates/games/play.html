@@ -35,9 +35,14 @@ bg-no-repeat bg-cover bg-fixed
 
 
 <div id="game-data"
-     data-slug="{{ slug }}"
-     data-extra-id="{{ extra_id }}">
+     data-slug="{{ game.slug }}"
+     {% if extra_play %}
+     data-extra-id="{{ extra_play.id }}"
+     {% endif %}
+     data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}">
+
 </div>
+
 
 {# ——— Título ——— #}
 <section class="container mx-auto text-center drop-shadow">

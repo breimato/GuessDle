@@ -4,6 +4,7 @@ from tkinter import E
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
@@ -98,23 +99,51 @@ def play_view(request, slug):
             messages.error(request, "Intento inválido o repetido.")
             return render(request, "games/play.html", ctx)
 
+        ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+        last_attempt = ctx["attempts"][0]
+        if correct:
+            ctx["won"] = True
+            ctx["target"] = daily_target
+
+        # 🔄 Añadimos estos context vars para JS
+        ctx["slug"] = game.slug
+        ctx["extra_id"] = None
+        today = now().date()
+        extras_today = ExtraDailyPlay.objects.filter(
+            user=request.user,
+            game=game,
+            created_at__date=today
+        ).count()
+        ctx["max_extras_reached"] = extras_today >= 2
+
         if is_ajax:
-            ctx = ContextBuilder(request, game, daily_target=daily_target).build()
-            last_attempt = ctx["attempts"][0]
             return JsonResponse({
                 "won": correct,
                 "attempt": {
                     "name": last_attempt["name"],
                     "icon": last_attempt["icon"],
                     "feedback": last_attempt["feedback"],
-                }
+                },
+                "remaining_names": json.loads(ctx["remaining_names_json"]),
             })
 
         return render(request, "games/play.html", ctx)
 
     # ------------------- GET ------------------- #
     ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+    ctx["slug"] = game.slug
+    ctx["extra_id"] = None
+    today = now().date()
+    extras_today = ExtraDailyPlay.objects.filter(
+        user=request.user,
+        game=game,
+        created_at__date=today
+    ).count()
+    ctx["max_extras_reached"] = extras_today >= 2
+
     return render(request, "games/play.html", ctx)
+
+
 
 
 # ------------------------------------------------------------------ #
@@ -203,6 +232,18 @@ def start_extra_daily(request, slug):
     game = get_object_or_404(Game, slug=slug)
     user = request.user
 
+    today = now().date()
+    extras_hoy = ExtraDailyPlay.objects.filter(
+        user=user,
+        game=game,
+        created_at__date=today
+    ).count()
+
+    if extras_hoy >= 2:
+        messages.error(request, "Ya has jugado el máximo de 2 partidas extra hoy en este juego.")
+        return redirect("dashboard")
+
+    # 💰 Validación apuesta
     try:
         bet = float(request.POST.get("bet", "0"))
     except ValueError:
@@ -231,6 +272,13 @@ def start_extra_daily(request, slug):
 def play_extra_daily(request, extra_id):
     extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user, completed=False)
     game = extra.game  # ✅ ya lo tienes desde la relación
+    today = now().date()
+    extras_today = ExtraDailyPlay.objects.filter(
+        user=request.user,
+        game=game,
+        created_at__date=today
+    ).count()
+
 
     valid, correct = GuessProcessor(game, request.user).process(request, extra_play=extra)
     if valid and correct:
@@ -243,6 +291,8 @@ def play_extra_daily(request, extra_id):
     ctx["guess_url"] = reverse("ajax_guess_extra", args=[extra.id])
     ctx["slug"] = game.slug
     ctx["extra_id"] = extra.id
+    ctx["max_extras_reached"] = extras_today >= 2
+
     return render(request, "games/play.html", ctx)
 
 
