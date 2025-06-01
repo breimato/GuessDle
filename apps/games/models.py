@@ -101,17 +101,15 @@ class GameResult(models.Model):
 class GameAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE, null=True, blank=True)
     guess = models.ForeignKey(GameItem, on_delete=models.CASCADE)
     is_correct = models.BooleanField()
     attempted_at = models.DateTimeField(auto_now_add=True)
-    challenge = models.ForeignKey(
-        'accounts.Challenge',
+    session = models.ForeignKey(
+        'games.PlaySession',
         on_delete=models.CASCADE,
         null=True, blank=True,
-        related_name="attempts"
+        related_name='attempts'
     )
-    extra_play = models.ForeignKey("ExtraDailyPlay", null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['attempted_at']
@@ -130,3 +128,26 @@ class ExtraDailyPlay(models.Model):
 
     def __str__(self):
         return f"ExtraDailyPlay: {self.user.username} - {self.game.name} - {self.target.name}"
+
+
+class PlaySessionType(models.TextChoices):
+    DAILY     = "DAILY", "Daily"
+    EXTRA     = "EXTRA", "Extra"
+    CHALLENGE = "CHALLENGE", "Challenge"
+
+class PlaySession(models.Model):
+    user         = models.ForeignKey(User, on_delete=models.CASCADE, related_name="play_sessions")
+    game         = models.ForeignKey('games.Game', on_delete=models.CASCADE, related_name="play_sessions")
+    session_type = models.CharField(max_length=10, choices=PlaySessionType.choices)
+    reference_id = models.PositiveIntegerField(null=True, blank=True, help_text="PK de DailyTarget / ExtraDailyPlay / Challenge")
+    completed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'game', 'session_type', 'reference_id')
+        indexes = [
+            models.Index(fields=['game', 'session_type']),
+            models.Index(fields=['user']),
+        ]
+
+    def __str__(self):
+        return f"{self.user} - {self.game} - {self.session_type}"

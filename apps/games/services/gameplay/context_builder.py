@@ -3,6 +3,7 @@
 import json
 from apps.games.attempts import build_attempts
 from apps.games.models import GameAttempt
+from .play_session_service import PlaySessionService
 from .target_service import TargetService
 
 
@@ -19,17 +20,22 @@ class ContextBuilder:
 
     def build(self):
         if self.extra_play:
-            # 👈 PRIORIDAD A `extra_play` si existe
-            qs = GameAttempt.objects.filter(user=self.request.user, extra_play=self.extra_play).order_by(
-                "-attempted_at")
+            session = PlaySessionService.get_or_create(
+                self.request.user, self.game, extra_play=self.extra_play
+            )
             target_item = self.extra_play.target
         elif self.daily_target:
-            qs = GameAttempt.objects.filter(user=self.request.user, daily_target=self.daily_target).order_by(
-                "-attempted_at")
+            session = PlaySessionService.get_or_create(
+                self.request.user, self.game, daily_target=self.daily_target
+            )
             target_item = self.daily_target.target
-        elif self.challenge:
-            qs = GameAttempt.objects.filter(user=self.request.user, challenge=self.challenge).order_by("-attempted_at")
+        else:  # challenge
+            session = PlaySessionService.get_or_create(
+                self.request.user, self.game, challenge=self.challenge
+            )
             target_item = self.challenge.target
+
+        qs = GameAttempt.objects.filter(session=session).order_by("-attempted_at")
 
         attempts = build_attempts(self.game,[att.guess for att in qs],target_item)
 
