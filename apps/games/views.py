@@ -229,30 +229,22 @@ def start_extra_daily(request, slug):
 @login_required
 @csrf_protect
 def play_extra_daily(request, extra_id):
-    extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
-    game = extra.game
+    extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user, completed=False)
+    game = extra.game  # ✅ ya lo tienes desde la relación
 
-    session_key = f"extra_bet_{extra.id}"
-
-    # Verifica si ya ha ganado
     valid, correct = GuessProcessor(game, request.user).process(request, extra_play=extra)
     if valid and correct:
         ResultUpdater(game, request.user).update_for_game(extra_play=extra)
+        extra.completed = True
+        extra.save(update_fields=["completed"])
 
-        bet = ExtraDailyPlay.objects.filter(pk=extra.id, user=request.user).get().bet_amount
-
-        # ➕ lógica de apuesta personalizada
-        if bet:
-            gain = float(bet) + (float(bet) * 0.5)
-            elo = Elo(request.user, game)
-            elo.elo_obj.elo += gain
-            elo.elo_obj.save(update_fields=["elo"])
-
-    # 🧠 Aquí usamos extra_play=extra explícitamente
     ctx = ContextBuilder(request, game, extra_play=extra).build()
     ctx["target"] = extra.target
     ctx["guess_url"] = reverse("ajax_guess_extra", args=[extra.id])
+    ctx["slug"] = game.slug
+    ctx["extra_id"] = extra.id
     return render(request, "games/play.html", ctx)
+
 
 
 

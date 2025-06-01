@@ -122,7 +122,8 @@ class ExtraDailyPlay(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     target = models.ForeignKey('games.GameItem', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    bet_amount = models.FloatField(default=0) 
+    bet_amount = models.FloatField(default=0)
+    completed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'game', 'created_at')

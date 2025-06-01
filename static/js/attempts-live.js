@@ -5,8 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("guess-form");
   const csrf = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
   const slugMatch = location.pathname.match(/\/play(?:-extra)?\/([^\/]+)/);
-  const slug = slugMatch ? slugMatch[1] : null;
+  const gameData = document.getElementById("game-data");
+  const slug = gameData?.dataset.slug;
+  const extraId = gameData?.dataset.extraId;
   const startExtraURL = slug ? `/games/start-extra/${slug}/` : null;
+
 
 
   /* ────── helper: gap según columnas ────── */

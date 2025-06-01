@@ -47,7 +47,6 @@ class GuessProcessor:
             extra_play=extra_play,
         )
 
-        # Solo actualiza resultados si es daily
         if is_correct:
             ResultUpdater(self.game, self.user).update_for_game(
                 daily_target=daily_target,

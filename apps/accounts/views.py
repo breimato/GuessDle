@@ -13,24 +13,38 @@ from django.views.decorators.csrf import csrf_protect
 from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.accounts.services.elo import Elo
-from apps.games.models import Game
+from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
+from django.contrib.auth.models import User
 
 
 @never_cache
 @login_required
 def dashboard_view(request):
     stats = DashboardStats(request.user)
-    from django.contrib.auth.models import User
+    users = User.objects.exclude(id=request.user.id)
+
     pending_challenges = Challenge.objects.filter(opponent=request.user, accepted=False)
     active_challenges = Challenge.objects.filter(
         accepted=True,
         completed=False
     ).filter(models.Q(challenger=request.user) | models.Q(opponent=request.user))
-    users = User.objects.exclude(id=request.user.id)
+
+    active_extras = ExtraDailyPlay.objects.filter(
+        user=request.user,
+        completed=False,
+    ).select_related('game')
+
+    # 🔥 Creamos un dict juego_slug → extra_id
+    extras_by_slug = {extra.game.slug: extra.id for extra in active_extras}
+
+    # 🔁 Extendemos cada juego con extra_id si lo tiene
+    juegos_disponibles = stats.available_games()
+    for juego in juegos_disponibles:
+        juego.extra_id = extras_by_slug.get(juego.slug)
 
     context = {
-        "juegos_disponibles": stats.available_games(),
+        "juegos_disponibles": juegos_disponibles,
         "user_stats": {
             "juegos": stats.user_stats(),
             "elo_global": stats.elo_global(),
@@ -41,6 +55,7 @@ def dashboard_view(request):
         "active_challenges": active_challenges,
         "users": users,
     }
+
     return render(request, "accounts/dashboard.html", context)
 
 
