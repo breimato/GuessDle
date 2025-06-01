@@ -28,13 +28,13 @@ class ResultUpdater:
         )
 
         if not created:
-            return  # Ya se había registrado
+            return
 
         elo_service = Elo(self.user, self.game)
 
-        bet_amount = ExtraDailyPlay.objects.filter(pk=extra.id, user=request.user).get().bet_amount
+        if extra_play:
+            bet_amount = ExtraDailyPlay.objects.filter(pk=extra_play.id, user=self.user).get().bet_amount
 
-        if extra_play and bet_amount:
             # 👉 Verificar si hay otros jugadores en el juego
             hay_otros = GameResult.objects.filter(game=self.game).exclude(user=self.user).exists()
             if hay_otros:
