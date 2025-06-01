@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.utils import timezone
-from apps.games.models import DailyTarget
+from apps.games.models import DailyTarget, GameResult
 from apps.games.models import GameItem
 import secrets
 
@@ -36,3 +36,16 @@ class TargetService:
         if not items:
             raise ValueError("No hay ítems disponibles para este juego.")
         return secrets.choice(items)
+
+    def is_daily_resolved(self):
+        today = timezone.localdate()
+        daily = DailyTarget.objects.filter(
+            game=self.game,
+            date=today,
+            is_team=self.is_team
+        ).select_related("target").first()
+
+        if not daily:
+            return False
+
+        return GameResult.objects.filter(daily_target=daily.id, user=self.user).exists()

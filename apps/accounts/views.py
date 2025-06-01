@@ -4,6 +4,7 @@ from django.core.validators import validate_email
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -16,6 +17,8 @@ from apps.accounts.services.elo import Elo
 from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 
 @never_cache
@@ -30,18 +33,32 @@ def dashboard_view(request):
         completed=False
     ).filter(models.Q(challenger=request.user) | models.Q(opponent=request.user))
 
+    today = now().date()
+
+    # 🚀 1. Mapea slug → extra_id (solo de hoy)
     active_extras = ExtraDailyPlay.objects.filter(
         user=request.user,
         completed=False,
+        created_at__date=today  # ✅ solo de hoy
     ).select_related('game')
 
-    # 🔥 Creamos un dict juego_slug → extra_id
     extras_by_slug = {extra.game.slug: extra.id for extra in active_extras}
 
-    # 🔁 Extendemos cada juego con extra_id si lo tiene
+    # 🚀 2. Mapea slug → has_daily_target
     juegos_disponibles = stats.available_games()
+    daily_targets_by_slug = {
+        game.slug: bool(TargetService(game, request.user).get_target_for_today())
+        for game in juegos_disponibles
+    }
+
+    # 🚀 3. Annotamos cada juego con redirección lógica
     for juego in juegos_disponibles:
-        juego.extra_id = extras_by_slug.get(juego.slug)
+        if daily_targets_by_slug.get(juego.slug):
+            juego.redirect_url = reverse("play", args=[juego.slug])  # 🎯 prioridad a daily
+        elif juego.slug in extras_by_slug:
+            juego.redirect_url = reverse("play_extra_daily", args=[extras_by_slug[juego.slug]])
+        else:
+            juego.redirect_url = reverse("play", args=[juego.slug])  # fallback
 
     context = {
         "juegos_disponibles": juegos_disponibles,

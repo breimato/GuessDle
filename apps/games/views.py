@@ -273,6 +273,18 @@ def play_extra_daily(request, extra_id):
     extra = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user, completed=False)
     game = extra.game  # ✅ ya lo tienes desde la relación
     today = now().date()
+
+    # 💥 BLOQUEO si hay una daily activa
+    target_service = TargetService(game, request.user)
+    daily_target = target_service.is_daily_resolved()
+    if not daily_target:
+        # Redirige al juego normal (daily)
+        return redirect("play", slug=game.slug)
+
+    # 💥 BLOQUEO si el extra no es de hoy
+    if extra.created_at.date() != today:
+        return redirect("dashboard")
+
     extras_today = ExtraDailyPlay.objects.filter(
         user=request.user,
         game=game,
