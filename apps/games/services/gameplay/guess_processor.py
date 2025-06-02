@@ -51,11 +51,7 @@ class GuessProcessor:
             game=self.game,
             session=session,
             guess=item,
-            is_correct=is_correct,
-            # dejamos los FK antiguos para retro-compatibilidad
-            daily_target=daily_target,
-            challenge=challenge,
-            extra_play=extra_play,
+            is_correct=is_correct
         )
 
         # -------------------- 5️⃣ Actualizar resultado ---------- #
