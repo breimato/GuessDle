@@ -1,6 +1,6 @@
 from datetime import timedelta
 from django.utils import timezone
-from apps.games.models import DailyTarget, GameResult
+from apps.games.models import DailyTarget, GameResult, PlaySession, PlaySessionType, GameAttempt
 from apps.games.models import GameItem
 import secrets
 
@@ -48,4 +48,19 @@ class TargetService:
         if not daily:
             return False
 
-        return GameResult.objects.filter(daily_target=daily.id, user=self.user).exists()
+        # 1️⃣ Buscar la sesión DAILY de hoy para este usuario
+        session = PlaySession.objects.filter(
+            user=self.user,
+            game=self.game,
+            session_type=PlaySessionType.DAILY,
+            reference_id=daily.id
+        ).first()
+
+        if not session:
+            return False
+
+        # 2️⃣ Verificar si hay al menos un intento correcto en esa sesión
+        return GameAttempt.objects.filter(
+            session=session,
+            is_correct=True
+        ).exists()
