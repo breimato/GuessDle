@@ -13,11 +13,21 @@ from django.views.decorators.csrf import csrf_protect
 
 from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
-from apps.accounts.services.elo import Elo
+from apps.accounts.services.score_service import ScoreService
 from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
+
+from apps.accounts.models import Challenge
+from apps.accounts.services.score_service import ScoreService
+from apps.games.services.gameplay.play_session_service import PlaySessionService
+from apps.games.models import GameAttempt
+
 
 
 
@@ -47,7 +57,7 @@ def dashboard_view(request):
     # 🚀 2. Mapea slug → has_daily_target
     juegos_disponibles = stats.available_games()
     daily_targets_by_slug = {
-        game.slug: bool(TargetService(game, request.user).get_target_for_today())
+        game.slug: bool(not TargetService(game, request.user).is_daily_resolved())
         for game in juegos_disponibles
     }
 
@@ -127,33 +137,51 @@ def register_view(request):
 
 
 
+@login_required
+@csrf_protect
 def complete_challenge(request, challenge_id):
     challenge = get_object_or_404(Challenge, pk=challenge_id, accepted=True, completed=False)
 
-    # Lógica de determinar ganador
+    # Determinar ganador y perdedor
     winner = request.user
     loser = challenge.opponent if challenge.challenger == winner else challenge.challenger
 
-    elo_winner = Elo(winner, challenge.game)
-    elo_loser = Elo(loser, challenge.game)
+    # 1️⃣ Obtenemos la sesión de CHALLENGE para cada jugador
+    session_winner = PlaySessionService.get_or_create(
+        winner,
+        challenge.game,
+        challenge=challenge
+    )
+    session_loser = PlaySessionService.get_or_create(
+        loser,
+        challenge.game,
+        challenge=challenge
+    )
 
-    # Actualización cruzada de ELO
-    elo_winner.update_vs_opponent(result=1, opponent_rating=elo_loser.elo_obj.elo)
-    elo_loser.update_vs_opponent(result=0, opponent_rating=elo_winner.elo_obj.elo)
+    # 2️⃣ Contamos intentos en cada sesión
+    attempts_winner = GameAttempt.objects.filter(session=session_winner).count()
+    attempts_loser  = GameAttempt.objects.filter(session=session_loser).count()
 
+    # 3️⃣ Asignamos puntos al ganador según sus intentos
+    score_winner = ScoreService(winner, challenge.game)
+    pts_ganados   = score_winner.add_points_for_attempts(attempts_winner)
+
+    # (Opcional: si quieres dar puntos al perdedor, descomenta
+    # score_loser = ScoreService(loser, challenge.game)
+    # pts_perdedor = score_loser.add_points_for_attempts(attempts_loser)
+    # Pero por ahora, el perdedor no recibe puntos.)
+
+    # 4️⃣ Guardar resultado del challenge
     challenge.completed = True
-    challenge.winner = winner
-    challenge.elo_exchanged = True
+    challenge.winner   = winner
     challenge.save()
 
     return JsonResponse({
         "status": "success",
         "winner": winner.username,
-        "elo": {
-            winner.username: elo_winner.elo_obj.elo,
-            loser.username: elo_loser.elo_obj.elo
-        }
+        "points_awarded": pts_ganados,
     })
+
 
 
 @login_required

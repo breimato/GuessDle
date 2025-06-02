@@ -5,7 +5,7 @@ from django.db import models
 class GameElo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey('games.Game', on_delete=models.CASCADE)  # referencia perezosa
-    elo = models.FloatField(default=1200)
+    elo = models.FloatField(default=0)
     partidas = models.PositiveIntegerField(default=0)
 
     class Meta:

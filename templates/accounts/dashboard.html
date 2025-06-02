@@ -21,7 +21,7 @@ login-bg
     </h1>
     <p class="mt-2 text-white font-semibold text-lg tracking-wider"
        style="font-family:var(--font-lol); padding-top: 25px">
-        🔢 Tu ELO global:
+        🔢 Tus puntos globales:
         <span class="text-yellow-300">{{ user_stats.elo_global|floatformat:0 }}</span>
     </p>
 
@@ -50,7 +50,7 @@ login-bg
                 style="font-family:var(--font-lol); letter-spacing:.05em;">
                 <th class="rounded-l-2xl">Juego</th>
                 <th>Media&nbsp;intentos</th>
-                <th class="rounded-r-2xl">ELO</th>
+                <th class="rounded-r-2xl">Puntos</th>
             </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@ login-bg
                     {{ j.media_tiempo|floatformat:2 }} int.
                 </td>
                 <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
-                    {{ j.elo|floatformat:0 }}
+                    {{ j.puntos|floatformat:0 }}
                 </td>
             </tr>
             {% endfor %}

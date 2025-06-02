@@ -17,6 +17,10 @@ SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'GuessDle.urls'
 
+# Configuración del modelo ScoringRule
+SCORING_FALLBACK = {"decrement": 10, "floor": 0}
+
+
 # Redirecciones
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = '/accounts/login/'

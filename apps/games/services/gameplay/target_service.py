@@ -1,7 +1,8 @@
+# apps/games/services/gameplay/target_service.py
+
 from datetime import timedelta
 from django.utils import timezone
-from apps.games.models import DailyTarget, GameResult, PlaySession, PlaySessionType, GameAttempt
-from apps.games.models import GameItem
+from apps.games.models import DailyTarget, PlaySession, PlaySessionType, GameAttempt, GameItem
 import secrets
 
 
@@ -30,7 +31,7 @@ class TargetService:
 
     def get_current_target(self):
         return DailyTarget.get_current(self.game, self.user)
-    
+
     def get_random_item(self):
         items = list(GameItem.objects.filter(game=self.game))
         if not items:
@@ -38,6 +39,12 @@ class TargetService:
         return secrets.choice(items)
 
     def is_daily_resolved(self):
+        """
+        Comprueba si el daily de hoy ya se ha resuelto:
+        - Busca DailyTarget de hoy
+        - Obtiene la PlaySession DAILY de hoy para este usuario
+        - Comprueba si existe al menos un GameAttempt con is_correct=True en esa sesión
+        """
         today = timezone.localdate()
         daily = DailyTarget.objects.filter(
             game=self.game,
@@ -48,7 +55,6 @@ class TargetService:
         if not daily:
             return False
 
-        # 1️⃣ Buscar la sesión DAILY de hoy para este usuario
         session = PlaySession.objects.filter(
             user=self.user,
             game=self.game,
@@ -59,8 +65,4 @@ class TargetService:
         if not session:
             return False
 
-        # 2️⃣ Verificar si hay al menos un intento correcto en esa sesión
-        return GameAttempt.objects.filter(
-            session=session,
-            is_correct=True
-        ).exists()
+        return GameAttempt.objects.filter(session=session, is_correct=True).exists()

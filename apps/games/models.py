@@ -151,3 +151,24 @@ class PlaySession(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.game} - {self.session_type}"
+
+
+class ScoringRule(models.Model):
+    """
+    Define cuántos puntos se otorgan si aciertas en un intento N.
+    Se puede crear una regla por juego; si `game` es NULL ⇒ regla global.
+
+    Está en el panel de admin para que el admin pueda definir las reglas de puntuación
+    """
+    game       = models.ForeignKey('games.Game', null=True, blank=True,
+                                   on_delete=models.CASCADE, related_name='scoring_rules')
+    attempt_no = models.PositiveIntegerField(help_text="1 = primer intento, 2 = segundo...")
+    points     = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('game', 'attempt_no')
+        ordering = ('attempt_no',)
+
+    def __str__(self):
+        scope = self.game.slug if self.game else "GLOBAL"
+        return f"{scope}: intento {self.attempt_no} → {self.points} pts"

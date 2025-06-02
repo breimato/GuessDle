@@ -1,21 +1,21 @@
+# apps/games/services/gameplay/extra_daily_service.py
+
 from datetime import date
 
 from django.contrib.auth.models import User
-from django.utils.timezone import now, localtime
-from django.utils import timezone
-
+from django.utils import timezone  # IMPORT CORRECTO: usar django.utils.timezone
 
 from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
-from apps.accounts.services.elo import Elo
+from apps.accounts.services.score_service import ScoreService
 
 
 class ExtraDailyService:
     """
     Encapsula TODA la lógica relacionada con partidas extra diarias:
-    - contar cuántas lleva
-    - validar y registrar apuestas
-    - crear la ExtraDailyPlay
+      - contar cuántas lleva el usuario hoy
+      - validar y restar apuesta de sus puntos
+      - crear la ExtraDailyPlay
     """
 
     MAX_EXTRAS_PER_DAY = 2
@@ -24,10 +24,13 @@ class ExtraDailyService:
         self.user = user
         self.game = game
 
-    # ---------- Consulta ---------- #
+    # ---------- Consultas ---------- #
     def count_today(self) -> int:
-        # Usamos localdate() para comparar con la fecha local (Europe/Madrid)
-        today = timezone.localdate()
+        """
+        Devuelve cuántas partidas extra ha iniciado este usuario
+        en este juego hoy (fecha local).
+        """
+        today = timezone.localdate()  # ahora sí es el método de django.utils.timezone
         return ExtraDailyPlay.objects.filter(
             user=self.user,
             game=self.game,
@@ -35,23 +38,33 @@ class ExtraDailyService:
         ).count()
 
     def max_reached(self) -> bool:
+        """
+        True si ya alcanzó el máximo de partidas extra hoy.
+        """
         return self.count_today() >= self.MAX_EXTRAS_PER_DAY
 
     # ---------- Creación ---------- #
     def start_extra_play(self, bet_amount: float) -> ExtraDailyPlay:
+        """
+        Valida la apuesta y crea la partida extra con la apuesta registrada.
+        Resta los puntos (antes ELO) de ScoreService.
+        """
         if bet_amount <= 0:
             raise ValueError("La apuesta debe ser mayor que cero.")
 
         if self.max_reached():
             raise ValueError("Ya has jugado el máximo de partidas extra hoy.")
 
-        elo = Elo(self.user, self.game)
-        if elo.elo_obj.elo < bet_amount:
-            raise ValueError("No tienes suficiente ELO para esa apuesta.")
+        # Reemplazamos Elo por ScoreService
+        score_service = ScoreService(self.user, self.game)
+        current_points = score_service.score_obj.elo
 
-        # Restar ELO
-        elo.elo_obj.elo -= bet_amount
-        elo.elo_obj.save(update_fields=["elo"])
+        if current_points < bet_amount:
+            raise ValueError("No tienes suficientes puntos para esa apuesta.")
+
+        # Restar puntos
+        score_service.score_obj.elo = current_points - bet_amount
+        score_service.score_obj.save(update_fields=["elo"])
 
         # Elegir target aleatorio y crear partida extra
         target = TargetService(self.game, self.user).get_random_item()
