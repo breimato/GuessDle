@@ -18,6 +18,15 @@ while [[ "$#" -gt 0 ]]; do
             PORT="$2"
             shift 2
             ;;
+        -c|--container-name)
+            if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+                CONTAINER_NAME="$2"
+                shift 2
+            else
+                echo "❌ Error: --container-name requires a value."
+                exit 1
+            fi
+            ;;
         -v|--volume)
             CREATE_DB_PATH=true
             if [[ -n "$2" && ! "$2" =~ ^- ]]; then
@@ -42,13 +51,14 @@ while [[ "$#" -gt 0 ]]; do
             ;;
         *)
             echo "❌ Unknown argument: $1"
-            echo "Usage: $0 [-p|--port <port>] [-v|--volume [<path>]] [-m|--media [<path>]]"
+            echo "Usage: $0 [-p|--port <port>] [-v|--volume [<path>]] [-m|--media [<path>]] [-c|--container-name <name>]"
             exit 1
             ;;
     esac
 done
 
 echo "📦 Using port: $PORT"
+echo "📦 Using container name: $CONTAINER_NAME"
 
 echo "🔨 Building new image..."
 if docker build -t $IMAGE_NAME .; then
