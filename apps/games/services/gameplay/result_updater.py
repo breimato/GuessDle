@@ -39,7 +39,7 @@ class ResultUpdater:
             bet_amount = ExtraDailyPlay.objects.get(pk=extra_play.id, user=self.user).bet_amount
             score_service = ScoreService(self.user, self.game)
 
-            global_avg = score_service.get_global_average_attempts(exclude_user=True)
+            global_avg = score_service.get_global_average_of_averages(exclude_user=True)
 
             if global_avg is not None:
                 result_flag = attempts_count < global_avg

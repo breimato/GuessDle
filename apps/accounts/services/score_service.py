@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db.models import Count, Avg
+from django.contrib.auth.models import User
+from django.db.models import Count, Avg, Q, Sum
 from apps.games.models import ScoringRule, GameAttempt, PlaySessionType
 from apps.accounts.models import GameElo
 
@@ -24,36 +25,61 @@ class ScoreService:
 
     def get_user_average_attempts(self) -> float | None:
         """
-        Promedio de intentos correctos del usuario en sesiones EXTRA del juego.
-        Agrupado por sesión.
+        Promedio de intentos hechos por el usuario en sesiones EXTRA del juego.
+        Incluye sesiones no completadas. La media es (intentos totales) / (partidas completadas).
+        Si no hay partidas completadas, devuelve None.
         """
-        return (
+        # Todas las sesiones del usuario en este juego
+        sesiones = (
+            self.user.play_sessions
+            .filter(game=self.game, session_type=PlaySessionType.EXTRA)
+        )
+
+        # Intentos totales (todas las sesiones)
+        intentos_totales = (
             GameAttempt.objects
-            .filter(
-                session__game=self.game,
-                user=self.user
-            )
-            .values('session')
-            .annotate(attempts_per_session=Count('pk'))
-            .aggregate(avg=Avg('attempts_per_session'))['avg']
+            .filter(session__in=sesiones)
+            .count()
         )
 
-    def get_global_average_attempts(self, exclude_user=True) -> float | None:
-        """
-        Promedio de intentos correctos en sesiones del juego (global).
-        Agrupado por sesión. Excluye al usuario si se indica.
-        """
-        qs = GameAttempt.objects.filter(
-            session__game=self.game
+        # Partidas completadas: sesiones donde hay al menos 1 intento correcto
+        completadas = (
+            sesiones
+            .annotate(correctos=Count('attempts', filter=Q(attempts__is_correct=True)))
+            .filter(correctos__gt=0)
+            .count()
         )
-        if exclude_user:
-            qs = qs.exclude(user=self.user)
 
-        return (
-            qs.values('session')
-            .annotate(attempts_per_session=Count('pk'))
-            .aggregate(avg=Avg('attempts_per_session'))['avg']
+        if completadas == 0:
+            return None
+
+        return intentos_totales / completadas
+
+    def get_global_average_of_averages(self, exclude_user=True) -> float | None:
+        """
+        Calcula la media de los promedios individuales de intentos/partidas completas por usuario.
+        Solo cuenta a los users que tengan al menos una partida completa.
+        """
+        # Buscamos todos los user_id que hayan jugado este juego (EXTRA)
+        user_ids = (
+            GameAttempt.objects
+            .filter(session__game=self.game, session__session_type=PlaySessionType.EXTRA)
+            .exclude(user=self.user if exclude_user else None)
+            .values_list('user', flat=True)
+            .distinct()
         )
+
+        medias = []
+        for user_id in user_ids:
+            # Seteamos el user actual
+            user = User.objects.get(pk=user_id)
+            # OJO: si ScoreService necesita user instance, no id
+            avg = ScoreService(user, self.game).get_user_average_attempts()
+            if avg is not None:
+                medias.append(avg)
+        if not medias:
+            return None
+        return sum(medias) / len(medias)
 
     # ---------- Internals ----------
     def _points_for_attempts(self, n: int) -> int:
