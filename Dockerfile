@@ -19,7 +19,7 @@ COPY . /app/
 # ─── 5. Añade la tarea cron ───────────────────────────────────────────────────
 #  - 0 23 * * * → a las 23:00 todos los días
 #  - redireccionamos stdout/err al log /var/log/cron.log
-RUN echo '0 23 * * * cd /app && python manage.py generate_daily_targets >> /var/log/cron.log 2>&1' \
+RUN echo '0 23 * * * cd /app && /usr/local/bin/python manage.py generate_daily_targets >> /var/log/cron.log 2>&1' \
     > /etc/cron.d/daily_targets \
  && chmod 0644 /etc/cron.d/daily_targets \
  && crontab /etc/cron.d/daily_targets
