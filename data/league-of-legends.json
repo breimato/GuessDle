@@ -15,8 +15,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2013,
         "region": "runeterra",
         "lane": "top"
@@ -37,10 +37,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "mid"
     },
     {
@@ -59,10 +59,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top, mid"
     },
     {
@@ -81,8 +81,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2021,
         "region": "shurima",
         "lane": "mid"
@@ -103,8 +103,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "supp"
@@ -125,8 +125,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "region": "noxus",
         "releaseDate": 2024,
         "lane": "top, jungla, mid"
@@ -147,8 +147,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "shurima",
         "lane": "jungla"
@@ -169,8 +169,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "freljord",
         "lane": "mid"
@@ -191,8 +191,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "mid"
@@ -213,8 +213,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2019,
         "region": "mount-targon",
         "lane": "adc"
@@ -235,8 +235,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "freljord",
         "lane": "adc, supp"
@@ -257,8 +257,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2016,
         "region": "mount-targon",
         "lane": "mid"
@@ -279,8 +279,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2024,
         "region": "freljord",
         "lane": "top, mid"
@@ -301,8 +301,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2014,
         "region": "shurima",
         "lane": "mid"
@@ -323,8 +323,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2015,
         "region": "runeterra",
         "lane": "supp"
@@ -345,8 +345,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2022,
         "region": "void",
         "lane": "jungla"
@@ -367,8 +367,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "supp"
@@ -389,8 +389,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "runeterra",
         "lane": "jungla, supp"
@@ -411,8 +411,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2014,
         "region": "freljord",
         "lane": "supp"
@@ -433,8 +433,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2023,
         "region": "noxus",
         "lane": "jungla"
@@ -455,8 +455,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "piltover",
         "lane": "adc"
@@ -477,8 +477,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2016,
         "region": "piltover",
         "lane": "top"
@@ -499,8 +499,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "noxus",
         "lane": "mid"
@@ -522,7 +522,7 @@
             "h": 48
         },
         "gender": "divers",
-        "attackType": "melee",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "void",
         "lane": "top"
@@ -543,8 +543,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "bandle-city",
         "lane": "mid"
@@ -565,8 +565,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "noxus",
         "lane": "top"
@@ -587,8 +587,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "mount-targon",
         "lane": "jungla, mid"
@@ -609,8 +609,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "noxus",
         "lane": "adc"
@@ -631,8 +631,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "top"
@@ -653,8 +653,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2015,
         "region": "zaun",
         "lane": "jungla, mid"
@@ -675,8 +675,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "shadow-isles",
         "lane": "jungla"
@@ -697,8 +697,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "jungla"
@@ -719,8 +719,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "piltover",
         "lane": "adc"
@@ -741,8 +741,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "jungla"
@@ -763,8 +763,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "demacia",
         "lane": "top"
@@ -785,8 +785,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "bilgewater",
         "lane": "mid"
@@ -807,8 +807,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "mid"
@@ -829,8 +829,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "bilgewater",
         "lane": "top"
@@ -851,8 +851,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "top"
@@ -873,8 +873,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2014,
         "region": "freljord",
         "lane": "top"
@@ -895,8 +895,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "freljord",
         "lane": "jungla"
@@ -917,8 +917,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "bilgewater",
         "lane": "jungla"
@@ -939,8 +939,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2021,
         "region": "shadow-isles",
         "lane": "top"
@@ -961,8 +961,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "shadow-isles",
         "lane": "jungla"
@@ -983,8 +983,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "piltover",
         "lane": "supp"
@@ -1005,8 +1005,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2023,
         "region": "runeterra",
         "lane": "mid, supp"
@@ -1027,8 +1027,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2015,
         "region": "bilgewater",
         "lane": "top"
@@ -1049,10 +1049,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top, mid"
     },
     {
@@ -1071,10 +1071,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2016,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1093,8 +1093,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "supp"
@@ -1115,8 +1115,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "demacia",
         "lane": "jungla"
@@ -1137,8 +1137,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "top, jungla"
@@ -1159,8 +1159,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "piltover",
         "lane": "top"
@@ -1181,10 +1181,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2016,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "adc"
     },
     {
@@ -1203,8 +1203,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2013,
         "region": "zaun",
         "lane": "adc"
@@ -1225,8 +1225,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2018,
         "region": "void",
         "lane": "adc"
@@ -1247,8 +1247,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2014,
         "region": "shadow-isles",
         "lane": "adc"
@@ -1269,10 +1269,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "mid, supp"
     },
     {
@@ -1291,8 +1291,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "shadow-isles",
         "lane": "jungla"
@@ -1313,8 +1313,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "void",
         "lane": "mid"
@@ -1335,8 +1335,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "noxus",
         "lane": "mid"
@@ -1357,8 +1357,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "demacia",
         "lane": "top"
@@ -1379,10 +1379,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2017,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1401,10 +1401,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top"
     },
     {
@@ -1423,8 +1423,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "void",
         "lane": "jungla"
@@ -1445,8 +1445,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2015,
         "region": "runeterra",
         "lane": "jungla"
@@ -1467,8 +1467,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2016,
         "region": "noxus",
         "lane": "top"
@@ -1489,8 +1489,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "void",
         "lane": "adc"
@@ -1511,8 +1511,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2022,
         "region": "shurima",
         "lane": "top"
@@ -1533,8 +1533,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "noxus",
         "lane": "mid"
@@ -1555,10 +1555,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1577,8 +1577,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "mount-targon",
         "lane": "supp"
@@ -1599,10 +1599,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2020,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1621,8 +1621,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2013,
         "region": "freljord",
         "lane": "mid"
@@ -1643,8 +1643,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2013,
         "region": "demacia",
         "lane": "adc"
@@ -1665,8 +1665,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "bandle-city",
         "lane": "supp"
@@ -1687,8 +1687,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "mid, supp"
@@ -1709,8 +1709,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "ixtal",
         "lane": "top"
@@ -1731,8 +1731,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "void",
         "lane": "mid"
@@ -1753,8 +1753,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "shadow-isles",
         "lane": "supp"
@@ -1775,10 +1775,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1797,8 +1797,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2023,
         "region": "ixtal",
         "lane": "supp"
@@ -1819,8 +1819,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "bilgewater",
         "lane": "adc"
@@ -1841,10 +1841,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "jungla"
     },
     {
@@ -1863,8 +1863,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "noxus",
         "lane": "top"
@@ -1885,8 +1885,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "demacia",
         "lane": "supp"
@@ -1907,8 +1907,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2023,
         "region": "shurima",
         "lane": "mid"
@@ -1929,8 +1929,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "runeterra",
         "lane": "supp"
@@ -1951,8 +1951,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "shurima",
         "lane": "top"
@@ -1973,8 +1973,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "bilgewater",
         "lane": "supp"
@@ -1995,8 +1995,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2018,
         "region": "ixtal",
         "lane": "mid, supp"
@@ -2017,8 +2017,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "ixtal",
         "lane": "jungla"
@@ -2039,8 +2039,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2022,
         "region": "runeterra",
         "lane": "adc"
@@ -2062,7 +2062,7 @@
             "h": 48
         },
         "gender": "divers",
-        "attackType": "melee",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "runeterra",
         "lane": "jungla"
@@ -2083,8 +2083,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "freljord",
         "lane": "jungla"
@@ -2105,8 +2105,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "freljord",
         "lane": "top"
@@ -2127,8 +2127,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "piltover",
         "lane": "mid"
@@ -2149,8 +2149,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2017,
         "region": "freljord",
         "lane": "top"
@@ -2171,8 +2171,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "mount-targon",
         "lane": "top, supp"
@@ -2193,8 +2193,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "top, jungla"
@@ -2215,8 +2215,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2018,
         "region": "bilgewater",
         "lane": "supp"
@@ -2237,8 +2237,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2019,
         "region": "ixtal",
         "lane": "mid"
@@ -2259,8 +2259,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2013,
         "region": "demacia",
         "lane": "top"
@@ -2281,10 +2281,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2017,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "supp"
     },
     {
@@ -2303,8 +2303,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "shurima",
         "lane": "jungla"
@@ -2325,8 +2325,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2014,
         "region": "void",
         "lane": "jungla"
@@ -2347,8 +2347,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2020,
         "region": "noxus",
         "lane": "supp"
@@ -2369,8 +2369,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2022,
         "region": "zaun",
         "lane": "supp"
@@ -2391,8 +2391,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "shurima",
         "lane": "top"
@@ -2413,8 +2413,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "ixtal",
         "lane": "jungla"
@@ -2435,8 +2435,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "noxus",
         "lane": "top"
@@ -2457,8 +2457,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "bandle-city",
         "lane": "top"
@@ -2479,8 +2479,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "mid"
@@ -2501,8 +2501,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2020,
         "region": "noxus",
         "lane": "adc"
@@ -2523,8 +2523,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "freljord",
         "lane": "jungla"
@@ -2545,8 +2545,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2019,
         "region": "runeterra",
         "lane": "adc, supp"
@@ -2567,8 +2567,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2020,
         "region": "piltover",
         "lane": "adc, supp"
@@ -2589,10 +2589,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2020,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top"
     },
     {
@@ -2611,8 +2611,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "jungla"
@@ -2633,10 +2633,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top"
     },
     {
@@ -2655,8 +2655,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "demacia",
         "lane": "jungla"
@@ -2677,8 +2677,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "top"
@@ -2699,8 +2699,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "noxus",
         "lane": "top"
@@ -2721,8 +2721,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "shurima",
         "lane": "adc"
@@ -2743,8 +2743,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "ixtal",
         "lane": "top, jungla"
@@ -2765,8 +2765,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2024,
         "region": "runeterra",
         "lane": "adc"
@@ -2787,8 +2787,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "supp"
@@ -2809,8 +2809,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "mount-targon",
         "lane": "supp"
@@ -2831,8 +2831,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "noxus",
         "lane": "supp"
@@ -2853,8 +2853,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2019,
         "region": "demacia",
         "lane": "mid"
@@ -2875,10 +2875,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "mid"
     },
     {
@@ -2897,8 +2897,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2015,
         "region": "bilgewater",
         "lane": "top"
@@ -2919,8 +2919,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2016,
         "region": "shurima",
         "lane": "jungla"
@@ -2941,8 +2941,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "noxus",
         "lane": "mid, jungla"
@@ -2963,8 +2963,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "mount-targon",
         "lane": "supp"
@@ -2985,8 +2985,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "bandle-city",
         "lane": "top"
@@ -3007,8 +3007,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2013,
         "region": "shadow-isles",
         "lane": "supp"
@@ -3029,8 +3029,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "bandle-city",
         "lane": "adc"
@@ -3051,8 +3051,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "freljord",
         "lane": "top"
@@ -3073,8 +3073,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "freljord",
         "lane": "top"
@@ -3095,8 +3095,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "bilgewater",
         "lane": "mid, adc"
@@ -3117,8 +3117,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "adc"
@@ -3139,8 +3139,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "freljord",
         "lane": "top, jungla"
@@ -3161,8 +3161,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "zaun",
         "lane": "top"
@@ -3183,10 +3183,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "adc"
     },
     {
@@ -3205,8 +3205,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "demacia",
         "lane": "adc"
@@ -3227,8 +3227,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "bandle-city",
         "lane": "mid"
@@ -3249,11 +3249,11 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2014,
         "region": "void",
-        "lane": "supp"
+        "lane": "mid, supp"
     },
     {
         "id": 149,
@@ -3271,8 +3271,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2021,
         "region": "shadow-isles",
         "lane": "mid"
@@ -3293,8 +3293,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
         "region": "piltover",
         "lane": "jungla"
@@ -3315,8 +3315,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2021,
         "region": "shadow-isles",
         "lane": "jungla"
@@ -3337,8 +3337,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "zaun",
         "lane": "mid"
@@ -3359,8 +3359,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2010,
         "region": "noxus",
         "lane": "mid"
@@ -3381,8 +3381,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "freljord",
         "lane": "top"
@@ -3403,8 +3403,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2009,
         "region": "zaun",
         "lane": "jungla"
@@ -3425,10 +3425,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2017,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "adc"
     },
     {
@@ -3447,8 +3447,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2011,
         "region": "shurima",
         "lane": "mid, supp"
@@ -3469,8 +3469,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2010,
         "region": "demacia",
         "lane": "jungla"
@@ -3491,10 +3491,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2013,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top, mid, adc"
     },
     {
@@ -3513,10 +3513,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2020,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "top, mid"
     },
     {
@@ -3535,8 +3535,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2011,
         "region": "shadow-isles",
         "lane": "top"
@@ -3557,8 +3557,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "melee",
+        "gender": "Femenino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2019,
         "region": "bandle-city",
         "lane": "supp"
@@ -3579,8 +3579,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2013,
         "region": "zaun",
         "lane": "jungla"
@@ -3601,10 +3601,10 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "melee",
+        "gender": "Masculino",
+        "attackType": "Cuerpo a cuerpo",
         "releaseDate": 2012,
-        "region": "ionia",
+        "region": "jonia",
         "lane": "mid"
     },
     {
@@ -3623,8 +3623,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2022,
         "region": "zaun",
         "lane": "adc"
@@ -3645,8 +3645,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "zaun",
         "lane": "adc"
@@ -3667,8 +3667,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "male",
-        "attackType": "ranged",
+        "gender": "Masculino",
+        "attackType": "A distancia",
         "releaseDate": 2009,
         "region": "runeterra",
         "lane": "supp"
@@ -3689,8 +3689,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2017,
         "region": "mount-targon",
         "lane": "mid"
@@ -3711,8 +3711,8 @@
             "w": 48,
             "h": 48
         },
-        "gender": "female",
-        "attackType": "ranged",
+        "gender": "Femenino",
+        "attackType": "A distancia",
         "releaseDate": 2012,
         "region": "ixtal",
         "lane": "supp"
