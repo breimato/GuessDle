@@ -55,38 +55,40 @@ class ResultUpdater:
 
         # 3️⃣ CONTEXTO CHALLENGE
         if challenge:
-            # — Si aún no se completó el reto, que lo calcule el manager (marca winner+completed)
             if not challenge.completed:
                 manager = ChallengeManager(user=self.user, challenge=challenge)
                 manager.calculate_winner()
 
-            # — Si no hay ganador (empate), o ya no asignamos puntos, salimos con cero
             if not challenge.winner:
-                return 0
+                manager = ChallengeManager(user=self.user, challenge=challenge)
+                tied_users = manager.get_tied_users()
+
+                total_points = 0
+                for user in tied_users:
+                    session = PlaySessionService.get_or_create(user, self.game, challenge=challenge)
+                    attempts = GameAttempt.objects.filter(session=session).count()
+                    score_service = ScoreService(user, self.game)
+                    base_pts = score_service.add_points_for_attempts(attempts)
+                    total_points += base_pts  # Solo por si quieres devolver el total
+
+                return total_points  # O puedes retornar lo de self.user si solo importa eso
+
             if challenge.points_assigned:
                 return 0
 
             # — Aquí ya hay winner y points_assigned=False: asignamos base + bonus
             ganador = challenge.winner
-
-            # Contamos los intentos del ganador:
             session_winner = PlaySessionService.get_or_create(
                 ganador,
                 self.game,
                 challenge=challenge
             )
             attempts_winner = GameAttempt.objects.filter(session=session_winner).count()
-
-            # PUNTOS BASE
             score_service = ScoreService(ganador, self.game)
             base_pts = score_service.add_points_for_attempts(attempts_winner)
-
-            # BONUS 100 puntos
             score_service.score_obj.elo += 100
             score_service.score_obj.save(update_fields=("elo",))
-
-            # Marcamos en el modelo que ya dimos el bonus
             challenge.points_assigned = True
             challenge.save(update_fields=["points_assigned"])
-
             return base_pts + 100
+
