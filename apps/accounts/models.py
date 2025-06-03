@@ -28,6 +28,8 @@ class Challenge(models.Model):
     elo_exchanged = models.BooleanField(default=False)
     challenger_attempts = models.PositiveIntegerField(null=True, blank=True)
     opponent_attempts = models.PositiveIntegerField(null=True, blank=True)
+    points_assigned = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f"{self.challenger.username} vs {self.opponent.username}"

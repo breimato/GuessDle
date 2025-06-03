@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Challenge
+from apps.accounts.services.score_service import ScoreService
 from apps.games.models import Game, ExtraDailyPlay, GameAttempt
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
@@ -133,6 +134,8 @@ def play_view(request, slug: str):
 # ------------------------------------------------------------------ #
 # 3) Vista HTML – reto 1 v 1
 # ------------------------------------------------------------------ #
+# apps/games/views.py
+
 @never_cache
 @login_required
 @csrf_protect
@@ -140,10 +143,10 @@ def play_challenge(request, challenge_id: int):
     challenge = get_object_or_404(Challenge, id=challenge_id)
     helper = ChallengeViewHelper(request, challenge)
 
-    # 1) Aceptar reto si me toca
+    # 1) Si soy opponent y no había aceptado, lo marco
     helper.accept_if_needed()
 
-    # 2) Verificar que sea participante
+    # 2) Solo participantes
     if not helper.ensure_participant():
         return redirect("dashboard")
 
@@ -152,42 +155,37 @@ def play_challenge(request, challenge_id: int):
         challenge.target = TargetService(challenge.game, request.user).get_random_item()
         challenge.save(update_fields=["target"])
 
-    # 4) POST: guardo intentos y resuelvo
+    # 4) POST: subo mis intentos y resuelvo el reto
     if request.method == "POST":
         if not helper.assign_attempts_from_post():
-            # Si hay error de validación, redirijo de nuevo para que se vea message
             return redirect("play_challenge", challenge_id=challenge.id)
 
+        # 4.1) Marca winner + completed
         helper.resolve_if_ready()
 
-        # 2️⃣ Si justo se completó el reto, asigno puntos al ganador
-        #    (challenge.winner será None en empate o un User en victoria)
-        if challenge.completed and challenge.winner:
-            # Solo quiero asignar una vez; podríamos hacer una bandera tipo 'points_given'
-            # o eliminar el método tras ejecutarlo, pero lo más sencillo es:
-            #   a) Chequear si el ganador ya tiene un "flag" o
-            #   b) el propio ResultUpdater podría ignorar si ya se dio.
-            # Aquí asumimos que cada reto se resuelve 1 sola vez en esta vista.
+        # 4.2) Si ya hay winner y no se asignaron puntos aún…
+        if challenge.completed and challenge.winner and not challenge.points_assigned:
             ganador = challenge.winner
+            # Determinamos quién es el perdedor
+            perdedor = challenge.challenger if ganador == challenge.opponent else challenge.opponent
 
-            # Contar sus intentos en la sesión correspondiente
-            session_ganador = PlaySessionService.get_or_create(
-                ganador,
+            # 4.2.1) Al perdedor le damos SOLO puntos base (intentos)
+            session_perdedor = PlaySessionService.get_or_create(
+                perdedor,
                 challenge.game,
                 challenge=challenge
             )
-            attempts_count = GameAttempt.objects.filter(session=session_ganador).count()
+            intentos_perdedor = GameAttempt.objects.filter(session=session_perdedor).count()
+            svc_perdedor = ScoreService(perdedor, challenge.game)
+            svc_perdedor.add_points_for_attempts(intentos_perdedor)
 
-            # ★ Llamo a ResultUpdater _solo para este challenge concreto_
-            #   y le paso el usuario ganador (ganador) y el reto
+            # 4.2.2) Al ganador le damos base + bonus 100
+            # Usamos ResultUpdater para no repetir lógica de bonus
             ResultUpdater(challenge.game, ganador).update_for_game(challenge=challenge)
-
-            # En lugar de usar add_points aquí, delegamos TODO en ResultUpdater.
-            # Él hará: puntos base + bonus de 100 automáticamente.
 
         return redirect("dashboard")
 
-    # 5) GET: armo contexto y renderizo
+    # 5) GET: render normal
     ctx = ContextBuilder(request, challenge.game, challenge=challenge).build()
     ctx.update({
         "game": challenge.game,
@@ -201,6 +199,8 @@ def play_challenge(request, challenge_id: int):
         "is_challenge_js": "true",
     })
     return render(request, "games/play.html", ctx)
+
+
 
 
 # ------------------------------------------------------------------ #
