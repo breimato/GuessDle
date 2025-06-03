@@ -12,6 +12,7 @@ class Game(models.Model):
     description = models.TextField(blank=True)
     icon_image = models.ImageField(upload_to='game_icons/', blank=True, null=True)
     background_image = models.ImageField(upload_to='game_background/', blank=True, null=True)
+    color = models.CharField(max_length=7, default="#ff0000", blank=True)
     numeric_fields = JSONField(default=list, blank=True, help_text="Atributos que deben compararse como números")
     audio_file = models.FileField(upload_to='game_audios/', null=True, blank=True)
 

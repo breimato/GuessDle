@@ -46,23 +46,81 @@ def _crear_embed_ranking(title, description, color, thumbnail_url=None):
     return embed
 
 
+N_COL_W = 2  # Ancho para contenido de columna Nº (ej: "10")
+ELO_COL_W = 5  # Ancho para contenido de columna ELO (ej: "1200", " ELO ")
+USER_HEADER_TEXT = "Usuario"
+MAX_USER_W = 25  # Máximo ancho para contenido de nombre de usuario
+MIN_USER_W = max(len(USER_HEADER_TEXT), 10) # Mínimo ancho para contenido de nombre de usuario
+
+
 def _generar_tabla_ranking(ranking_data, is_global_ranking=False):
-    description_content = "╔════╦═════════════════════════════╦═══════╗\n"
-    description_content += "║ Nº ║ Usuario                     ║  ELO  ║\n"
-    description_content += "╠════╬═════════════════════════════╬═══════╣\n"
+    if not ranking_data:
+        # Esto normalmente lo maneja formatear_ranking, pero por si acaso.
+        return "No hay datos de ranking para mostrar."
+
+    usernames = [
+        item['user__username'] if is_global_ranking else item.user.username
+        for item in ranking_data
+    ]
+    
+    max_data_username_len = 0
+    if usernames:
+        max_data_username_len = max(len(name) for name in usernames)
+
+    # Calcular el ancho de contenido real para la columna de usuario
+    user_col_content_w = max(len(USER_HEADER_TEXT), max_data_username_len)
+    user_col_content_w = max(user_col_content_w, MIN_USER_W)
+    user_col_content_w = min(user_col_content_w, MAX_USER_W)
+
+    # Anchos de contenido para las otras columnas (texto dentro de las celdas)
+    n_content_w = N_COL_W
+    elo_content_w = ELO_COL_W
+
+    # Longitud de las barras horizontales (═), incluyendo 1 espacio de padding a cada lado del contenido
+    n_bar_len = n_content_w + 2
+    user_bar_len = user_col_content_w + 2
+    elo_bar_len = elo_content_w + 2
+
+    n_bar_str = "═" * n_bar_len
+    user_bar_str = "═" * user_bar_len
+    elo_bar_str = "═" * elo_bar_len
+
+    # Construir partes de la tabla
+    top_border = f"╔{n_bar_str}╦{user_bar_str}╦{elo_bar_str}╗"
+    header_row = f"║ {str('Nº').center(n_content_w)} ║ {USER_HEADER_TEXT.center(user_col_content_w)} ║ {str('ELO').center(elo_content_w)} ║"
+    separator = f"╠{n_bar_str}╬{user_bar_str}╬{elo_bar_str}╣"
+    bottom_border = f"╚{n_bar_str}╩{user_bar_str}╩{elo_bar_str}╝"
+
+    table_rows_strings = []
     for idx, item in enumerate(ranking_data, start=1):
-        idx_f = str(idx).center(4)
-        if is_global_ranking:
-            user_f = item['user__username'][:27].ljust(29)
-            elo_f = str(int(item['avg_elo'])).center(7)
-        else:
-            user_f = item.user.username[:27].ljust(29)
-            elo_f = str(int(item.elo)).center(7)
-        description_content += f"║{idx_f}║{user_f}║{elo_f}║\n"
-        if idx < len(ranking_data):
-            description_content += "╠════╬═════════════════════════════╬═══════╣\n"
-    description_content += "╚════╩═════════════════════════════╩═══════╝"
-    return description_content
+        idx_str = str(idx).center(n_content_w)
+        
+        elo_original = item['avg_elo'] if is_global_ranking else item.elo
+        elo_str = str(int(elo_original)).rjust(elo_content_w) # ELO alineado a la derecha
+
+        username_original = item['user__username'] if is_global_ranking else item.user.username
+        display_username = username_original
+        if len(username_original) > user_col_content_w:
+            display_username = username_original[:user_col_content_w-3] + "..."
+        user_str = display_username.ljust(user_col_content_w) # Usuario alineado a la izquierda
+
+        table_rows_strings.append(f"║ {idx_str} ║ {user_str} ║ {elo_str} ║")
+
+    # Ensamblar la tabla completa
+    full_table_parts = [top_border, header_row]
+    if not table_rows_strings: # Si, después de todo, no hay filas (aunque ranking_data no estuviera vacío)
+        # Esto es un fallback, idealmente no debería llegar aquí si formatear_ranking funciona
+        placeholder_text = "No hay jugadores".center(user_col_content_w)
+        full_table_parts.append(separator)
+        full_table_parts.append(f"║ {str('').center(n_content_w)} ║ {placeholder_text} ║ {str('').center(elo_content_w)} ║")
+
+    else:
+        for i, data_row_str in enumerate(table_rows_strings):
+            full_table_parts.append(separator) # Separador antes de cada fila de datos
+            full_table_parts.append(data_row_str)
+            
+    full_table_parts.append(bottom_border)
+    return "\n".join(full_table_parts)
 
 
 def formatear_ranking(game_slug=None):
@@ -71,6 +129,13 @@ def formatear_ranking(game_slug=None):
     if game_slug:
         try:
             juego = Game.objects.get(slug=game_slug)
+            if juego.color:
+                try:
+                    hex_color = juego.color.lstrip('#')
+                    rgb_color = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+                    embed_color = discord.Color.from_rgb(rgb_color[0], rgb_color[1], rgb_color[2])
+                except ValueError:
+                    pass
         except Game.DoesNotExist:
             return _crear_embed_ranking(
                 "Error",
@@ -111,6 +176,7 @@ def formatear_ranking(game_slug=None):
             thumbnail_url=thumbnail_url_final
         )
     else:  # Ranking global
+        global_embed_color = discord.Color.blue()
         game_elos = (
             GameElo.objects
             .values("user__username")
@@ -123,14 +189,14 @@ def formatear_ranking(game_slug=None):
             return _crear_embed_ranking(
                 titulo_embed,
                 "❗ No hay jugadores registrados aún.",
-                embed_color
+                global_embed_color
             )
 
         description_content = _generar_tabla_ranking(game_elos, is_global_ranking=True)
         return _crear_embed_ranking(
             titulo_embed,
             f"```{description_content}```",
-            embed_color
+            global_embed_color
         )
 
 
