@@ -14,7 +14,6 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Challenge
-from apps.accounts.services.score_service import ScoreService
 from apps.games.models import Game, ExtraDailyPlay, GameAttempt
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
@@ -24,6 +23,9 @@ from apps.games.services.gameplay.context_builder import ContextBuilder
 from apps.games.services.gameplay.guess_processor import GuessProcessor
 from apps.games.services.gameplay.result_updater import ResultUpdater
 from apps.games.services.gameplay.target_service import TargetService
+
+# Nuevo: ChallengeResolutionService
+from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 
 # ------------------------------------------------------------------ #
 # 1) AJAX – partida diaria
@@ -42,17 +44,14 @@ def ajax_guess(request, slug: str):
     if not daily_target:
         return JsonResponse({"error": "No hay objetivo diario."}, status=400)
 
-    # ----- Verificar límite de intentos -----
     ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     if not ctx["can_play"]:
         return JsonResponse({"error": "No puedes jugar más."}, status=403)
 
-    # ----- Procesar guess -----
     valid, correct = GuessProcessor(game, user).process(request, daily_target=daily_target)
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
-    # ----- Reconstruir contexto -----
     ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     last_attempt = ctx["attempts"][0]
 
@@ -86,10 +85,8 @@ def play_view(request, slug: str):
 
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
 
-    # ------------------- POST ------------------- #
     if request.method == "POST":
         ctx = ContextBuilder(request, game, daily_target=daily_target).build()
-
         if not ctx["can_play"]:
             if is_ajax:
                 return JsonResponse({"error": "No puedes jugar más."}, status=403)
@@ -122,7 +119,6 @@ def play_view(request, slug: str):
             })
         return render(request, "games/play.html", ctx)
 
-    # ------------------- GET ------------------- #
     ctx = ContextBuilder(request, game, daily_target=daily_target).build()
     extras_service = ExtraDailyService(user, game)
     ctx.update({
@@ -136,7 +132,6 @@ def play_view(request, slug: str):
 # ------------------------------------------------------------------ #
 # 3) Vista HTML – reto 1 v 1
 # ------------------------------------------------------------------ #
-# apps/games/views.py
 
 @never_cache
 @login_required
@@ -145,49 +140,22 @@ def play_challenge(request, challenge_id: int):
     challenge = get_object_or_404(Challenge, id=challenge_id)
     helper = ChallengeViewHelper(request, challenge)
 
-    # 1) Si soy opponent y no había aceptado, lo marco
     helper.accept_if_needed()
-
-    # 2) Solo participantes
     if not helper.ensure_participant():
         return redirect("dashboard")
 
-    # 3) Si falta target, lo creo
     if not challenge.target:
         challenge.target = TargetService(challenge.game, request.user).get_random_item()
         challenge.save(update_fields=["target"])
 
-    # 4) POST: subo mis intentos y resuelvo el reto
     if request.method == "POST":
         if not helper.assign_attempts_from_post():
             return redirect("play_challenge", challenge_id=challenge.id)
 
-        # 4.1) Marca winner + completed
-        helper.resolve_if_ready()
-
-        # 4.2) Si ya hay winner y no se asignaron puntos aún…
-        if challenge.completed and challenge.winner and not challenge.points_assigned:
-            ganador = challenge.winner
-            # Determinamos quién es el perdedor
-            perdedor = challenge.challenger if ganador == challenge.opponent else challenge.opponent
-
-            # 4.2.1) Al perdedor le damos SOLO puntos base (intentos)
-            session_perdedor = PlaySessionService.get_or_create(
-                perdedor,
-                challenge.game,
-                challenge=challenge
-            )
-            intentos_perdedor = GameAttempt.objects.filter(session=session_perdedor).count()
-            svc_perdedor = ScoreService(perdedor, challenge.game)
-            svc_perdedor.add_points_for_attempts(intentos_perdedor)
-
-            # 4.2.2) Al ganador le damos base + bonus 100
-            # Usamos ResultUpdater para no repetir lógica de bonus
-            ResultUpdater(challenge.game, ganador).update_for_game(challenge=challenge)
-
+        # SOLID: toda la lógica de resolución de retos y puntos en un solo service
+        ChallengeResolutionService(challenge, acting_user=request.user).resolve_and_assign_points()
         return redirect("dashboard")
 
-    # 5) GET: render normal
     ctx = ContextBuilder(request, challenge.game, challenge=challenge).build()
     ctx.update({
         "game": challenge.game,
@@ -201,8 +169,6 @@ def play_challenge(request, challenge_id: int):
         "is_challenge_js": "true",
     })
     return render(request, "games/play.html", ctx)
-
-
 
 
 # ------------------------------------------------------------------ #
@@ -241,7 +207,6 @@ def ajax_guess_challenge(request, challenge_id: int):
     })
 
 
-
 # ------------------------------------------------------------------ #
 # 5) Iniciar partida extra diaria (POST)
 # ------------------------------------------------------------------ #
@@ -252,12 +217,10 @@ def start_extra_daily(request, slug: str):
     user = request.user
     extras_service = ExtraDailyService(user, game)
 
-    # Validar límite
     if extras_service.max_reached():
         messages.error(request, "Ya has jugado el máximo de 2 partidas extra hoy en este juego.")
         return redirect("dashboard")
 
-    # Validar apuesta
     try:
         bet = float(request.POST.get("bet", "0"))
     except ValueError:
@@ -282,16 +245,13 @@ def play_extra_daily(request, extra_id: int):
     game = extra.game
     extras_service = ExtraDailyService(request.user, game)
 
-    # BLOQUEO si hay una daily activa sin resolver
     target_service = TargetService(game, request.user)
     if not target_service.is_daily_resolved():
         return redirect("play", slug=game.slug)
 
-    # BLOQUEO si el extra no es de hoy
     if localtime(extra.created_at).date() != date.today():
         return redirect("dashboard")
 
-    # ------ SOLO PROCESAR EN POST, NUNCA EN GET ------ #
     if request.method == "POST":
         valid, correct = GuessProcessor(game, request.user).process(request, extra_play=extra)
         if valid and correct:
