@@ -48,6 +48,10 @@ class Command(BaseCommand):
                 for local_field, remote_field in field_mapping.items()
             }
 
+            original_id = entry.get('id')
+            if original_id is not None:
+                structured_data['id'] = original_id
+
             GameItem.objects.update_or_create(
                 game=game,
                 name=name,

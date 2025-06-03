@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.games',
     'tailwind',
+    'colorfield',
 ]
 
 # Middleware

@@ -60,8 +60,9 @@ def ajax_guess(request, slug: str):
         "won": correct,
         "attempt": {
             "name":     last_attempt["name"],
-            "icon":     last_attempt["icon"],
+            "icon":     last_attempt.get("icon"),
             "feedback": last_attempt["feedback"],
+            "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),
     })
@@ -112,9 +113,10 @@ def play_view(request, slug: str):
             return JsonResponse({
                 "won": correct,
                 "attempt": {
-                    "name": last_attempt["name"],
-                    "icon": last_attempt["icon"],
+                    "name":     last_attempt["name"],
+                    "icon":     last_attempt.get("icon"),
                     "feedback": last_attempt["feedback"],
+                    "guess_image_url": last_attempt.get("guess_image_url"),
                 },
                 "remaining_names": json.loads(ctx["remaining_names_json"]),
             })
@@ -231,8 +233,9 @@ def ajax_guess_challenge(request, challenge_id: int):
         "won": correct,
         "attempt": {
             "name":     last_attempt["name"],
-            "icon":     last_attempt["icon"],
+            "icon":     last_attempt.get("icon"),
             "feedback": last_attempt["feedback"],
+            "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),
     })
@@ -332,9 +335,10 @@ def ajax_guess_extra(request, extra_id: int):
     return JsonResponse({
         "won": correct,
         "attempt": {
-            "name": last_attempt["name"],
-            "icon": last_attempt["icon"],
+            "name":     last_attempt["name"],
+            "icon":     last_attempt.get("icon"),
             "feedback": last_attempt["feedback"],
+            "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),
     })

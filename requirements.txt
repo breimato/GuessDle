@@ -11,3 +11,4 @@ tailwind==3.1.5b0
 tzdata==2025.2
 urllib3==2.4.0
 discord.py>=2.3
+django-colorfield==0.14.0

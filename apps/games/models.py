@@ -4,6 +4,8 @@ from datetime import time, timedelta
 from django.db.models import JSONField
 from django.conf import settings
 from django.db import models
+import os
+from colorfield.fields import ColorField
 
 
 class Game(models.Model):
@@ -12,7 +14,7 @@ class Game(models.Model):
     description = models.TextField(blank=True)
     icon_image = models.ImageField(upload_to='game_icons/', blank=True, null=True)
     background_image = models.ImageField(upload_to='game_background/', blank=True, null=True)
-    color = models.CharField(max_length=7, default="#ff0000", blank=True)
+    color = ColorField(default="#FF0000", format="hex")
     numeric_fields = JSONField(default=list, blank=True, help_text="Atributos que deben compararse como números")
     audio_file = models.FileField(upload_to='game_audios/', null=True, blank=True)
 
@@ -42,6 +44,37 @@ class GameItem(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.game.slug})"
+
+    def get_image_filename(self):
+        # Ahora que sync_game_data asegura que el 'id' original está en self.data['id'],
+        # podemos buscarlo directamente.
+        image_identifier = None
+        if isinstance(self.data, dict):
+            image_identifier = self.data.get('id')
+        
+        if image_identifier is None:
+            # Opcional: Podrías loguear aquí si un item no tiene el 'id' esperado en data
+            # print(f"Advertencia: GameItem '{self.name}' (ID: {self.id}) no tiene la clave 'id' en su campo 'data' para la imagen.")
+            return None
+        
+        return f"{str(image_identifier)}.png"
+
+    def get_image_url(self):
+        filename = self.get_image_filename()
+
+        if not filename:
+            return None
+
+        path_parts = ['game_item_images', self.game.slug, filename]
+        disk_path = os.path.join(settings.MEDIA_ROOT, *path_parts)
+
+        if os.path.exists(disk_path):
+            base_url = settings.MEDIA_URL
+            if not base_url.endswith('/'):
+                base_url += '/'
+            return base_url + "/".join(path_parts)
+        
+        return None
 
 
 class DailyTarget(models.Model):

@@ -98,20 +98,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ───────── render intento ───────── */
-  function renderAttempt({ name, icon, feedback }, animate = true) {
+  function renderAttempt({ name, icon, feedback, guess_image_url }, animate = true) {
     const cols = feedback.length + 1;
     const gap = calcGap(cols);
 
     const row = document.createElement("div");
     row.className = "attempt-row";
-    /* ⬇️ cambio clave: usamos var(--cell) para ancho fijo, no 1fr */
     row.style.cssText = `display:grid;grid-template-columns:repeat(${cols},var(--cell));gap:${gap}`;
+
+    // Lógica para la celda del personaje/ítem
+    let characterCellHtml = "";
+    if (guess_image_url) {
+      characterCellHtml = `<img src="${guess_image_url}" alt="${name}" style="width: 100%; height: 100px; object-fit: cover; object-position: top;">`;
+    } else { // Fallback al nombre si no hay ni imagen ni icono
+      characterCellHtml = `<span class="champion-icon-name">${name}</span>`;
+    }
 
     row.append(makeCell({
       isStatic: true,
-      html: `${icon ? `<img src="${icon}" alt="${name}" style="width:2.2rem;height:2.2rem">` : ""}
-           <span class="champion-icon-name">${name}</span>`
+      html: characterCellHtml
     }));
+
     feedback.forEach(fb => row.append(makeCell({
       state: fb, html: `${fb.value}${fb.arrow || ""}`
     })));

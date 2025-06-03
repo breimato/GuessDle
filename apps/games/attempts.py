@@ -21,6 +21,7 @@ def build_attempts(game: Game, guesses: List[GameItem], target: GameItem) -> Lis
             "is_correct": item.name == target.name,
             "feedback": [],
             "icon": getattr(item, "icon", None),
+            "guess_image_url": item.get_image_url(),
         }
 
         for attr in game.attributes:

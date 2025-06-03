@@ -77,6 +77,10 @@ class Command(BaseCommand):
                 value = deep_get(raw, remote_field, game.defaults.get(local_field))
                 parsed[local_field] = value
 
+            original_id = deep_get(raw, 'id') 
+            if original_id is not None:
+                parsed['id'] = original_id
+
             name = parsed.get("nombre") or parsed.get("name") or raw.get("name")
             if not name:
                 continue
