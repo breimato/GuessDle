@@ -14,7 +14,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Challenge
-from apps.games.models import Game, ExtraDailyPlay
+from apps.games.models import Game, ExtraDailyPlay, GameAttempt
+from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
@@ -106,14 +107,6 @@ def play_view(request, slug: str):
             ctx["won"] = True
             ctx["target"] = daily_target
 
-        # ------------------- Extras ------------------- #
-        extras_service = ExtraDailyService(user, game)
-        ctx.update({
-            "slug": game.slug,
-            "extra_id": None,
-            "max_extras_reached": extras_service.max_reached(),
-        })
-
         if is_ajax:
             return JsonResponse({
                 "won": correct,
@@ -145,25 +138,56 @@ def play_view(request, slug: str):
 @csrf_protect
 def play_challenge(request, challenge_id: int):
     challenge = get_object_or_404(Challenge, id=challenge_id)
-    manager = ChallengeManager(request, challenge)
+    helper = ChallengeViewHelper(request, challenge)
 
-    manager.accept_if_needed()
-    if not manager.ensure_participant():
+    # 1) Aceptar reto si me toca
+    helper.accept_if_needed()
+
+    # 2) Verificar que sea participante
+    if not helper.ensure_participant():
         return redirect("dashboard")
 
-    # Crear target si falta
+    # 3) Si falta target, lo creo
     if not challenge.target:
         challenge.target = TargetService(challenge.game, request.user).get_random_item()
-        challenge.save()
+        challenge.save(update_fields=["target"])
 
-    # POST: guardar intentos
+    # 4) POST: guardo intentos y resuelvo
     if request.method == "POST":
-        if not manager.assign_attempts_from_post():
+        if not helper.assign_attempts_from_post():
+            # Si hay error de validación, redirijo de nuevo para que se vea message
             return redirect("play_challenge", challenge_id=challenge.id)
-        manager.resolve_if_ready()
+
+        helper.resolve_if_ready()
+
+        # 2️⃣ Si justo se completó el reto, asigno puntos al ganador
+        #    (challenge.winner será None en empate o un User en victoria)
+        if challenge.completed and challenge.winner:
+            # Solo quiero asignar una vez; podríamos hacer una bandera tipo 'points_given'
+            # o eliminar el método tras ejecutarlo, pero lo más sencillo es:
+            #   a) Chequear si el ganador ya tiene un "flag" o
+            #   b) el propio ResultUpdater podría ignorar si ya se dio.
+            # Aquí asumimos que cada reto se resuelve 1 sola vez en esta vista.
+            ganador = challenge.winner
+
+            # Contar sus intentos en la sesión correspondiente
+            session_ganador = PlaySessionService.get_or_create(
+                ganador,
+                challenge.game,
+                challenge=challenge
+            )
+            attempts_count = GameAttempt.objects.filter(session=session_ganador).count()
+
+            # ★ Llamo a ResultUpdater _solo para este challenge concreto_
+            #   y le paso el usuario ganador (ganador) y el reto
+            ResultUpdater(challenge.game, ganador).update_for_game(challenge=challenge)
+
+            # En lugar de usar add_points aquí, delegamos TODO en ResultUpdater.
+            # Él hará: puntos base + bonus de 100 automáticamente.
+
         return redirect("dashboard")
 
-    # GET: construir contexto y renderizar
+    # 5) GET: armo contexto y renderizo
     ctx = ContextBuilder(request, challenge.game, challenge=challenge).build()
     ctx.update({
         "game": challenge.game,
@@ -212,6 +236,7 @@ def ajax_guess_challenge(request, challenge_id: int):
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),
     })
+
 
 
 # ------------------------------------------------------------------ #
@@ -270,7 +295,6 @@ def play_extra_daily(request, extra_id: int):
             ResultUpdater(game, request.user).update_for_game(extra_play=extra)
             extra.completed = True
             extra.save(update_fields=["completed"])
-        # Después de procesar el intento, refrescamos contexto y seguimos a la renderización
 
     ctx = ContextBuilder(request, game, extra_play=extra).build()
     ctx.update({
@@ -301,12 +325,6 @@ def ajax_guess_extra(request, extra_id: int):
     valid, correct = GuessProcessor(game, request.user).process(request, extra_play=extra)
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
-
-    # Solo cuando es correcto marcamos completed
-    if correct:
-        ResultUpdater(game, request.user).update_for_game(extra_play=extra)
-        extra.completed = True
-        extra.save(update_fields=["completed"])
 
     ctx = ContextBuilder(request, game, extra_play=extra).build()
     last_attempt = ctx["attempts"][0]

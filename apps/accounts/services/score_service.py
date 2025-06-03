@@ -40,13 +40,11 @@ class ScoreService:
 
     def get_global_average_attempts(self, exclude_user=True) -> float | None:
         """
-        Promedio de intentos correctos en sesiones EXTRA del juego (global).
+        Promedio de intentos correctos en sesiones del juego (global).
         Agrupado por sesión. Excluye al usuario si se indica.
         """
         qs = GameAttempt.objects.filter(
-            session__session_type=PlaySessionType.EXTRA,
-            session__game=self.game,
-            is_correct=True
+            session__game=self.game
         )
         if exclude_user:
             qs = qs.exclude(user=self.user)

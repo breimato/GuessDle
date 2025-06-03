@@ -2,6 +2,7 @@
 
 from django.db.models import Count
 from apps.games.models import ExtraDailyPlay, GameAttempt
+from .challenger_manager import ChallengeManager
 from .play_session_service import PlaySessionService
 from apps.accounts.services.score_service import ScoreService
 
@@ -54,14 +55,19 @@ class ResultUpdater:
 
         # 🏆 CHALLENGE
         if challenge:
+            # 1️⃣ Puntos base por intentos propios
             score_service = ScoreService(self.user, self.game)
             base_pts = score_service.add_points_for_attempts(attempts_count)
 
-            won_challenge = GameAttempt.objects.filter(session=session, is_correct=True).exists()
-            bonus_pts = 100 if won_challenge else 0
+            # 2️⃣ Calcular ganador
+            manager = ChallengeManager(user=self.user, challenge=challenge)
+            won_challenge = manager.calculate_winner()
 
+            # 3️⃣ Bonus si ganó el reto
+            bonus_pts = 100 if won_challenge else 0
             if bonus_pts:
                 score_service.score_obj.elo += bonus_pts
                 score_service.score_obj.save(update_fields=("elo",))
 
             return base_pts + bonus_pts
+
