@@ -6,7 +6,8 @@
         "champions": 15,
         "ligas": 36,
         "colores": "Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 1
     },
     {
         "nombre": "FC Barcelona",
@@ -15,7 +16,8 @@
         "champions": 5,
         "ligas": 28,
         "colores": "Azul, Grana",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 2
     },
     {
         "nombre": "Atlético de Madrid",
@@ -24,7 +26,8 @@
         "champions": 0,
         "ligas": 11,
         "colores": "Rojo, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 3
     },
     {
         "nombre": "Sevilla FC",
@@ -33,7 +36,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Blanco, Rojo",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 4
     },
     {
         "nombre": "Real Sociedad",
@@ -42,7 +46,8 @@
         "champions": 0,
         "ligas": 2,
         "colores": "Azul, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 5
     },
     {
         "nombre": "Athletic Club",
@@ -51,7 +56,8 @@
         "champions": 0,
         "ligas": 8,
         "colores": "Rojo, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 6
     },
     {
         "nombre": "Valencia CF",
@@ -60,7 +66,8 @@
         "champions": 0,
         "ligas": 6,
         "colores": "Blanco, Negro",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 7
     },
     {
         "nombre": "Villarreal CF",
@@ -69,7 +76,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Amarillo",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 8
     },
     {
         "nombre": "Real Betis",
@@ -78,7 +86,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Verde, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 9
     },
     {
         "nombre": "RC Celta de Vigo",
@@ -87,7 +96,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Celeste, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 10
     },
     {
         "nombre": "CA Osasuna",
@@ -96,7 +106,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Azul",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 11
     },
     {
         "nombre": "Rayo Vallecano",
@@ -105,7 +116,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Rojo",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 12
     },
     {
         "nombre": "Getafe CF",
@@ -114,7 +126,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 13
     },
     {
         "nombre": "RCD Mallorca",
@@ -123,7 +136,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Negro",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 14
     },
     {
         "nombre": "UD Almería",
@@ -132,7 +146,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 15
     },
     {
         "nombre": "Granada CF",
@@ -141,7 +156,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 16
     },
     {
         "nombre": "Cádiz CF",
@@ -150,7 +166,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Amarillo, Azul",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 17
     },
     {
         "nombre": "UD Las Palmas",
@@ -159,7 +176,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Amarillo, Azul",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 18
     },
     {
         "nombre": "Deportivo Alavés",
@@ -168,7 +186,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 19
     },
     {
         "nombre": "RCD Espanyol",
@@ -177,7 +196,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Azul",
-        "competicion": "La Liga"
+        "competicion": "La Liga",
+        "id": 20
     },
     {
         "nombre": "Arsenal FC",
@@ -186,7 +206,8 @@
         "champions": 0,
         "ligas": 13,
         "colores": "Rojo, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 21
     },
     {
         "nombre": "Aston Villa FC",
@@ -195,7 +216,8 @@
         "champions": 1,
         "ligas": 7,
         "colores": "Granate, Azul",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 22
     },
     {
         "nombre": "AFC Bournemouth",
@@ -204,7 +226,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Negro",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 23
     },
     {
         "nombre": "Brentford FC",
@@ -213,7 +236,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 24
     },
     {
         "nombre": "Brighton & Hove Albion FC",
@@ -222,7 +246,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 25
     },
     {
         "nombre": "Chelsea FC",
@@ -231,7 +256,8 @@
         "champions": 2,
         "ligas": 6,
         "colores": "Azul",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 26
     },
     {
         "nombre": "Crystal Palace FC",
@@ -240,7 +266,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Azul",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 27
     },
     {
         "nombre": "Everton FC",
@@ -249,7 +276,8 @@
         "champions": 0,
         "ligas": 9,
         "colores": "Azul",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 28
     },
     {
         "nombre": "Fulham FC",
@@ -258,7 +286,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Negro",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 29
     },
     {
         "nombre": "Ipswich Town FC",
@@ -267,7 +296,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Azul, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 30
     },
     {
         "nombre": "Leicester City FC",
@@ -276,7 +306,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Azul, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 31
     },
     {
         "nombre": "Liverpool FC",
@@ -285,7 +316,8 @@
         "champions": 6,
         "ligas": 20,
         "colores": "Rojo",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 32
     },
     {
         "nombre": "Manchester City FC",
@@ -294,7 +326,8 @@
         "champions": 1,
         "ligas": 10,
         "colores": "Celeste, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 33
     },
     {
         "nombre": "Manchester United FC",
@@ -303,7 +336,8 @@
         "champions": 3,
         "ligas": 20,
         "colores": "Rojo, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 34
     },
     {
         "nombre": "Newcastle United FC",
@@ -312,7 +346,8 @@
         "champions": 0,
         "ligas": 4,
         "colores": "Negro, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 35
     },
     {
         "nombre": "Nottingham Forest FC",
@@ -321,7 +356,8 @@
         "champions": 2,
         "ligas": 1,
         "colores": "Rojo, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 36
     },
     {
         "nombre": "Southampton FC",
@@ -330,7 +366,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 37
     },
     {
         "nombre": "Tottenham Hotspur FC",
@@ -339,7 +376,8 @@
         "champions": 0,
         "ligas": 2,
         "colores": "Blanco, Azul Marino",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 38
     },
     {
         "nombre": "West Ham United FC",
@@ -348,7 +386,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Granate, Azul Claro",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 39
     },
     {
         "nombre": "Wolverhampton Wanderers FC",
@@ -357,7 +396,8 @@
         "champions": 0,
         "ligas": 3,
         "colores": "Oro, Negro",
-        "competicion": "Premier"
+        "competicion": "Premier",
+        "id": 40
     },
     {
         "nombre": "FC Bayern München",
@@ -366,7 +406,8 @@
         "champions": 6,
         "ligas": 34,
         "colores": "Rojo, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 41
     },
     {
         "nombre": "Borussia Dortmund",
@@ -375,7 +416,8 @@
         "champions": 1,
         "ligas": 8,
         "colores": "Amarillo, Negro",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 42
     },
     {
         "nombre": "RB Leipzig",
@@ -384,7 +426,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Rojo",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 43
     },
     {
         "nombre": "Bayer 04 Leverkusen",
@@ -393,7 +436,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Negro",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 44
     },
     {
         "nombre": "Eintracht Frankfurt",
@@ -402,7 +446,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Blanco, Negro",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 45
     },
     {
         "nombre": "SC Freiburg",
@@ -411,7 +456,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 46
     },
     {
         "nombre": "1. FSV Mainz 05",
@@ -420,7 +466,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 47
     },
     {
         "nombre": "TSG 1899 Hoffenheim",
@@ -429,7 +476,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 48
     },
     {
         "nombre": "VfB Stuttgart",
@@ -438,7 +486,8 @@
         "champions": 0,
         "ligas": 5,
         "colores": "Blanco, Rojo",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 49
     },
     {
         "nombre": "Werder Bremen",
@@ -447,7 +496,8 @@
         "champions": 0,
         "ligas": 4,
         "colores": "Verde, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 50
     },
     {
         "nombre": "Borussia Mönchengladbach",
@@ -456,7 +506,8 @@
         "champions": 0,
         "ligas": 5,
         "colores": "Blanco, Negro",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 51
     },
     {
         "nombre": "VfL Wolfsburg",
@@ -465,7 +516,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Verde, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 52
     },
     {
         "nombre": "1. FC Union Berlin",
@@ -474,7 +526,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 53
     },
     {
         "nombre": "FC Augsburg",
@@ -483,7 +536,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Verde",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 54
     },
     {
         "nombre": "1. FC Heidenheim 1846",
@@ -492,7 +546,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 55
     },
     {
         "nombre": "VfL Bochum",
@@ -501,7 +556,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 56
     },
     {
         "nombre": "FC St. Pauli",
@@ -510,7 +566,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Marrón, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 57
     },
     {
         "nombre": "Holstein Kiel",
@@ -519,7 +576,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "Bundesliga"
+        "competicion": "Bundesliga",
+        "id": 58
     },
     {
         "nombre": "Atalanta B.C.",
@@ -528,7 +586,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Negro, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 59
     },
     {
         "nombre": "Bologna F.C. 1909",
@@ -537,7 +596,8 @@
         "champions": 0,
         "ligas": 7,
         "colores": "Rojo, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 60
     },
     {
         "nombre": "Cagliari Calcio",
@@ -546,7 +606,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Rojo, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 61
     },
     {
         "nombre": "Como 1907",
@@ -555,7 +616,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Blanco",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 62
     },
     {
         "nombre": "Empoli F.C.",
@@ -564,7 +626,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 63
     },
     {
         "nombre": "ACF Fiorentina",
@@ -573,7 +636,8 @@
         "champions": 0,
         "ligas": 2,
         "colores": "Púrpura",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 64
     },
     {
         "nombre": "Genoa C.F.C.",
@@ -582,7 +646,8 @@
         "champions": 0,
         "ligas": 9,
         "colores": "Rojo, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 65
     },
     {
         "nombre": "Hellas Verona F.C.",
@@ -591,7 +656,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Amarillo, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 66
     },
     {
         "nombre": "Inter de Milán",
@@ -600,7 +666,8 @@
         "champions": 3,
         "ligas": 19,
         "colores": "Negro, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 67
     },
     {
         "nombre": "Juventus F.C.",
@@ -609,7 +676,8 @@
         "champions": 2,
         "ligas": 36,
         "colores": "Blanco, Negro",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 68
     },
     {
         "nombre": "S.S. Lazio",
@@ -618,7 +686,8 @@
         "champions": 0,
         "ligas": 2,
         "colores": "Celeste, Blanco",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 69
     },
     {
         "nombre": "U.S. Lecce",
@@ -627,7 +696,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Amarillo",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 70
     },
     {
         "nombre": "AC Milan",
@@ -636,7 +706,8 @@
         "champions": 7,
         "ligas": 19,
         "colores": "Rojo, Negro",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 71
     },
     {
         "nombre": "AC Monza",
@@ -645,7 +716,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 72
     },
     {
         "nombre": "S.S.C. Napoli",
@@ -654,7 +726,8 @@
         "champions": 0,
         "ligas": 3,
         "colores": "Celeste, Blanco",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 73
     },
     {
         "nombre": "Parma Calcio 1913",
@@ -663,7 +736,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Amarillo, Azul",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 74
     },
     {
         "nombre": "AS Roma",
@@ -672,7 +746,8 @@
         "champions": 0,
         "ligas": 3,
         "colores": "Rojo, Amarillo",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 75
     },
     {
         "nombre": "Torino F.C.",
@@ -681,7 +756,8 @@
         "champions": 0,
         "ligas": 7,
         "colores": "Granate",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 76
     },
     {
         "nombre": "Udinese Calcio",
@@ -690,7 +766,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Negro",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 77
     },
     {
         "nombre": "Venezia F.C.",
@@ -699,7 +776,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Naranja, Verde, Negro",
-        "competicion": "Serie A"
+        "competicion": "Serie A",
+        "id": 78
     },
     {
         "nombre": "Paris Saint-Germain FC",
@@ -708,7 +786,8 @@
         "champions": 0,
         "ligas": 13,
         "colores": "Azul, Rojo",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 79
     },
     {
         "nombre": "Olympique de Marseille",
@@ -717,7 +796,8 @@
         "champions": 1,
         "ligas": 9,
         "colores": "Blanco, Azul",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 80
     },
     {
         "nombre": "AS Monaco FC",
@@ -726,7 +806,8 @@
         "champions": 0,
         "ligas": 8,
         "colores": "Rojo, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 81
     },
     {
         "nombre": "Olympique Lyonnais",
@@ -735,7 +816,8 @@
         "champions": 0,
         "ligas": 7,
         "colores": "Blanco, Rojo, Azul",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 82
     },
     {
         "nombre": "LOSC Lille",
@@ -744,7 +826,8 @@
         "champions": 0,
         "ligas": 4,
         "colores": "Rojo, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 83
     },
     {
         "nombre": "Stade Rennais FC",
@@ -753,7 +836,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Negro",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 84
     },
     {
         "nombre": "OGC Nice",
@@ -762,7 +846,8 @@
         "champions": 0,
         "ligas": 4,
         "colores": "Rojo, Negro",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 85
     },
     {
         "nombre": "RC Lens",
@@ -771,7 +856,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Rojo, Amarillo",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 86
     },
     {
         "nombre": "FC Nantes",
@@ -780,7 +866,8 @@
         "champions": 0,
         "ligas": 8,
         "colores": "Amarillo, Verde",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 87
     },
     {
         "nombre": "Stade Brestois 29",
@@ -789,7 +876,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Rojo, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 88
     },
     {
         "nombre": "Stade de Reims",
@@ -798,7 +886,8 @@
         "champions": 0,
         "ligas": 6,
         "colores": "Rojo, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 89
     },
     {
         "nombre": "RC Strasbourg Alsace",
@@ -807,7 +896,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Azul, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 90
     },
     {
         "nombre": "Montpellier HSC",
@@ -816,7 +906,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Naranja, Azul",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 91
     },
     {
         "nombre": "Toulouse FC",
@@ -825,7 +916,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Violeta, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 92
     },
     {
         "nombre": "Le Havre AC",
@@ -834,7 +926,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Azul, Celeste",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 93
     },
     {
         "nombre": "AJ Auxerre",
@@ -843,7 +936,8 @@
         "champions": 0,
         "ligas": 1,
         "colores": "Blanco, Azul",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 94
     },
     {
         "nombre": "Angers SCO",
@@ -852,7 +946,8 @@
         "champions": 0,
         "ligas": 0,
         "colores": "Blanco, Negro",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 95
     },
     {
         "nombre": "AS Saint-Étienne",
@@ -861,6 +956,7 @@
         "champions": 0,
         "ligas": 10,
         "colores": "Verde, Blanco",
-        "competicion": "Ligue 1"
+        "competicion": "Ligue 1",
+        "id": 96
     }
 ]
