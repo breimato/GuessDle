@@ -50,3 +50,15 @@ class ChallengeManager:
             self.challenge.save(update_fields=["winner", "completed"])
 
         return ganador == self.user
+
+    def get_tied_users(self):
+        """
+        Devuelve una lista de usuarios que empataron el reto.
+        Si no hay empate, devuelve [].
+        """
+        ca = self.challenge.challenger_attempts
+        oa = self.challenge.opponent_attempts
+
+        if ca is not None and oa is not None and ca == oa:
+            return [self.challenge.challenger, self.challenge.opponent]
+        return []
