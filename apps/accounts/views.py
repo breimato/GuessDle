@@ -1,4 +1,4 @@
-# apps/accounts/views.py
+
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import JsonResponse
@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import models, transaction
 from django.views.decorators.csrf import csrf_protect
-
+from django.contrib.auth.views import LoginView as DjangoLoginView
 from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.accounts.services.score_service import ScoreService
@@ -219,3 +219,15 @@ def create_challenge(request):
 
     return redirect("dashboard")
 
+
+class LoginView(DjangoLoginView):
+    template_name = "registration/login.html"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        remember_me = self.request.POST.get('remember_me')
+        if remember_me:
+            self.request.session.set_expiry(1209600)  # 2 semanas
+        else:
+            self.request.session.set_expiry(0)  # Hasta cerrar el navegador
+        return response

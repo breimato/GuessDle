@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import dashboard_view, register_view, complete_challenge, create_challenge
+from .views import LoginView, dashboard_view, register_view, complete_challenge, create_challenge
 from django.contrib.auth import views as auth_views
 
 from ..games.views import play_challenge, ajax_guess_challenge
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', register_view, name='register'),
     path("password_reset/", auth_views.PasswordResetView.as_view(
