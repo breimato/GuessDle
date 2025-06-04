@@ -176,6 +176,7 @@ def formatear_ranking(game_slug=None):
             thumbnail_url=thumbnail_url_final
         )
     else:  # Ranking global
+        global_embed_color = discord.Color.blue()
         game_elos = (
             GameElo.objects
             .values("user__username")
