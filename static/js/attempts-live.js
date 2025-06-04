@@ -97,6 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  function capitalize(text) {
+    return text.replace(/\b\w/g, char => char.toUpperCase());
+  }
+
   /* ───────── render intento ───────── */
   function renderAttempt({ name, icon, feedback, guess_image_url }, animate = true) {
     const cols = feedback.length + 1;
@@ -109,7 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Lógica para la celda del personaje/ítem
     let characterCellHtml = "";
     if (guess_image_url) {
-      characterCellHtml = `<img src="${guess_image_url}" alt="${name}" style="width: 100%; height: 100px; object-fit: cover; object-position: top;">`;
+      characterCellHtml = `
+        <img
+          src="${guess_image_url}"
+          alt="${capitalize(name)}"
+          title="${capitalize(name)}"
+          style="width: 100%; height: 100px; object-fit: cover; object-position: top;"
+          onerror="this.onerror=null; this.src='/static/images/default-character.png';"
+        >
+      `;
     } else { // Fallback al nombre si no hay ni imagen ni icono
       characterCellHtml = `<span class="champion-icon-name">${name}</span>`;
     }
