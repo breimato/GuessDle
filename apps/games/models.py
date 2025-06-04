@@ -6,7 +6,12 @@ from django.conf import settings
 from django.db import models
 import os
 from colorfield.fields import ColorField
+from django.core.exceptions import ValidationError
 
+
+def game_json_file_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/json_files/<game_slug>/<filename>
+    return f'json_files/{instance.slug}/{filename}'
 
 class Game(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -20,6 +25,7 @@ class Game(models.Model):
 
     # Configuración de API
     data_source_url = models.URLField(blank=True, null=True, help_text="URL de la API para sincronizar los datos")
+    json_file = models.FileField(upload_to=game_json_file_path, blank=True, null=True, help_text="Archivo JSON local para los datos del juego.")
     field_mapping = models.JSONField(default=dict, help_text="Mapeo de campos: {'nombre': 'api_field'}")
     defaults = models.JSONField(default=dict, help_text="Valores por defecto para campos faltantes")
     attributes = models.JSONField(default=list, help_text="Lista de atributos que tiene cada ítem")
@@ -30,6 +36,17 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        super().clean()
+        if self.data_source_url and self.json_file:
+            raise ValidationError(
+                {'data_source_url': "No puedes proporcionar una URL de API y un archivo JSON a la vez. Escoge solo uno.",
+                 'json_file': "No puedes proporcionar una URL de API y un archivo JSON a la vez. Escoge solo uno."})
+        if not self.data_source_url and not self.json_file:
+            raise ValidationError(
+                {'data_source_url': "Debes proporcionar una URL de API o un archivo JSON.",
+                 'json_file': "Debes proporcionar una URL de API o un archivo JSON."})
 
 
 class GameItem(models.Model):
