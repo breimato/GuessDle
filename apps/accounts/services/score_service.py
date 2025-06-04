@@ -30,30 +30,30 @@ class ScoreService:
         Si no hay partidas completadas, devuelve None.
         """
         # Todas las sesiones del usuario en este juego
-        sesiones = (
+        sessions = (
             self.user.play_sessions
-            .filter(game=self.game, session_type=PlaySessionType.EXTRA)
+            .filter(game=self.game)
         )
 
-        # Intentos totales (todas las sesiones)
-        intentos_totales = (
+        # Intentos totales (todas las sessions)
+        total_tries = (
             GameAttempt.objects
-            .filter(session__in=sesiones)
+            .filter(session__in=sessions)
             .count()
         )
 
-        # Partidas completadas: sesiones donde hay al menos 1 intento correcto
-        completadas = (
-            sesiones
+        # Partidas completadas: sessions donde hay al menos 1 intento correcto
+        completed = (
+            sessions
             .annotate(correctos=Count('attempts', filter=Q(attempts__is_correct=True)))
             .filter(correctos__gt=0)
             .count()
         )
 
-        if completadas == 0:
+        if completed == 0:
             return None
 
-        return intentos_totales / completadas
+        return total_tries / completed
 
     def get_global_average_of_averages(self, exclude_user=True) -> float | None:
         """
@@ -63,23 +63,23 @@ class ScoreService:
         # Buscamos todos los user_id que hayan jugado este juego (EXTRA)
         user_ids = (
             GameAttempt.objects
-            .filter(session__game=self.game, session__session_type=PlaySessionType.EXTRA)
+            .filter(session__game=self.game)
             .exclude(user=self.user if exclude_user else None)
             .values_list('user', flat=True)
             .distinct()
         )
 
-        medias = []
+        average = []
         for user_id in user_ids:
             # Seteamos el user actual
             user = User.objects.get(pk=user_id)
             # OJO: si ScoreService necesita user instance, no id
             avg = ScoreService(user, self.game).get_user_average_attempts()
             if avg is not None:
-                medias.append(avg)
-        if not medias:
+                average.append(avg)
+        if not average:
             return None
-        return sum(medias) / len(medias)
+        return sum(average) / len(average)
 
     # ---------- Internals ----------
     def _points_for_attempts(self, n: int) -> int:
