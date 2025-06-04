@@ -52,13 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
   input.addEventListener('keydown', e => {
     if (box.classList.contains('hidden')) return;
     switch (e.key) {
-      case 'ArrowDown': e.preventDefault(); move(1); break;
-      case 'ArrowUp':   e.preventDefault(); move(-1); break;
-      case 'Tab':       e.preventDefault(); if (hl === -1) hl = 0; setVal(box.children[hl]?.textContent || ''); break;
-      case 'Enter':     if (hl > -1) { e.preventDefault(); setVal(box.children[hl].textContent); } break;
-      case 'Escape':    close(); break;
+      case 'ArrowDown':
+        e.preventDefault(); move(1); break;
+      case 'ArrowUp':
+        e.preventDefault(); move(-1); break;
+      case 'Tab':
+        e.preventDefault();
+        if (hl === -1) hl = 0;
+        setVal(box.children[hl]?.textContent || '');
+        break;
+      case 'Enter':
+        if (hl > -1) {
+          e.preventDefault();
+          setVal(box.children[hl].textContent);
+        } else if (box.children.length) {
+          e.preventDefault();
+          setVal(box.children[0].textContent);
+        }
+        break;
+      case 'Escape':
+        close(); break;
     }
   });
+
 
   document.addEventListener('click', e => {
     if (!box.contains(e.target) && e.target !== input) close();
