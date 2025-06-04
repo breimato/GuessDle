@@ -178,9 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
   modal.className = `
     bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800
     shadow-lg text-gray-900 w-full max-w-xl animate-bounceInCenter mx-4
-    flex flex-col items-center text-center`;
+    flex flex-col items-center text-center relative`;
 
   modal.innerHTML = `
+  <button id="close-modal-btn" style="position:absolute;top:10px;right:15px;background:transparent;border:none;font-size:1.5rem;color:black;cursor:pointer;">&times;</button>
   <h2 class="text-2xl font-bold mb-4">
     ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
   </h2>
@@ -218,6 +219,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+
+  // Event listener para cerrar el modal al hacer click fuera
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      document.body.removeChild(overlay);
+    }
+  });
+
+  // Event listener para el botón de cierre "X"
+  const closeModalBtn = document.getElementById("close-modal-btn");
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+    });
+  }
 
   // ✅ Poner aquí el event listener porque los elementos ya existen
   const showBetFormBtn = document.getElementById("show-bet-form");

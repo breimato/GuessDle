@@ -3,9 +3,11 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# ─── 2. Instala dependencias del sistema (cron) ───────────────────────────────
+# ─── 2. Instala dependencias del sistema (cron + tzdata) ──────────────────────
 RUN apt-get update \
- && apt-get install -y --no-install-recommends cron \
+ && apt-get install -y --no-install-recommends cron tzdata \
+ && ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime \
+ && dpkg-reconfigure -f noninteractive tzdata \
  && rm -rf /var/lib/apt/lists/*
 
 # ─── 3. Copia requirements y las instala ──────────────────────────────────────
