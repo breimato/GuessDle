@@ -49,64 +49,39 @@ class DashboardStats:
 
     def elo_global(self):
         """
-        Promedio ponderado de puntos en TODOS los juegos.
-        Devuelve 0 si no hay partidas jugadas.
+        Suma total de puntos ELO del usuario en todos los juegos.
+        Devuelve 0 si no tiene partidas.
         """
         records = GameElo.objects.filter(user=self.user)
-        total_partidas = sum(r.partidas for r in records)
-        if total_partidas == 0:
-            return 0
+        total_elo = sum(r.elo for r in records)
+        return total_elo
 
-        weighted_sum = sum(r.elo * r.partidas for r in records)
-        return weighted_sum / total_partidas
 
     def ranking_global(self):
         """
-        Ranking global de usuarios basado en puntos (“puntos_global”) y media de intentos.
-        No se filtra por tipo de sesión ni por si la partida fue resuelta.
+        Ranking global de usuarios basado en la suma total de puntos (ELO) en todos los juegos.
         """
+        from django.contrib.auth import get_user_model
         User = get_user_model()
 
+        # Agrupa por usuario y suma el ELO total de todos sus juegos
         user_points_qs = (
             GameElo.objects.values("user__username", "user_id")
             .annotate(
-                weighted_sum=Sum(F("elo") * F("partidas"), output_field=FloatField()),
-                total_games=Sum("partidas"),
-            )
-            .annotate(
-                puntos_global=ExpressionWrapper(
-                    F("weighted_sum") / F("total_games"), output_field=FloatField()
-                )
+                puntos_totales=Sum("elo")
             )
         )
 
+        # Convierte el queryset en una lista ordenada por puntos descendente
         rows = []
         for record in user_points_qs:
-            username = record["user__username"]
-            puntos_g = record["puntos_global"] or 0
-
-            user_obj = User.objects.get(username=username)
-            sessions = PlaySession.objects.filter(user=user_obj)
-
-            attempts_counts = [
-                GameAttempt.objects.filter(session=s).count()
-                for s in sessions
-                if GameAttempt.objects.filter(session=s).exists()
-            ]
-
-            media = sum(attempts_counts) / len(attempts_counts) if attempts_counts else None
-            partidas = len(attempts_counts)
-
-            rows.append(
-                {
-                    "username": username,
-                    "puntos": puntos_g,
-                    "media": media,
-                    "partidas": partidas,
-                }
-            )
+            rows.append({
+                "username": record["user__username"],
+                "puntos": record["puntos_totales"] or 0,
+            })
 
         return sorted(rows, key=lambda x: (-x["puntos"], x["username"]))
+
 
     def ranking_per_game(self):
         """
