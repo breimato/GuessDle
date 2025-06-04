@@ -1,6 +1,6 @@
 import os
 import sys
-
+from django.db.models import Sum
 import django
 import discord
 from discord.ext import commands
@@ -95,8 +95,8 @@ def _generar_tabla_ranking(ranking_data, is_global_ranking=False):
     for idx, item in enumerate(ranking_data, start=1):
         idx_str = str(idx).center(n_content_w)
         
-        elo_original = item['avg_elo'] if is_global_ranking else item.elo
-        elo_str = str(int(elo_original)).rjust(elo_content_w) # ELO alineado a la derecha
+        elo_original = item['total_elo'] if is_global_ranking else item.elo
+        elo_str = str(int(elo_original)).rjust(elo_content_w)
 
         username_original = item['user__username'] if is_global_ranking else item.user.username
         display_username = username_original
@@ -176,14 +176,13 @@ def formatear_ranking(game_slug=None):
             thumbnail_url=thumbnail_url_final
         )
     else:  # Ranking global
-        global_embed_color = discord.Color.blue()
         game_elos = (
             GameElo.objects
             .values("user__username")
-            .annotate(avg_elo=Avg("elo"))
-            .order_by("-avg_elo")[:10]
+            .annotate(total_elo=Sum("elo"))
+            .order_by("-total_elo")[:10]
         )
-        titulo_embed = "🌍 Ranking Global (Media ELO)"
+        titulo_embed = "🌍 Ranking Global (ELO Total)"
 
         if not game_elos:
             return _crear_embed_ranking(
