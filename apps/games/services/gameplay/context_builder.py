@@ -43,8 +43,9 @@ class ContextBuilder:
         can_play = not has_won
 
         guessed_ids = [att.guess_id for att in qs]
-        remaining_names = list(self.game.items.exclude(id__in=guessed_ids).values_list("name", flat=True))
-
+        remaining_names = list(
+            self.game.items.filter(deleted=False).exclude(id__in=guessed_ids).values_list("name", flat=True)
+        )
         ctx = {
             "game": self.game,
             "target": target_item,

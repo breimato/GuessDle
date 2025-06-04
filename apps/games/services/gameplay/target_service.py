@@ -1,5 +1,3 @@
-# apps/games/services/gameplay/target_service.py
-
 from datetime import timedelta
 from django.utils import timezone
 from apps.games.models import DailyTarget, PlaySession, PlaySessionType, GameAttempt, GameItem
@@ -17,7 +15,8 @@ class TargetService:
         return DailyTarget.objects.filter(
             game=self.game,
             date=today,
-            is_team=self.is_team
+            is_team=self.is_team,
+            target__deleted=False
         ).select_related("target").first()
 
     def get_yesterday_target(self, today_date=None):
@@ -33,7 +32,7 @@ class TargetService:
         return DailyTarget.get_current(self.game, self.user)
 
     def get_random_item(self):
-        items = list(GameItem.objects.filter(game=self.game))
+        items = list(GameItem.objects.filter(game=self.game, deleted=False))
         if not items:
             raise ValueError("No hay ítems disponibles para este juego.")
         return secrets.choice(items)

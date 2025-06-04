@@ -16,7 +16,7 @@ class Command(BaseCommand):
             self.stdout.write(f"✔️ Ya existe target ({tipo}) para {game.name} ({date})")
             return False
 
-        items = list(GameItem.objects.filter(game=game))
+        items = list(GameItem.objects.filter(game=game, deleted=False))
         if not items:
             self.stdout.write(f"⚠️ {game.name} no tiene ítems para generar target ({tipo}) ({date})")
             return False

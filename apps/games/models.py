@@ -36,7 +36,8 @@ class GameItem(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='items')
     name = models.CharField(max_length=255)
     data = models.JSONField(default=dict, help_text="Diccionario de atributos del ítem")
-
+    deleted = models.BooleanField(default=False)
+    deleted_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -101,35 +102,6 @@ class DailyTarget(models.Model):
             .select_related("target")
             .first()
         )
-
-
-class GameResult(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
-
-    daily_target = models.ForeignKey(DailyTarget, on_delete=models.CASCADE, null=True, blank=True)
-    extra_play = models.ForeignKey("ExtraDailyPlay", on_delete=models.CASCADE, null=True, blank=True)
-    challenge = models.ForeignKey("accounts.Challenge", on_delete=models.CASCADE, null=True, blank=True)
-
-    attempts = models.PositiveIntegerField()
-    completed_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "daily_target"],
-                name="unique_result_per_daily"
-            ),
-            models.UniqueConstraint(
-                fields=["user", "extra_play"],
-                name="unique_result_per_extra"
-            ),
-            models.UniqueConstraint(
-                fields=["user", "challenge"],
-                name="unique_result_per_challenge"
-            ),
-        ]
-
 
 
 class GameAttempt(models.Model):

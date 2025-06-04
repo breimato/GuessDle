@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
           src="${guess_image_url}"
           alt="${capitalize(name)}"
           title="${capitalize(name)}"
-          style="width: 100%; height: 100px; object-fit: cover; object-position: top;"
+          style="width: 100px; height: 100px; object-fit: cover; object-position: top;"
           onerror="this.onerror=null; this.src='/static/images/default-character.png';"
         >
       `;

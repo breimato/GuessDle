@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import Game, GameItem, ScoringRule
+from .models import GameAttempt, DailyTarget, ExtraDailyPlay, PlaySession
+from apps.accounts.models import Challenge
 from django import forms
 from django.conf import settings
 from django.contrib import messages
@@ -95,9 +97,22 @@ class GameAdmin(admin.ModelAdmin):
 
 @admin.register(GameItem)
 class GameItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'game')
-    list_filter = ('game',)
+    list_display = ('name', 'game', 'deleted', 'deleted_at')
+    list_filter = ('game', 'deleted')
     search_fields = ('name',)
+    actions = ['soft_delete_items', 'restore_items']
+
+    @admin.action(description="Marcar como eliminado (soft delete)")
+    def soft_delete_items(self, request, queryset):
+        from django.utils import timezone
+        updated = queryset.update(deleted=True, deleted_at=timezone.now())
+        self.message_user(request, f"{updated} ítems marcados como eliminados (soft delete).")
+
+    @admin.action(description="Restaurar ítems eliminados")
+    def restore_items(self, request, queryset):
+        updated = queryset.update(deleted=False, deleted_at=None)
+        self.message_user(request, f"{updated} ítems restaurados.")
+
 
 
 @admin.register(ScoringRule)
@@ -105,4 +120,32 @@ class ScoringRuleAdmin(admin.ModelAdmin):
     list_display  = ("game", "attempt_no", "points")
     list_filter   = ("game",)
     ordering      = ("game", "attempt_no")
+
+
+@admin.register(GameAttempt)
+class GameAttemptAdmin(admin.ModelAdmin):
+    list_display = ('user', 'game', 'guess', 'is_correct', 'attempted_at', 'session')
+    list_filter = ('game', 'is_correct')
+    search_fields = ('user__username', 'guess__name')
+
+@admin.register(DailyTarget)
+class DailyTargetAdmin(admin.ModelAdmin):
+    list_display = ('game', 'target', 'date', 'is_team')
+    list_filter = ('game', 'is_team', 'date')
+    search_fields = ('game__name', 'target__name')
+
+@admin.register(ExtraDailyPlay)
+class ExtraDailyPlayAdmin(admin.ModelAdmin):
+    list_display = ('user', 'game', 'target', 'created_at', 'bet_amount', 'completed')
+    list_filter = ('game', 'completed')
+    search_fields = ('user__username', 'target__name')
+
+@admin.register(PlaySession)
+class PlaySessionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'game', 'session_type', 'reference_id', 'completed_at')
+    list_filter = ('game', 'session_type')
+    search_fields = ('user__username',)
+
+
+
 
