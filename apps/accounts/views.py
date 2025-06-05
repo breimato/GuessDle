@@ -23,28 +23,18 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-
 from apps.accounts.models import Challenge
 from apps.accounts.services.score_service import ScoreService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.models import GameAttempt
 from apps.common.utils import json_success, json_error
-
-
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from apps.accounts.models import Challenge
-
-
-# apps/accounts/views.py  (o donde tengas el resto)
 from django.views.decorators.http import require_POST
-
-# apps/accounts/views.py
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-# … resto de imports …
 
 # ---------- CREAR RETO ----------
 @login_required

@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 from apps.accounts.models import GameElo
 from apps.games.models import Game, PlaySession, GameAttempt
+from django.contrib.auth import get_user_model
+
 
 
 class DashboardStats:
@@ -59,28 +61,40 @@ class DashboardStats:
 
     def ranking_global(self):
         """
-        Ranking global de usuarios basado en la suma total de puntos (ELO) en todos los juegos.
+        Ranking global de usuarios con:
+        - puntos (ELO total)
+        - partidas (total de sesiones con al menos un intento)
+        - media (media de intentos por partida real jugada)
         """
-        from django.contrib.auth import get_user_model
         User = get_user_model()
 
-        # Agrupa por usuario y suma el ELO total de todos sus juegos
-        user_points_qs = (
-            GameElo.objects.values("user__username", "user_id")
-            .annotate(
-                puntos_totales=Sum("elo")
-            )
+        users_qs = GameElo.objects.values("user__username", "user_id").annotate(
+            puntos_totales=Sum("elo")
         )
 
-        # Convierte el queryset en una lista ordenada por puntos descendente
         rows = []
-        for record in user_points_qs:
+        for record in users_qs:
+            user = User.objects.get(pk=record["user_id"])
+            sessions = PlaySession.objects.filter(user=user)
+            # solo sesiones que tengan al menos 1 intento
+            attempts_counts = [
+                GameAttempt.objects.filter(session=s).count()
+                for s in sessions
+                if GameAttempt.objects.filter(session=s).exists()
+            ]
+            num_partidas = len(attempts_counts)
+            media_global = sum(attempts_counts) / num_partidas if num_partidas else None
+
             rows.append({
                 "username": record["user__username"],
                 "puntos": record["puntos_totales"] or 0,
+                "partidas": num_partidas,
+                "media": media_global,
             })
 
         return sorted(rows, key=lambda x: (-x["puntos"], x["username"]))
+
+
 
 
     def ranking_per_game(self):
