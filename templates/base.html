@@ -13,7 +13,9 @@
 <!-- Estilos del tablero -->
 </head>
 
-<body class="text-gray-100 bg-gray-900">
+<body class="text-gray-100 bg-gray-900
+  bg-[url('{% if background_url %}{{ background_url }}{% else %}{% static "img/login.png" %}{% endif %}')]
+  bg-no-repeat bg-cover bg-fixed bg-center">
 
   {# ---------- UNA SOLA CAPA CON EL FONDO ---------- #}
   <div

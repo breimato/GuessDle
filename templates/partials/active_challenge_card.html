@@ -1,16 +1,41 @@
-<div class="p-6 bg-yellow-100/90 border-2 border-yellow-700 rounded-2xl shadow flex flex-col justify-between gap-4">
-  <div class="text-yellow-900 font-semibold leading-snug" style="font-family:var(--font-lol);">
-    {% if challenge.challenger == user %}
-      Has retado a <strong>{{ challenge.opponent.username }}</strong> en
-      <strong>{{ challenge.game.name }}</strong>
-    {% else %}
-      <strong>{{ challenge.challenger.username }}</strong> te ha retado en
-      <strong>{{ challenge.game.name }}</strong>
-    {% endif %}
+{# tarjeta de reto activo #}
+<div class="bg-amber-100/90 border-2 border-yellow-800 rounded-2xl shadow
+            px-4 py-3 flex flex-col items-center gap-1 w-full">
+
+  {# ─── Cabecera ─── #}
+  <div class="flex items-center gap-1 leading-none">
+    <span class="text-yellow-700">⚔️</span>
+    <span class="text-sm font-semibold text-yellow-900" style="font-family:var(--font-lol);">
+      {{ challenge.challenger.username }}
+    </span>
+    <span class="text-xs font-semibold text-yellow-900" style="margin: 0 4px;">vs</span>
+    <span class="text-sm font-semibold text-yellow-900" style="font-family:var(--font-lol);">
+      {{ challenge.opponent.username }}
+    </span>
   </div>
 
-  <a href="{% url 'play_challenge' challenge.id %}"
-     class="mt-2 flex items-center justify-center gap-2 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full shadow transition font-semibold">
-    <span> Jugar</span>
-  </a>
+  {# Juego #}
+  <div class="text-xs font-semibold text-yellow-900 mb-1">
+    Juego: <span class="font-semibold">{{ challenge.game.name }}</span>
+  </div>
+
+  {# ─── Acción / Estado ─── #}
+  {% if user == challenge.challenger and challenge.challenger_attempts == None %}
+    <a href="{% url 'play_challenge' challenge.id %}"
+       class="mt-1 flex items-center gap-1 bg-yellow-700 hover:bg-yellow-800 text-white
+              px-4 py-2 rounded-full shadow text-sm font-semibold transition">
+      🎯 Jugar
+    </a>
+  {% elif user == challenge.opponent and challenge.opponent_attempts == None %}
+    <a href="{% url 'play_challenge' challenge.id %}"
+       class="mt-1 flex items-center gap-1 bg-yellow-700 hover:bg-yellow-800 text-white
+              px-4 py-2 rounded-full shadow text-sm font-semibold transition">
+      🎯 Jugar
+    </a>
+  {% else %}
+    <div class="mt-1 w-full flex items-center justify-center gap-1 bg-yellow-200/60
+                rounded-full px-3 py-1 text-xs font-semibold text-yellow-900">
+      ⏳ Esperando rival…
+    </div>
+  {% endif %}
 </div>

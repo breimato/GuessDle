@@ -29,7 +29,35 @@ from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.models import GameAttempt
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+from apps.accounts.models import Challenge
 
+
+# apps/accounts/views.py  (o donde tengas el resto)
+from django.views.decorators.http import require_POST
+
+@require_POST
+@login_required
+def cancelar_challenge(request, challenge_id):
+    challenge = get_object_or_404(
+        Challenge,
+        id=challenge_id,
+        challenger=request.user,
+        accepted=False,
+        completed=False
+    )
+    challenge.delete()
+    return redirect('dashboard')
+
+
+@require_POST
+@login_required
+def rechazar_challenge(request, challenge_id):
+    challenge = get_object_or_404(Challenge, id=challenge_id, opponent=request.user)
+    challenge.delete()
+    return redirect('dashboard')
 
 @never_cache
 @login_required
@@ -42,6 +70,19 @@ def dashboard_view(request):
         accepted=True,
         completed=False
     ).filter(models.Q(challenger=request.user) | models.Q(opponent=request.user))
+    active_challenges_to_play = Challenge.objects.filter(
+        accepted=True,
+        completed=False
+    ).filter(
+        challenger=request.user
+        # aquí puedes añadir más lógica si necesitas comprobar si tú has jugado tu parte
+    )
+    sent_pending_challenges = Challenge.objects.filter(
+        challenger=request.user,
+        accepted=False,
+        completed=False
+        )
+
 
     today = now().date()
 
@@ -80,6 +121,8 @@ def dashboard_view(request):
         "ranking_por_juego": stats.ranking_per_game(),
         "pending_challenges": pending_challenges,
         "active_challenges": active_challenges,
+        "active_challenges_to_play": active_challenges_to_play,
+        "sent_pending_challenges": sent_pending_challenges,
         "users": users,
     }
 
