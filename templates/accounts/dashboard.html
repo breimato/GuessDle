@@ -173,9 +173,7 @@ bg-no-repeat bg-cover bg-fixed
     {% for challenge in pending_challenges %}
       {% include "partials/pending_challenge_card.html" with challenge=challenge %}
     {% empty %}
-      <p class="text-yellow-900 text-center font-medium col-span-full">
-        No tienes retos pendientes.
-      </p>
+
     {% endfor %}
   </div>
 
