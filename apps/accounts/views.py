@@ -14,6 +14,7 @@ from django.contrib.auth.views import LoginView as DjangoLoginView
 from apps.accounts.models import UserProfile, Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.accounts.services.score_service import ScoreService
+from apps.common.utils import json_success
 from apps.games.models import Game, ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
 from django.contrib.auth.models import User
@@ -27,6 +28,8 @@ from apps.accounts.models import Challenge
 from apps.accounts.services.score_service import ScoreService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.models import GameAttempt
+from apps.common.utils import json_success, json_error
+
 
 
 from django.contrib.auth.decorators import login_required
@@ -38,6 +41,53 @@ from apps.accounts.models import Challenge
 # apps/accounts/views.py  (o donde tengas el resto)
 from django.views.decorators.http import require_POST
 
+# apps/accounts/views.py
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+# … resto de imports …
+
+# ---------- CREAR RETO ----------
+@login_required
+@csrf_protect
+def create_challenge(request):
+    if request.method != "POST":
+        return json_error("Método no permitido", 405)
+
+    opponent_id = request.POST.get("opponent")
+    game_id     = request.POST.get("game")
+
+    opponent = get_object_or_404(User, pk=opponent_id)
+    game     = get_object_or_404(Game, pk=game_id)
+
+    exists = Challenge.objects.filter(
+        challenger=request.user,
+        opponent=opponent,
+        game=game,
+        accepted=False,
+        completed=False
+    ).exists()
+    if exists:
+        return json_error("Ese reto ya existe")
+
+    with transaction.atomic():
+        target = TargetService(game, request.user).get_random_item()
+        challenge = Challenge.objects.create(
+            challenger=request.user,
+            opponent=opponent,
+            game=game,
+            target=target
+        )
+
+    # devolvemos la tarjeta HTML lista para insertar
+    card_html = render_to_string(
+        "partials/sent_challenge_card.html",
+        {"challenge": challenge},
+        request=request
+    )
+    return json_success({"card": card_html})
+
+
+# ---------- CANCELAR (yo lo envié) ----------
 @require_POST
 @login_required
 def cancelar_challenge(request, challenge_id):
@@ -49,15 +99,23 @@ def cancelar_challenge(request, challenge_id):
         completed=False
     )
     challenge.delete()
-    return redirect('dashboard')
+    return json_success({"id": challenge_id})
 
 
+# ---------- RECHAZAR (me lo enviaron) ----------
 @require_POST
 @login_required
 def rechazar_challenge(request, challenge_id):
-    challenge = get_object_or_404(Challenge, id=challenge_id, opponent=request.user)
+    challenge = get_object_or_404(
+        Challenge,
+        id=challenge_id,
+        opponent=request.user,
+        accepted=False,
+        completed=False
+    )
     challenge.delete()
-    return redirect('dashboard')
+    return json_success({"id": challenge_id})
+
 
 @never_cache
 @login_required
@@ -224,43 +282,6 @@ def complete_challenge(request, challenge_id):
         "winner": winner.username,
         "points_awarded": pts_ganados,
     })
-
-
-
-@login_required
-@csrf_protect
-def create_challenge(request):
-    if request.method != "POST":
-        return redirect("dashboard")
-
-    opponent_id = request.POST.get("opponent")
-    game_id     = request.POST.get("game")
-
-    opponent = get_object_or_404(User, pk=opponent_id)
-    game     = get_object_or_404(Game, pk=game_id)
-
-    already_exists = Challenge.objects.filter(
-        challenger=request.user,
-        opponent=opponent,
-        game=game,
-        accepted=False,
-        completed=False
-    ).exists()
-
-    if already_exists:
-        return redirect("dashboard")
-
-    with transaction.atomic():
-        target = TargetService(game, request.user).get_random_item()
-
-        Challenge.objects.create(
-            challenger=request.user,
-            opponent=opponent,
-            game=game,
-            target=target
-        )
-
-    return redirect("dashboard")
 
 
 class LoginView(DjangoLoginView):

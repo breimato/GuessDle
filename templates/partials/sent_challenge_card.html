@@ -1,29 +1,27 @@
 {# templates/partials/sent_challenge_card.html #}
 <div
-  class="w-full min-h-[160px] p-6 bg-yellow-50/90 border-2 border-yellow-700
-         rounded-2xl shadow flex flex-col justify-between gap-6">
+  class="challenge-card w-full min-h-[160px] p-6 bg-yellow-50/90 border-2 border-yellow-700
+         rounded-2xl shadow flex flex-col justify-between gap-6"
+  data-challenge-id="{{ challenge.id }}">
 
-  <!-- Texto principal -->
   <div class="text-yellow-900 font-semibold leading-snug text-center"
-       style="font-family:var(--font-lol);">
+       style="font-family:var(--font-lol); margin-bottom: 15px;">
     Has retado a <strong>{{ challenge.opponent.username }}</strong> en
     <strong>{{ challenge.game.name }}</strong>
   </div>
 
-  <!-- Botón Cancelar -->
-  <form method="POST" action="{% url 'cancelar_challenge' challenge.id %}" class="flex justify-center">
-    {% csrf_token %}
-    <button type="submit" style="margin: 15px"
-      class="flex items-center gap-2 bg-red-50 border border-red-400
-             text-red-700 font-semibold px-4 py-2 rounded-full shadow transition
-             hover:bg-red-600 hover:text-white hover:border-red-600
-             focus:outline-none focus:ring-2 focus:ring-red-200"
-             onmouseover="this.style.backgroundColor='#ef4444'; this.style.color='#fff'; this.style.borderColor='#dc2626';"
-             onmouseout="this.style.backgroundColor=''; this.style.color=''; this.style.borderColor='';">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      <span>Cancelar</span>
-    </button>
-  </form>
+  <button
+    type="button"
+    class="ajax-delete flex items-center gap-2 bg-red-50 border border-red-400
+           text-red-700 font-semibold px-4 py-2 rounded-full shadow transition
+           hover:bg-red-600 hover:text-white hover:border-red-600
+           focus:outline-none focus:ring-2 focus:ring-red-200 mx-auto"
+           onmouseover="this.style.backgroundColor='#ef4444'; this.style.color='#fff'; this.style.borderColor='#dc2626';"
+             onmouseout="this.style.backgroundColor=''; this.style.color=''; this.style.borderColor='';"
+    data-url="{% url 'cancelar_challenge' challenge.id %}">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+    <span>Cancelar</span>
+  </button>
 </div>

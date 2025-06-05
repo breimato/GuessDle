@@ -102,7 +102,8 @@ bg-no-repeat bg-cover bg-fixed
     ⚔️ Retar a un jugador
   </h2>
 
-  <form method="post" action="{% url 'create_challenge' %}" class="flex flex-col gap-8 mb-12">
+  <form id="challenge-form" method="post" action="{% url 'create_challenge' %}" class="flex flex-col gap-8 mb-12">
+
     {% csrf_token %}
 
     <div>
@@ -185,7 +186,7 @@ bg-no-repeat bg-cover bg-fixed
     {% include "partials/sent_challenge_card.html" with challenge=challenge %}
   {% empty %}
     <p class="text-yellow-900 text-center font-medium col-span-full">
-      No hay retos enviados sin responder.
+
     </p>
   {% endfor %}
 </div>
@@ -258,4 +259,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- CSRF ---------- */
+  const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+  const headers   = { 'X-CSRFToken': csrftoken,
+                      'Content-Type': 'application/x-www-form-urlencoded' };
+
+  /* ---------- Enviar reto ---------- */
+  const form = document.querySelector('#challenge-form');
+  if (form) {
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+
+      const body = new URLSearchParams(new FormData(form));
+      const res  = await fetch(form.action, { method: 'POST', headers, body });
+      const data = await res.json();
+
+      if (data.status === 'ok') {
+        // nueva tarjeta en “Enviados” sin refrescar
+        document.querySelector('#view-enviados')
+                .insertAdjacentHTML('afterbegin', data.card);
+        form.reset();
+      }
+    });
+  }
+
+  /* ---------- Cancelar o Rechazar ---------- */
+  document.body.addEventListener('click', async (ev) => {
+    const btn = ev.target.closest('.ajax-delete');
+    if (!btn) return;
+
+    ev.preventDefault();
+
+    const res  = await fetch(btn.dataset.url, { method: 'POST', headers });
+    const data = await res.json();
+
+    if (data.status === 'ok') {
+      // volar la tarjeta del DOM
+      btn.closest('.challenge-card')?.remove();
+    }
+  });
+});
+</script>
+
+
+
 {% endblock %}
