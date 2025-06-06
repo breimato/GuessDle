@@ -29,6 +29,7 @@ class Game(models.Model):
     field_mapping = models.JSONField(default=dict, help_text="Mapeo de campos: {'nombre': 'api_field'}")
     defaults = models.JSONField(default=dict, help_text="Valores por defecto para campos faltantes")
     attributes = models.JSONField(default=list, help_text="Lista de atributos que tiene cada ítem")
+    grouped_attributes = models.JSONField(default=list, help_text='Grupos de atributos a comparar conjuntamente (ej: [["tipo_1", "tipo_2"]])')
 
     active = models.BooleanField(default=True)
 

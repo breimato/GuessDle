@@ -46,8 +46,18 @@ class GameAdmin(admin.ModelAdmin):
             'fields': ('color', 'icon_image', 'background_image')
         }),
         ('API Configuration', {
-            'fields': ('data_source_url', 'json_file', 'field_mapping', 'defaults', 'attributes', 'numeric_fields', 'audio_file')
-        }),
+    'fields': (
+        'data_source_url',
+        'json_file',
+        'field_mapping',
+        'defaults',
+        'attributes',
+        'grouped_attributes',  # Añadido aquí
+        'numeric_fields',
+        'audio_file'
+    )
+}),
+
         ('Subida Masiva de Imágenes de Ítems', {
             'fields': ('item_images_zip',)
         })
