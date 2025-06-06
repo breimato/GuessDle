@@ -83,14 +83,14 @@ class GameAdmin(admin.ModelAdmin):
             # Uses field_mapping first, then common default names
             name_field_in_mapping = None
             for k, v in game.field_mapping.items():
-                if k == 'name' or k == 'nombre': # Check if 'name' or 'nombre' is mapped
+                if k.upper() == 'NAME' or k.upper() == 'NOMBRE': # Check if 'name' or 'nombre' is mapped
                     name_field_in_mapping = v
                     break
             
             if name_field_in_mapping:
                 name = deep_get(raw, name_field_in_mapping)
             else: # Fallback to common direct names if not in mapping or mapping doesn't specify name source
-                name = raw.get("name") or raw.get("nombre")
+                name = raw.get("name") or raw.get("nombre") or raw.get("NAME") or raw.get("NOMBRE")
 
             if not name:
                 errors_processing.append(f"Item skipped: missing name. Data: {str(raw)[:100]}")
