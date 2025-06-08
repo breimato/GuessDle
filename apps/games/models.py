@@ -126,6 +126,7 @@ class GameAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     guess = models.ForeignKey(GameItem, on_delete=models.CASCADE)
+    mode = models.ForeignKey('games.GameMode', on_delete=models.CASCADE, null=True)
     is_correct = models.BooleanField()
     attempted_at = models.DateTimeField(auto_now_add=True)
     session = models.ForeignKey(
@@ -164,6 +165,7 @@ class PlaySession(models.Model):
     game         = models.ForeignKey('games.Game', on_delete=models.CASCADE, related_name="play_sessions")
     session_type = models.CharField(max_length=10, choices=PlaySessionType.choices)
     reference_id = models.PositiveIntegerField(null=True, blank=True, help_text="PK de DailyTarget / ExtraDailyPlay / Challenge")
+    mode = models.ForeignKey('games.GameMode', on_delete=models.CASCADE, null=True)
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -196,3 +198,39 @@ class ScoringRule(models.Model):
     def __str__(self):
         scope = self.game.slug if self.game else "GLOBAL"
         return f"{scope}: intento {self.attempt_no} → {self.points} pts"
+
+
+
+# ——— NUEVOS MODELOS ————————————————————————————
+
+class GameMode(models.Model):
+    """
+    Variante de un juego (“classic”, “emoji”, “trivia”…).
+    Cada Game puede tener varios GameMode.
+    """
+    game        = models.ForeignKey('games.Game', on_delete=models.CASCADE, related_name='modes')
+    slug        = models.SlugField()                          # 'classic', 'emoji', etc.
+    name        = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+    config      = models.JSONField(default=dict, blank=True)  # reglas propias (nº intentos, etc.)
+
+    class Meta:
+        unique_together = ('game', 'slug')                    # No repitas el mismo slug en un juego
+
+    def __str__(self):
+        return f'{self.game.slug} • {self.slug}'
+
+
+class GameItemModeData(models.Model):
+    """
+    Datos específicos de UN ítem en UN modo (pistas, emojis, pixel-art, etc.).
+    """
+    item  = models.ForeignKey('games.GameItem', on_delete=models.CASCADE, related_name='mode_data')
+    mode  = models.ForeignKey('games.GameMode', on_delete=models.CASCADE, related_name='item_data')
+    extra = models.JSONField(default=dict, blank=True)        # ej.: {"emojis_by_turn": ["👦", …]}
+
+    class Meta:
+        unique_together = ('item', 'mode')
+
+    def __str__(self):
+        return f'{self.item.name} @ {self.mode.slug}'
