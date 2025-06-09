@@ -234,3 +234,17 @@ class GameItemModeData(models.Model):
 
     def __str__(self):
         return f'{self.item.name} @ {self.mode.slug}'
+
+
+class EmojiPlaySession(models.Model):
+    session = models.OneToOneField('games.PlaySession', on_delete=models.CASCADE, related_name='emoji_data')
+    emoji_set_index = models.IntegerField()
+
+    class Meta:
+        unique_together = ('session',)
+
+    def __str__(self):
+        return f"EmojiData: session={self.session_id}, set={self.emoji_set_index}"
+
+
+

@@ -44,6 +44,30 @@ bg-no-repeat bg-cover bg-fixed
 </div>
 
 
+{% if show_mode_switcher %}
+  <div class="flex gap-2 justify-center mb-4">
+    {% for m in available_modes %}
+      <a href="?mode={{ m.slug }}"
+         class="px-4 py-2 rounded-full font-semibold shadow transition
+         {% if mode.slug == m.slug %}bg-yellow-700 text-white{% else %}bg-gray-200 hover:bg-yellow-100 text-yellow-900{% endif %}">
+        {{ m.name|default:m.slug|capfirst }}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+{# ——— EMOJI HINTS (solo modo emoji) ——— #}
+{% if mode.slug == "emoji" and emoji_hint %}
+  <div id="emoji-hints" class="flex justify-center gap-3 mb-4 text-3xl">
+    {% for emoji in emoji_hint %}
+      <span>{{ emoji }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
 {# ——— Título ——— #}
 <section class="container mx-auto text-center drop-shadow">
   <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
@@ -51,6 +75,16 @@ bg-no-repeat bg-cover bg-fixed
     🛡️ {{ game.name }}
   </h1>
 </section>
+
+
+{% if mode.slug == "emoji" and emoji_hint %}
+  <div class="flex justify-center gap-4 my-6">
+    {% for e in emoji_hint %}
+      <span class="text-5xl select-none">{{ e }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
+
 
 {# ——— Flag de victoria (para JS) ——— #}
 {% if won %}

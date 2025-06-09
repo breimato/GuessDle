@@ -45,56 +45,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ───────── 3· envío normal ───────── */
   form?.addEventListener("submit", async e => {
-    e.preventDefault();
-    const res = await fetch(form.action, {
-      method: "POST",
-      headers: { "X-CSRFToken": csrf, "X-Requested-With": "XMLHttpRequest" },
-      body: new FormData(form)
-    });
+      e.preventDefault();
+      const res = await fetch(form.action, {
+        method: "POST",
+        headers: { "X-CSRFToken": csrf, "X-Requested-With": "XMLHttpRequest" },
+        body: new FormData(form)
+      });
 
-    const data = await res.json();
-    if (!res.ok) { alert(data.error || "Error"); return; }
+      const data = await res.json();
+      console.log("Respuesta AJAX:", data); // <-- AQUÍ!
 
-    form.reset();
-    const row = renderAttempt(data.attempt, true);
+      if (!res.ok) { alert(data.error || "Error"); return; }
 
-    // 🔁 actualizar lista de sugerencias
-    const guessInput = document.getElementById("guess");
-    if (guessInput && data.remaining_names) {
-      guessInput.dataset.names = JSON.stringify(data.remaining_names);
-    }
+      form.reset();
+      const row = renderAttempt(data.attempt, true);
 
-
-    if (data.won) {
-      const cells = row.querySelectorAll(".square");
-      const last = cells[cells.length - 1];
-      if (last) {
-        last.addEventListener("animationend", () => {
-          disableForm();
-          launchConfettiSides();
-          showVictoryModal(data.attempt.name);
-        }, { once: true });
-      } else {
-        setTimeout(() => {
-          disableForm();
-          launchConfettiSides();
-          showVictoryModal(data.attempt.name);
-        }, 500);
+      // --- ACTUALIZAR EMOJIS EN MODO EMOJI ---
+      if (data.emoji_hint !== undefined) {
+        const emojiDiv = document.getElementById("emoji-hints");
+        if (emojiDiv) {
+          emojiDiv.innerHTML = data.emoji_hint.map(e => `<span>${e}</span>`).join("");
+        }
       }
 
-      if (IS_CHALLENGE === "true") {
-        const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
-
-        fetch(CHALLENGE_REPORT_URL, {
-          method: "POST",
-          headers: {
-            "X-CSRFToken": CSRF_TOKEN,
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: new URLSearchParams({ attempts: attemptsPlayed }),
-        }).catch(err => console.error("Error al reportar intento:", err));
+      // 🔁 actualizar lista de sugerencias
+      const guessInput = document.getElementById("guess");
+      if (guessInput && data.remaining_names) {
+        guessInput.dataset.names = JSON.stringify(data.remaining_names);
       }
-    }
+
+      if (data.won) {
+          const cells = row.querySelectorAll(".square");
+          const last = cells[cells.length - 1];
+          if (last) {
+            last.addEventListener("animationend", () => {
+              disableForm();
+              launchConfettiSides();
+              showVictoryModal(data.attempt.name);
+            }, { once: true });
+          } else {
+            setTimeout(() => {
+              disableForm();
+              launchConfettiSides();
+              showVictoryModal(data.attempt.name);
+            }, 500);
+          }
+
+          if (IS_CHALLENGE === "true") {
+            const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
+
+            fetch(CHALLENGE_REPORT_URL, {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": CSRF_TOKEN,
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({ attempts: attemptsPlayed }),
+            }).catch(err => console.error("Error al reportar intento:", err));
+          }
+        }
   });
 
   function capitalize(text) {

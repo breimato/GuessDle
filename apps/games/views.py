@@ -14,7 +14,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Challenge
-from apps.games.models import Game, ExtraDailyPlay, GameAttempt
+from apps.games.models import Game, ExtraDailyPlay, GameAttempt, GameMode, PlaySession, PlaySessionType, \
+    EmojiPlaySession
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
@@ -38,23 +39,59 @@ def ajax_guess(request, slug: str):
     game = get_object_or_404(Game, slug=slug)
     user = request.user
 
+    # OJO: lee el modo de la petición (POST o GET)
+    mode_slug = request.GET.get("mode") or request.POST.get("mode") or "classic"
+    available_modes = GameMode.objects.filter(game=game)
+    mode = available_modes.filter(slug=mode_slug).first()
+    if not mode:
+        mode = available_modes.filter(slug="classic").first()
+        mode_slug = mode.slug if mode else "classic"
+
     target_service = TargetService(game, user)
     daily_target = target_service.get_target_for_today()
-
     if not daily_target:
         return JsonResponse({"error": "No hay objetivo diario."}, status=400)
 
-    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+    # Obtener o crear sesión (igual que en play_view)
+    session, _ = PlaySession.objects.get_or_create(
+        user=user,
+        game=game,
+        session_type=PlaySessionType.DAILY,
+        reference_id=daily_target.id,
+    )
+    if session.mode != mode:
+        session.mode = mode
+        session.save(update_fields=["mode"])
+
+    # EmojiPlaySession para emoji
+    if mode.slug == "emoji" and not hasattr(session, "emoji_data"):
+        try:
+            mode_data = daily_target.target.mode_data.get(mode=mode)
+            emoji_hints = mode_data.extra.get("emoji_hints", [])
+            import random
+            emoji_set_index = random.randint(0, len(emoji_hints) - 1) if emoji_hints else 0
+        except Exception:
+            emoji_set_index = 0
+        from apps.games.models import EmojiPlaySession
+        EmojiPlaySession.objects.create(
+            session=session,
+            emoji_set_index=emoji_set_index
+        )
+
+    # Aquí SÍ le pasas la session y el modo al ContextBuilder
+    ctx = ContextBuilder(request, game, daily_target=daily_target, mode=mode_slug, session=session).build()
     if not ctx["can_play"]:
         return JsonResponse({"error": "No puedes jugar más."}, status=403)
 
     valid, correct = GuessProcessor(game, user).process(request, daily_target=daily_target)
+
     if not valid:
         return JsonResponse({"error": "Intento inválido"}, status=400)
 
-    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+    ctx = ContextBuilder(request, game, daily_target=daily_target, mode=mode_slug, session=session).build()
     last_attempt = ctx["attempts"][0]
 
+    # Ahora SÍ devuelves emoji_hint
     return JsonResponse({
         "won": correct,
         "attempt": {
@@ -64,7 +101,9 @@ def ajax_guess(request, slug: str):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(ctx["remaining_names_json"]),
+        "emoji_hint": ctx.get("emoji_hint"),
     })
+
 
 
 # ------------------------------------------------------------------ #
@@ -76,31 +115,72 @@ def ajax_guess(request, slug: str):
 def play_view(request, slug: str):
     game = get_object_or_404(Game, slug=slug)
     user = request.user
+
+    # 1. Modos
+    mode_slug = request.GET.get("mode", "classic")
+    available_modes = GameMode.objects.filter(game=game)
+    mode = available_modes.filter(slug=mode_slug).first()
+    if not mode:
+        mode = available_modes.filter(slug="classic").first()
+        mode_slug = mode.slug if mode else "classic"
+
     target_service = TargetService(game, user)
     daily_target = target_service.get_target_for_today()
 
     if not daily_target:
         messages.error(request, "Todavía no se ha generado el personaje del día.")
-        return render(request, "games/play.html", {"game": game})
+        return render(request, "games/play.html", {
+            "game": game,
+            "available_modes": available_modes,
+            "mode": mode,
+        })
 
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
 
+    # ----------- Sesión y EmojiPlaySession (solo en modo emoji) ------------
+    # Usamos get_or_create para evitar errores de integridad
+    session, created = PlaySession.objects.get_or_create(
+        user=user,
+        game=game,
+        session_type=PlaySessionType.DAILY,
+        reference_id=daily_target.id,
+    )
+    if session.mode != mode:
+        session.mode = mode
+        session.save(update_fields=["mode"])
+
+    if mode.slug == "emoji" and not hasattr(session, "emoji_data"):
+        try:
+            mode_data = daily_target.target.mode_data.get(mode=mode)
+            emoji_hints = mode_data.extra.get("emoji_hints", [])
+            import random
+            emoji_set_index = random.randint(0, len(emoji_hints) - 1) if emoji_hints else 0
+        except Exception:
+            emoji_set_index = 0
+        EmojiPlaySession.objects.create(
+            session=session,
+            emoji_set_index=emoji_set_index
+        )
+
+    # ------------------------ POST -----------------------------
     if request.method == "POST":
-        ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+        ctx = ContextBuilder(request, game, daily_target=daily_target, mode=mode_slug, session=session).build()
         if not ctx["can_play"]:
             if is_ajax:
                 return JsonResponse({"error": "No puedes jugar más."}, status=403)
             messages.error(request, "No puedes jugar más.")
             return render(request, "games/play.html", ctx)
 
-        valid, correct = GuessProcessor(game, user).process(request, daily_target=daily_target)
+        valid, correct = GuessProcessor(game, user).process(
+            request, daily_target=daily_target, mode=mode_slug, session=session
+        )
         if not valid:
             if is_ajax:
                 return JsonResponse({"error": "Intento inválido"}, status=400)
             messages.error(request, "Intento inválido o repetido.")
             return render(request, "games/play.html", ctx)
 
-        ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+        ctx = ContextBuilder(request, game, daily_target=daily_target, mode=mode_slug, session=session).build()
         last_attempt = ctx["attempts"][0]
         if correct:
             ctx["won"] = True
@@ -116,17 +196,26 @@ def play_view(request, slug: str):
                     "guess_image_url": last_attempt.get("guess_image_url"),
                 },
                 "remaining_names": json.loads(ctx["remaining_names_json"]),
+                "emoji_hint": ctx.get("emoji_hint"),
             })
         return render(request, "games/play.html", ctx)
 
-    ctx = ContextBuilder(request, game, daily_target=daily_target).build()
+    # ------------- GET: contexto inicial -------------
+    ctx = ContextBuilder(
+        request, game, daily_target=daily_target, mode=mode_slug, session=session
+    ).build()
     extras_service = ExtraDailyService(user, game)
     ctx.update({
         "slug": game.slug,
         "extra_id": None,
         "max_extras_reached": extras_service.max_reached(),
+        "available_modes": available_modes,
+        "mode": mode,
+        "show_mode_switcher": available_modes.count() > 1,
     })
     return render(request, "games/play.html", ctx)
+
+
 
 
 # ------------------------------------------------------------------ #
