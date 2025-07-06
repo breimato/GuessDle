@@ -1,4 +1,3 @@
-{# …/partials/pending_challenge_card.html #}
 <div
   class="challenge-card p-6 bg-yellow-50/90 border-2 border-yellow-700 rounded-2xl shadow flex flex-col justify-between gap-6"
   data-challenge-id="{{ challenge.id }}"
@@ -16,12 +15,12 @@
     </a>
 
     <button
-  type="button"
-  class="ajax-delete flex items-center gap-2 bg-red-50 border border-red-400
-         text-red-700 font-semibold px-4 py-2 rounded-full shadow transition
-         hover:bg-red-600 hover:text-white hover:border-red-600
-         focus:outline-none focus:ring-2 focus:ring-red-200"
-  data-url="{% url 'rechazar_challenge' challenge.id %}">
+      type="button"
+      class="ajax-delete flex items-center gap-2 bg-red-50 border border-red-400
+             text-red-700 font-semibold px-4 py-2 rounded-full shadow transition
+             hover:bg-red-600 hover:text-white hover:border-red-600
+             focus:outline-none focus:ring-2 focus:ring-red-200"
+      data-url="{% url 'reject_challenge' challenge.id %}">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
