@@ -1,12 +1,11 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, date
 from apps.games.models import Game, DailyTarget, GameItem
 import secrets
 
-
 class Command(BaseCommand):
-    help = "Genera los DailyTarget de hoy y mañana (normal + equipo) para todos los juegos activos."
+    help = "Genera los DailyTarget para todos los días del año (normal + equipo) para todos los juegos activos."
 
     def create_target_for_date(self, game, date, is_team):
         exists = DailyTarget.objects.filter(game=game, date=date, is_team=is_team).exists()
@@ -33,18 +32,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         today = timezone.localtime().date()
-        tomorrow = today + timedelta(days=1)
-
-        created_today = 0
-        created_tomorrow = 0
+        end_of_year = date(today.year, 12, 31)
+        total_created = 0
 
         for game in Game.objects.filter(active=True):
             for is_team in [False, True]:
-                if self.create_target_for_date(game, today, is_team):
-                    created_today += 1
-                if self.create_target_for_date(game, tomorrow, is_team):
-                    created_tomorrow += 1
+                current_day = today
+                while current_day <= end_of_year:
+                    if self.create_target_for_date(game, current_day, is_team):
+                        total_created += 1
+                    current_day += timedelta(days=1)
 
-        self.stdout.write(self.style.SUCCESS(
-            f"✅ Targets generados: hoy={created_today}, mañana={created_tomorrow}"
-        ))
+        self.stdout.write(self.style.SUCCESS(f"Total DailyTargets creados: {total_created}"))
