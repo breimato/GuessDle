@@ -148,7 +148,7 @@ class DashboardStats:
         """
         sessions = (
             PlaySession.objects
-            .filter(user=user)
+            .filter(user=user, game__active=True)
             .annotate(num_attempts=Count("attempts"))
             .filter(num_attempts__gt=0)
         )
@@ -159,7 +159,7 @@ class DashboardStats:
         Returns the count of sessions (for a user, optionally filtered by game)
         that have at least one correct attempt.
         """
-        qs = PlaySession.objects.filter(user=user)
+        qs = PlaySession.objects.filter(user=user, game__active=True)
         if game is not None:
             qs = qs.filter(game=game)
         return (
