@@ -1321,3 +1321,10 @@ body, html {
 
 
 
+.attempts-scroll-wrapper .header-cell {
+  margin: 0.15em 0.1em;
+}
+
+#attempts-container .attempt-row {
+  margin-top: 0.6em; /* o lo que prefieras */
+}
