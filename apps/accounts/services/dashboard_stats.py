@@ -47,7 +47,7 @@ class DashboardStats:
         """
         Returns the total ELO points the user has accumulated across all games.
         """
-        records = GameElo.objects.filter(user=self.user)
+        records = GameElo.objects.filter(user=self.user, game__active=True)
         return sum(r.elo for r in records)
 
     def ranking_global(self):
