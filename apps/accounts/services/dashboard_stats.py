@@ -60,6 +60,7 @@ class DashboardStats:
         User = get_user_model()
         users_qs = (
             GameElo.objects
+            .filter(game__active=True)
             .values("user__username", "user_id")
             .annotate(total_points=Sum("elo"))
         )
