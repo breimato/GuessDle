@@ -14,7 +14,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  /* ────── helper: gap según columnas ────── */
+  /* ────── gap y columnas (anchas solo si hace falta) ────── */
+  const DEFAULT_CELL = 110;
+  const MAX_WIDE_CELL = 300;
+  const CELL_PAD = 38;
+  const BOARD_FONT = "600 0.875rem Rubik, sans-serif";
+
+  let columnWidths = null;
+  let measureEl = null;
+
+  function getMeasureEl() {
+    if (!measureEl) {
+      measureEl = document.createElement("span");
+      measureEl.className = "square-text board-measure-probe";
+      measureEl.setAttribute("aria-hidden", "true");
+      Object.assign(measureEl.style, {
+        position: "absolute",
+        visibility: "hidden",
+        whiteSpace: "nowrap",
+        pointerEvents: "none",
+        left: "-9999px",
+        top: "0",
+        font: BOARD_FONT,
+      });
+      document.body.appendChild(measureEl);
+    }
+    return measureEl;
+  }
+
+  function measureText(text) {
+    const el = getMeasureEl();
+    el.textContent = String(text ?? "");
+    return el.getBoundingClientRect().width;
+  }
+
+  function stripArrow(text) {
+    return String(text ?? "").replace(/[▲▼]/g, "").trim();
+  }
+
+  function isSingleToken(text) {
+    const clean = stripArrow(text);
+    return Boolean(clean) && !/\s/.test(clean);
+  }
+
+  function widthForCellValue(text) {
+    const display = String(text ?? "").trim();
+    if (!isSingleToken(display)) return DEFAULT_CELL;
+
+    const needed = Math.ceil(measureText(display) + CELL_PAD);
+    if (needed <= DEFAULT_CELL) return DEFAULT_CELL;
+    return Math.min(MAX_WIDE_CELL, needed);
+  }
+
+  function getFeedbackCount() {
+    const firstRow = cont?.querySelector(".attempt-row");
+    if (firstRow) return firstRow.querySelectorAll(".square").length - 1;
+    const cols = parseInt(header?.dataset.cols, 10);
+    return Number.isFinite(cols) && cols > 1 ? cols - 1 : 0;
+  }
+
+  function ensureColumnWidths(colCount) {
+    if (!columnWidths || columnWidths.length !== colCount) {
+      columnWidths = new Array(colCount).fill(DEFAULT_CELL);
+    }
+    return columnWidths;
+  }
+
+  function rebuildColumnWidthsFromDom(feedbackCount) {
+    const widths = ensureColumnWidths(feedbackCount + 1);
+    widths.fill(DEFAULT_CELL);
+
+    document.querySelectorAll(".attempt-row").forEach(row => {
+      row.querySelectorAll(".square").forEach((cell, idx) => {
+        if (idx === 0) return;
+        widths[idx] = Math.max(widths[idx], widthForCellValue(cell.textContent || ""));
+      });
+    });
+
+    return widths;
+  }
+
+  function buildGridTemplate(feedbackCount) {
+    const widths = rebuildColumnWidthsFromDom(feedbackCount);
+    return widths.map(w => `${w}px`).join(" ");
+  }
+
+  function applyBoardGrid(feedbackCount) {
+    const template = buildGridTemplate(feedbackCount);
+    const gap = calcGap(feedbackCount + 1);
+    if (header) {
+      header.style.gridTemplateColumns = template;
+      header.style.gap = gap;
+    }
+    document.querySelectorAll(".attempt-row").forEach(row => {
+      row.style.gridTemplateColumns = template;
+      row.style.gap = gap;
+    });
+    return { template, gap };
+  }
+
   function calcGap(cols) {
     if (cols <= 4) return "10px";
     if (cols <= 6) return "8px";
@@ -29,7 +127,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       JSON.parse(initJSON.textContent)
         .reverse()
-        .forEach(a => renderAttempt(a, false));   // sin animación
+        .forEach(a => renderAttempt(a, false));
+      document.fonts?.ready?.then(() => applyBoardGrid(getFeedbackCount()));
     } catch (e) { console.error("Historial parse:", e); }
   }
 
@@ -235,16 +334,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return text.replace(/\b\w/g, char => char.toUpperCase());
   }
 
+  function wrapCellText(html) {
+    const single = isSingleToken(html);
+    const cls = single ? "square-text square-text--single" : "square-text";
+    return `<span class="${cls}">${html}</span>`;
+  }
+
   /* ───────── render intento ───────── */
   function renderAttempt({ name, icon, feedback, guess_image_url }, animate = true) {
-    const cols = feedback.length + 1;
-    const gap = calcGap(cols);
-
     const row = document.createElement("div");
     row.className = "attempt-row";
     row.style.display = "grid";
-    row.style.gridTemplateColumns = `repeat(${cols}, var(--cell))`;
-    row.style.gap = gap;
 
     // Lógica para la celda del personaje/ítem
     let characterCellHtml = "";
@@ -268,17 +368,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }));
 
     feedback.forEach(fb => row.append(makeCell({
-      state: fb, html: `${fb.value}${fb.arrow || ""}`
+      state: fb, html: wrapCellText(`${fb.value ?? ""}${fb.arrow || ""}`)
     })));
 
     cont.prepend(row);
+    applyBoardGrid(feedback.length);
 
-    /* cabecera la primera vez */
     if (header) {
-      header.classList.remove("hidden");             // por si estaba oculta
+      header.classList.remove("hidden");
       header.style.display = "grid";
-      header.style.gridTemplateColumns = row.style.gridTemplateColumns;
-      header.style.gap = gap;
     }
 
     /* animación flip */

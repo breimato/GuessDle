@@ -10,13 +10,13 @@
 @source "../templates/**/*.html";
 
 .square {
-  @apply flex items-center justify-center border-[3px] h-14 md:h-16 font-semibold text-sm text-center;
+  @apply flex items-center justify-center border-[3px] font-semibold text-sm text-center;
   font-family: var(--font-ui, 'Rubik', sans-serif);
   border-color: #111;
   border-radius: 0;
-  width: var(--cell, 110px);
+  width: 100%;
+  min-width: 0;
   height: var(--cell, 110px);
-  min-width: var(--cell, 110px);
   min-height: var(--cell, 110px);
   overflow: hidden;
 }
@@ -42,7 +42,26 @@
 .square.show.square-superior { background: #2e6da4; color: #fff; border-color: #111; }
 .square.show.square--static  { background: var(--cab-panel, #d4c4a8); color: var(--cab-ink, #1a1a1a); border-color: #111; }
 
-.square-content  { @apply w-full h-full flex items-center justify-center p-1; }
+.square-content  {
+  @apply w-full h-full flex items-center justify-center p-1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.square-text {
+  display: block;
+  max-width: 100%;
+  line-height: 1.15;
+  text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.square-text--single {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-wrap: normal;
+}
 .champion-icon-name {
   @apply text-xs mt-1;
   font-family: var(--font-ui, 'Rubik', sans-serif);
