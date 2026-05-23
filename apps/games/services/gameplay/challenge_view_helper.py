@@ -1,7 +1,14 @@
 """Helper class to handle request-based views operations for challenge management."""
 
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+
+from apps.accounts.models import Challenge
+from apps.games.models import Game
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
+from apps.games.services.gameplay.target_service import TargetService
 
 
 class ChallengeViewHelper:
@@ -55,3 +62,67 @@ class ChallengeViewHelper:
             and not self.challenge.completed
         ):
             self.challenge_manager.calculate_winner()
+
+    @staticmethod
+    def create_challenge(request):
+        """Parse POST parameters and create a new pending challenge with a random target item."""
+
+        if request.method != "POST":
+            return None, "Invalid method"
+
+        opponent_id = request.POST.get("opponent")
+        game_id = request.POST.get("game")
+
+        if not opponent_id or not game_id:
+            return None, "Missing parameters"
+
+        try:
+            opponent = get_object_or_404(User, pk=opponent_id)
+            game = get_object_or_404(Game, pk=game_id)
+        except Exception:
+            return None, "Opponent or game does not exist"
+
+        with transaction.atomic():
+            target = TargetService(game, request.user).get_random_item()
+            challenge = Challenge.objects.create(
+                challenger=request.user,
+                opponent=opponent,
+                game=game,
+                target=target
+            )
+
+        return challenge, None
+
+    @staticmethod
+    def cancel_challenge(request, challenge_id):
+        """Cancel a pending challenge created by the current user."""
+
+        challenge = Challenge.objects.filter(
+            id=challenge_id,
+            challenger=request.user,
+            accepted=False,
+            completed=False
+        ).first()
+
+        if not challenge:
+            return False
+
+        challenge.delete()
+        return True
+
+    @staticmethod
+    def reject_challenge(request, challenge_id):
+        """Reject a pending challenge received by the current user."""
+
+        challenge = Challenge.objects.filter(
+            id=challenge_id,
+            opponent=request.user,
+            accepted=False,
+            completed=False
+        ).first()
+
+        if not challenge:
+            return False
+
+        challenge.delete()
+        return True

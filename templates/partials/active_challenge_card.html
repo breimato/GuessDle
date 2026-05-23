@@ -1,8 +1,8 @@
-{# tarjeta de reto activo #}
+{# Active challenge card #}
 <div class="bg-amber-100/90 border-2 border-yellow-800 rounded-2xl shadow
             px-4 py-3 flex flex-col items-center gap-1 w-full">
 
-  {# ─── Cabecera ─── #}
+  {# ─── Header ─── #}
   <div class="flex items-center gap-1 leading-none">
     <span class="text-yellow-700">⚔️</span>
     <span class="text-sm font-semibold text-yellow-900" style="font-family:var(--font-lol);">
@@ -14,12 +14,12 @@
     </span>
   </div>
 
-  {# Juego #}
+  {# Game #}
   <div class="text-xs font-semibold text-yellow-900 mb-1">
-    Juego: <span class="font-semibold">{{ challenge.game.name }}</span>
+    Game: <span class="font-semibold">{{ challenge.game.name }}</span>
   </div>
 
-  {# ─── Acción / Estado ─── #}
+  {# ─── Action / State ─── #}
   {% if user == challenge.challenger and challenge.challenger_attempts == None %}
     <a href="{% url 'play_challenge' challenge.id %}"
        class="mt-1 flex items-center gap-1 bg-yellow-700 hover:bg-yellow-800 text-white
@@ -35,7 +35,7 @@
   {% else %}
     <div class="mt-1 w-full flex items-center justify-center gap-1 bg-yellow-200/60
                 rounded-full px-3 py-1 text-xs font-semibold text-yellow-900">
-      ⏳ Esperando rival…
+      ⏳ Esperando al rival…
     </div>
   {% endif %}
 </div>

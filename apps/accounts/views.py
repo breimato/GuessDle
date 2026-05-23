@@ -1,4 +1,3 @@
-
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import JsonResponse
@@ -6,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
-from django.db import models, transaction
+from django.db import models
 from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -17,44 +16,21 @@ from django.template.loader import render_to_string
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
-from apps.accounts.services.score_service import ScoreService
-from apps.games.models import Game, ExtraDailyPlay, GameAttempt
+from apps.games.models import ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
-from apps.games.services.gameplay.play_session_service import PlaySessionService
+from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
+from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 from apps.common.utils import json_success, json_error
+
 
 @login_required
 @csrf_protect
 def create_challenge(request):
+    """Create a new 1v1 challenge via POST request."""
 
-    if request.method != "POST":
-        return json_error("Método no permitido", 405)
-
-    opponent_id = request.POST.get("opponent")
-    game_id     = request.POST.get("game")
-
-    opponent = get_object_or_404(User, pk=opponent_id)
-    game     = get_object_or_404(Game, pk=game_id)
-
-    exists = Challenge.objects.filter(
-        challenger=request.user,
-        opponent=opponent,
-        game=game,
-        accepted=False,
-        completed=False
-    ).exists()
-
-    if exists:
-        return json_error("Ese reto ya existe")
-
-    with transaction.atomic():
-        target = TargetService(game, request.user).get_random_item()
-        challenge = Challenge.objects.create(
-            challenger=request.user,
-            opponent=opponent,
-            game=game,
-            target=target
-        )
+    challenge, error_message = ChallengeViewHelper.create_challenge(request)
+    if error_message:
+        return json_error(error_message)
 
     card_html = render_to_string(
         "partials/sent_challenge_card.html",
@@ -69,14 +45,9 @@ def create_challenge(request):
 def cancel_challenge(request, challenge_id):
     """Cancel a pending challenge created by the user."""
 
-    challenge = get_object_or_404(
-        Challenge,
-        id=challenge_id,
-        challenger=request.user,
-        accepted=False,
-        completed=False
-    )
-    challenge.delete()
+    is_cancelled = ChallengeViewHelper.cancel_challenge(request, challenge_id)
+    if not is_cancelled:
+        return json_error("Could not cancel challenge")
     return json_success({"id": challenge_id})
 
 
@@ -85,20 +56,16 @@ def cancel_challenge(request, challenge_id):
 def reject_challenge(request, challenge_id):
     """Reject a pending challenge received by the user."""
 
-    challenge = get_object_or_404(
-        Challenge,
-        id=challenge_id,
-        opponent=request.user,
-        accepted=False,
-        completed=False
-    )
-    challenge.delete()
+    is_rejected = ChallengeViewHelper.reject_challenge(request, challenge_id)
+    if not is_rejected:
+        return json_error("Could not reject challenge")
     return json_success({"id": challenge_id})
 
 
 @never_cache
 @login_required
 def dashboard_view(request):
+    """Render the main statistics dashboard for the authenticated user."""
 
     stats = DashboardStats(request.user)
     users = User.objects.exclude(id=request.user.id)
@@ -108,11 +75,9 @@ def dashboard_view(request):
         accepted=True,
         completed=False
     ).filter(models.Q(challenger=request.user) | models.Q(opponent=request.user))
-
     active_challenges_to_play = Challenge.objects.filter(
         accepted=True,
-        completed=False
-    ).filter(
+        completed=False,
         challenger=request.user
     )
 
@@ -122,10 +87,11 @@ def dashboard_view(request):
         completed=False
     )
 
+    today = now().date()
     active_extras = ExtraDailyPlay.objects.filter(
         user=request.user,
         completed=False,
-        created_at__date=now().date()
+        created_at__date=today
     ).select_related('game')
 
     extras_by_slug = {extra.game.slug: extra.id for extra in active_extras}
@@ -137,13 +103,10 @@ def dashboard_view(request):
     }
 
     for game in available_games:
-
         if daily_targets_by_slug.get(game.slug):
             game.redirect_url = reverse("play", args=[game.slug])
-
         elif game.slug in extras_by_slug:
             game.redirect_url = reverse("play_extra_daily", args=[extras_by_slug[game.slug]])
-
         else:
             game.redirect_url = reverse("play", args=[game.slug])
 
@@ -166,6 +129,7 @@ def dashboard_view(request):
 
 
 def register_view(request):
+    """Handle new user registration via standard form submission."""
 
     if request.method != "POST":
         return render(request, "accounts/register.html")
@@ -173,31 +137,31 @@ def register_view(request):
     username = request.POST.get("username")
     first_name = request.POST.get("first_name")
     email = request.POST.get("email")
-    password = request.POST.get("password")
-    repeated_password = request.POST.get("repeated_password")
+    password = request.POST.get("password1")
+    confirm_password = request.POST.get("password2")
     is_team_account = request.POST.get("is_team_account") == "on"
 
-    for field in [username, first_name, email, password, repeated_password]:
+    for field in [username, first_name, email, password, confirm_password]:
         if not field or field.strip() == "":
-            messages.error(request, "Todos los campos son obligatorios.")
+            messages.error(request, "All fields are required.")
             return render(request, "accounts/register.html")
 
     try:
         validate_email(email)
     except ValidationError:
-        messages.error(request, "El email no tiene un formato válido.")
+        messages.error(request, "Invalid email format.")
         return render(request, "accounts/register.html")
 
-    if password != repeated_password:
-        messages.error(request, "Las contraseñas no coinciden.")
+    if password != confirm_password:
+        messages.error(request, "Passwords do not match.")
         return render(request, "accounts/register.html")
 
     if User.objects.filter(username=username).exists():
-        messages.error(request, "Este nickname ya está en uso.")
+        messages.error(request, "This nickname is already taken.")
         return render(request, "accounts/register.html")
 
     if User.objects.filter(email=email).exists():
-        messages.error(request, "Ya existe una cuenta con este email.")
+        messages.error(request, "There is already an account with this email.")
         return render(request, "accounts/register.html")
 
     user = User.objects.create_user(
@@ -210,43 +174,41 @@ def register_view(request):
     user.profile.is_team_account = is_team_account
     user.profile.save()
 
-    messages.success(request, "¡Registro completado! Ahora inicia sesión.")
+    messages.success(request, "Registration complete! Please log in.")
     return redirect("login")
 
 
 @login_required
 @csrf_protect
 def complete_challenge(request, challenge_id):
+    """Complete a challenge and resolve point allocations."""
 
     challenge = get_object_or_404(Challenge, pk=challenge_id, accepted=True, completed=False)
+    result = ChallengeResolutionService(challenge, acting_user=request.user).resolve_and_assign_points()
 
-    session_winner = PlaySessionService.get_or_create(
-        request.user,
-        challenge.game,
-        challenge=challenge
-    )
-
-    attempts_winner = GameAttempt.objects.filter(session=session_winner).count()
-
-    score_winner = ScoreService(request.user, challenge.game)
-    points_awarded = score_winner.add_points_for_attempts(attempts_winner)
-
-    challenge.completed = True
-    challenge.winner = request.user
-    challenge.save()
-
-    return JsonResponse({
-        "status": "success",
-        "winner": request.user.username,
-        "points_awarded": points_awarded,
-    })
+    if result["status"] == "already-resolved":
+        return JsonResponse({"status": "already-resolved"})
+    if result["status"] == "tie":
+        return JsonResponse({
+            "status": "tie",
+            "users": [user.username for user in result["users"]],
+        })
+    if result["status"] == "winner":
+        return JsonResponse({
+            "status": "success",
+            "winner": result["winner"].username,
+            "loser": result["loser"].username,
+        })
+    return JsonResponse({"status": "error"})
 
 
 class LoginView(DjangoLoginView):
+    """Custom LoginView that supports 'Remember Me' sessions."""
 
     template_name = "registration/login.html"
 
     def form_valid(self, form):
+        """Configure session expiry when the login form is successfully submitted."""
 
         response = super().form_valid(form)
         remember_me = self.request.POST.get('remember_me')

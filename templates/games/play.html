@@ -98,15 +98,56 @@ bg-no-repeat bg-cover bg-fixed
 <div class="attempts-scroll-wrapper">
   <div id="attempts-header"
        {% if attempts %}class="header-grid"{% else %}class="header-grid" style="display:none;"{% endif %}
-       data-cols="{{ game.attributes|length|add:'1' }}">
-    <div class="header-cell">Personaje</div>
+       data-cols="{{ game.attributes|length|add:'1' }}"
+       style="margin-bottom: 1.2em;">
+    <div class="header-cell"
+         style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(24,24,28,0.88);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-shadow: 0 0 3px {{ game.color }}, 0 1px 2px #000A;
+            border-radius: 0.5em;
+            box-shadow: 0 1px 4px #0002;
+            padding: 0.18em 0.6em;
+            margin: 0.15em 0.1em;
+            letter-spacing: 0.01em;
+            width: 100%;
+            height: 100%;
+         ">
+      Personaje
+    </div>
     {% for attr in game.attributes %}
-      <div class="header-cell">{{ attr|title }}</div>
+      <div class="header-cell"
+           style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: rgba(24,24,28,0.88);
+              color: #fff;
+              font-size: 0.9rem;
+              font-weight: 600;
+              text-shadow: 0 0 3px {{ game.color }}, 0 1px 2px #000A;
+              border-radius: 0.5em;
+              box-shadow: 0 1px 4px #0002;
+              padding: 0.18em 0.6em;
+              margin: 0.15em 0.1em;
+              letter-spacing: 0.01em;
+              width: 100%;
+              height: 100%;
+           ">
+        {{ attr|title }}
+      </div>
     {% endfor %}
   </div>
 
   <div id="attempts-container"></div>
 </div>
+
+
 
 {# ——— HISTORIAL JSON ——— #}
 {% if attempts %}

@@ -1,5 +1,5 @@
 from collections import defaultdict
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Q
 
 from apps.accounts.models import GameElo
 from apps.games.models import Game, PlaySession
@@ -42,9 +42,9 @@ class DashboardStats:
         return sorted(dashboard_statistics, key=lambda s: s["points"], reverse=True)
 
     def calculate_global_elo_score(self):
-        """Calculate the total accumulated ELO points for the user across all games."""
+        """Calculate the total accumulated ELO points for the user across all active games."""
 
-        game_elo_records = GameElo.objects.filter(user=self.user)
+        game_elo_records = GameElo.objects.filter(user=self.user, game__active=True)
         global_elo_score = sum(record.elo for record in game_elo_records)
         return global_elo_score
 
@@ -57,39 +57,37 @@ class DashboardStats:
         ranking_rows = []
         for record in global_rankings_query:
             user_id = record["user_id"]
-            games_played_count, global_attempts_average = user_session_statistics_mapping.get(user_id, (0, None))
+            games_finished, global_attempts_average = user_session_statistics_mapping.get(user_id, (0, None))
 
             ranking_rows.append({
                 "username": record["user__username"],
                 "points": record["total_points"] or 0,
-                "games_played": games_played_count,
-                "average": global_attempts_average,
+                "games_finished": games_finished,
+                "average_attempts": global_attempts_average,
             })
 
         return sorted(ranking_rows, key=lambda x: (-x["points"], x["username"]))
 
     def generate_ranking_per_game(self):
-        """Generate leaderboards for each individual game, showing points, games played, and average attempts."""
+        """Generate leaderboards for each individual game, showing points, games finished, and average attempts."""
 
         session_statistics_mapping = self._calculate_per_game_session_stats()
-        game_elos = GameElo.objects.select_related("user", "game")
+        game_elos = GameElo.objects.select_related("user", "game").filter(game__active=True)
 
         game_rankings = {}
         for game in self.fetch_active_games():
             game_rankings[game.slug] = []
 
         for game_elo in game_elos:
-            if not game_elo.game.active:
-                continue
-            games_played_count, attempts_average = session_statistics_mapping.get(
+            games_finished, attempts_average = session_statistics_mapping.get(
                 (game_elo.game_id, game_elo.user_id), (0, None)
             )
             game_rankings[game_elo.game.slug].append(
                 {
                     "username": game_elo.user.username,
                     "points": game_elo.elo,
-                    "average": attempts_average,
-                    "games_played": games_played_count,
+                    "average_attempts": attempts_average,
+                    "games_finished": games_finished,
                 }
             )
 
@@ -128,48 +126,78 @@ class DashboardStats:
         return {item['game_id']: item['elo'] for item in game_elos}
 
     def _fetch_global_rankings(self):
-        """Fetch total points query grouped by user."""
+        """Fetch total points query grouped by user for active games."""
 
-        return GameElo.objects.values("user__username", "user_id").annotate(
-            total_points=Sum("elo")
+        return (
+            GameElo.objects.filter(game__active=True)
+            .values("user__username", "user_id")
+            .annotate(total_points=Sum("elo"))
         )
 
     def _calculate_global_session_stats(self):
-        """Calculate games played count and average attempts for all users across their sessions."""
+        """Calculate games finished count and average attempts for all users across their sessions."""
 
         all_play_sessions = (
-            PlaySession.objects.annotate(num_attempts=Count('attempts'))
-            .values('user_id', 'num_attempts')
+            PlaySession.objects.filter(game__active=True)
+            .annotate(
+                num_attempts=Count('attempts'),
+                correct_count=Count('attempts', filter=Q(attempts__is_correct=True))
+            )
+            .values('user_id', 'num_attempts', 'correct_count')
         )
-        
-        attempts_by_user = defaultdict(list)
+
+        attempts_by_user = defaultdict(int)
+        finished_by_user = defaultdict(int)
+
         for session_item in all_play_sessions:
+            user_id = session_item['user_id']
             attempts_count = session_item['num_attempts']
+            correct_count = session_item['correct_count']
+
             if attempts_count > 0:
-                attempts_by_user[session_item['user_id']].append(attempts_count)
-                
+                attempts_by_user[user_id] += attempts_count
+            if correct_count > 0:
+                finished_by_user[user_id] += 1
+
         user_session_statistics_mapping = {}
-        for user_id, attempts in attempts_by_user.items():
-            user_session_statistics_mapping[user_id] = (len(attempts), sum(attempts) / len(attempts))
-        
+        for user_id in set(list(attempts_by_user.keys()) + list(finished_by_user.keys())):
+            total_att = attempts_by_user[user_id]
+            fin_count = finished_by_user[user_id]
+            avg_att = (total_att / fin_count) if fin_count > 0 else None
+            user_session_statistics_mapping[user_id] = (fin_count, avg_att)
+
         return user_session_statistics_mapping
 
     def _calculate_per_game_session_stats(self):
         """Calculate session statistics mapped by (game_id, user_id)."""
 
         all_play_sessions = (
-            PlaySession.objects.annotate(num_attempts=Count('attempts'))
-            .values('game_id', 'user_id', 'num_attempts')
+            PlaySession.objects.filter(game__active=True)
+            .annotate(
+                num_attempts=Count('attempts'),
+                correct_count=Count('attempts', filter=Q(attempts__is_correct=True))
+            )
+            .values('game_id', 'user_id', 'num_attempts', 'correct_count')
         )
-        
-        attempts_by_game_and_user = defaultdict(list)
+
+        attempts_by_game_and_user = defaultdict(int)
+        finished_by_game_and_user = defaultdict(int)
+
         for session_item in all_play_sessions:
+            key = (session_item['game_id'], session_item['user_id'])
             attempts_count = session_item['num_attempts']
+            correct_count = session_item['correct_count']
+
             if attempts_count > 0:
-                attempts_by_game_and_user[(session_item['game_id'], session_item['user_id'])].append(attempts_count)
-                
+                attempts_by_game_and_user[key] += attempts_count
+            if correct_count > 0:
+                finished_by_game_and_user[key] += 1
+
         session_statistics_mapping = {}
-        for key, attempts in attempts_by_game_and_user.items():
-            session_statistics_mapping[key] = (len(attempts), sum(attempts) / len(attempts))
-            
+        for key in set(list(attempts_by_game_and_user.keys()) + list(finished_by_game_and_user.keys())):
+            total_att = attempts_by_game_and_user[key]
+            fin_count = finished_by_game_and_user[key]
+            avg_att = (total_att / fin_count) if fin_count > 0 else None
+            session_statistics_mapping[key] = (fin_count, avg_att)
+
         return session_statistics_mapping

@@ -1,7 +1,15 @@
 from django.urls import path
-from .views import LoginView, cancel_challenge, dashboard_view, reject_challenge, register_view, complete_challenge, create_challenge
 from django.contrib.auth import views as auth_views
 
+from .views import (
+    LoginView,
+    cancel_challenge,
+    dashboard_view,
+    reject_challenge,
+    register_view,
+    complete_challenge,
+    create_challenge,
+)
 from ..games.views import play_challenge_game, process_challenge_guess
 
 urlpatterns = [
@@ -12,15 +20,12 @@ urlpatterns = [
     path("password_reset/", auth_views.PasswordResetView.as_view(
         template_name="accounts/password_reset_form.html"
     ), name="password_reset"),
-
     path("password_reset/done/", auth_views.PasswordResetDoneView.as_view(
         template_name="accounts/password_reset_done.html"
     ), name="password_reset_done"),
-
     path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(
         template_name="accounts/password_reset_confirm.html"
     ), name="password_reset_confirm"),
-
     path("reset/done/", auth_views.PasswordResetCompleteView.as_view(
         template_name="accounts/password_reset_complete.html"
     ), name="password_reset_complete"),
@@ -30,5 +35,4 @@ urlpatterns = [
     path("challenges/<int:challenge_id>/guess/", process_challenge_guess, name="ajax_guess_challenge"),
     path("challenge/<int:challenge_id>/reject/", reject_challenge, name="reject_challenge"),
     path("challenge/<int:challenge_id>/cancel/", cancel_challenge, name="cancel_challenge"),
-
 ]
