@@ -218,3 +218,42 @@ class PlayerStatsServiceTests(TestCase):
         self.assertEqual(canonical["points"], 120)
         self.assertEqual(canonical["games_finished"], 1)
         self.assertEqual(canonical["average_attempts"], 2.0)
+
+
+class PasswordResetEmailTests(TestCase):
+    """Tests for password reset email delivery."""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="resetuser",
+            email="reset@example.com",
+            password="password123",
+        )
+
+    def test_password_reset_sends_email_with_reset_link(self):
+        from django.core import mail
+
+        with self.settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend"):
+            response = self.client.post(
+                reverse("password_reset"),
+                {"email": "reset@example.com"},
+            )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("password_reset_done"))
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("Recuperar contraseña en GuessDle", mail.outbox[0].subject)
+        self.assertIn("/accounts/reset/", mail.outbox[0].body)
+
+    def test_password_reset_unknown_email_still_redirects(self):
+        from django.core import mail
+
+        with self.settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend"):
+            response = self.client.post(
+                reverse("password_reset"),
+                {"email": "unknown@example.com"},
+            )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(mail.outbox), 0)

@@ -51,6 +51,31 @@ Accede a la aplicación en:
 http://localhost:8000
 ```
 
+---
+
+## Correo y recuperación de contraseña (producción)
+
+En producción el archivo `.env` **no se despliega** (está en `.gitignore`). Debes definir las variables de entorno en el contenedor o servidor. Copia [`.env.example`](.env.example) como referencia.
+
+Variables mínimas:
+
+```env
+EMAIL_HOST_USER=tu-cuenta@dominio.com
+EMAIL_HOST_PASSWORD=contraseña-o-app-password
+DEFAULT_FROM_EMAIL=GuessDle <tu-cuenta@dominio.com>
+ALLOWED_HOSTS=tudominio.com
+CSRF_TRUSTED_ORIGINS=https://tudominio.com
+USE_X_FORWARDED_HOST=True
+```
+
+Para verificar SMTP dentro del contenedor:
+
+```bash
+python manage.py send_test_email tu@email.com
+```
+
+Si Gmail bloquea el envío desde el servidor, usa un proveedor transaccional (Brevo, Resend, SendGrid) cambiando `EMAIL_HOST`, `EMAIL_PORT` y las credenciales.
+
 ________
 
 # 🎮 GuessDle

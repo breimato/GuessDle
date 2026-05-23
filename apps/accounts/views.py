@@ -1,18 +1,21 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.timezone import now
 from django.views.decorators.cache import never_cache
 from django.contrib import messages
 from django.db import models
 from django.contrib.auth.views import LoginView as DjangoLoginView
+from django.contrib.auth.views import PasswordResetView as DjangoPasswordResetView
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.template.loader import render_to_string
+from django.conf import settings
+import logging
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
@@ -22,6 +25,35 @@ from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 from apps.common.utils import json_success, json_error
+
+logger = logging.getLogger(__name__)
+
+
+class PasswordResetView(DjangoPasswordResetView):
+    """Password reset with custom templates and SMTP error logging."""
+
+    template_name = "accounts/password_reset_form.html"
+    email_template_name = "registration/password_reset_email.txt"
+    html_email_template_name = "registration/password_reset_email.html"
+    subject_template_name = "registration/password_reset_subject.txt"
+    success_url = reverse_lazy("password_reset_done")
+
+    def form_valid(self, form):
+        opts = {
+            "use_https": self.request.is_secure(),
+            "token_generator": self.token_generator,
+            "from_email": settings.DEFAULT_FROM_EMAIL or None,
+            "email_template_name": self.email_template_name,
+            "subject_template_name": self.subject_template_name,
+            "request": self.request,
+            "html_email_template_name": self.html_email_template_name,
+            "extra_email_context": self.extra_email_context,
+        }
+        try:
+            form.save(**opts)
+        except Exception:
+            logger.exception("Failed to send password reset email")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 @login_required

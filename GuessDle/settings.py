@@ -1,19 +1,26 @@
 from pathlib import Path
 from dotenv import load_dotenv
+import logging
 import os
 
 # Cargar variables desde el archivo .env
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
+logger = logging.getLogger(__name__)
+
 # Seguridad
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h.strip()]
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]
 
 CSRF_COOKIE_SECURE   = True
 SESSION_COOKIE_SECURE = True
+
+USE_X_FORWARDED_HOST = os.getenv("USE_X_FORWARDED_HOST", "False") == "True"
+if USE_X_FORWARDED_HOST:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 ROOT_URLCONF = 'GuessDle.urls'
 
@@ -27,13 +34,41 @@ LOGIN_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Email
-EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.getenv("EMAIL_HOST", 'smtp.gmail.com')
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "False") == "True"
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "")
+SERVER_EMAIL = os.getenv("SERVER_EMAIL", DEFAULT_FROM_EMAIL)
+PASSWORD_RESET_TIMEOUT = int(os.getenv("PASSWORD_RESET_TIMEOUT", 86400))
+
+
+def validate_email_settings():
+    """Log warnings when email is misconfigured (common in production)."""
+    if EMAIL_BACKEND.endswith("console.EmailBackend"):
+        if not DEBUG:
+            logger.warning("EMAIL_BACKEND is console — password reset emails will not be sent in production.")
+        return
+
+    missing = [
+        name for name, value in (
+            ("EMAIL_HOST_USER", EMAIL_HOST_USER),
+            ("EMAIL_HOST_PASSWORD", EMAIL_HOST_PASSWORD),
+            ("DEFAULT_FROM_EMAIL", DEFAULT_FROM_EMAIL),
+        )
+        if not value
+    ]
+    if missing and not DEBUG:
+        logger.error(
+            "Email not configured for production. Missing: %s. Password reset will fail silently.",
+            ", ".join(missing),
+        )
+
+
+validate_email_settings()
 
 # Idioma y zona horaria
 LANGUAGE_CODE = os.getenv("LANGUAGE_CODE", "es-es")
