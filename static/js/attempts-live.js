@@ -108,7 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const row = document.createElement("div");
     row.className = "attempt-row";
-    row.style.cssText = `display:grid;grid-template-columns:repeat(${cols},var(--cell));gap:${gap}`;
+    row.style.display = "grid";
+    row.style.gridTemplateColumns = `repeat(${cols}, var(--cell))`;
+    row.style.gap = gap;
 
     // Lógica para la celda del personaje/ítem
     let characterCellHtml = "";
