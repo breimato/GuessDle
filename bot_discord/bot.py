@@ -220,17 +220,9 @@ async def handle_botpremade_slash(interaction: discord.Interaction):
         User.objects.filter(username=BOT_PREMADE_USERNAME).exists
     )()
 
-    exists_note = (
-        f"La cuenta `{BOT_PREMADE_USERNAME}` existe en GuessDle."
-        if user_exists
-        else f"⚠️ La cuenta `{BOT_PREMADE_USERNAME}` no existe aún; créala con esa contraseña."
-    )
-
     message = (
-        f"**Cuenta premade**\n"
         f"Usuario: `{BOT_PREMADE_USERNAME}`\n"
         f"Contraseña: `{BOT_PREMADE_PASSWORD}`\n\n"
-        f"{exists_note}"
     )
     await interaction.response.send_message(message)
 
