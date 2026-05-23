@@ -2,26 +2,30 @@
 
 import os
 import sys
-import django
+
 import discord
-from django.db.models import Sum
-from discord.ext import commands
-from discord import app_commands
-from dotenv import load_dotenv
+import django
 from asgiref.sync import sync_to_async
+from discord import app_commands
+from discord.ext import commands
+from django.db.models import Sum
+from dotenv import load_dotenv
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 load_dotenv()
 BASE_URL = os.getenv("CSRF_TRUSTED_ORIGINS")
 TOKEN = os.getenv("DISCORD_TOKEN")
+BOT_PREMADE_USERNAME = os.getenv("BOT_PREMADE_USERNAME", "botpremade")
+BOT_PREMADE_PASSWORD = os.getenv("BOT_PREMADE_PASSWORD", "abc123.")
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GuessDle.settings")
 django.setup()
 
 from django.contrib.auth.models import User
-from apps.games.models import Game
+
 from apps.accounts.models import GameElo
+from apps.games.models import Game
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -60,7 +64,7 @@ def _generate_ranking_table(ranking_data, is_global_ranking=False):
         return "No ranking data to show."
 
     usernames = [
-        item['user__username'] if is_global_ranking else item.user.username
+        item["user__username"] if is_global_ranking else item.user.username
         for item in ranking_data
     ]
 
@@ -92,13 +96,17 @@ def _generate_ranking_table(ranking_data, is_global_ranking=False):
     for index, item in enumerate(ranking_data, start=1):
         index_string = str(index).center(n_content_width)
 
-        original_elo = item['total_elo'] if is_global_ranking else item.elo
+        original_elo = item["total_elo"] if is_global_ranking else item.elo
         elo_string = str(int(original_elo)).rjust(elo_content_width)
 
-        original_username = item['user__username'] if is_global_ranking else item.user.username
+        original_username = (
+            item["user__username"] if is_global_ranking else item.user.username
+        )
         display_username = original_username
         if len(original_username) > user_column_content_width:
-            display_username = original_username[:user_column_content_width-3] + "..."
+            display_username = (
+                original_username[: user_column_content_width - 3] + "..."
+            )
         user_string = display_username.ljust(user_column_content_width)
 
         table_rows_strings.append(f"║ {index_string} ║ {user_string} ║ {elo_string} ║")
@@ -107,7 +115,9 @@ def _generate_ranking_table(ranking_data, is_global_ranking=False):
     if not table_rows_strings:
         placeholder_text = "No players".center(user_column_content_width)
         full_table_parts.append(separator)
-        full_table_parts.append(f"║ {str('').center(n_content_width)} ║ {placeholder_text} ║ {str('').center(elo_content_width)} ║")
+        full_table_parts.append(
+            f"║ {str('').center(n_content_width)} ║ {placeholder_text} ║ {str('').center(elo_content_width)} ║"
+        )
     else:
         for data_row_string in table_rows_strings:
             full_table_parts.append(separator)
@@ -127,32 +137,32 @@ def format_ranking(game_slug=None):
             game = Game.objects.get(slug=game_slug)
             if game.color:
                 try:
-                    hex_color = game.color.lstrip('#')
-                    rgb_color = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-                    embed_color = discord.Color.from_rgb(rgb_color[0], rgb_color[1], rgb_color[2])
+                    hex_color = game.color.lstrip("#")
+                    rgb_color = tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
+                    embed_color = discord.Color.from_rgb(
+                        rgb_color[0], rgb_color[1], rgb_color[2]
+                    )
                 except ValueError:
                     pass
         except Game.DoesNotExist:
             return _create_ranking_embed(
-                "Error",
-                f"❗ Game '{game_slug}' was not found",
-                embed_color
+                "Error", f"❗ Game '{game_slug}' was not found", embed_color
             )
 
         game_elos = GameElo.objects.filter(game=game).order_by("-elo")[:10]
         embed_title = f"🏆 Leaderboard for {game.name}"
 
         final_thumbnail_url = None
-        if hasattr(game, 'icon_image') and game.icon_image and game.icon_image.url:
+        if hasattr(game, "icon_image") and game.icon_image and game.icon_image.url:
             icon_path = game.icon_image.url
             if BASE_URL:
-                if BASE_URL.endswith('/') and icon_path.startswith('/'):
+                if BASE_URL.endswith("/") and icon_path.startswith("/"):
                     final_thumbnail_url = BASE_URL[:-1] + icon_path
-                elif not BASE_URL.endswith('/') and not icon_path.startswith('/'):
-                    final_thumbnail_url = BASE_URL + '/' + icon_path
+                elif not BASE_URL.endswith("/") and not icon_path.startswith("/"):
+                    final_thumbnail_url = BASE_URL + "/" + icon_path
                 else:
                     final_thumbnail_url = BASE_URL + icon_path
-            elif icon_path.startswith(('http://', 'https://')):
+            elif icon_path.startswith(("http://", "https://")):
                 final_thumbnail_url = icon_path
 
         if not game_elos:
@@ -160,7 +170,7 @@ def format_ranking(game_slug=None):
                 embed_title,
                 "❗ No players registered yet.",
                 embed_color,
-                thumbnail_url=final_thumbnail_url
+                thumbnail_url=final_thumbnail_url,
             )
 
         description_content = _generate_ranking_table(game_elos)
@@ -168,13 +178,12 @@ def format_ranking(game_slug=None):
             embed_title,
             f"```{description_content}```",
             embed_color,
-            thumbnail_url=final_thumbnail_url
+            thumbnail_url=final_thumbnail_url,
         )
     else:
         global_embed_color = discord.Color.blue()
         game_elos = (
-            GameElo.objects
-            .values("user__username")
+            GameElo.objects.values("user__username")
             .annotate(total_elo=Sum("elo"))
             .order_by("-total_elo")[:10]
         )
@@ -182,20 +191,18 @@ def format_ranking(game_slug=None):
 
         if not game_elos:
             return _create_ranking_embed(
-                embed_title,
-                "❗ No players registered yet.",
-                global_embed_color
+                embed_title, "❗ No players registered yet.", global_embed_color
             )
 
         description_content = _generate_ranking_table(game_elos, is_global_ranking=True)
         return _create_ranking_embed(
-            embed_title,
-            f"```{description_content}```",
-            global_embed_color
+            embed_title, f"```{description_content}```", global_embed_color
         )
 
 
-@bot.tree.command(name="ranking", description="Show the global leaderboard (Total ELO).")
+@bot.tree.command(
+    name="ranking", description="Show the global leaderboard (Total ELO)."
+)
 async def handle_global_ranking_slash(interaction: discord.Interaction):
     """Slash command to display the global leaderboard ranking."""
 
@@ -203,17 +210,46 @@ async def handle_global_ranking_slash(interaction: discord.Interaction):
     await interaction.response.send_message(embed=ranking_embed)
 
 
+@bot.tree.command(
+    name="botpremade", description="Credenciales de la cuenta premade del bot."
+)
+async def handle_botpremade_slash(interaction: discord.Interaction):
+    """Reply with premade bot account credentials (password cannot be read from DB hash)."""
+
+    user_exists = await sync_to_async(
+        User.objects.filter(username=BOT_PREMADE_USERNAME).exists
+    )()
+
+    exists_note = (
+        f"La cuenta `{BOT_PREMADE_USERNAME}` existe en GuessDle."
+        if user_exists
+        else f"⚠️ La cuenta `{BOT_PREMADE_USERNAME}` no existe aún; créala con esa contraseña."
+    )
+
+    message = (
+        f"**Cuenta premade**\n"
+        f"Usuario: `{BOT_PREMADE_USERNAME}`\n"
+        f"Contraseña: `{BOT_PREMADE_PASSWORD}`\n\n"
+        f"{exists_note}"
+    )
+    await interaction.response.send_message(message)
+
+
 try:
-    ACTIVE_GAME_SLUGS_AND_NAMES = list(Game.objects.filter(active=True).values_list('slug', 'name'))
+    ACTIVE_GAME_SLUGS_AND_NAMES = list(
+        Game.objects.filter(active=True).values_list("slug", "name")
+    )
 except Exception as error:
     print(f"Error loading games for slash commands: {error}")
     ACTIVE_GAME_SLUGS_AND_NAMES = []
 
 for slug, game_name in ACTIVE_GAME_SLUGS_AND_NAMES:
+
     def create_game_ranking_callback(current_slug):
         async def game_ranking_callback(interaction: discord.Interaction):
             ranking_embed = await sync_to_async(format_ranking)(current_slug)
             await interaction.response.send_message(embed=ranking_embed)
+
         return game_ranking_callback
 
     command_name = slug
@@ -222,7 +258,7 @@ for slug, game_name in ACTIVE_GAME_SLUGS_AND_NAMES:
     specific_game_command = app_commands.Command(
         name=command_name,
         description=command_description,
-        callback=create_game_ranking_callback(slug)
+        callback=create_game_ranking_callback(slug),
     )
     bot.tree.add_command(specific_game_command)
 

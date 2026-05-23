@@ -1,0 +1,879 @@
+/* ═══════════════════════════════════════════════════════════
+   GuessDle — Tema arcade clásico (sala recreativa)
+   Paleta cabinet · sin neón · sombras duras
+   Fuentes: Press Start 2P (títulos) · Rubik (UI)
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --cab-bg: #1a1814;
+  --cab-bg-pattern: #222018;
+  --cab-panel: #d4c4a8;
+  --cab-panel-border: #111;
+  --cab-yellow: #f5c400;
+  --cab-red: #c0392b;
+  --cab-red-dark: #922b21;
+  --cab-green: #3d8c40;
+  --cab-blue: #2e6da4;
+  --cab-ink: #1a1a1a;
+  --cab-muted: #5c5348;
+  --cab-input-bg: #ede4d4;
+  --font-marquee: 'Press Start 2P', monospace;
+  --font-ui: 'Rubik', sans-serif;
+  --font-arcade: var(--font-marquee);
+  --cab-shadow: 6px 6px 0 var(--cab-panel-border);
+  --cab-shadow-sm: 4px 4px 0 var(--cab-panel-border);
+  --cab-radius: 0;
+}
+
+html,
+body {
+  font-family: var(--font-ui);
+}
+
+/* ─── Page shells ─── */
+.cabinet-page,
+.arcade-page {
+  min-height: 100vh;
+  background-color: var(--cab-bg);
+  background-image:
+    linear-gradient(45deg, var(--cab-bg-pattern) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--cab-bg-pattern) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--cab-bg-pattern) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--cab-bg-pattern) 75%);
+  background-size: 24px 24px;
+  background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+  color: var(--cab-ink);
+  font-family: var(--font-ui);
+}
+
+.cabinet-page::before,
+.cabinet-page::after,
+.arcade-page::before,
+.arcade-page::after {
+  display: none;
+}
+
+.cabinet-page > main,
+.cabinet-page--game > main,
+.arcade-page > main,
+.arcade-page--game > main {
+  position: relative;
+  z-index: 1;
+}
+
+.cabinet-page--game,
+.arcade-page--game {
+  min-height: 100vh;
+  color: var(--cab-ink);
+  font-family: var(--font-ui);
+  background-color: var(--cab-bg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.cabinet-page--game::before,
+.arcade-page--game::before {
+  display: block;
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 24, 20, 0.5);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cabinet-page .h-24 {
+  display: none;
+}
+
+/* ─── Marquesina ─── */
+.cabinet-marquee,
+.cabinet-login__marquee {
+  width: 100%;
+  background: var(--cab-yellow);
+  border: 4px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow);
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.cabinet-marquee--compact {
+  padding: 0.85rem 1rem;
+  max-width: 32rem;
+  margin: 0 auto 1.5rem;
+}
+
+.cabinet-login__logo {
+  display: block;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+  color: var(--cab-red-dark);
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+
+.cabinet-login__subtitle {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cab-ink);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cabinet-login {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.cabinet-login .cabinet-panel {
+  width: 100%;
+}
+
+
+  background: #333;
+  border: 3px solid var(--cab-panel-border);
+  border-radius: 2px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* ─── Typography ─── */
+.arcade-heading,
+.cabinet-panel__title {
+  font-family: var(--font-marquee);
+  font-size: clamp(0.55rem, 2.5vw, 0.7rem);
+  color: var(--cab-ink);
+  text-align: center;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+}
+
+.arcade-heading-lg {
+  font-family: var(--font-marquee);
+  font-size: clamp(0.75rem, 3vw, 1rem);
+  line-height: 1.7;
+  color: var(--cab-yellow);
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 0.06em;
+}
+
+.arcade-subheading {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cab-red-dark);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--cab-panel-border);
+  padding-bottom: 0.5rem;
+}
+
+.arcade-text-muted {
+  color: var(--cab-muted);
+}
+
+.text-cyan-400,
+.cabinet-accent {
+  color: var(--cab-red-dark);
+  font-weight: 700;
+}
+
+.text-pink-400,
+.cabinet-accent-alt {
+  color: var(--cab-red);
+  font-weight: 700;
+}
+
+/* ─── Panels / cards ─── */
+.arcade-card,
+.cabinet-panel {
+  background: var(--cab-panel);
+  border: 4px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow);
+  padding: 1.5rem;
+  color: var(--cab-ink);
+  border-radius: var(--cab-radius);
+}
+
+.arcade-card--auth {
+  max-width: 28rem;
+  width: 100%;
+}
+
+/* ─── Buttons ─── */
+.arcade-btn,
+.cabinet-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.15rem;
+  border: 3px solid var(--cab-panel-border);
+  --cab-btn-shadow: var(--cab-panel-border);
+  box-shadow: 0 4px 0 var(--cab-btn-shadow);
+  cursor: url('/static/cursors/lol.cur'), auto;
+  transition: transform 0.08s, box-shadow 0.08s;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--cab-radius);
+  color: #fff;
+  background: var(--cab-red);
+}
+
+.arcade-btn:hover:not(:disabled),
+.cabinet-btn:hover:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--cab-btn-shadow);
+}
+
+.arcade-btn:active:not(:disabled),
+.cabinet-btn:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.arcade-btn--primary,
+.cabinet-btn--primary {
+  background: var(--cab-red);
+  color: #fff;
+}
+
+.arcade-btn--secondary {
+  background: var(--cab-yellow);
+  color: var(--cab-ink);
+}
+
+.arcade-btn--ghost {
+  background: transparent;
+  color: var(--cab-yellow);
+  border-color: var(--cab-yellow);
+  --cab-btn-shadow: var(--cab-yellow);
+}
+
+.arcade-btn--danger {
+  background: transparent;
+  color: var(--cab-red);
+  border-color: var(--cab-red);
+  --cab-btn-shadow: var(--cab-red);
+}
+
+.arcade-btn--danger:hover:not(:disabled) {
+  background: var(--cab-red);
+  color: #fff;
+}
+
+.arcade-btn--game {
+  background: var(--cab-panel);
+  color: var(--cab-ink);
+  border-color: var(--cab-panel-border);
+  --cab-btn-shadow: var(--cab-panel-border);
+  box-shadow: 4px 4px 0 var(--cab-btn-shadow);
+  width: 100%;
+  padding: 0.85rem 1rem;
+  text-transform: none;
+  font-weight: 600;
+}
+
+.arcade-btn--game:hover:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--cab-btn-shadow);
+}
+
+.arcade-btn--game:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.arcade-btn--game img,
+.arcade-btn__game-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ─── Rankings scroll ─── */
+.ranking-scroll {
+  max-height: 22rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.35rem;
+  scrollbar-width: auto;
+  scrollbar-color: var(--cab-yellow) var(--cab-bg-pattern);
+}
+
+.ranking-scroll::-webkit-scrollbar {
+  width: 14px;
+}
+
+.ranking-scroll::-webkit-scrollbar-track {
+  background: var(--cab-bg-pattern);
+  border-left: 3px solid var(--cab-panel-border);
+}
+
+.ranking-scroll::-webkit-scrollbar-thumb {
+  background: var(--cab-yellow);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ranking-scroll::-webkit-scrollbar-thumb:hover {
+  background: #ffcf33;
+}
+
+.ranking-scroll::-webkit-scrollbar-thumb:active {
+  background: var(--cab-red);
+}
+
+.arcade-btn--full,
+.cabinet-btn--full,
+.cabinet-panel form .cabinet-btn {
+  width: 100%;
+}
+
+/* ─── Form controls ─── */
+.arcade-label,
+.cabinet-label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--cab-ink);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.arcade-input,
+.arcade-select,
+.cabinet-input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--cab-ink);
+  background: var(--cab-input-bg);
+  border: 3px solid var(--cab-panel-border);
+  border-radius: var(--cab-radius);
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.08);
+  transition: background 0.1s;
+}
+
+.arcade-input:focus,
+.arcade-select:focus,
+.cabinet-input:focus {
+  outline: none;
+  background: #fffef8;
+}
+
+.arcade-select option {
+  background: var(--cab-panel);
+  color: var(--cab-ink);
+}
+
+.cabinet-field {
+  margin-bottom: 1rem;
+}
+
+.cabinet-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.cabinet-checkbox-row input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--cab-red);
+}
+
+.cabinet-checkbox-row label {
+  font-size: 0.875rem;
+  color: var(--cab-muted);
+  font-weight: 500;
+}
+
+.cabinet-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--cab-muted);
+}
+
+.cabinet-footer p + p {
+  margin-top: 0.5rem;
+}
+
+/* ─── Tabs ─── */
+.arcade-tab {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.45rem 0.9rem;
+  border: 3px solid var(--cab-panel-border);
+  background: var(--cab-panel);
+  color: var(--cab-muted);
+  cursor: url('/static/cursors/lol.cur'), auto;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 3px 0 var(--cab-panel-border);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.arcade-tab:hover {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--cab-panel-border);
+  color: var(--cab-ink);
+}
+
+.arcade-tab:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.arcade-tab--active {
+  background: var(--cab-yellow);
+  color: var(--cab-ink);
+  border-color: var(--cab-panel-border);
+}
+
+/* ─── Tables ─── */
+.arcade-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.arcade-table thead tr th {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cab-red-dark);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  border-bottom: 3px solid var(--cab-panel-border);
+}
+
+.arcade-table tbody tr td {
+  padding: 0.55rem 0.75rem;
+  text-align: center;
+  color: var(--cab-ink);
+  border-bottom: 2px solid rgba(17, 17, 17, 0.12);
+}
+
+.arcade-table tbody tr:hover td {
+  background: rgba(245, 196, 0, 0.12);
+}
+
+.arcade-rank-badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--cab-panel-border);
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin: 0 auto;
+}
+
+.arcade-rank-badge--1 { background: var(--cab-yellow); color: var(--cab-ink); }
+.arcade-rank-badge--2 { background: #c0c0c0; color: var(--cab-ink); }
+.arcade-rank-badge--3 { background: #cd7f32; color: #fff; }
+.arcade-rank-badge--n  { background: #e8e0d0; color: var(--cab-muted); font-size: 0.65rem; }
+
+/* ─── Alerts ─── */
+.arcade-alert,
+.cabinet-alert {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 3px solid var(--cab-panel-border);
+  margin-bottom: 1rem;
+}
+
+.arcade-alert--error {
+  background: #fde8e8;
+  color: var(--cab-red-dark);
+}
+
+.arcade-alert--success {
+  background: #e8f5e9;
+  color: var(--cab-green);
+}
+
+/* ─── Challenge cards ─── */
+.arcade-challenge-card {
+  background: var(--cab-panel);
+  border: 3px solid var(--cab-panel-border);
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--cab-shadow-sm);
+  height: 100%;
+}
+
+.arcade-challenge-card__title {
+  font-weight: 600;
+  color: var(--cab-ink);
+  font-size: 0.9rem;
+  width: 100%;
+  min-height: calc(0.9rem * 1.4 * 2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.arcade-challenge-card__line {
+  display: block;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arcade-challenge-card__actions,
+.arcade-challenge-card > .arcade-btn {
+  margin-top: auto;
+}
+
+.arcade-challenge-card__waiting {
+  background: var(--cab-yellow);
+  border: 2px solid var(--cab-panel-border);
+  color: var(--cab-ink);
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ─── Points badge ─── */
+.arcade-points-badge {
+  display: inline-block;
+  background: var(--cab-yellow);
+  border: 3px solid var(--cab-panel-border);
+  padding: 0.45rem 1.25rem;
+  font-family: var(--font-ui);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cab-red-dark);
+  box-shadow: var(--cab-shadow-sm);
+  line-height: 1.4;
+}
+
+/* ─── Dashboard hero (compacto) ─── */
+.dashboard-hero {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+}
+
+.dashboard-hero__welcome {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cab-ink);
+  justify-self: start;
+}
+
+.dashboard-hero__badge {
+  padding: 0.3rem 0.85rem;
+  font-size: 0.95rem;
+  box-shadow: 2px 2px 0 var(--cab-panel-border);
+  justify-self: center;
+}
+
+.dashboard-hero__logout {
+  margin: 0;
+  justify-self: end;
+}
+
+.dashboard-logout-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cab-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: url('/static/cursors/lol.cur'), auto;
+}
+
+.dashboard-logout-link:hover {
+  color: var(--cab-red-dark);
+}
+
+.dashboard-logout-link:active {
+  transform: translateY(1px);
+}
+
+/* ─── Bet tracker ─── */
+.bet-tracker {
+  background: var(--cab-panel);
+  border: 4px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow);
+  width: 100%;
+  max-width: 36rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.bet-tracker__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.bet-tracker__col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bet-tracker__col--left {
+  border-right: 3px solid var(--cab-panel-border);
+  padding-right: 0.75rem;
+}
+
+.bet-tracker__label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cab-muted);
+}
+
+.bet-tracker__label--bet { color: var(--cab-red-dark); }
+.bet-tracker__label--goal { color: var(--cab-green); }
+
+.bet-tracker__value {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--cab-ink);
+}
+
+.bet-tracker__unit {
+  font-size: 0.85rem;
+  color: var(--cab-muted);
+  font-weight: 500;
+}
+
+.attempts-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cab-yellow);
+  color: var(--cab-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 3px solid var(--cab-panel-border);
+  padding: 0.35em 0.5em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Modal (JS) ─── */
+.arcade-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.arcade-modal {
+  background: var(--cab-panel);
+  border: 4px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow);
+  padding: 1.5rem;
+  color: var(--cab-ink);
+  width: 100%;
+  max-width: 32rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.arcade-modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--cab-muted);
+  cursor: url('/static/cursors/lol.cur'), auto;
+  line-height: 1;
+  font-weight: 700;
+  font-family: var(--font-ui);
+  transition: transform 0.08s, color 0.08s;
+}
+
+.arcade-modal__close:hover {
+  transform: translateY(2px);
+  color: var(--cab-red);
+}
+
+.arcade-modal__close:active {
+  transform: translateY(3px);
+}
+
+.arcade-modal__title {
+  font-family: var(--font-marquee);
+  font-size: clamp(0.55rem, 2vw, 0.75rem);
+  color: var(--cab-green);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.arcade-msg--win,
+.arcade-msg--bet-win { color: var(--cab-green); font-weight: 700; margin-bottom: 0.75rem; }
+.arcade-msg--loss,
+.arcade-msg--bet-loss { color: var(--cab-red); font-weight: 700; margin-bottom: 0.75rem; }
+.arcade-msg--tie  { color: var(--cab-muted); font-weight: 700; margin-bottom: 0.75rem; }
+.arcade-msg--wait { color: var(--cab-blue); font-weight: 600; margin-bottom: 0.75rem; }
+
+/* Sin aura neón en retos */
+.epic-aura {
+  display: none;
+}
+
+@keyframes bounceInCenter {
+  0%   { opacity: 0; transform: scale(0.95) translateY(-20px); }
+  60%  { opacity: 1; transform: scale(1.02) translateY(4px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.animate-bounceInCenter {
+  animation: bounceInCenter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+/* ─── Links ─── */
+.arcade-link,
+.cabinet-link {
+  color: var(--cab-red-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.arcade-link:hover,
+.cabinet-link:hover {
+  color: var(--cab-ink);
+}
+
+.arcade-empty {
+  color: var(--cab-muted);
+  text-align: center;
+  padding: 1rem;
+  font-style: italic;
+}
+
+/* ─── Layout utilities (fallback) ─── */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+.grid { display: grid; }
+.hidden { display: none; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-start { justify-content: flex-start; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.max-w-xl { max-width: 36rem; }
+.max-w-4xl { max-width: 56rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-10 { margin-bottom: 2.5rem; }
+.mb-24 { margin-bottom: 6rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+.pt-16 { padding-top: 4rem; }
+.pb-12 { padding-bottom: 3rem; }
+.py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+.container { width: 100%; max-width: 1280px; margin-left: auto; margin-right: auto; }
+.opacity-50 { opacity: 0.5; }
+.pointer-events-none { pointer-events: none; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.left-0 { left: 0; }
+.top-full { top: 100%; }
+.z-50 { z-index: 50; }
+.max-h-56 { max-height: 14rem; }
+.overflow-y-auto { overflow-y: auto; }
+.rounded-b-none { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.rounded-t-none { border-top-left-radius: 0; border-top-right-radius: 0; }
+.rounded-lg { border-radius: 0; }
+.text-sm { font-size: 0.875rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-xs { font-size: 0.75rem; }
+.text-lg { font-size: 1.125rem; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.w-10 { width: 2.5rem; }
+.h-10 { height: 2.5rem; }
+.object-cover { object-fit: cover; }
+.max-w-lg { max-width: 32rem; }
+.col-span-full { grid-column: 1 / -1; }
+.min-h-screen { min-height: 100vh; }
+
+@media (min-width: 640px) {
+  .sm\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\\:col-span-2 { grid-column: span 2 / span 2; }
+}
+@media (min-width: 1280px) {
+  .xl\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .xl\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

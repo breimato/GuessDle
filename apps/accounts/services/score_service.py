@@ -4,6 +4,7 @@ from django.db.models import Count, Avg, Q, Sum, FloatField, ExpressionWrapper
 from django.db.models.functions import Cast
 from apps.games.models import ScoringRule, GameAttempt, PlaySessionType, PlaySession
 from apps.accounts.models import GameElo
+from apps.accounts.services.player_stats_service import PlayerStatsService
 
 class ScoreService:
     """Service to manage and query user points and game attempts statistics."""
@@ -27,19 +28,7 @@ class ScoreService:
     def calculate_user_average_attempts(self) -> float | None:
         """Calculate the average number of attempts for the user in this game across completed sessions."""
 
-        session_statistics = (
-            PlaySession.objects
-            .filter(user=self.user, game=self.game)
-            .aggregate(
-                total_tries=Count('attempts'),
-                completed=Count('id', filter=Q(attempts__is_correct=True), distinct=True)
-            )
-        )
-        completed_sessions_count = session_statistics['completed'] or 0
-        if completed_sessions_count == 0:
-            return None
-
-        return (session_statistics['total_tries'] or 0) / completed_sessions_count
+        return PlayerStatsService.calculate_user_average_attempts(self.user, self.game)
 
     def calculate_global_average_of_averages(self, exclude_user=True) -> float | None:
         """Calculate the global average of individual user averages for completed sessions in this game."""

@@ -88,15 +88,15 @@ document.addEventListener("DOMContentLoaded", () => {
         statusMsg.classList.remove("hidden");
         if (betInfo?.betWon) {
           statusMsg.textContent = `¡Apuesta ganada! +${formatEloAmount(betInfo.netProfit)} ELO`;
-          statusMsg.className = "mt-4 font-bold text-center text-lg text-green-700 animate__animated animate__pulse";
+          statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-win";
         } else {
           statusMsg.textContent = `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`;
-          statusMsg.className = "mt-4 font-bold text-center text-lg text-red-600 animate__animated animate__shakeX";
+          statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-loss";
         }
       } else if (average !== null && Number(currentAttempts) > average) {
         statusMsg.classList.remove("hidden");
         statusMsg.textContent = `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`;
-        statusMsg.className = "mt-4 font-bold text-center text-lg text-red-600 animate__animated animate__shakeX";
+        statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-loss";
       } else {
         statusMsg.classList.add("hidden");
       }
@@ -327,22 +327,17 @@ document.addEventListener("DOMContentLoaded", () => {
   injectKeyframes();
 
   const overlay = document.createElement("div");
-  overlay.style = `
-    position:fixed;inset:0;background:rgba(0,0,0,.5);
-    display:flex;align-items:center;justify-content:center;z-index:1000;`;
+  overlay.className = "arcade-modal-overlay";
 
   const modal = document.createElement("div");
-  modal.className = `
-    bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800
-    shadow-lg text-gray-900 w-full max-w-xl animate-bounceInCenter mx-4
-    flex flex-col items-center text-center relative`;
+  modal.className = "arcade-modal animate-bounceInCenter";
 
   let betMessageHtml = "";
   if (isExtra && betInfo) {
     if (betInfo.betWon) {
-      betMessageHtml = `<p class="text-green-700 font-bold mb-4">🎉 ¡Apuesta ganada! Has conseguido +${formatEloAmount(betInfo.netProfit)} ELO.</p>`;
+      betMessageHtml = `<p class="arcade-msg--bet-win">¡Apuesta ganada! +${formatEloAmount(betInfo.netProfit)} ELO</p>`;
     } else {
-      betMessageHtml = `<p class="text-red-600 font-bold mb-4">❌ Apuesta perdida. Has perdido ${formatEloAmount(betInfo.betAmount)} ELO.</p>`;
+      betMessageHtml = `<p class="arcade-msg--bet-loss">Apuesta perdida. Has perdido ${formatEloAmount(betInfo.betAmount)} ELO.</p>`;
     }
   }
 
@@ -362,49 +357,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const attemptsLabel = userAttempts != null ? `${userAttempts} intentos` : "tus intentos";
 
     if (!normalizedChallenge.completed) {
-      challengeMessageHtml = `<p class="text-blue-700 font-semibold mb-4">¡Partida completada! Has usado ${attemptsLabel}. Esperando a tu rival...</p>`;
+      challengeMessageHtml = `<p class="arcade-msg--wait">Partida completada (${attemptsLabel}). Esperando a tu rival…</p>`;
     } else if (normalizedChallenge.winner === normalizedChallenge.current_user) {
-      challengeMessageHtml = `<p class="text-green-700 font-bold mb-4">🏆 ¡Has ganado el reto contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts} intentos)</p>`;
+      challengeMessageHtml = `<p class="arcade-msg--win">¡Has ganado el reto contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts})</p>`;
     } else if (normalizedChallenge.winner) {
-      challengeMessageHtml = `<p class="text-red-600 font-bold mb-4">💀 Has perdido el reto contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts} intentos)</p>`;
+      challengeMessageHtml = `<p class="arcade-msg--loss">Has perdido el reto contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})</p>`;
     } else {
-      challengeMessageHtml = `<p class="text-gray-700 font-bold mb-4">🤝 ¡Empate contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts} intentos)</p>`;
+      challengeMessageHtml = `<p class="arcade-msg--tie">Empate contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})</p>`;
     }
   }
 
   modal.innerHTML = `
-  <button id="close-modal-btn" style="position:absolute;top:10px;right:15px;background:transparent;border:none;font-size:1.5rem;color:black;cursor:pointer;">&times;</button>
-  <h2 class="text-2xl font-bold mb-4">
-    ¡Correcto! Has adivinado: <span class="text-green-800">${name}</span>
-  </h2>
+  <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
+  <h2 class="arcade-modal__title">¡Correcto! ${name}</h2>
   ${challengeMessageHtml}
   ${betMessageHtml}
   <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
-    <a href="/accounts"
-       class="bg-yellow-700 hover:bg-yellow-800 text-white px-6 py-2 rounded-full transition shadow text-center block">
-      🏠 Volver al Dashboard
-    </a>
+    <a href="/accounts" class="arcade-btn arcade-btn--primary arcade-btn--full">Volver al Dashboard</a>
 
     ${!isChallengeModal ? (maxExtrasReached ? `
-      <div class="bg-red-100 text-red-800 px-4 py-3 rounded-xl text-center border-2 border-red-300 font-semibold">
-        🔒 Ya has jugado tus 2 partidas extra hoy en este juego.
-      </div>` : startExtraURL ? `
-      <div id="extra-play-wrapper" class="flex flex-col gap-2">
-        <button id="show-bet-form"
-                class="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition shadow w-full">
-          💰 Apostar y jugar partida extra
-        </button>
+      <div class="arcade-alert arcade-alert--error text-center">Ya has jugado tus 2 partidas extra hoy.</div>` : startExtraURL ? `
+      <div id="extra-play-wrapper" class="flex flex-col gap-2 w-full">
+        <button id="show-bet-form" class="arcade-btn arcade-btn--secondary arcade-btn--full">Apostar y jugar extra</button>
         <form method="post" action="${startExtraURL}" id="bet-form" class="flex flex-col gap-2 hidden">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrf}">
-          <label for="bet" class="text-lg font-semibold text-gray-800">
-            ¿Cuánto quieres apostar para jugar una partida extra?
-          </label>
-          <input type="number" name="bet" min="10" step="1" required
-            class="w-full px-4 py-2 border-0 border-green-600 rounded-xl text-center text-lg focus:outline-none focus:ring-green-500 bg-white text-black" style="margin-top: 0.5rem;" />
-          <button type="submit"
-                  class="bg-green-700 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-full transition shadow w-full" style="margin-top: 1rem;">
-            🎰 ¡Jugar ahora!
-          </button>
+          <label for="bet" class="arcade-label">¿Cuánto quieres apostar?</label>
+          <input type="number" name="bet" min="10" step="1" required class="arcade-input" />
+          <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full">¡Jugar ahora!</button>
         </form>
       </div>` : '') : ''}
   </div>`;

@@ -9,11 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // botones
       tabs.forEach(b => {
-        const active = b === btn;
-        b.classList.toggle('bg-yellow-500', active);
-        b.classList.toggle('text-gray-900', active);
-        b.classList.toggle('bg-yellow-700', !active);
-        b.classList.toggle('text-white', !active);
+        b.classList.toggle('arcade-tab--active', b === btn);
       });
 
       // paneles

@@ -1,110 +1,96 @@
 #challenge-toast-container {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 400px;
-    width: calc(100% - 48px);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  width: calc(100% - 48px);
 }
 
 .challenge-toast {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
-    color: #ffffff;
-    font-family: inherit;
-    overflow: hidden;
-    animation: toast-slide-in 0.3s ease-out forwards;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 3px solid var(--cab-panel-border, #111);
+  box-shadow: 4px 4px 0 var(--cab-panel-border, #111);
+  color: var(--cab-ink, #1a1a1a);
+  font-family: var(--font-ui, 'Rubik', sans-serif);
+  overflow: hidden;
+  animation: toast-slide-in 0.3s ease-out forwards;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .challenge-toast.toast-win {
-    background: linear-gradient(135deg, #1e3a1e 0%, #15803d 100%);
-    border: 2px solid #22c55e;
+  background: #e8f5e9;
+  border-color: var(--cab-green, #3d8c40);
 }
 
 .challenge-toast.toast-loss {
-    background: linear-gradient(135deg, #451a1a 0%, #b91c1c 100%);
-    border: 2px solid #ef4444;
+  background: #fde8e8;
+  border-color: var(--cab-red, #c0392b);
 }
 
 .challenge-toast.toast-tie {
-    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
-    border: 2px solid #64748b;
-    animation: toast-slide-in 0.3s ease-out, toast-shake 0.5s ease-in-out 0.3s;
+  background: var(--cab-panel, #d4c4a8);
+  border-color: var(--cab-yellow, #f5c400);
 }
 
 .challenge-toast-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
 .challenge-toast-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
+  font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .challenge-toast-text {
-    font-size: 0.95rem;
-    line-height: 1.4;
-    font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .challenge-toast-close {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.25rem;
-    cursor: pointer;
-    padding: 4px;
-    line-height: 1;
-    border-radius: 4px;
-    margin-left: 8px;
-    transition: color 0.15s ease, background-color 0.15s ease;
+  background: transparent;
+  border: none;
+  color: var(--cab-muted, #5c5348);
+  font-size: 1.25rem;
+  cursor: url('/static/cursors/lol.cur'), auto;
+  padding: 0 0 0 8px;
+  line-height: 1;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-family: var(--font-ui, 'Rubik', sans-serif);
+  transition: transform 0.08s, color 0.08s;
 }
 
 .challenge-toast-close:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(2px);
+  color: var(--cab-ink, #1a1a1a);
+}
+
+.challenge-toast-close:active {
+  transform: translateY(3px);
 }
 
 @keyframes toast-slide-in {
-    from {
-        transform: translateX(120%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes toast-fade-out {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(120%);
-        opacity: 0;
-    }
-}
-
-@keyframes toast-shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
-    20%, 40%, 60%, 80% { transform: translateX(6px); }
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .challenge-toast.toast-hide {
-    animation: toast-fade-out 0.3s ease-in forwards;
+  animation: toast-slide-out 0.3s ease-in forwards;
+}
+
+@keyframes toast-slide-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(100%); }
 }

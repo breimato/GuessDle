@@ -8,200 +8,136 @@
 {% endblock %}
 
 {% block main_class %}
-min-h-screen flex flex-col gap-12 pt-24 pb-12 px-4
-bg-no-repeat bg-cover bg-fixed
+min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
 {% endblock %}
 
 {% block content %}
 
-<!-- ========== HERO ========== -->
-<section class="container mx-auto text-center drop-shadow">
-  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
-      style="font-family:var(--font-lol); text-shadow: 2px 2px #000;">
-    🛡️ ¡Bienvenido, <span class="text-white">{{ user.username }}</span>!
-  </h1>
-  <p class="mt-2 text-white font-semibold text-lg tracking-wider"
-     style="font-family:var(--font-lol); padding-top: 25px">
-    🔢 Tus puntos globales:
-    <span class="text-yellow-300">{{ user_stats.global_elo|floatformat:0 }}</span>
-  </p>
+<div class="cabinet-marquee cabinet-marquee--compact mb-8">
+  <span class="cabinet-login__logo">GUESSDLE</span>
+</div>
 
-  <div class="flex justify-end mt-4">
-    <form action="{% url 'logout' %}" method="post">
-      {% csrf_token %}
-      <button type="submit"
-              class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
-        🔓 Cerrar sesión
-      </button>
-    </form>
-  </div>
+<!-- HERO -->
+<section class="container mx-auto arcade-card dashboard-hero">
+  <p class="dashboard-hero__welcome">
+    Bienvenido, <span class="cabinet-accent">{{ user.username }}</span>
+  </p>
+  <div class="arcade-points-badge dashboard-hero__badge">{{ user_stats.global_elo|floatformat:0 }} ELO</div>
+  <form action="{% url 'logout' %}" method="post" class="dashboard-hero__logout">
+    {% csrf_token %}
+    <button type="submit" class="dashboard-logout-link">Cerrar sesión</button>
+  </form>
 </section>
 
-<!-- ========== STATS + GAMES ========== -->
+<!-- STATS + GAMES -->
 <section class="container mx-auto grid lg:grid-cols-3 gap-8">
-  <!-- Stats -->
-  <div class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
-    <h2 class="text-2xl mb-4 text-yellow-900 font-bold" style="font-family:var(--font-lol);">
-      📊 Tus estadísticas
-    </h2>
-    <table class="w-full text-sm border-separate border-spacing-y-2">
+  <div class="arcade-card">
+    <h2 class="arcade-subheading mb-4">Tus estadísticas</h2>
+    <table class="arcade-table">
       <thead>
-      <tr class="bg-black/80 text-yellow-100"
-          style="font-family:var(--font-lol); letter-spacing:.05em;">
-        <th class="rounded-l-2xl">Juego</th>
-        <th>Media&nbsp;intentos</th>
-        <th class="rounded-r-2xl">Puntos</th>
-      </tr>
+        <tr>
+          <th>Juego</th>
+          <th>Media</th>
+          <th>Puntos</th>
+        </tr>
       </thead>
       <tbody>
-      {% for j in user_stats.games %}
-      <tr class="hover:brightness-110 transition duration-150">
-        <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-          {{ j.name }}
-        </td>
-        <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 px-4 py-2">
-          {{ j.average_attempts|floatformat:2 }} int.
-        </td>
-        <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
-          {{ j.points|floatformat:0 }}
-        </td>
-      </tr>
-      {% endfor %}
+        {% for j in user_stats.games %}
+        <tr>
+          <td>{{ j.name }}</td>
+          <td>{{ j.average_attempts|floatformat:2 }}</td>
+          <td><strong>{{ j.points|floatformat:0 }}</strong></td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
 
-  <!-- Game Selector -->
-  <div class="lg:col-span-2 bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
-    <h2 class="text-2xl mb-4 text-yellow-900 font-bold" style="font-family:var(--font-lol);">
-      🎮 Escoge un juego
-    </h2>
+  <div class="lg:col-span-2 arcade-card">
+    <h2 class="arcade-subheading mb-4">Escoge un juego</h2>
     <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
       {% for game in available_games %}
-      <a href="{{ game.redirect_url }}"
-         class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition">
+      <a href="{{ game.redirect_url }}" class="arcade-btn arcade-btn--game">
         {% if game.icon_image %}
-        <img src="{{ game.icon_image.url }}" alt="{{ game.name }}" class="w-10 h-10 object-cover">
+        <img src="{{ game.icon_image.url }}" alt="{{ game.name }}" class="arcade-btn__game-icon">
         {% else %}
         <span class="text-2xl">🎲</span>
         {% endif %}
-        <span class="font-semibold">Jugar a {{ game.name }}</span>
+        <span>{{ game.name }}</span>
       </a>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- ========== CHALLENGES (form + tabs) ========== -->
-<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-8 border-4 border-yellow-800 shadow-lg">
-  <div style="margin: 30px">
-    <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
-      ⚔️ Retar a un jugador
-    </h2>
-    <form id="challenge-form" method="post" action="{% url 'create_challenge' %}" class="flex flex-col gap-8 mb-12">
-      {% csrf_token %}
-      <div>
-        <label for="opponent" class="block font-bold text-yellow-900 mb-2">Seleccionar rival</label>
-        <select id="opponent" name="opponent"
-                class="w-full bg-white text-black border border-yellow-400 px-4 py-2 shadow-sm focus:outline-none rounded-none">
-          {% for user in users %}
-          <option value="{{ user.id }}">{{ user.username }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div>
-        <label for="game" class="block font-bold text-yellow-900 mb-2">Seleccionar juego</label>
-        <select id="game" name="game"
-                class="w-full bg-white text-black border border-yellow-400 px-4 py-2 shadow-sm focus:outline-none rounded-none">
-          {% for game in available_games %}
-          <option value="{{ game.id }}">{{ game.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <button type="submit"
-              class="w-full bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-6 py-3 rounded-full shadow transition">
-        ⚔️ Enviar challenge
-      </button>
-    </form>
+<!-- CHALLENGES -->
+<section class="container mx-auto arcade-card">
+  <h2 class="arcade-subheading mb-4">Retar a un jugador</h2>
+  <form id="challenge-form" method="post" action="{% url 'create_challenge' %}" class="flex flex-col gap-5 mb-10 max-w-lg">
+    {% csrf_token %}
+    <div>
+      <label for="opponent" class="arcade-label">Seleccionar rival</label>
+      <select id="opponent" name="opponent" class="arcade-select">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="game" class="arcade-label">Seleccionar juego</label>
+      <select id="game" name="game" class="arcade-select">
+        {% for game in available_games %}
+        <option value="{{ game.id }}">{{ game.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="arcade-btn arcade-btn--secondary arcade-btn--full">Enviar reto</button>
+  </form>
+
+  <h2 class="arcade-subheading mb-4">Tus retos</h2>
+  <div class="flex flex-wrap gap-3 mb-6">
+    <button data-view="active" class="view-btn arcade-tab arcade-tab--active">Activos</button>
+    <button data-view="pending" class="view-btn arcade-tab">Recibidos</button>
+    <button data-view="sent" class="view-btn arcade-tab">Enviados</button>
   </div>
 
-  <div style="margin: 30px">
-    <h2 class="text-2xl text-yellow-900 font-bold mb-4" style="font-family:var(--font-lol);">
-      🗂️ Tus challenges
-    </h2>
-    <div class="flex flex-wrap gap-3 mb-6">
-      <button data-view="active"
-              class="view-btn bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full shadow">
-        🕹️ Activos
-      </button>
-      <button data-view="pending"
-              class="view-btn bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
-        📬 Recibidos
-      </button>
-      <button data-view="sent"
-              class="view-btn bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
-        📤 Enviados
-      </button>
-    </div>
-
-    <!-- Active -->
-    <div id="view-active"
-         class="view-panel grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4">
-      {% for challenge in active_challenges %}
-        {% include "partials/active_challenge_card.html" with challenge=challenge %}
-      {% empty %}
-        <p class="text-black text-center col-span-full">No active challenges yet.</p>
-      {% endfor %}
-    </div>
-    <!-- Pending -->
-    <div id="view-pending"
-         class="view-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4">
-      {% for challenge in pending_challenges %}
-        {% include "partials/pending_challenge_card.html" with challenge=challenge %}
-      {% empty %}
-        <p class="text-black text-center col-span-full">No pending challenges received yet.</p>
-      {% endfor %}
-    </div>
-    <!-- Sent -->
-    <div id="view-sent"
-         class="view-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4">
-      {% for challenge in sent_pending_challenges %}
-        {% include "partials/sent_challenge_card.html" with challenge=challenge %}
-      {% empty %}
-        <p class="text-yellow-900 text-center font-medium col-span-full">
-          No sent challenges yet.
-        </p>
-      {% endfor %}
-    </div>
+  <div id="view-active" class="view-panel grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    {% for challenge in active_challenges %}
+      {% include "partials/active_challenge_card.html" with challenge=challenge %}
+    {% empty %}
+      <p class="arcade-empty col-span-full">No hay retos activos.</p>
+    {% endfor %}
+  </div>
+  <div id="view-pending" class="view-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    {% for challenge in pending_challenges %}
+      {% include "partials/pending_challenge_card.html" with challenge=challenge %}
+    {% empty %}
+      <p class="arcade-empty col-span-full">No hay retos recibidos.</p>
+    {% endfor %}
+  </div>
+  <div id="view-sent" class="view-panel hidden grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    {% for challenge in sent_pending_challenges %}
+      {% include "partials/sent_challenge_card.html" with challenge=challenge %}
+    {% empty %}
+      <p class="arcade-empty col-span-full">No has enviado retos.</p>
+    {% endfor %}
   </div>
 </section>
 
-<!-- ========== RANKINGS ========== -->
-<section class="container mx-auto bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg">
-
-  <h2 class="text-2xl text-yellow-900 font-bold mb-6" style="font-family:var(--font-lol);">
-    🏆 Rankings
-  </h2>
-  <!-- Tabs -->
+<!-- RANKINGS -->
+<section class="container mx-auto arcade-card">
+  <h2 class="arcade-subheading mb-6">Rankings</h2>
   <div id="ranking-tabs" class="flex flex-wrap gap-3 mb-6">
-    <button data-tab="global"
-            class="rank-tab bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full shadow">
-      🌐 Global
-    </button>
+    <button data-tab="global" class="rank-tab arcade-tab arcade-tab--active">Global</button>
     {% for game in available_games %}
-    <button data-tab="{{ game.slug }}"
-            class="rank-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
-      {{ game.name }}
-    </button>
+    <button data-tab="{{ game.slug }}" class="rank-tab arcade-tab">{{ game.name }}</button>
     {% endfor %}
   </div>
-  <!-- Panels -->
-  <div id="tab-global" class="rank-panel">
+  <div id="tab-global" class="rank-panel ranking-scroll">
     {% include "partials/ranking_table.html" with rows=global_ranking %}
   </div>
-
   {% for game in available_games %}
-  <div id="tab-{{ game.slug }}" class="rank-panel hidden">
+  <div id="tab-{{ game.slug }}" class="rank-panel ranking-scroll hidden">
     {% include "partials/ranking_table.html" with rows=ranking_by_game|get_item:game.slug %}
   </div>
   {% endfor %}
@@ -212,7 +148,6 @@ bg-no-repeat bg-cover bg-fixed
 {{ challenge_notifications|json_script:"challenge-notifications-data" }}
 <script src="{% static 'js/ranking-tabs.js' %}" defer></script>
 <script src="{% static 'js/pending-tabs.js' %}" defer></script>
-<script src="{% static 'js/active-tabs.js' %}" defer></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -226,27 +161,18 @@ document.addEventListener('DOMContentLoaded', () => {
         container.id = 'challenge-toast-container';
         document.body.appendChild(container);
       }
-
       notifications.forEach(notification => {
         const toast = document.createElement('div');
         let toastClass = 'toast-loss';
         let iconText = '💀';
-        if (notification.type === 'win') {
-          toastClass = 'toast-win';
-          iconText = '🏆';
-        } else if (notification.type === 'tie') {
-          toastClass = 'toast-tie';
-          iconText = '🤝';
-        }
+        if (notification.type === 'win') { toastClass = 'toast-win'; iconText = '🏆'; }
+        else if (notification.type === 'tie') { toastClass = 'toast-tie'; iconText = '🤝'; }
         toast.className = `challenge-toast ${toastClass}`;
-
         const content = document.createElement('div');
         content.className = 'challenge-toast-content';
-
         const icon = document.createElement('span');
         icon.className = 'challenge-toast-icon';
         icon.textContent = iconText;
-
         const text = document.createElement('div');
         text.className = 'challenge-toast-text';
         if (notification.type === 'win') {
@@ -256,30 +182,22 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           text.textContent = `¡Has perdido el reto de ${notification.game_name} contra ${notification.opponent_username}!`;
         }
-
         content.appendChild(icon);
         content.appendChild(text);
-
         const closeBtn = document.createElement('button');
         closeBtn.className = 'challenge-toast-close';
         closeBtn.innerHTML = '&times;';
         closeBtn.addEventListener('click', () => {
           toast.classList.add('toast-hide');
-          toast.addEventListener('animationend', () => {
-            toast.remove();
-          });
+          toast.addEventListener('animationend', () => toast.remove());
         });
-
         toast.appendChild(content);
         toast.appendChild(closeBtn);
         container.appendChild(toast);
-
         setTimeout(() => {
           if (toast.parentNode) {
             toast.classList.add('toast-hide');
-            toast.addEventListener('animationend', () => {
-              toast.remove();
-            });
+            toast.addEventListener('animationend', () => toast.remove());
           }
         }, 10000);
       });
@@ -288,22 +206,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.view-btn');
   const panels  = document.querySelectorAll('.view-panel');
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        b.classList.remove('bg-yellow-500', 'text-gray-900');
-        b.classList.add('bg-yellow-700', 'text-white');
-      });
-      btn.classList.remove('bg-yellow-700', 'text-white');
-      btn.classList.add('bg-yellow-500', 'text-gray-900');
-      const target = 'view-' + btn.dataset.view;
+      buttons.forEach(b => b.classList.remove('arcade-tab--active'));
+      btn.classList.add('arcade-tab--active');
       panels.forEach(p => p.classList.add('hidden'));
-      document.getElementById(target)?.classList.remove('hidden');
+      document.getElementById('view-' + btn.dataset.view)?.classList.remove('hidden');
     });
   });
 });
@@ -312,35 +224,27 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-  const headers   = { 'X-CSRFToken': csrftoken,
-                      'Content-Type': 'application/x-www-form-urlencoded' };
-
-  // Send challenge
+  const headers = { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/x-www-form-urlencoded' };
   const form = document.querySelector('#challenge-form');
   if (form) {
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
       const body = new URLSearchParams(new FormData(form));
-      const res  = await fetch(form.action, { method: 'POST', headers, body });
+      const res = await fetch(form.action, { method: 'POST', headers, body });
       const data = await res.json();
       if (data.status === 'ok') {
-        document.querySelector('#view-sent')
-                .insertAdjacentHTML('afterbegin', data.card);
+        document.querySelector('#view-sent').insertAdjacentHTML('afterbegin', data.card);
         form.reset();
       }
     });
   }
-
-  // Cancel or Reject challenge
   document.body.addEventListener('click', async (ev) => {
     const btn = ev.target.closest('.ajax-delete');
     if (!btn) return;
     ev.preventDefault();
-    const res  = await fetch(btn.dataset.url, { method: 'POST', headers });
+    const res = await fetch(btn.dataset.url, { method: 'POST', headers });
     const data = await res.json();
-    if (data.status === 'ok') {
-      btn.closest('.challenge-card')?.remove();
-    }
+    if (data.status === 'ok') btn.closest('.challenge-card')?.remove();
   });
 });
 </script>

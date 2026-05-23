@@ -12,14 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       /* 1️⃣ Reset botones */
-      buttons.forEach(b => {
-        b.classList.remove('bg-yellow-500', 'text-gray-900');
-        b.classList.add('bg-yellow-700', 'text-white');
-      });
-
-      /* 2️⃣ Botón activo */
-      btn.classList.remove('bg-yellow-700', 'text-white');
-      btn.classList.add('bg-yellow-500', 'text-gray-900');
+      buttons.forEach(b => b.classList.remove('arcade-tab--active'));
+      btn.classList.add('arcade-tab--active');
 
       /* 3️⃣ Panels */
       const target = 'view-' + btn.dataset.view;

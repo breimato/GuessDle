@@ -1,9 +1,33 @@
 /* Cursor base (espada LoL) */
-*,*:hover{
-  cursor:url('/static/cursors/lol.cur'),auto;
+:root {
+  --cursor-lol: url('/static/cursors/lol.cur'), auto;
+  --cursor-blade: url('/static/cursors/blade.cur'), auto;
 }
 
-/* Cursor “clic” */
+*,
+*:hover {
+  cursor: var(--cursor-lol);
+}
+
+button,
+a,
+input,
+textarea,
+select,
+label,
+[role="button"],
+[type="submit"],
+[type="button"],
+.arcade-btn,
+.cabinet-btn,
+.arcade-tab,
+.dashboard-logout-link,
+.challenge-toast-close,
+.arcade-modal__close {
+  cursor: var(--cursor-lol);
+}
+
+/* Cursor "clic" al pulsar */
 button:active,
 a:active,
 input:active,
@@ -12,6 +36,31 @@ select:active,
 label:active,
 [role="button"]:active,
 [type="submit"]:active,
-[type="button"]:active{
-  cursor:url('/static/cursors/blade.cur'),auto;
+[type="button"]:active,
+.arcade-btn:active,
+.cabinet-btn:active,
+.arcade-tab:active {
+  cursor: var(--cursor-blade);
+}
+
+/* Cursor arcade en barras de scroll (WebKit / Chromium) */
+.ranking-scroll,
+.attempts-scroll-wrapper {
+  cursor: var(--cursor-lol);
+}
+
+.ranking-scroll::-webkit-scrollbar,
+.ranking-scroll::-webkit-scrollbar-track,
+.ranking-scroll::-webkit-scrollbar-thumb,
+.ranking-scroll::-webkit-scrollbar-corner,
+.attempts-scroll-wrapper::-webkit-scrollbar,
+.attempts-scroll-wrapper::-webkit-scrollbar-track,
+.attempts-scroll-wrapper::-webkit-scrollbar-thumb,
+.attempts-scroll-wrapper::-webkit-scrollbar-corner {
+  cursor: var(--cursor-lol);
+}
+
+.ranking-scroll::-webkit-scrollbar-thumb:active,
+.attempts-scroll-wrapper::-webkit-scrollbar-thumb:active {
+  cursor: var(--cursor-blade);
 }

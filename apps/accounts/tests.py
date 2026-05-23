@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
 from apps.accounts.models import Challenge
-from apps.games.models import Game, GameItem
+from apps.games.models import Game, GameItem, PlaySession, PlaySessionType, GameAttempt
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 
 
@@ -148,3 +148,73 @@ class ChallengeBackendTests(TestCase):
 
         self.challenge.refresh_from_db()
         self.assertTrue(self.challenge.winner_notified)
+
+
+class PlayerStatsServiceTests(TestCase):
+    """Ensure dashboard stats and rankings use the same formulas."""
+
+    USERNAME = "stats_user"
+    GAME_NAME = "Test Game"
+    GAME_SLUG = "test-game"
+    TARGET_NAME = "Hero"
+
+    def setUp(self):
+        self.user = User.objects.create_user(username=self.USERNAME, password="pass")
+        self.game = Game.objects.create(name=self.GAME_NAME, slug=self.GAME_SLUG, active=True)
+        self.target = GameItem.objects.create(game=self.game, name=self.TARGET_NAME)
+        from apps.accounts.models import GameElo
+
+        GameElo.objects.create(user=self.user, game=self.game, elo=120)
+
+        won_session = PlaySession.objects.create(
+            user=self.user,
+            game=self.game,
+            session_type=PlaySessionType.DAILY,
+            reference_id=1,
+        )
+        GameAttempt.objects.create(
+            user=self.user,
+            game=self.game,
+            guess=self.target,
+            is_correct=False,
+            session=won_session,
+        )
+        GameAttempt.objects.create(
+            user=self.user,
+            game=self.game,
+            guess=self.target,
+            is_correct=True,
+            session=won_session,
+        )
+
+        lost_session = PlaySession.objects.create(
+            user=self.user,
+            game=self.game,
+            session_type=PlaySessionType.DAILY,
+            reference_id=2,
+        )
+        GameAttempt.objects.create(
+            user=self.user,
+            game=self.game,
+            guess=self.target,
+            is_correct=False,
+            session=lost_session,
+        )
+
+    def test_dashboard_and_ranking_stats_match(self):
+        from apps.accounts.services.dashboard_stats import DashboardStats
+        from apps.accounts.services.player_stats_service import PlayerStatsService
+
+        dashboard = DashboardStats(self.user)
+        user_row = dashboard.calculate_user_statistics()[0]
+        ranking_row = dashboard.generate_ranking_per_game()[self.GAME_SLUG][0]
+
+        self.assertEqual(user_row["points"], ranking_row["points"])
+        self.assertEqual(user_row["average_attempts"], ranking_row["average_attempts"])
+        self.assertEqual(ranking_row["games_finished"], 1)
+        self.assertEqual(user_row["average_attempts"], 2.0)
+
+        canonical = PlayerStatsService.get_game_stats(self.user, self.game)
+        self.assertEqual(canonical["points"], 120)
+        self.assertEqual(canonical["games_finished"], 1)
+        self.assertEqual(canonical["average_attempts"], 2.0)

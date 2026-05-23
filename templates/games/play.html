@@ -3,15 +3,12 @@
 
 {% block title %}{{ game.name }}{% endblock %}
 
-
 {% block main_class %}
-min-h-screen flex flex-col items-center gap-10 py-10 px-4
-bg-no-repeat bg-cover bg-fixed
+min-h-screen flex flex-col items-center gap-8 py-10 px-4
 {% endblock %}
 
 {% block content %}
 
-{# ——— Audio reto ——— #}
 {% if is_challenge %}
 <script>
   const IS_CHALLENGE            = "{{ is_challenge_js }}";
@@ -24,37 +21,22 @@ bg-no-repeat bg-cover bg-fixed
     <source src="{{ game.audio_file.url }}" type="audio/mpeg">
   </audio>
   {% endif %}
-  <div class="epic-aura"></div>
 {% endif %}
 
-{# ——— Botón dashboard ——— #}
-<div class="mb-4">
-  <a href="{% url 'dashboard' %}"
-     class="bg-yellow-700 hover:bg-yellow-800 text-white font-semibold px-4 py-2 rounded-full shadow transition">
-    🏠 Dashboard
-  </a>
+<div class="w-full max-w-4xl flex justify-start">
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--ghost">Dashboard</a>
 </div>
-
 
 <div id="game-data"
      data-slug="{{ game.slug }}"
-     {% if extra_play %}
-     data-extra-id="{{ extra_play.id }}"
-     {% endif %}
+     {% if extra_play %}data-extra-id="{{ extra_play.id }}"{% endif %}
      data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}">
-
 </div>
 
-
-{# ——— Título ——— #}
-<section class="container mx-auto text-center drop-shadow">
-  <h1 class="text-5xl md:text-6xl font-bold text-yellow-300 tracking-wide"
-      style="font-family:var(--font-lol); text-shadow:2px 2px #000;">
-    🛡️ {{ game.name }}
-  </h1>
+<section class="container mx-auto text-center">
+  <h1 class="arcade-heading-lg">{{ game.name }}</h1>
 </section>
 
-{# ——— Flag de victoria (para JS) ——— #}
 {% if won %}
   <script id="won-flag"
           data-champ="{{ target.name|escapejs }}"
@@ -68,155 +50,82 @@ bg-no-repeat bg-cover bg-fixed
 {% endif %}
 
 {% if extra_play %}
-<div id="bet-tracker-box" class="w-full max-w-xl shadow-2xl mb-6 backdrop-blur-md" 
-     style="background: rgba(18, 18, 22, 0.85); border: 2px solid {{ game.color|default:'#d4af37' }}; border-radius: 16px; padding: 16px;">
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: center; align-items: center; position: relative;">
-    
-    <!-- Apuesta Column -->
-    <div style="border-right: 1px solid rgba(255, 255, 255, 0.15); padding-right: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
-      <div style="display: flex; align-items: center; gap: 6px; justify-content: center;">
-        <span style="font-size: 1.2rem; filter: drop-shadow(0 0 4px rgba(250,204,21,0.4));">🪙</span>
-        <span style="color: #facc15; font-family: var(--font-lol); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-shadow: 0 1px 2px #000;">APUESTA</span>
-      </div>
-      <span id="bet-tracker-amount" class="font-extrabold text-2xl tracking-wide text-white" 
-            style="font-family: var(--font-lol); text-shadow: 0 0 8px rgba(255,255,255,0.25);">
-        {{ bet_amount }} <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">ELO</span>
+<div id="bet-tracker-box" class="bet-tracker">
+  <div class="bet-tracker__grid">
+    <div class="bet-tracker__col bet-tracker__col--left">
+      <span class="bet-tracker__label bet-tracker__label--bet">🪙 Apuesta</span>
+      <span id="bet-tracker-amount" class="bet-tracker__value">
+        {{ bet_amount }} <span class="bet-tracker__unit">ELO</span>
       </span>
     </div>
-
-    <!-- Límite Column -->
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
-      <div style="display: flex; align-items: center; gap: 6px; justify-content: center;">
-        <span style="font-size: 1.2rem; filter: drop-shadow(0 0 4px rgba(56,189,248,0.4));">🎯</span>
-        <span style="color: #38bdf8; font-family: var(--font-lol); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-shadow: 0 1px 2px #000;">OBJETIVO</span>
-      </div>
-      <span id="bet-tracker-average" class="font-extrabold text-2xl tracking-wide text-white" 
-            style="font-family: var(--font-lol); text-shadow: 0 0 8px rgba(255,255,255,0.25);">
-        {% if global_average %}{{ global_average|floatformat:1 }}{% else %}Sin media{% endif %} <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">intentos</span>
+    <div class="bet-tracker__col">
+      <span class="bet-tracker__label bet-tracker__label--goal">🎯 Objetivo</span>
+      <span id="bet-tracker-average" class="bet-tracker__value">
+        {% if global_average %}{{ global_average|floatformat:1 }}{% else %}Sin media{% endif %}
+        <span class="bet-tracker__unit">intentos</span>
       </span>
     </div>
   </div>
   <div id="bet-status-msg" class="mt-2 font-bold text-center text-lg hidden"></div>
 </div>
-
 {{ bet_tracking|json_script:"bet-tracking-data" }}
 {% endif %}
 
-{# ——— Formulario siempre presente, pero desactivado si won ——— #}
 <form id="guess-form"
       action="{{ guess_url }}"
       method="post"
-      class="bg-amber-100/90 backdrop-blur rounded-3xl p-6 border-4 border-yellow-800 shadow-lg w-full max-w-xl text-gray-900
-             {% if won %}opacity-50 pointer-events-none{% endif %}" style="margin-bottom: 100px"
+      class="arcade-card w-full max-w-xl mb-24 {% if won %}opacity-50 pointer-events-none{% endif %}"
       novalidate>
-
   {% csrf_token %}
-  <label for="guess" class="block font-semibold mb-2">¿Quién crees que es?</label>
+  <label for="guess" class="arcade-label">¿Quién crees que es?</label>
 
   {% if guess_error %}
-    <p class="text-red-700 font-bold mb-2">Ese personaje no existe o ya fue usado.</p>
+    <p class="arcade-alert arcade-alert--error mt-2">Ese personaje no existe o ya fue usado.</p>
   {% endif %}
 
-  <div class="relative">
-    <input  type="text" name="guess" id="guess" autofocus
-            class="w-full p-2 rounded-t border border-yellow-400 bg-white focus:outline-none"
-            placeholder="Escribe un nombre"
-            autocomplete="off"
-            required
-            data-names="{{ remaining_names_json|escape }}"
-            {% if won %}disabled{% endif %}>
+  <div class="relative mt-2">
+    <input type="text" name="guess" id="guess" autofocus
+           class="arcade-input rounded-b-none"
+           placeholder="Escribe un nombre"
+           autocomplete="off" required
+           data-names="{{ remaining_names_json|escape }}"
+           {% if won %}disabled{% endif %}>
     <ul id="suggestions" role="listbox"
-        class="hidden w-full absolute left-0 top-full bg-white text-gray-900 rounded-b-xl
-               border-x border-b border-yellow-400 max-h-56 overflow-y-auto z-50"></ul>
+        class="hidden w-full absolute left-0 top-full arcade-card rounded-t-none max-h-56 overflow-y-auto z-50 p-0"></ul>
   </div>
 
-  <button type="submit"
-          class="mt-4 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-2 rounded-full transition w-full shadow"
-          {% if won %}disabled{% endif %}>
-    Probar
-  </button>
+  <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
+          {% if won %}disabled{% endif %}>Probar</button>
 </form>
 
-{# ---------- Cabecera de atributos ---------- #}
 {% if game.attributes %}
-  {# ——— CABECERA + INTENTOS CON SCROLL LATERAL ——— #}
-<div class="attempts-scroll-wrapper">
+<div class="attempts-scroll-wrapper w-full max-w-full">
   <div id="attempts-header"
-       {% if attempts %}class="header-grid"{% else %}class="header-grid" style="display:none;"{% endif %}
+       class="header-grid"
        data-cols="{{ game.attributes|length|add:'1' }}"
-       style="margin-bottom: 1.2em;">
-    <div class="header-cell"
-         style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(24,24,28,0.88);
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-shadow: 0 0 3px {{ game.color }}, 0 1px 2px #000A;
-            border-radius: 0.5em;
-            box-shadow: 0 1px 4px #0002;
-            padding: 0.18em 0.6em;
-            margin: 0.15em 0.1em;
-            letter-spacing: 0.01em;
-            width: 100%;
-            height: 100%;
-         ">
-      Personaje
-    </div>
+       {% if not attempts %}style="display:none; margin-bottom: 1.2em;"{% else %}style="margin-bottom: 1.2em;"{% endif %}>
+    <div class="attempts-header-cell">Personaje</div>
     {% for attr in game.attributes %}
-      <div class="header-cell"
-           style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              background: rgba(24,24,28,0.88);
-              color: #fff;
-              font-size: 0.9rem;
-              font-weight: 600;
-              text-shadow: 0 0 3px {{ game.color }}, 0 1px 2px #000A;
-              border-radius: 0.5em;
-              box-shadow: 0 1px 4px #0002;
-              padding: 0.18em 0.6em;
-              margin: 0.15em 0.1em;
-              letter-spacing: 0.01em;
-              width: 100%;
-              height: 100%;
-           ">
-        {{ attr|title }}
-      </div>
+      <div class="attempts-header-cell">{{ attr|title }}</div>
     {% endfor %}
   </div>
-
   <div id="attempts-container"></div>
 </div>
-
-
-
-{# ——— HISTORIAL JSON ——— #}
-{% if attempts %}
-  {{ attempts|json_script:"initial-attempts" }}
-{% endif %}
+{% if attempts %}{{ attempts|json_script:"initial-attempts" }}{% endif %}
 {% endif %}
 
-
-{# ——— Personaje de ayer ——— #}
 {% if yesterday_target_name %}
-  <div class="mt-6 mx-auto max-w-xl bg-black/60 text-white border-2 border-yellow-600 rounded-xl px-4 py-3 shadow-lg backdrop-blur">
-    <p class="text-lg text-yellow-200 font-semibold text-center"
-       style="font-family: var(--font-lol); text-shadow: 1px 1px #000;">
-      🕐 El personaje de ayer fue: <span class="text-white">{{ yesterday_target_name }}</span>
-    </p>
-  </div>
+<div class="mt-6 mx-auto max-w-xl arcade-card text-center">
+  <p class="arcade-text-muted">
+    El personaje de ayer fue: <strong class="cabinet-accent">{{ yesterday_target_name }}</strong>
+  </p>
+</div>
 {% endif %}
 
 {% endblock %}
 
 {% block extra_scripts %}
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
-  <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
-  <script src="{% static 'js/attempts-live.js' %}" defer></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+<script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+<script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% endblock %}

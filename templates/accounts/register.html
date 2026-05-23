@@ -1,81 +1,107 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Registro – GuessDle{% endblock %}
-
-{% block main_class %}
-min-h-screen flex items-center justify-center py-16 px-4
-bg-no-repeat bg-cover bg-fixed
-login-bg
-{% endblock %}
-
-{% block content %}
-<div class="bg-amber-100 text-gray-900 font-serif border-4 border-yellow-800 rounded-[32px] shadow-inner p-10 w-full max-w-md">
-
-  <h2 class="text-3xl font-bold text-center text-yellow-900 mb-6 drop-shadow">Crear cuenta</h2>
-
-  {% if messages %}
-    {% for message in messages %}
-      <div class="bg-red-200 border border-red-500 text-red-800 px-4 py-3 rounded mb-4">{{ message }}</div>
-    {% endfor %}
-  {% endif %}
-
-  <form method="post" novalidate>
-    {% csrf_token %}
-
-    <div class="mb-4">
-      <label for="username" class="block text-yellow-900 mb-1">Nickname</label>
-      <input  type="text" name="username" id="username" required autofocus
-              class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-              autocomplete="username">
+{% extends 'base.html' %} {% load static %} {% block title %}Registro –
+GuessDle{% endblock %} {% block main_class %} min-h-screen flex items-center
+justify-center py-12 px-4 {% endblock %} {% block content %}
+<div class="cabinet-login">
+    <div class="cabinet-login__marquee">
+        <span class="cabinet-login__logo">GUESSDLE</span>
+        <span class="cabinet-login__subtitle">NUEVO MORNINSTAR PRAYER</span>
     </div>
 
-    <div class="mb-4">
-      <label for="first_name" class="block text-yellow-900 mb-1">Tu nombre real</label>
-      <input type="text" name="first_name" id="first_name" required
-             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-             autocomplete="given-name">
+    <div class="cabinet-panel">
+        {% if messages %} {% for message in messages %}
+        <div class="cabinet-alert">{{ message }}</div>
+        {% endfor %} {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="cabinet-field">
+                <label for="username" class="cabinet-label">Nickname</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    required
+                    autofocus
+                    class="cabinet-input"
+                    autocomplete="username"
+                />
+            </div>
+
+            <div class="cabinet-field">
+                <label for="first_name" class="cabinet-label"
+                    >Tu nombre real</label
+                >
+                <input
+                    type="text"
+                    name="first_name"
+                    id="first_name"
+                    required
+                    class="cabinet-input"
+                    autocomplete="given-name"
+                />
+            </div>
+
+            <div class="cabinet-field">
+                <label for="email" class="cabinet-label">Tu email</label>
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                    class="cabinet-input"
+                    autocomplete="email"
+                />
+            </div>
+
+            <div class="cabinet-field">
+                <label for="password1" class="cabinet-label">Contraseña</label>
+                <input
+                    type="password"
+                    name="password1"
+                    id="password1"
+                    required
+                    class="cabinet-input"
+                    autocomplete="new-password"
+                />
+            </div>
+
+            <div class="cabinet-field">
+                <label for="password2" class="cabinet-label"
+                    >Repite la contraseña</label
+                >
+                <input
+                    type="password"
+                    name="password2"
+                    id="password2"
+                    required
+                    class="cabinet-input"
+                    autocomplete="new-password"
+                />
+            </div>
+
+            <div class="cabinet-checkbox-row">
+                <input
+                    type="checkbox"
+                    name="is_team_account"
+                    id="is_team_account"
+                />
+                <label for="is_team_account"
+                    >Esta cuenta es <strong>una cuenta de equipo</strong></label
+                >
+            </div>
+
+            <button type="submit" class="cabinet-btn">Registrar</button>
+        </form>
+
+        <div class="cabinet-footer">
+            <p>
+                ¿Ya tienes cuenta?
+                <a href="{% url 'login' %}" class="cabinet-link"
+                    >Inicia sesión</a
+                >
+            </p>
+        </div>
     </div>
-
-    <div class="mb-4">
-      <label for="email" class="block text-yellow-900 mb-1">Tu email</label>
-      <input type="email" name="email" id="email" required
-             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-             autocomplete="email">
-    </div>
-
-
-
-    <div class="mb-4">
-      <label for="password1" class="block text-yellow-900 mb-1">Contraseña</label>
-      <input type="password" name="password1" id="password1" required
-             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-             autocomplete="new-password">
-    </div>
-
-    <div class="mb-6">
-      <label for="password2" class="block text-yellow-900 mb-1">Repite la contraseña</label>
-      <input type="password" name="password2" id="password2" required
-             class="w-full px-4 py-2 bg-yellow-50 border border-yellow-400 rounded focus:outline-none focus:ring-2 focus:ring-yellow-600"
-             autocomplete="new-password">
-    </div>
-    <div class="mb-6 flex items-center gap-3">
-      <input type="checkbox" name="is_team_account" id="is_team_account"
-             class="w-4 h-4 text-yellow-700 border-gray-300 rounded focus:ring-yellow-600">
-      <label for="is_team_account" class="text-yellow-900">
-        Esta cuenta es <strong>una cuenta de equipo</strong> 🧑‍🤝‍🧑
-      </label>
-    </div>
-
-    <button type="submit"
-            class="w-full bg-yellow-700 text-white font-semibold py-2 px-4 rounded hover:bg-yellow-800 transition">
-      Registrar
-    </button>
-  </form>
-
-  <p class="mt-6 text-sm text-center text-yellow-800">
-    ¿Ya tienes cuenta?
-    <a href="{% url 'login' %}" class="text-yellow-700 hover:underline">Inicia sesión</a>
-  </p>
 </div>
 {% endblock %}

@@ -1,23 +1,55 @@
-@import "tailwindcss";         /* ya no se usan las @tailwind xxx */
+@import "tailwindcss";
 @import "../css/global.css";
 @import "../css/cursors.css";
 
-/* Ejemplo de tema “CSS-first” (opcional) */
 @theme {
-  --font-lol: 'BeaufortLOL', 'Cinzel Decorative', serif;
+  --font-arcade: 'Press Start 2P', monospace;
+  --font-ui: 'Rubik', sans-serif;
 }
 
-/* Si quieres limitar el escaneo a tus plantillas Django: */
 @source "../templates/**/*.html";
 
-
-@import "https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css";
-
 .square {
-  @apply rounded-xl flex items-center justify-center border-2 h-14 md:h-16 font-semibold text-sm text-center;
+  @apply flex items-center justify-center border-[3px] h-14 md:h-16 font-semibold text-sm text-center;
+  font-family: var(--font-ui, 'Rubik', sans-serif);
+  border-color: #111;
+  border-radius: 0;
+  width: var(--cell, 110px);
+  height: var(--cell, 110px);
+  min-width: var(--cell, 110px);
+  min-height: var(--cell, 110px);
+  overflow: hidden;
 }
-.square-good     { @apply bg-green-600 text-white border-green-800; }
-.square-part     { @apply bg-yellow-400 text-black border-yellow-600; }
-.square-bad      { @apply bg-red-700 text-white border-red-800; }
+
+.square:not(.show) {
+  opacity: 0;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+.square:not(.show) .square-content {
+  visibility: hidden;
+}
+
+.square.show .square-content {
+  visibility: visible;
+}
+
+.square.show.square-good     { background: #3d8c40; color: #fff; border-color: #111; }
+.square.show.square-part     { background: #f5c400; color: #1a1a1a; border-color: #111; }
+.square.show.square-bad      { background: #c0392b; color: #fff; border-color: #111; }
+.square.show.square-superior { background: #2e6da4; color: #fff; border-color: #111; }
+.square.show.square--static  { background: var(--cab-panel, #d4c4a8); color: var(--cab-ink, #1a1a1a); border-color: #111; }
+
 .square-content  { @apply w-full h-full flex items-center justify-center p-1; }
-.champion-icon-name { @apply text-xs mt-1; }
+.champion-icon-name {
+  @apply text-xs mt-1;
+  font-family: var(--font-ui, 'Rubik', sans-serif);
+}
+
+.suggestion-active,
+.suggestion:hover {
+  background-color: rgba(245, 196, 0, 0.35);
+  color: var(--cab-ink, #1a1a1a);
+}

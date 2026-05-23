@@ -1,26 +1,11 @@
-<div
-  class="challenge-card w-full min-h-[160px] p-6 bg-yellow-50/90 border-2 border-yellow-700
-         rounded-2xl shadow flex flex-col justify-between gap-6"
-  data-challenge-id="{{ challenge.id }}">
-
-  <div class="text-yellow-900 font-semibold leading-snug text-center"
-       style="font-family:var(--font-lol); margin-bottom: 15px;">
-    Has retado a <strong>{{ challenge.opponent.username }}</strong> en
-    <strong>{{ challenge.game.name }}</strong>
+<div class="arcade-challenge-card challenge-card w-full" data-challenge-id="{{ challenge.id }}">
+  <div class="arcade-challenge-card__title">
+    <span class="arcade-challenge-card__line">Has retado a <strong class="cabinet-accent-alt">{{ challenge.opponent.username }}</strong></span>
+    <span class="arcade-challenge-card__line">en <strong class="cabinet-accent">{{ challenge.game.name }}</strong></span>
   </div>
-
-  <button
-    type="button"
-    class="ajax-delete flex items-center gap-2 bg-red-50 border border-red-400
-           text-red-700 font-semibold px-4 py-2 rounded-full shadow transition
-           hover:bg-red-600 hover:text-white hover:border-red-600
-           focus:outline-none focus:ring-2 focus:ring-red-200 mx-auto"
-           onmouseover="this.style.backgroundColor='#ef4444'; this.style.color='#fff'; this.style.borderColor='#dc2626';"
-           onmouseout="this.style.backgroundColor=''; this.style.color=''; this.style.borderColor='';"
-    data-url="{% url 'cancel_challenge' challenge.id %}">
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-    <span>Cancelar</span>
+  <button type="button"
+          class="arcade-btn arcade-btn--danger ajax-delete"
+          data-url="{% url 'cancel_challenge' challenge.id %}">
+    Cancelar
   </button>
 </div>
