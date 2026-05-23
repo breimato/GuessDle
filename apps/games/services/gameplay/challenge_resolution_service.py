@@ -28,7 +28,11 @@ class ChallengeResolutionService:
         if self.challenge.winner is None:
             ResultUpdater(self.challenge.game, self.acting_user).update_for_game(challenge=self.challenge)
             self.challenge.points_assigned = True
-            self.challenge.save(update_fields=["points_assigned"])
+            if self.acting_user == self.challenge.challenger:
+                self.challenge.winner_notified = True
+            elif self.acting_user == self.challenge.opponent:
+                self.challenge.loser_notified = True
+            self.challenge.save(update_fields=["points_assigned", "winner_notified", "loser_notified"])
             return {
                 "status": "tie",
                 "users": challenge_manager.get_tied_users(),
@@ -49,7 +53,11 @@ class ChallengeResolutionService:
         ResultUpdater(self.challenge.game, winner).update_for_game(challenge=self.challenge)
 
         self.challenge.points_assigned = True
-        self.challenge.save(update_fields=["points_assigned"])
+        if self.acting_user == winner:
+            self.challenge.winner_notified = True
+        elif self.acting_user == loser:
+            self.challenge.loser_notified = True
+        self.challenge.save(update_fields=["points_assigned", "winner_notified", "loser_notified"])
 
         return {
             "status": "winner",

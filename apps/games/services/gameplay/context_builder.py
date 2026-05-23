@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from apps.games.attempts import build_attempts
 from apps.games.models import GameAttempt
+from apps.accounts.services.score_service import ScoreService
 from .play_session_service import PlaySessionService
 from .target_service import TargetService
 
@@ -75,9 +76,46 @@ class ContextBuilder:
                 if yesterday_target:
                     context["yesterday_target_name"] = yesterday_target.target.name
 
+            if self.extra_play:
+                score_service = ScoreService(self.request.user, self.game)
+                global_average = score_service.calculate_global_average_of_averages(exclude_user=True)
+                if global_average is None:
+                    global_average = score_service.calculate_user_average_attempts()
+
+                current_attempts = len(attempts)
+
+                bet_won = False
+                if has_won:
+                    if global_average is not None:
+                        bet_won = float(current_attempts) < float(global_average)
+                    else:
+                        bet_won = True
+
+                bet_amount = self.extra_play.bet_amount
+                bonus_points = bet_amount * 1.5 if bet_won else 0
+                net_profit = bonus_points - bet_amount if bet_won else 0
+
+                context.update({
+                    "extra_play": self.extra_play,
+                    "bet_amount": bet_amount,
+                    "global_average": global_average,
+                    "current_attempts": current_attempts,
+                    "bet_won": bet_won,
+                    "points_awarded": bonus_points,
+                    "net_profit": net_profit,
+                    "bet_tracking": {
+                        "bet_amount": bet_amount,
+                        "global_average": global_average,
+                        "current_attempts": current_attempts,
+                        "bet_won": bet_won,
+                    },
+                })
+
         return context
 
     def _get_guess_url(self):
         """Retrieve the AJAX guess submission URL endpoint."""
 
+        if self.extra_play:
+            return reverse("ajax_guess_extra", args=[self.extra_play.id])
         return reverse("ajax_guess", args=[self.game.slug])

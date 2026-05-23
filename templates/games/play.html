@@ -3,6 +3,7 @@
 
 {% block title %}{{ game.name }}{% endblock %}
 
+
 {% block main_class %}
 min-h-screen flex flex-col items-center gap-10 py-10 px-4
 bg-no-repeat bg-cover bg-fixed
@@ -13,9 +14,10 @@ bg-no-repeat bg-cover bg-fixed
 {# ——— Audio reto ——— #}
 {% if is_challenge %}
 <script>
-  const IS_CHALLENGE          = "{{ is_challenge_js }}";
-  const CHALLENGE_REPORT_URL  = "{{ challenge_report_url }}";
-  const CSRF_TOKEN            = "{{ csrf_token }}";
+  const IS_CHALLENGE            = "{{ is_challenge_js }}";
+  const CHALLENGE_REPORT_URL    = "{{ challenge_report_url }}";
+  const CHALLENGE_CURRENT_USER  = "{{ user.username|escapejs }}";
+  const CSRF_TOKEN              = "{{ csrf_token }}";
 </script>
   {% if game.audio_file %}
   <audio autoplay loop>
@@ -54,7 +56,50 @@ bg-no-repeat bg-cover bg-fixed
 
 {# ——— Flag de victoria (para JS) ——— #}
 {% if won %}
-  <script id="won-flag" data-champ="{{ target.name|escapejs }}"></script>
+  <script id="won-flag"
+          data-champ="{{ target.name|escapejs }}"
+          {% if extra_play %}
+          data-is-extra="true"
+          data-bet-won="{{ bet_won|yesno:'true,false' }}"
+          data-points-awarded="{{ points_awarded|default:0 }}"
+          data-net-profit="{{ net_profit|default:0 }}"
+          data-bet-amount="{{ bet_amount|default:0 }}"
+          {% endif %}></script>
+{% endif %}
+
+{% if extra_play %}
+<div id="bet-tracker-box" class="w-full max-w-xl shadow-2xl mb-6 backdrop-blur-md" 
+     style="background: rgba(18, 18, 22, 0.85); border: 2px solid {{ game.color|default:'#d4af37' }}; border-radius: 16px; padding: 16px;">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; text-align: center; align-items: center; position: relative;">
+    
+    <!-- Apuesta Column -->
+    <div style="border-right: 1px solid rgba(255, 255, 255, 0.15); padding-right: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+      <div style="display: flex; align-items: center; gap: 6px; justify-content: center;">
+        <span style="font-size: 1.2rem; filter: drop-shadow(0 0 4px rgba(250,204,21,0.4));">🪙</span>
+        <span style="color: #facc15; font-family: var(--font-lol); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-shadow: 0 1px 2px #000;">APUESTA</span>
+      </div>
+      <span id="bet-tracker-amount" class="font-extrabold text-2xl tracking-wide text-white" 
+            style="font-family: var(--font-lol); text-shadow: 0 0 8px rgba(255,255,255,0.25);">
+        {{ bet_amount }} <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">ELO</span>
+      </span>
+    </div>
+
+    <!-- Límite Column -->
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+      <div style="display: flex; align-items: center; gap: 6px; justify-content: center;">
+        <span style="font-size: 1.2rem; filter: drop-shadow(0 0 4px rgba(56,189,248,0.4));">🎯</span>
+        <span style="color: #38bdf8; font-family: var(--font-lol); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em; text-shadow: 0 1px 2px #000;">OBJETIVO</span>
+      </div>
+      <span id="bet-tracker-average" class="font-extrabold text-2xl tracking-wide text-white" 
+            style="font-family: var(--font-lol); text-shadow: 0 0 8px rgba(255,255,255,0.25);">
+        {% if global_average %}{{ global_average|floatformat:1 }}{% else %}Sin media{% endif %} <span style="font-size: 1rem; color: #a1a1aa; font-weight: 500;">intentos</span>
+      </span>
+    </div>
+  </div>
+  <div id="bet-status-msg" class="mt-2 font-bold text-center text-lg hidden"></div>
+</div>
+
+{{ bet_tracking|json_script:"bet-tracking-data" }}
 {% endif %}
 
 {# ——— Formulario siempre presente, pero desactivado si won ——— #}
@@ -173,12 +218,5 @@ bg-no-repeat bg-cover bg-fixed
   <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
   <script src="{% static 'js/attempts-live.js' %}" defer></script>
 
-
-{% if is_challenge %}
-<form id="challenge-report-form" method="POST" action="{% url 'play_challenge' challenge_id %}">
-  {% csrf_token %}
-  <input type="hidden" name="attempts" id="challenge-attempts-input">
-</form>
-{% endif %}
 
 {% endblock %}

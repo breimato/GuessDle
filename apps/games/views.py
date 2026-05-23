@@ -42,14 +42,14 @@ def process_daily_guess(request, slug: str):
     if not context["can_play"]:
         return JsonResponse({"error": "You cannot play anymore."}, status=403)
 
-    is_valid, is_correct = GuessProcessor(game, user).process(request, daily_target=daily_target)
+    is_valid, is_correct, points_data = GuessProcessor(game, user).process(request, daily_target=daily_target)
     if not is_valid:
         return JsonResponse({"error": "Invalid attempt."}, status=400)
 
     context = ContextBuilder(request, game, daily_target=daily_target).build()
     last_attempt = context["attempts"][0]
 
-    return JsonResponse({
+    response_data = {
         "won": is_correct,
         "attempt": {
             "name":     last_attempt["name"],
@@ -58,7 +58,9 @@ def process_daily_guess(request, slug: str):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
-    })
+    }
+    response_data.update(points_data)
+    return JsonResponse(response_data)
 
 
 @never_cache
@@ -86,7 +88,7 @@ def play_daily_game(request, slug: str):
             messages.error(request, "You cannot play anymore.")
             return render(request, "games/play.html", context)
 
-        is_valid, is_correct = GuessProcessor(game, user).process(request, daily_target=daily_target)
+        is_valid, is_correct, points_data = GuessProcessor(game, user).process(request, daily_target=daily_target)
         if not is_valid:
             if is_ajax:
                 return JsonResponse({"error": "Invalid attempt."}, status=400)
@@ -99,8 +101,10 @@ def play_daily_game(request, slug: str):
             context["won"] = True
             context["target"] = daily_target
 
+        context.update(points_data)
+
         if is_ajax:
-            return JsonResponse({
+            response_data = {
                 "won": is_correct,
                 "attempt": {
                     "name":     last_attempt["name"],
@@ -109,7 +113,9 @@ def play_daily_game(request, slug: str):
                     "guess_image_url": last_attempt.get("guess_image_url"),
                 },
                 "remaining_names": json.loads(context["remaining_names_json"]),
-            })
+            }
+            response_data.update(points_data)
+            return JsonResponse(response_data)
         return render(request, "games/play.html", context)
 
     context = ContextBuilder(request, game, daily_target=daily_target).build()
@@ -140,10 +146,28 @@ def play_challenge_game(request, challenge_id: int):
         challenge.save(update_fields=["target"])
 
     if request.method == "POST":
+        is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
         if not challenge_view_helper.assign_attempts_from_post():
+            if is_ajax:
+                return JsonResponse({"error": "Invalid attempts value."}, status=400)
             return redirect("play_challenge", challenge_id=challenge.id)
 
-        ChallengeResolutionService(challenge, acting_user=request.user).resolve_and_assign_points()
+        resolution_result = ChallengeResolutionService(
+            challenge,
+            acting_user=request.user
+        ).resolve_and_assign_points()
+
+        if is_ajax:
+            return JsonResponse({
+                "completed": challenge.completed,
+                "winner": challenge.winner.username if challenge.winner else None,
+                "challenger": challenge.challenger.username,
+                "opponent": challenge.opponent.username,
+                "current_user": request.user.username,
+                "challenger_attempts": challenge.challenger_attempts,
+                "opponent_attempts": challenge.opponent_attempts,
+                "result_status": resolution_result.get("status"),
+            })
         return redirect("dashboard")
 
     context = ContextBuilder(request, challenge.game, challenge=challenge).build()
@@ -177,14 +201,14 @@ def process_challenge_guess(request, challenge_id: int):
     if not context["can_play"]:
         return JsonResponse({"error": "You cannot play anymore."}, status=403)
 
-    is_valid, is_correct = GuessProcessor(game, request.user).process(request, challenge=challenge)
+    is_valid, is_correct, points_data = GuessProcessor(game, request.user).process(request, challenge=challenge)
     if not is_valid:
         return JsonResponse({"error": "Invalid attempt."}, status=400)
 
     context = ContextBuilder(request, game, challenge=challenge).build()
     last_attempt = context["attempts"][0]
 
-    return JsonResponse({
+    response_data = {
         "won": is_correct,
         "attempt": {
             "name":     last_attempt["name"],
@@ -193,7 +217,9 @@ def process_challenge_guess(request, challenge_id: int):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
-    })
+    }
+    response_data.update(points_data)
+    return JsonResponse(response_data)
 
 
 @login_required
@@ -208,6 +234,11 @@ def start_extra_daily_game(request, slug: str):
     if extra_daily_service.max_reached():
         messages.error(request, "You have already played the maximum of 2 extra games today for this game.")
         return redirect("dashboard")
+
+    target_service = TargetService(game, user)
+    if not target_service.is_daily_resolved():
+        messages.error(request, "Debes completar la partida diaria antes de apostar una partida extra.")
+        return redirect("play", slug=slug)
 
     try:
         bet = float(request.POST.get("bet", "0"))
@@ -228,23 +259,18 @@ def start_extra_daily_game(request, slug: str):
 def play_extra_daily_game(request, extra_id: int):
     """Render extra daily play view and handle non-AJAX correct guesses."""
 
-    extra_play = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user, completed=False)
+    extra_play = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
     game = extra_play.game
     extra_daily_service = ExtraDailyService(request.user, game)
-
-    target_service = TargetService(game, request.user)
-    if not target_service.is_daily_resolved():
-        return redirect("play", slug=game.slug)
 
     if localtime(extra_play.created_at).date() != date.today():
         return redirect("dashboard")
 
+    points_data = {}
     if request.method == "POST":
-        is_valid, is_correct = GuessProcessor(game, request.user).process(request, extra_play=extra_play)
-        if is_valid and is_correct:
-            ResultUpdater(game, request.user).update_for_game(extra_play=extra_play)
-            extra_play.completed = True
-            extra_play.save(update_fields=["completed"])
+        if extra_play.completed:
+            return redirect("play_extra_daily", extra_id=extra_play.id)
+        is_valid, is_correct, points_data = GuessProcessor(game, request.user).process(request, extra_play=extra_play)
 
     context = ContextBuilder(request, game, extra_play=extra_play).build()
     context.update({
@@ -254,6 +280,8 @@ def play_extra_daily_game(request, extra_id: int):
         "extra_id": extra_play.id,
         "max_extras_reached": extra_daily_service.max_reached(),
     })
+    if points_data:
+        context.update(points_data)
     return render(request, "games/play.html", context)
 
 
@@ -271,14 +299,14 @@ def process_extra_guess(request, extra_id: int):
     if not context["can_play"]:
         return JsonResponse({"error": "You cannot play anymore."}, status=403)
 
-    is_valid, is_correct = GuessProcessor(game, request.user).process(request, extra_play=extra_play)
+    is_valid, is_correct, points_data = GuessProcessor(game, request.user).process(request, extra_play=extra_play)
     if not is_valid:
         return JsonResponse({"error": "Invalid attempt."}, status=400)
 
     context = ContextBuilder(request, game, extra_play=extra_play).build()
     last_attempt = context["attempts"][0]
 
-    return JsonResponse({
+    response_data = {
         "won": is_correct,
         "attempt": {
             "name":     last_attempt["name"],
@@ -287,4 +315,6 @@ def process_extra_guess(request, extra_id: int):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
-    })
+    }
+    response_data.update(points_data)
+    return JsonResponse(response_data)

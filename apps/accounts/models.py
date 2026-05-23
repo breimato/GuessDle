@@ -31,6 +31,8 @@ class Challenge(models.Model):
     challenger_attempts = models.PositiveIntegerField(null=True, blank=True)
     opponent_attempts = models.PositiveIntegerField(null=True, blank=True)
     points_assigned = models.BooleanField(default=False)
+    winner_notified = models.BooleanField(default=False)
+    loser_notified = models.BooleanField(default=False)
 
 
     def __str__(self):

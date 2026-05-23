@@ -3,6 +3,10 @@
 
 {% block title %}Dashboard – GuessDle{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/challenge-toast.css' %}">
+{% endblock %}
+
 {% block main_class %}
 min-h-screen flex flex-col gap-12 pt-24 pb-12 px-4
 bg-no-repeat bg-cover bg-fixed
@@ -205,9 +209,85 @@ bg-no-repeat bg-cover bg-fixed
 {% endblock %}
 
 {% block extra_scripts %}
+{{ challenge_notifications|json_script:"challenge-notifications-data" }}
 <script src="{% static 'js/ranking-tabs.js' %}" defer></script>
 <script src="{% static 'js/pending-tabs.js' %}" defer></script>
 <script src="{% static 'js/active-tabs.js' %}" defer></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const notificationsData = document.getElementById('challenge-notifications-data');
+  if (notificationsData) {
+    const notifications = JSON.parse(notificationsData.textContent);
+    if (notifications && notifications.length > 0) {
+      let container = document.getElementById('challenge-toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'challenge-toast-container';
+        document.body.appendChild(container);
+      }
+
+      notifications.forEach(notification => {
+        const toast = document.createElement('div');
+        let toastClass = 'toast-loss';
+        let iconText = '💀';
+        if (notification.type === 'win') {
+          toastClass = 'toast-win';
+          iconText = '🏆';
+        } else if (notification.type === 'tie') {
+          toastClass = 'toast-tie';
+          iconText = '🤝';
+        }
+        toast.className = `challenge-toast ${toastClass}`;
+
+        const content = document.createElement('div');
+        content.className = 'challenge-toast-content';
+
+        const icon = document.createElement('span');
+        icon.className = 'challenge-toast-icon';
+        icon.textContent = iconText;
+
+        const text = document.createElement('div');
+        text.className = 'challenge-toast-text';
+        if (notification.type === 'win') {
+          text.textContent = `¡Has ganado el reto de ${notification.game_name} contra ${notification.opponent_username}!`;
+        } else if (notification.type === 'tie') {
+          text.textContent = `¡Empate en ${notification.game_name} contra ${notification.opponent_username}!`;
+        } else {
+          text.textContent = `¡Has perdido el reto de ${notification.game_name} contra ${notification.opponent_username}!`;
+        }
+
+        content.appendChild(icon);
+        content.appendChild(text);
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'challenge-toast-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.addEventListener('click', () => {
+          toast.classList.add('toast-hide');
+          toast.addEventListener('animationend', () => {
+            toast.remove();
+          });
+        });
+
+        toast.appendChild(content);
+        toast.appendChild(closeBtn);
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.classList.add('toast-hide');
+            toast.addEventListener('animationend', () => {
+              toast.remove();
+            });
+          }
+        }, 10000);
+      });
+    }
+  }
+});
+</script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

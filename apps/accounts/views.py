@@ -18,6 +18,7 @@ from apps.accounts.models import Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
 from apps.games.models import ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
+from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 from apps.common.utils import json_success, json_error
@@ -88,13 +89,18 @@ def dashboard_view(request):
     )
 
     today = now().date()
-    active_extras = ExtraDailyPlay.objects.filter(
+    today_extras = ExtraDailyPlay.objects.filter(
         user=request.user,
-        completed=False,
-        created_at__date=today
-    ).select_related('game')
+        created_at__date=today,
+    ).select_related("game").order_by("-created_at")
 
-    extras_by_slug = {extra.game.slug: extra.id for extra in active_extras}
+    active_extra_by_slug = {}
+    latest_extra_by_slug = {}
+    for extra in today_extras:
+        slug = extra.game.slug
+        latest_extra_by_slug.setdefault(slug, extra.id)
+        if not extra.completed:
+            active_extra_by_slug.setdefault(slug, extra.id)
 
     available_games = stats.fetch_active_games()
     daily_targets_by_slug = {
@@ -103,13 +109,81 @@ def dashboard_view(request):
     }
 
     for game in available_games:
-        if daily_targets_by_slug.get(game.slug):
+        slug = game.slug
+        if slug in active_extra_by_slug:
+            game.redirect_url = reverse("play_extra_daily", args=[active_extra_by_slug[slug]])
+        elif (
+            slug in latest_extra_by_slug
+            and ExtraDailyService(request.user, game).max_reached()
+        ):
+            game.redirect_url = reverse("play_extra_daily", args=[latest_extra_by_slug[slug]])
+        elif daily_targets_by_slug.get(slug):
             game.redirect_url = reverse("play", args=[game.slug])
-        elif game.slug in extras_by_slug:
-            game.redirect_url = reverse("play_extra_daily", args=[extras_by_slug[game.slug]])
         else:
             game.redirect_url = reverse("play", args=[game.slug])
 
+    notifications = []
+
+    won_challenges = Challenge.objects.filter(
+        completed=True,
+        winner=request.user,
+        winner_notified=False
+    ).select_related("challenger", "opponent", "game")
+
+    for challenge in won_challenges:
+        opponent_user = challenge.opponent if challenge.challenger == request.user else challenge.challenger
+        notifications.append({
+            "id": challenge.id,
+            "type": "win",
+            "game_name": challenge.game.name,
+            "opponent_username": opponent_user.username,
+        })
+        challenge.winner_notified = True
+        challenge.save(update_fields=["winner_notified"])
+
+    lost_challenges = Challenge.objects.filter(
+        completed=True,
+        loser_notified=False
+    ).filter(
+        models.Q(challenger=request.user) | models.Q(opponent=request.user)
+    ).exclude(
+        winner=request.user
+    ).exclude(
+        winner__isnull=True
+    ).select_related("winner", "game")
+
+    for challenge in lost_challenges:
+        notifications.append({
+            "id": challenge.id,
+            "type": "loss",
+            "game_name": challenge.game.name,
+            "opponent_username": challenge.winner.username,
+        })
+        challenge.loser_notified = True
+        challenge.save(update_fields=["loser_notified"])
+
+    tie_challenges = Challenge.objects.filter(
+        completed=True,
+        winner__isnull=True
+    ).filter(
+        (models.Q(challenger=request.user) & models.Q(winner_notified=False)) |
+        (models.Q(opponent=request.user) & models.Q(loser_notified=False))
+    ).select_related("challenger", "opponent", "game")
+
+    for challenge in tie_challenges:
+        opponent_user = challenge.opponent if challenge.challenger == request.user else challenge.challenger
+        notifications.append({
+            "id": challenge.id,
+            "type": "tie",
+            "game_name": challenge.game.name,
+            "opponent_username": opponent_user.username,
+        })
+        if challenge.challenger == request.user:
+            challenge.winner_notified = True
+            challenge.save(update_fields=["winner_notified"])
+        else:
+            challenge.loser_notified = True
+            challenge.save(update_fields=["loser_notified"])
     context = {
         "available_games": available_games,
         "user_stats": {
@@ -123,6 +197,7 @@ def dashboard_view(request):
         "active_challenges_to_play": active_challenges_to_play,
         "sent_pending_challenges": sent_pending_challenges,
         "users": users,
+        "challenge_notifications": notifications,
     }
 
     return render(request, "accounts/dashboard.html", context)
