@@ -10,7 +10,7 @@
 - 🎯 Juegos tipo Wordle según franquicia.
 - 🛠️ Añade nuevos juegos fácilmente desde el panel de administración de Django (sin tocar código).
 - 🔁 Soporte para APIs externas o archivos `.json` locales.
-- 🔐 Sistema de inicio de sesión, registro y recuperación de contraseña.
+- 🔐 Sistema de inicio de sesión y registro.
 - 🏆 Estadísticas por usuario y rankings:
   - Ranking global 🌍
   - Ranking por juego 🎮
@@ -51,31 +51,6 @@ Accede a la aplicación en:
 http://localhost:8000
 ```
 
----
-
-## Correo y recuperación de contraseña (producción)
-
-En producción el archivo `.env` **no se despliega** (está en `.gitignore`). Debes definir las variables de entorno en el contenedor o servidor. Copia [`.env.example`](.env.example) como referencia.
-
-Variables mínimas:
-
-```env
-EMAIL_HOST_USER=tu-cuenta@dominio.com
-EMAIL_HOST_PASSWORD=contraseña-o-app-password
-DEFAULT_FROM_EMAIL=GuessDle <tu-cuenta@dominio.com>
-ALLOWED_HOSTS=tudominio.com
-CSRF_TRUSTED_ORIGINS=https://tudominio.com
-USE_X_FORWARDED_HOST=True
-```
-
-Para verificar SMTP dentro del contenedor:
-
-```bash
-python manage.py send_test_email tu@email.com
-```
-
-Si Gmail bloquea el envío desde el servidor, usa un proveedor transaccional (Brevo, Resend, SendGrid) cambiando `EMAIL_HOST`, `EMAIL_PORT` y las credenciales.
-
 ________
 
 # 🎮 GuessDle
@@ -90,7 +65,7 @@ ________
 - 🎯 Wordle-style games based on popular franchises.
 - 🛠️ Add new games via the Django admin panel – no coding required.
 - 🔁 Supports both external APIs and local `.json` files.
-- 🔐 Login, registration, and password recovery system.
+- 🔐 Login and registration system.
 - 🏆 User statistics and leaderboards:
   - Global ranking 🌍  
   - Game-specific rankings 🎮  
