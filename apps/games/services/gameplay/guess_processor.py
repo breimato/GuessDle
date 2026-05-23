@@ -1,29 +1,31 @@
-# apps/games/services/gameplay/guess_processor.py
-from django.db.models import Q
+"""Service to validate and process guess attempts, register attempts, and trigger outcome score updates."""
+
 from apps.games.models import GameAttempt
 from .result_updater import ResultUpdater
 from .play_session_service import PlaySessionService
 
 
 class GuessProcessor:
-    """Procesa un intento: valida duplicados, guarda intento y actualiza resultado."""
+    """Handles verification of new guesses, checks for duplication, stores attempts, and updates game results."""
 
     def __init__(self, game, user):
+        """Initialize guess processor."""
+
         self.game = game
         self.user = user
 
-    # daily_target / extra_play / challenge son mutuamente excluyentes
     def process(self, request, *, daily_target=None, extra_play=None, challenge=None):
-        if sum(bool(x) for x in (daily_target, extra_play, challenge)) != 1:
-            raise ValueError("Debes indicar daily_target, challenge o extra_play.")
+        """Validate, store, and process a user's guess, returning a tuple (is_valid, is_correct)."""
+
+        if sum(bool(param) for param in (daily_target, extra_play, challenge)) != 1:
+            raise ValueError("Must specify exactly one of daily_target, challenge, or extra_play.")
 
         guess_name = request.POST.get("guess", "").strip()
-        item = self.game.items.filter(name__iexact=guess_name).first()
-        if not item:
-            return False, False  # nombre incorrecto
+        guessed_item = self.game.items.filter(name__iexact=guess_name).first()
+        if not guessed_item:
+            return False, False
 
-        # -------------------- 1️⃣ Sesión -------------------- #
-        session = PlaySessionService.get_or_create(
+        play_session = PlaySessionService.get_or_create(
             self.user,
             self.game,
             daily_target=daily_target,
@@ -31,30 +33,26 @@ class GuessProcessor:
             challenge=challenge,
         )
 
-        # -------------------- 2️⃣ Duplicados -------------------- #
-        if GameAttempt.objects.filter(session=session, guess=item).exists():
+        if GameAttempt.objects.filter(session=play_session, guess=guessed_item).exists():
             return False, False
 
-        # -------------------- 3️⃣ ¿Es correcto? ----------------- #
         if daily_target:
             target_item = daily_target.target
         elif extra_play:
             target_item = extra_play.target
-        else:  # challenge
+        else:
             target_item = challenge.target
 
-        is_correct = item.pk == target_item.pk
+        is_correct = guessed_item.pk == target_item.pk
 
-        # -------------------- 4️⃣ Guardar intento --------------- #
         GameAttempt.objects.create(
             user=self.user,
             game=self.game,
-            session=session,
-            guess=item,
+            session=play_session,
+            guess=guessed_item,
             is_correct=is_correct
         )
 
-        # -------------------- 5️⃣ Actualizar resultado ---------- #
         if is_correct:
             ResultUpdater(self.game, self.user).update_for_game(
                 daily_target=daily_target,

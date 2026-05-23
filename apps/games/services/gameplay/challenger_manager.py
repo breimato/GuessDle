@@ -1,64 +1,69 @@
-# apps/games/services/gameplay/challenge_manager.py
+"""Domain logic manager for challenges (determining winners, saving completions, checking ties)."""
 
-from apps.games.services.gameplay.play_session_service import PlaySessionService
-from apps.accounts.services.score_service import ScoreService
-from apps.games.models import GameAttempt
 
 class ChallengeManager:
-    """
-    Lógica de dominio del reto (calcular ganador, marcar completado,
-    persistir winner). No sabe nada de HttpRequest ni messages.
-    """
+    """Manages pure domain decisions about challenges, including resolving outcomes and ties."""
+
     def __init__(self, *, user, challenge):
+        """Initialize challenge manager."""
+
         self.user = user
         self.challenge = challenge
 
     def _both_attempts_submitted(self):
+        """Determine if both participants have submitted their attempt counts."""
+
         return (
             self.challenge.challenger_attempts is not None
             and self.challenge.opponent_attempts is not None
         )
 
     def _winner_user(self):
-        ca = self.challenge.challenger_attempts
-        oa = self.challenge.opponent_attempts
-        if ca is None or oa is None or ca == oa:
-            return None  # Inf completa o empate
-        return self.challenge.challenger if ca < oa else self.challenge.opponent
+        """Determine the winning user based on who took fewer attempts. Returns None on tie or missing data."""
+
+        challenger_attempts_count = self.challenge.challenger_attempts
+        opponent_attempts_count = self.challenge.opponent_attempts
+        if (
+            challenger_attempts_count is None
+            or opponent_attempts_count is None
+            or challenger_attempts_count == opponent_attempts_count
+        ):
+            return None
+        return (
+            self.challenge.challenger
+            if challenger_attempts_count < opponent_attempts_count
+            else self.challenge.opponent
+        )
 
     def calculate_winner(self) -> bool:
-        """
-        ⚠ Devuelve True si `self.user` es el ganador. False si pierde,
-        empata o aún no se puede decidir.
-        Además, marca el challenge como completado y guarda el winner
-        (solo la primera vez que se decide).
-        """
+        """Calculate the challenge outcome, mark completion, persist results, and return if the current user won."""
+
         if not self._both_attempts_submitted():
             return False
 
-        ganador = self._winner_user()
-        if ganador is None:
-            # Empate: marco como completado sin winner
+        winner = self._winner_user()
+        if winner is None:
             self.challenge.completed = True
             self.challenge.save(update_fields=["completed"])
             return False
 
-        # Solo persisto la primera vez
         if self.challenge.winner_id is None:
-            self.challenge.winner = ganador
+            self.challenge.winner = winner
             self.challenge.completed = True
             self.challenge.save(update_fields=["winner", "completed"])
 
-        return ganador == self.user
+        return winner == self.user
 
     def get_tied_users(self):
-        """
-        Devuelve una lista de usuarios que empataron el reto.
-        Si no hay empate, devuelve [].
-        """
-        ca = self.challenge.challenger_attempts
-        oa = self.challenge.opponent_attempts
+        """Return a list containing both participants if they finished with a tie (equal attempts), or an empty list."""
 
-        if ca is not None and oa is not None and ca == oa:
+        challenger_attempts_count = self.challenge.challenger_attempts
+        opponent_attempts_count = self.challenge.opponent_attempts
+
+        if (
+            challenger_attempts_count is not None
+            and opponent_attempts_count is not None
+            and challenger_attempts_count == opponent_attempts_count
+        ):
             return [self.challenge.challenger, self.challenge.opponent]
         return []

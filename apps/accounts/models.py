@@ -3,8 +3,9 @@ from django.db import models
 
 
 class GameElo(models.Model):
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    game = models.ForeignKey('games.Game', on_delete=models.CASCADE)  # referencia perezosa
+    game = models.ForeignKey('games.Game', on_delete=models.CASCADE)
     elo = models.FloatField(default=0)
     partidas = models.PositiveIntegerField(default=0)
 
@@ -16,6 +17,7 @@ class GameElo(models.Model):
 
 
 class Challenge(models.Model):
+
     challenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_sent')
     opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_received')
     game = models.ForeignKey('games.Game', on_delete=models.CASCADE)
@@ -36,6 +38,7 @@ class Challenge(models.Model):
 
 
 class UserProfile(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     is_team_account = models.BooleanField(default=False)
 

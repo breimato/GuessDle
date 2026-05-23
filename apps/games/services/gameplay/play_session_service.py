@@ -1,28 +1,32 @@
+"""Service to retrieve or initialize a PlaySession for a user and game."""
+
 from apps.games.models import PlaySession, PlaySessionType
 
+
 class PlaySessionService:
-    """Orquesta la vida de una sesión de juego (SRP)."""
+    """Manages the creation and retrieval of play sessions for different modes (Daily, Extra, Challenge)."""
 
     @staticmethod
-    def get_or_create(user, game, *, daily_target=None,
-                      extra_play=None, challenge=None):
-        if sum(bool(x) for x in (daily_target, extra_play, challenge)) != 1:
-            raise ValueError("Debes indicar exactamente un contexto.")
+    def get_or_create(user, game, *, daily_target=None, extra_play=None, challenge=None):
+        """Retrieve an existing play session or create a new one for the given parameters."""
+
+        if sum(bool(param) for param in (daily_target, extra_play, challenge)) != 1:
+            raise ValueError("Must specify exactly one context (daily_target, extra_play, or challenge).")
 
         if daily_target:
             session_type = PlaySessionType.DAILY
-            ref_id = daily_target.id
+            reference_id = daily_target.id
         elif extra_play:
             session_type = PlaySessionType.EXTRA
-            ref_id = extra_play.id
+            reference_id = extra_play.id
         else:
             session_type = PlaySessionType.CHALLENGE
-            ref_id = challenge.id
+            reference_id = challenge.id
 
-        session, _ = PlaySession.objects.get_or_create(
+        play_session, _ = PlaySession.objects.get_or_create(
             user=user,
             game=game,
             session_type=session_type,
-            reference_id=ref_id,
+            reference_id=reference_id,
         )
-        return session
+        return play_session

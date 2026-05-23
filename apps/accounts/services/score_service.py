@@ -1,101 +1,86 @@
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models import Count, Avg, Q, Sum
-from apps.games.models import ScoringRule, GameAttempt, PlaySessionType
+from django.db.models import Count, Avg, Q, Sum, FloatField, ExpressionWrapper
+from django.db.models.functions import Cast
+from apps.games.models import ScoringRule, GameAttempt, PlaySessionType, PlaySession
 from apps.accounts.models import GameElo
 
 class ScoreService:
-    """
-    Actualiza y consulta los puntos de un usuario en un juego.
-    Usa la tabla GameElo para no crear otra (puedes renombrarla luego).
-    """
+    """Service to manage and query user points and game attempts statistics."""
+
     def __init__(self, user, game):
-        self.user  = user
-        self.game  = game
+        """Initialize the score service with a user and a game."""
+
+        self.user = user
+        self.game = game
         self.score_obj, _ = GameElo.objects.get_or_create(user=user, game=game)
 
-    # ---------- API pública ----------
     def add_points_for_attempts(self, attempts_count: int) -> int:
-        """Devuelve los puntos sumados y actualiza la tabla."""
-        pts = self._points_for_attempts(attempts_count)
-        self.score_obj.elo += pts
+        """Add points to the user's score based on the number of attempts and update the database."""
+
+        points = self._calculate_points_for_attempts(attempts_count)
+        self.score_obj.elo += points
         self.score_obj.partidas += 1
         self.score_obj.save(update_fields=("elo", "partidas"))
-        return pts
+        return points
 
-    def get_user_average_attempts(self) -> float | None:
-        """
-        Promedio de intentos hechos por el usuario en sesiones EXTRA del juego.
-        Incluye sesiones no completadas. La media es (intentos totales) / (partidas completadas).
-        Si no hay partidas completadas, devuelve None.
-        """
-        # Todas las sesiones del usuario en este juego
-        sessions = (
-            self.user.play_sessions
-            .filter(game=self.game)
+    def calculate_user_average_attempts(self) -> float | None:
+        """Calculate the average number of attempts for the user in this game across completed sessions."""
+
+        session_statistics = (
+            PlaySession.objects
+            .filter(user=self.user, game=self.game)
+            .aggregate(
+                total_tries=Count('attempts'),
+                completed=Count('id', filter=Q(attempts__is_correct=True), distinct=True)
+            )
         )
-
-        # Intentos totales (todas las sessions)
-        total_tries = (
-            GameAttempt.objects
-            .filter(session__in=sessions)
-            .count()
-        )
-
-        # Partidas completadas: sessions donde hay al menos 1 intento correcto
-        completed = (
-            sessions
-            .annotate(correctos=Count('attempts', filter=Q(attempts__is_correct=True)))
-            .filter(correctos__gt=0)
-            .count()
-        )
-
-        if completed == 0:
+        completed_sessions_count = session_statistics['completed'] or 0
+        if completed_sessions_count == 0:
             return None
 
-        return total_tries / completed
+        return (session_statistics['total_tries'] or 0) / completed_sessions_count
 
-    def get_global_average_of_averages(self, exclude_user=True) -> float | None:
-        """
-        Calcula la media de los promedios individuales de intentos/partidas completas por usuario.
-        Solo cuenta a los users que tengan al menos una partida completa.
-        """
-        # Buscamos todos los user_id que hayan jugado este juego (EXTRA)
-        user_ids = (
-            GameAttempt.objects
-            .filter(session__game=self.game)
-            .exclude(user=self.user if exclude_user else None)
-            .values_list('user', flat=True)
-            .distinct()
+    def calculate_global_average_of_averages(self, exclude_user=True) -> float | None:
+        """Calculate the global average of individual user averages for completed sessions in this game."""
+
+        play_sessions = PlaySession.objects.filter(game=self.game)
+        if exclude_user:
+            play_sessions = play_sessions.exclude(user=self.user)
+
+        user_averages = (
+            play_sessions
+            .values('user')
+            .annotate(
+                total_attempts=Count('attempts'),
+                completed_sessions=Count('id', filter=Q(attempts__is_correct=True), distinct=True)
+            )
+            .filter(completed_sessions__gt=0)
+            .annotate(
+                user_avg=ExpressionWrapper(
+                    Cast('total_attempts', FloatField()) / Cast('completed_sessions', FloatField()),
+                    output_field=FloatField()
+                )
+            )
         )
 
-        average = []
-        for user_id in user_ids:
-            # Seteamos el user actual
-            user = User.objects.get(pk=user_id)
-            # OJO: si ScoreService necesita user instance, no id
-            avg = ScoreService(user, self.game).get_user_average_attempts()
-            if avg is not None:
-                average.append(avg)
-        if not average:
-            return None
-        return sum(average) / len(average)
+        global_average_result = user_averages.aggregate(avg_of_avgs=Avg('user_avg'))
+        return global_average_result['avg_of_avgs']
 
-    # ---------- Internals ----------
-    def _points_for_attempts(self, n: int) -> int:
-        # 1) Busca regla específica del juego
-        rule = (
+    def _calculate_points_for_attempts(self, attempts_count: int) -> int:
+        """Get the point value for a specific number of attempts based on rules or fallback scoring."""
+
+        scoring_rule = (
             ScoringRule.objects
-            .filter(game=self.game, attempt_no=n)
+            .filter(game=self.game, attempt_no=attempts_count)
             .first()
-            or ScoringRule.objects.filter(game__isnull=True, attempt_no=n).first()
+            or ScoringRule.objects.filter(game__isnull=True, attempt_no=attempts_count).first()
         )
-        if rule:
-            return rule.points
+        if scoring_rule:
+            return scoring_rule.points
 
-        # 2) Fallback: 1-3 ya deberían estar en ScoringRule
-        dec   = getattr(settings, "SCORING_FALLBACK", {}).get("decrement", 10)
+        decrement = getattr(settings, "SCORING_FALLBACK", {}).get("decrement", 10)
         floor = getattr(settings, "SCORING_FALLBACK", {}).get("floor", 0)
-        pts   = 50 - dec * (n - 3)  # n=4 → 40, n=5 → 30…
-        return max(floor, pts)
+        fallback_points = 50 - decrement * (attempts_count - 3)
+        return max(floor, fallback_points)
 

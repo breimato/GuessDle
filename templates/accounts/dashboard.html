@@ -22,7 +22,7 @@ bg-no-repeat bg-cover bg-fixed
   <p class="mt-2 text-white font-semibold text-lg tracking-wider"
      style="font-family:var(--font-lol); padding-top: 25px">
     🔢 Tus puntos globales:
-    <span class="text-yellow-300">{{ user_stats.elo_global|floatformat:0 }}</span>
+    <span class="text-yellow-300">{{ user_stats.global_elo|floatformat:0 }}</span>
   </p>
 
   <div class="flex justify-end mt-4">
@@ -54,16 +54,16 @@ bg-no-repeat bg-cover bg-fixed
       </tr>
       </thead>
       <tbody>
-      {% for j in user_stats.juegos %}
+      {% for j in user_stats.games %}
       <tr class="hover:brightness-110 transition duration-150">
         <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-l-xl px-4 py-2">
-          {{ j.nombre }}
+          {{ j.name }}
         </td>
         <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 px-4 py-2">
-          {{ j.media_intentos|floatformat:2 }} int.
+          {{ j.average_attempts|floatformat:2 }} int.
         </td>
         <td class="bg-black/60 text-gray-100 border-2 border-yellow-600 rounded-r-xl px-4 py-2">
-          {{ j.puntos|floatformat:0 }}
+          {{ j.points|floatformat:0 }}
         </td>
       </tr>
       {% endfor %}
@@ -78,7 +78,7 @@ bg-no-repeat bg-cover bg-fixed
     </h2>
 
     <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-      {% for j in juegos_disponibles %}
+      {% for j in available_games %}
       <a href="{{ j.redirect_url }}"
          class="flex items-center gap-3 bg-yellow-700 hover:bg-yellow-800 text-white px-4 py-3 rounded-2xl shadow transition">
         {% if j.icon_image %}
@@ -120,7 +120,7 @@ bg-no-repeat bg-cover bg-fixed
       <label for="game" class="block font-bold text-yellow-900 mb-2">Selecciona un juego</label>
       <select id="game" name="game"
               class="w-full bg-white text-black border border-yellow-400 px-4 py-2 shadow-sm focus:outline-none rounded-none">
-        {% for game in juegos_disponibles %}
+        {% for game in available_games %}
         <option value="{{ game.id }}">{{ game.name }}</option>
         {% endfor %}
       </select>
@@ -205,7 +205,7 @@ bg-no-repeat bg-cover bg-fixed
             class="rank-tab bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-full shadow">
       🌐 Global
     </button>
-    {% for juego in juegos_disponibles %}
+    {% for juego in available_games %}
     <button data-tab="{{ juego.slug }}"
             class="rank-tab bg-yellow-700 text-white font-semibold px-4 py-2 rounded-full shadow hover:bg-yellow-800">
       {{ juego.name }}
@@ -215,12 +215,12 @@ bg-no-repeat bg-cover bg-fixed
 
   <!-- Paneles -->
   <div id="tab-global" class="rank-panel">
-    {% include "partials/ranking_table.html" with rows=ranking_global %}
+    {% include "partials/ranking_table.html" with rows=global_ranking %}
   </div>
 
-  {% for juego in juegos_disponibles %}
+  {% for juego in available_games %}
   <div id="tab-{{ juego.slug }}" class="rank-panel hidden">
-    {% include "partials/ranking_table.html" with rows=ranking_por_juego|get_item:juego.slug %}
+    {% include "partials/ranking_table.html" with rows=ranking_by_game|get_item:juego.slug %}
   </div>
   {% endfor %}
 </section>

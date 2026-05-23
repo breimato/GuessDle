@@ -1,7 +1,5 @@
-# apps/games/utils.py
-"""
-Funciones utilitarias generales y agnósticas del dominio juego.
-"""
+"""General helper functions for game data processing and numeric comparison feedback."""
+
 import re
 from typing import Any, List, Optional, Dict
 
@@ -11,11 +9,10 @@ __all__ = [
     "to_list",
 ]
 
-# ----------------------------------------------------------------------
-# Conversión de strings numéricos → float
-# ----------------------------------------------------------------------
+
 def parse_to_float(value: Any) -> Optional[float]:
-    """Convierte un string con separadores europeos/americanos a float."""
+    """Convert a numeric string containing European or American decimal separators to a float."""
+
     if value is None:
         return None
 
@@ -23,46 +20,44 @@ def parse_to_float(value: Any) -> Optional[float]:
     if not match:
         return None
 
-    num_str = match.group()
+    number_string = match.group()
 
-    if num_str.count(".") > 1 and num_str.count(",") == 0:
-        num_str = num_str.replace(".", "")
-    elif num_str.count(",") > 1 and num_str.count(".") == 0:
-        num_str = num_str.replace(",", "")
-    elif "." in num_str and "," in num_str:
-        if num_str.rfind(",") > num_str.rfind("."):
-            num_str = num_str.replace(".", "").replace(",", ".")
+    if number_string.count(".") > 1 and number_string.count(",") == 0:
+        number_string = number_string.replace(".", "")
+    elif number_string.count(",") > 1 and number_string.count(".") == 0:
+        number_string = number_string.replace(",", "")
+    elif "." in number_string and "," in number_string:
+        if number_string.rfind(",") > number_string.rfind("."):
+            number_string = number_string.replace(".", "").replace(",", ".")
         else:
-            num_str = num_str.replace(",", "")
-    elif "," in num_str:
-        num_str = num_str.replace(",", ".")
+            number_string = number_string.replace(",", "")
+    elif "," in number_string:
+        number_string = number_string.replace(",", ".")
 
     try:
-        return float(num_str)
+        return float(number_string)
     except ValueError:
         return None
 
 
-# ----------------------------------------------------------------------
-# Feedback numérico (“Más / Menos”)
-# ----------------------------------------------------------------------
 def numeric_feedback(guess: Optional[float], target: Optional[float]) -> Dict[str, str]:
+    """Generate visual feedback (arrow direction and text hint) comparing a guess with the target value."""
+
     if guess is None or target is None:
-        return {"arrow": "", "hint": "Incorrecto"}
+        return {"arrow": "", "hint": "Incorrect"}
     if guess == target:
         return {"arrow": "", "hint": ""}
     return {
         "arrow": "▲" if guess < target else "▼",
-        "hint": "Más" if guess < target else "Menos",
+        "hint": "Higher" if guess < target else "Lower",
     }
 
 
-# ----------------------------------------------------------------------
-# Normalizar campos multi-valor a lista[str]
-# ----------------------------------------------------------------------
-def to_list(raw: Any) -> List[str]:
-    if raw is None:
+def to_list(raw_value: Any) -> List[str]:
+    """Normalize multi-value field content or comma-separated string into a list of strings."""
+
+    if raw_value is None:
         return []
-    if isinstance(raw, (list, tuple)):
-        return list(raw)
-    return [s.strip() for s in str(raw).split(",") if s.strip()]
+    if isinstance(raw_value, (list, tuple)):
+        return list(raw_value)
+    return [item.strip() for item in str(raw_value).split(",") if item.strip()]

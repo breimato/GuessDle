@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import LoginView, cancelar_challenge, dashboard_view, rechazar_challenge, register_view, complete_challenge, create_challenge
+from .views import LoginView, cancel_challenge, dashboard_view, reject_challenge, register_view, complete_challenge, create_challenge
 from django.contrib.auth import views as auth_views
 
-from ..games.views import play_challenge, ajax_guess_challenge
+from ..games.views import play_challenge_game, process_challenge_guess
 
 urlpatterns = [
     path('', dashboard_view, name='dashboard'),
@@ -25,10 +25,10 @@ urlpatterns = [
         template_name="accounts/password_reset_complete.html"
     ), name="password_reset_complete"),
     path("challenges/create/", create_challenge, name="create_challenge"),
-    path("challenges/<int:challenge_id>/play/", play_challenge, name="play_challenge"),
+    path("challenges/<int:challenge_id>/play/", play_challenge_game, name="play_challenge"),
     path("challenges/<int:challenge_id>/complete/", complete_challenge, name="complete_challenge"),
-    path("challenges/<int:challenge_id>/guess/", ajax_guess_challenge, name="ajax_guess_challenge"),
-    path('challenge/<int:challenge_id>/rechazar/', rechazar_challenge, name='rechazar_challenge'),
-    path("challenge/<int:challenge_id>/cancel/", cancelar_challenge, name="cancelar_challenge"),
+    path("challenges/<int:challenge_id>/guess/", process_challenge_guess, name="ajax_guess_challenge"),
+    path("challenge/<int:challenge_id>/reject/", reject_challenge, name="reject_challenge"),
+    path("challenge/<int:challenge_id>/cancel/", cancel_challenge, name="cancel_challenge"),
 
 ]

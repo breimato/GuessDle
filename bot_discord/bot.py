@@ -1,8 +1,10 @@
+"""Discord bot for displaying GuessDle game leaderboards and rankings."""
+
 import os
 import sys
-from django.db.models import Sum
 import django
 import discord
+from django.db.models import Sum
 from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
@@ -10,23 +12,17 @@ from asgiref.sync import sync_to_async
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Cargar .env
 load_dotenv()
 BASE_URL = os.getenv("CSRF_TRUSTED_ORIGINS")
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-# Configurar entorno Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GuessDle.settings")
 django.setup()
 
-# Importar modelos
 from django.contrib.auth.models import User
 from apps.games.models import Game
 from apps.accounts.models import GameElo
 
-from django.db.models import Avg
-
-# Crear bot
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -34,148 +30,147 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
+    """Event handler triggered when the Discord bot connection has successfully established."""
+
     await bot.tree.sync()
-    print(f"🤖 Bot conectado como {bot.user}")
-    print("Slash commands sincronizados.")
+    print(f"🤖 Bot connected as {bot.user}")
+    print("Slash commands synchronized.")
 
 
-def _crear_embed_ranking(title, description, color, thumbnail_url=None):
+def _create_ranking_embed(title, description, color, thumbnail_url=None):
+    """Construct a discord.Embed message formatting object."""
+
     embed = discord.Embed(title=title, description=description, color=color)
     if thumbnail_url:
         embed.set_thumbnail(url=thumbnail_url)
     return embed
 
 
-N_COL_W = 2  # Ancho para contenido de columna Nº (ej: "10")
-ELO_COL_W = 5  # Ancho para contenido de columna ELO (ej: "1200", " ELO ")
-USER_HEADER_TEXT = "Usuario"
-MAX_USER_W = 25  # Máximo ancho para contenido de nombre de usuario
-MIN_USER_W = max(len(USER_HEADER_TEXT), 10) # Mínimo ancho para contenido de nombre de usuario
+N_COLUMN_WIDTH = 2
+ELO_COLUMN_WIDTH = 5
+USER_HEADER_TEXT = "User"
+MAX_USER_WIDTH = 25
+MIN_USER_WIDTH = max(len(USER_HEADER_TEXT), 10)
 
 
-def _generar_tabla_ranking(ranking_data, is_global_ranking=False):
+def _generate_ranking_table(ranking_data, is_global_ranking=False):
+    """Generate a formatted ASCII table representing ranking data."""
+
     if not ranking_data:
-        # Esto normalmente lo maneja formatear_ranking, pero por si acaso.
-        return "No hay datos de ranking para mostrar."
+        return "No ranking data to show."
 
     usernames = [
         item['user__username'] if is_global_ranking else item.user.username
         for item in ranking_data
     ]
-    
-    max_data_username_len = 0
+
+    max_username_length = 0
     if usernames:
-        max_data_username_len = max(len(name) for name in usernames)
+        max_username_length = max(len(name) for name in usernames)
 
-    # Calcular el ancho de contenido real para la columna de usuario
-    user_col_content_w = max(len(USER_HEADER_TEXT), max_data_username_len)
-    user_col_content_w = max(user_col_content_w, MIN_USER_W)
-    user_col_content_w = min(user_col_content_w, MAX_USER_W)
+    user_column_content_width = max(len(USER_HEADER_TEXT), max_username_length)
+    user_column_content_width = max(user_column_content_width, MIN_USER_WIDTH)
+    user_column_content_width = min(user_column_content_width, MAX_USER_WIDTH)
 
-    # Anchos de contenido para las otras columnas (texto dentro de las celdas)
-    n_content_w = N_COL_W
-    elo_content_w = ELO_COL_W
+    n_content_width = N_COLUMN_WIDTH
+    elo_content_width = ELO_COLUMN_WIDTH
 
-    # Longitud de las barras horizontales (═), incluyendo 1 espacio de padding a cada lado del contenido
-    n_bar_len = n_content_w + 2
-    user_bar_len = user_col_content_w + 2
-    elo_bar_len = elo_content_w + 2
+    n_bar_length = n_content_width + 2
+    user_bar_length = user_column_content_width + 2
+    elo_bar_length = elo_content_width + 2
 
-    n_bar_str = "═" * n_bar_len
-    user_bar_str = "═" * user_bar_len
-    elo_bar_str = "═" * elo_bar_len
+    n_bar_string = "═" * n_bar_length
+    user_bar_string = "═" * user_bar_length
+    elo_bar_string = "═" * elo_bar_length
 
-    # Construir partes de la tabla
-    top_border = f"╔{n_bar_str}╦{user_bar_str}╦{elo_bar_str}╗"
-    header_row = f"║ {str('Nº').center(n_content_w)} ║ {USER_HEADER_TEXT.center(user_col_content_w)} ║ {str('ELO').center(elo_content_w)} ║"
-    separator = f"╠{n_bar_str}╬{user_bar_str}╬{elo_bar_str}╣"
-    bottom_border = f"╚{n_bar_str}╩{user_bar_str}╩{elo_bar_str}╝"
+    top_border = f"╔{n_bar_string}╦{user_bar_string}╦{elo_bar_string}╗"
+    header_row = f"║ {str('Rank').center(n_content_width)} ║ {USER_HEADER_TEXT.center(user_column_content_width)} ║ {str('ELO').center(elo_content_width)} ║"
+    separator = f"╠{n_bar_string}╬{user_bar_string}╬{elo_bar_string}╣"
+    bottom_border = f"╚{n_bar_string}╩{user_bar_string}╩{elo_bar_string}╝"
 
     table_rows_strings = []
-    for idx, item in enumerate(ranking_data, start=1):
-        idx_str = str(idx).center(n_content_w)
-        
-        elo_original = item['total_elo'] if is_global_ranking else item.elo
-        elo_str = str(int(elo_original)).rjust(elo_content_w)
+    for index, item in enumerate(ranking_data, start=1):
+        index_string = str(index).center(n_content_width)
 
-        username_original = item['user__username'] if is_global_ranking else item.user.username
-        display_username = username_original
-        if len(username_original) > user_col_content_w:
-            display_username = username_original[:user_col_content_w-3] + "..."
-        user_str = display_username.ljust(user_col_content_w) # Usuario alineado a la izquierda
+        original_elo = item['total_elo'] if is_global_ranking else item.elo
+        elo_string = str(int(original_elo)).rjust(elo_content_width)
 
-        table_rows_strings.append(f"║ {idx_str} ║ {user_str} ║ {elo_str} ║")
+        original_username = item['user__username'] if is_global_ranking else item.user.username
+        display_username = original_username
+        if len(original_username) > user_column_content_width:
+            display_username = original_username[:user_column_content_width-3] + "..."
+        user_string = display_username.ljust(user_column_content_width)
 
-    # Ensamblar la tabla completa
+        table_rows_strings.append(f"║ {index_string} ║ {user_string} ║ {elo_string} ║")
+
     full_table_parts = [top_border, header_row]
-    if not table_rows_strings: # Si, después de todo, no hay filas (aunque ranking_data no estuviera vacío)
-        # Esto es un fallback, idealmente no debería llegar aquí si formatear_ranking funciona
-        placeholder_text = "No hay jugadores".center(user_col_content_w)
+    if not table_rows_strings:
+        placeholder_text = "No players".center(user_column_content_width)
         full_table_parts.append(separator)
-        full_table_parts.append(f"║ {str('').center(n_content_w)} ║ {placeholder_text} ║ {str('').center(elo_content_w)} ║")
-
+        full_table_parts.append(f"║ {str('').center(n_content_width)} ║ {placeholder_text} ║ {str('').center(elo_content_width)} ║")
     else:
-        for i, data_row_str in enumerate(table_rows_strings):
-            full_table_parts.append(separator) # Separador antes de cada fila de datos
-            full_table_parts.append(data_row_str)
-            
+        for data_row_string in table_rows_strings:
+            full_table_parts.append(separator)
+            full_table_parts.append(data_row_string)
+
     full_table_parts.append(bottom_border)
     return "\n".join(full_table_parts)
 
 
-def formatear_ranking(game_slug=None):
+def format_ranking(game_slug=None):
+    """Format and return the ranking embed for a specific game or globally."""
+
     embed_color = discord.Color.red()
 
     if game_slug:
         try:
-            juego = Game.objects.get(slug=game_slug)
-            if juego.color:
+            game = Game.objects.get(slug=game_slug)
+            if game.color:
                 try:
-                    hex_color = juego.color.lstrip('#')
+                    hex_color = game.color.lstrip('#')
                     rgb_color = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
                     embed_color = discord.Color.from_rgb(rgb_color[0], rgb_color[1], rgb_color[2])
                 except ValueError:
                     pass
         except Game.DoesNotExist:
-            return _crear_embed_ranking(
+            return _create_ranking_embed(
                 "Error",
-                f"❗ No se encontró el juego '{game_slug}'",
+                f"❗ Game '{game_slug}' was not found",
                 embed_color
             )
 
-        game_elos = GameElo.objects.filter(game=juego).order_by("-elo")[:10]
-        titulo_embed = f"🏆 Ranking de {juego.name}"
-        
-        thumbnail_url_final = None
-        if hasattr(juego, 'icon_image') and juego.icon_image and juego.icon_image.url:
-            icon_path = juego.icon_image.url
+        game_elos = GameElo.objects.filter(game=game).order_by("-elo")[:10]
+        embed_title = f"🏆 Leaderboard for {game.name}"
+
+        final_thumbnail_url = None
+        if hasattr(game, 'icon_image') and game.icon_image and game.icon_image.url:
+            icon_path = game.icon_image.url
             if BASE_URL:
                 if BASE_URL.endswith('/') and icon_path.startswith('/'):
-                    thumbnail_url_final = BASE_URL[:-1] + icon_path
+                    final_thumbnail_url = BASE_URL[:-1] + icon_path
                 elif not BASE_URL.endswith('/') and not icon_path.startswith('/'):
-                     thumbnail_url_final = BASE_URL + '/' + icon_path
+                    final_thumbnail_url = BASE_URL + '/' + icon_path
                 else:
-                    thumbnail_url_final = BASE_URL + icon_path
+                    final_thumbnail_url = BASE_URL + icon_path
             elif icon_path.startswith(('http://', 'https://')):
-                thumbnail_url_final = icon_path
-
+                final_thumbnail_url = icon_path
 
         if not game_elos:
-            return _crear_embed_ranking(
-                titulo_embed,
-                "❗ No hay jugadores registrados aún.",
+            return _create_ranking_embed(
+                embed_title,
+                "❗ No players registered yet.",
                 embed_color,
-                thumbnail_url=thumbnail_url_final
+                thumbnail_url=final_thumbnail_url
             )
 
-        description_content = _generar_tabla_ranking(game_elos)
-        return _crear_embed_ranking(
-            titulo_embed,
+        description_content = _generate_ranking_table(game_elos)
+        return _create_ranking_embed(
+            embed_title,
             f"```{description_content}```",
             embed_color,
-            thumbnail_url=thumbnail_url_final
+            thumbnail_url=final_thumbnail_url
         )
-    else:  # Ranking global
+    else:
         global_embed_color = discord.Color.blue()
         game_elos = (
             GameElo.objects
@@ -183,48 +178,47 @@ def formatear_ranking(game_slug=None):
             .annotate(total_elo=Sum("elo"))
             .order_by("-total_elo")[:10]
         )
-        titulo_embed = "🌍 Ranking Global (ELO Total)"
+        embed_title = "🌍 Global Leaderboard (Total ELO)"
 
         if not game_elos:
-            return _crear_embed_ranking(
-                titulo_embed,
-                "❗ No hay jugadores registrados aún.",
+            return _create_ranking_embed(
+                embed_title,
+                "❗ No players registered yet.",
                 global_embed_color
             )
 
-        description_content = _generar_tabla_ranking(game_elos, is_global_ranking=True)
-        return _crear_embed_ranking(
-            titulo_embed,
+        description_content = _generate_ranking_table(game_elos, is_global_ranking=True)
+        return _create_ranking_embed(
+            embed_title,
             f"```{description_content}```",
             global_embed_color
         )
 
 
-# Comando global de ranking
-@bot.tree.command(name="ranking", description="Muestra el ranking global (Media ELO).")
-async def ranking_global_slash(interaction: discord.Interaction):
-    embed_mensaje = await sync_to_async(formatear_ranking)()
-    await interaction.response.send_message(embed=embed_mensaje)
+@bot.tree.command(name="ranking", description="Show the global leaderboard (Total ELO).")
+async def handle_global_ranking_slash(interaction: discord.Interaction):
+    """Slash command to display the global leaderboard ranking."""
+
+    ranking_embed = await sync_to_async(format_ranking)()
+    await interaction.response.send_message(embed=ranking_embed)
 
 
-# Obtener slugs de juegos activos desde la base de datos
 try:
-    JUEGOS_SLUGS_Y_NOMBRES = list(Game.objects.filter(active=True).values_list('slug', 'name'))
-except Exception as e:
-    print(f"Error al cargar juegos para slash commands: {e}")
-    JUEGOS_SLUGS_Y_NOMBRES = []
+    ACTIVE_GAME_SLUGS_AND_NAMES = list(Game.objects.filter(active=True).values_list('slug', 'name'))
+except Exception as error:
+    print(f"Error loading games for slash commands: {error}")
+    ACTIVE_GAME_SLUGS_AND_NAMES = []
 
-# Generar comandos de ranking específicos para cada juego
-for slug, game_name in JUEGOS_SLUGS_Y_NOMBRES:
+for slug, game_name in ACTIVE_GAME_SLUGS_AND_NAMES:
     def create_game_ranking_callback(current_slug):
         async def game_ranking_callback(interaction: discord.Interaction):
-            embed_mensaje = await sync_to_async(formatear_ranking)(current_slug)
-            await interaction.response.send_message(embed=embed_mensaje)
+            ranking_embed = await sync_to_async(format_ranking)(current_slug)
+            await interaction.response.send_message(embed=ranking_embed)
         return game_ranking_callback
 
     command_name = slug
-    command_description = f"Muestra el ranking de {game_name}."
-    
+    command_description = f"Show the leaderboard for {game_name}."
+
     specific_game_command = app_commands.Command(
         name=command_name,
         description=command_description,
@@ -232,7 +226,6 @@ for slug, game_name in JUEGOS_SLUGS_Y_NOMBRES:
     )
     bot.tree.add_command(specific_game_command)
 
-print(f"Registrados {len(JUEGOS_SLUGS_Y_NOMBRES)} comandos de ranking de juegos.")
+print(f"Registered {len(ACTIVE_GAME_SLUGS_AND_NAMES)} game ranking commands.")
 
-# Ejecutar bot
 bot.run(TOKEN)

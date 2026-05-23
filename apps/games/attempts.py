@@ -1,7 +1,5 @@
-# apps/games/attempts.py
-"""
-Construcción de intentos y feedback para la plantilla.
-"""
+"""Construction of attempts and feedback details for rendering in game templates."""
+
 from typing import Any, Dict, List, Set
 
 from .models import Game, GameItem
@@ -11,93 +9,90 @@ __all__ = ["build_attempts"]
 
 
 def _to_lower_set(value) -> Set[str]:
-    """Convierte un valor (str | lista | None) en un set en minúsculas."""
-    return {str(v).lower() for v in to_list(value)}
+    """Convert a value (string, list, or None) into a set of lowercase strings."""
+
+    return {str(item).lower() for item in to_list(value)}
 
 
 def _cross_group_partial(
-    attr: str,
-    grouped_attrs: Set[str],
+    attribute: str,
+    grouped_attributes: Set[str],
     guess_set: Set[str],
     target_data: dict,
     defaults: dict,
 ) -> bool:
-    """
-    Devuelve True si el valor del atributo `attr` aparece
-    en cualquier otro atributo del mismo grupo.
-    """
-    if attr not in grouped_attrs:
+    """Determine if the attribute value matches any other attribute in the same group."""
+
+    if attribute not in grouped_attributes:
         return False
 
     target_group_values = {
-        v.lower()
-        for g_attr in grouped_attrs
-        for v in to_list(target_data.get(g_attr) or defaults.get(g_attr))
+        value.lower()
+        for group_attribute in grouped_attributes
+        for value in to_list(target_data.get(group_attribute) or defaults.get(group_attribute))
     }
     return bool(guess_set & target_group_values)
 
 
-# ──────────────────────────── Main ───────────────────────────────
 def build_attempts(
     game: Game,
     guesses: List[GameItem],
     target: GameItem,
 ) -> List[Dict[str, Any]]:
+    """Build a list of user attempts with attribute-by-attribute feedback matching the target item."""
+
     attempts: List[Dict[str, Any]] = []
 
-    numeric_fields   = set(game.numeric_fields or [])
-    grouped_attrs    = set(game.grouped_attributes or [])   # p.e. {"tipo1", "tipo2"}
-    target_data      = target.data
+    numeric_fields = set(game.numeric_fields or [])
+    grouped_attributes = set(game.grouped_attributes or [])
+    target_data = target.data
 
     for item in guesses:
         attempt: Dict[str, Any] = {
-            "name":  item.name,
+            "name": item.name,
             "is_correct": item.name == target.name,
             "feedback": [],
             "icon": getattr(item, "icon", None),
             "guess_image_url": item.get_image_url(),
         }
 
-        for attr in game.attributes:
-            guess_val   = item.data.get(attr)   or game.defaults.get(attr)
-            target_val  = target_data.get(attr) or game.defaults.get(attr)
+        for attribute in game.attributes:
+            guess_value = item.data.get(attribute) or game.defaults.get(attribute)
+            target_value = target_data.get(attribute) or game.defaults.get(attribute)
 
-            is_match = partial = False
-            fb = {"arrow": "", "hint": ""}
+            is_match = False
+            is_partial = False
+            feedback_data = {"arrow": "", "hint": ""}
 
-            # ───────────── Campos numéricos ─────────────
-            if attr in numeric_fields:
-                g_num = parse_to_float(guess_val)
-                t_num = parse_to_float(target_val)
-                is_match = g_num == t_num
+            if attribute in numeric_fields:
+                guess_numeric = parse_to_float(guess_value)
+                target_numeric = parse_to_float(target_value)
+                is_match = guess_numeric == target_numeric
                 if not is_match:
-                    fb = numeric_feedback(g_num, t_num)
-
-            # ───────────── Campos texto / lista ─────────
+                    feedback_data = numeric_feedback(guess_numeric, target_numeric)
             else:
-                guess_set  = _to_lower_set(guess_val)
-                target_set = _to_lower_set(target_val)
+                guess_set = _to_lower_set(guess_value)
+                target_set = _to_lower_set(target_value)
 
                 if guess_set and target_set:
                     is_match = guess_set == target_set
-                    partial  = not is_match and bool(guess_set & target_set)
+                    is_partial = not is_match and bool(guess_set & target_set)
                 else:
-                    is_match = guess_val == target_val
+                    is_match = guess_value == target_value
 
-                # Coincidencia cruzada dentro del grupo (tipo1/tipo2)
-                if not is_match and not partial:
-                    partial = _cross_group_partial(
-                        attr, grouped_attrs, guess_set, target_data, game.defaults
+                if not is_match and not is_partial:
+                    is_partial = _cross_group_partial(
+                        attribute, grouped_attributes, guess_set, target_data, game.defaults
                     )
 
             attempt["feedback"].append(
                 {
-                    "attribute": attr,
-                    "value": guess_val,
+                    "attribute": attribute,
+                    "value": guess_value,
                     "correct": is_match,
-                    "partial": partial,
-                    "hint": fb["hint"],
-                    "arrow": fb["arrow"],
+                    "partial": is_partial,
+                    "hint": feedback_data["hint"],
+                    "arrow": feedback_data["arrow"],
                 }
             )
 
