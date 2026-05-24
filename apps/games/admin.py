@@ -52,7 +52,8 @@ class GameAdmin(admin.ModelAdmin):
         'field_mapping',
         'defaults',
         'attributes',
-        'grouped_attributes',  # Añadido aquí
+        'grouped_attributes',
+        'hint_reveal_columns',
         'numeric_fields',
         'audio_file'
     )

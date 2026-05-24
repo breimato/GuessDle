@@ -688,6 +688,34 @@ body {
   font-weight: 500;
 }
 
+.hint-controls.hidden,
+.hint-messages.hidden {
+  display: none;
+}
+
+.arcade-btn--hint {
+  background: var(--cab-green);
+  color: #fff;
+  --cab-btn-shadow: #1a6b35;
+}
+
+.arcade-btn--hint:hover:not(:disabled) {
+  background: #2ecc71;
+}
+
+.hint-messages {
+  margin-top: 1rem;
+}
+
+.hint-message {
+  margin: 0.35rem 0;
+  padding: 0.6rem 0.75rem;
+  border-left: 4px solid var(--cab-green);
+  background: rgba(46, 204, 113, 0.12);
+  color: var(--cab-ink);
+  font-size: 0.95rem;
+}
+
 .attempts-header-cell {
   display: flex;
   align-items: center;

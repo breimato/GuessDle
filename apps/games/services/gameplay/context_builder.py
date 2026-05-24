@@ -6,6 +6,7 @@ from django.urls import reverse
 from apps.games.attempts import build_attempts
 from apps.games.models import GameAttempt
 from apps.accounts.services.score_service import ScoreService
+from .hint_reveal_service import HintRevealService
 from .play_session_service import PlaySessionService
 from .target_service import TargetService
 
@@ -55,6 +56,9 @@ class ContextBuilder:
         remaining_names = list(
             self.game.items.filter(deleted=False).exclude(id__in=guessed_item_ids).values_list("name", flat=True)
         )
+        hint_service = HintRevealService(session, self.game, target_item)
+        hint_state = hint_service.get_hint_state()
+
         context = {
             "game": self.game,
             "target": target_item,
@@ -63,6 +67,8 @@ class ContextBuilder:
             "won": has_won,
             "can_play": can_play,
             "remaining_names_json": json.dumps(remaining_names),
+            "hint_state": hint_state,
+            "reveal_hint_url": self._get_reveal_hint_url(),
         }
 
         if self.daily_target or self.extra_play:
@@ -119,3 +125,12 @@ class ContextBuilder:
         if self.extra_play:
             return reverse("ajax_guess_extra", args=[self.extra_play.id])
         return reverse("ajax_guess", args=[self.game.slug])
+
+    def _get_reveal_hint_url(self):
+        """Retrieve the AJAX column-hint reveal URL endpoint."""
+
+        if self.extra_play:
+            return reverse("ajax_reveal_hint_extra", args=[self.extra_play.id])
+        if self.challenge:
+            return reverse("ajax_reveal_hint_challenge", args=[self.challenge.id])
+        return reverse("ajax_reveal_hint", args=[self.game.slug])

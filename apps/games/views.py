@@ -18,8 +18,34 @@ from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelp
 from apps.games.services.gameplay.context_builder import ContextBuilder
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.guess_processor import GuessProcessor
+from apps.games.services.gameplay.hint_reveal_service import HintRevealService
+from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.services.gameplay.result_updater import ResultUpdater
 from apps.games.services.gameplay.target_service import TargetService
+
+
+def _hint_state_from_context(context):
+    return context.get("hint_state", {})
+
+
+def _process_reveal_hint(request, *, game, target, daily_target=None, extra_play=None, challenge=None):
+    attribute = request.POST.get("attribute", "").strip()
+    if not attribute:
+        return JsonResponse({"error": "Debes elegir una columna."}, status=400)
+
+    session = PlaySessionService.get_or_create(
+        request.user, game,
+        daily_target=daily_target,
+        extra_play=extra_play,
+        challenge=challenge,
+    )
+    hint_service = HintRevealService(session, game, target)
+    try:
+        hint_state = hint_service.reveal(attribute)
+    except ValueError as error:
+        return JsonResponse({"error": str(error)}, status=400)
+
+    return JsonResponse({"hint_state": hint_state})
 
 
 @require_POST
@@ -58,9 +84,35 @@ def process_daily_guess(request, slug: str):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
+        "hint_state": _hint_state_from_context(context),
     }
     response_data.update(points_data)
     return JsonResponse(response_data)
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def reveal_daily_hint(request, slug: str):
+    """Reveal a column hint for the daily play session."""
+
+    game = get_object_or_404(Game, slug=slug)
+    target_service = TargetService(game, request.user)
+    daily_target = target_service.get_target_for_today()
+    if not daily_target:
+        return JsonResponse({"error": "No daily target set."}, status=400)
+
+    context = ContextBuilder(request, game, daily_target=daily_target).build()
+    if not context["can_play"]:
+        return JsonResponse({"error": "You cannot play anymore."}, status=403)
+
+    return _process_reveal_hint(
+        request,
+        game=game,
+        target=daily_target.target,
+        daily_target=daily_target,
+    )
 
 
 @never_cache
@@ -113,6 +165,7 @@ def play_daily_game(request, slug: str):
                     "guess_image_url": last_attempt.get("guess_image_url"),
                 },
                 "remaining_names": json.loads(context["remaining_names_json"]),
+                "hint_state": _hint_state_from_context(context),
             }
             response_data.update(points_data)
             return JsonResponse(response_data)
@@ -217,9 +270,37 @@ def process_challenge_guess(request, challenge_id: int):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
+        "hint_state": _hint_state_from_context(context),
     }
     response_data.update(points_data)
     return JsonResponse(response_data)
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def reveal_challenge_hint(request, challenge_id: int):
+    """Reveal a column hint for a challenge play session."""
+
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    if request.user not in (challenge.challenger, challenge.opponent):
+        return JsonResponse({"error": "Unauthorized."}, status=403)
+
+    if not challenge.target:
+        return JsonResponse({"error": "Challenge has no target."}, status=400)
+
+    game = challenge.game
+    context = ContextBuilder(request, game, challenge=challenge).build()
+    if not context["can_play"]:
+        return JsonResponse({"error": "You cannot play anymore."}, status=403)
+
+    return _process_reveal_hint(
+        request,
+        game=game,
+        target=challenge.target,
+        challenge=challenge,
+    )
 
 
 @login_required
@@ -315,6 +396,29 @@ def process_extra_guess(request, extra_id: int):
             "guess_image_url": last_attempt.get("guess_image_url"),
         },
         "remaining_names": json.loads(context["remaining_names_json"]),
+        "hint_state": _hint_state_from_context(context),
     }
     response_data.update(points_data)
     return JsonResponse(response_data)
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def reveal_extra_hint(request, extra_id: int):
+    """Reveal a column hint for an extra daily play session."""
+
+    extra_play = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
+    game = extra_play.game
+
+    context = ContextBuilder(request, game, extra_play=extra_play).build()
+    if not context["can_play"]:
+        return JsonResponse({"error": "You cannot play anymore."}, status=403)
+
+    return _process_reveal_hint(
+        request,
+        game=game,
+        target=extra_play.target,
+        extra_play=extra_play,
+    )

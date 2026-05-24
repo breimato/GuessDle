@@ -30,6 +30,11 @@ class Game(models.Model):
     defaults = models.JSONField(default=dict, help_text="Valores por defecto para campos faltantes")
     attributes = models.JSONField(default=list, help_text="Lista de atributos que tiene cada ítem")
     grouped_attributes = models.JSONField(default=list, help_text='Grupos de atributos a comparar conjuntamente (ej: [["tipo_1", "tipo_2"]])')
+    hint_reveal_columns = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Orden de preferencia para pistas de columna. Ej: ["tipo_1", "tipo_2", "generacion"]',
+    )
 
     active = models.BooleanField(default=True)
 
@@ -48,6 +53,15 @@ class Game(models.Model):
             raise ValidationError(
                 {'data_source_url': "Debes proporcionar una URL de API o un archivo JSON.",
                  'json_file': "Debes proporcionar una URL de API o un archivo JSON."})
+
+        attributes = set(self.attributes or [])
+        invalid_hints = [col for col in (self.hint_reveal_columns or []) if col not in attributes]
+        if invalid_hints:
+            raise ValidationError({
+                'hint_reveal_columns': (
+                    f"Columnas no definidas en attributes: {', '.join(invalid_hints)}"
+                ),
+            })
 
 
 class GameItem(models.Model):
@@ -164,6 +178,11 @@ class PlaySession(models.Model):
     game         = models.ForeignKey('games.Game', on_delete=models.CASCADE, related_name="play_sessions")
     session_type = models.CharField(max_length=10, choices=PlaySessionType.choices)
     reference_id = models.PositiveIntegerField(null=True, blank=True, help_text="PK de DailyTarget / ExtraDailyPlay / Challenge")
+    revealed_hints = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Pistas de columna usadas: [{"attribute": "tipo_1", "value": "Fuego", "at_attempt": 5}]',
+    )
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

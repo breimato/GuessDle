@@ -113,6 +113,127 @@ document.addEventListener("DOMContentLoaded", () => {
     return { template, gap };
   }
 
+  /* ────── pistas de columna ────── */
+  const hintControlsEl = document.getElementById("hint-controls");
+  const hintUseBtn = document.getElementById("hint-use-btn");
+  const hintMessagesEl = document.getElementById("hint-messages");
+  const revealHintUrl = gameData?.dataset.revealUrl || "";
+  let currentHintState = null;
+
+  function loadInitialHintState() {
+    const el = document.getElementById("hint-state-data");
+    if (!el) return null;
+    try {
+      return JSON.parse(el.textContent);
+    } catch (e) {
+      console.error("Hint state parse:", e);
+      return null;
+    }
+  }
+
+  function formatHintValue(value) {
+    if (value == null || value === "") return "—";
+    if (Array.isArray(value)) return value.map(String).join(", ");
+    if (typeof value === "object") return JSON.stringify(value);
+    return String(value);
+  }
+
+  function normalizeDisplayText(text) {
+    if (text == null) return "";
+    return String(text).replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) =>
+      String.fromCodePoint(parseInt(hex, 16))
+    );
+  }
+
+  function formatColumnLabel(attribute, label) {
+    if (label) return label;
+    return String(attribute).replace(/_/g, " ");
+  }
+
+  function renderHintMessages(hintState) {
+    if (!hintMessagesEl || !hintState?.enabled) return;
+
+    const items = hintState.revealed_hints || [];
+    if (!items.length) {
+      hintMessagesEl.innerHTML = "";
+      hintMessagesEl.classList.add("hidden");
+      return;
+    }
+
+    hintMessagesEl.innerHTML = items.map(entry => {
+      const label = formatColumnLabel(entry.attribute, entry.label).toLocaleUpperCase("es");
+      const value = formatHintValue(entry.value).toLocaleUpperCase("es");
+      return `<p class="hint-message"><strong>${label}:</strong> ${value}</p>`;
+    }).join("");
+    hintMessagesEl.classList.remove("hidden");
+  }
+
+  function syncHintControls(hintState) {
+    if (!hintControlsEl || !hintState?.enabled) {
+      hintControlsEl?.classList.add("hidden");
+      return;
+    }
+
+    const pending = hintState.slots_pending || 0;
+    const pickable = hintState.eligible_columns || [];
+    const canUseHint = pending > 0 && pickable.length > 0;
+
+    if (canUseHint) {
+      hintControlsEl.classList.remove("hidden");
+      const label = pending === 1 ? "1 pista disponible" : `${pending} pistas disponibles`;
+      if (hintUseBtn) {
+        hintUseBtn.textContent = `Revelar pista (${label})`;
+        hintUseBtn.disabled = false;
+      }
+    } else {
+      hintControlsEl.classList.add("hidden");
+    }
+  }
+
+  async function postRevealHint(attribute) {
+    if (!revealHintUrl) throw new Error("Reveal URL no configurada.");
+    const body = new URLSearchParams({ attribute });
+    const res = await fetch(revealHintUrl, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrf,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Error al revelar pista.");
+    return data.hint_state;
+  }
+
+  function handleHintState(hintState) {
+    if (!hintState?.enabled) return;
+    currentHintState = hintState;
+    renderHintMessages(hintState);
+    syncHintControls(hintState);
+  }
+
+  hintUseBtn?.addEventListener("click", async () => {
+    if (!currentHintState) return;
+    const pickable = currentHintState.eligible_columns || [];
+    if (!pickable.length) return;
+
+    hintUseBtn.disabled = true;
+    try {
+      const nextState = await postRevealHint(pickable[0].attribute);
+      handleHintState(nextState);
+    } catch (err) {
+      alert(err.message || "Error");
+      hintUseBtn.disabled = false;
+    }
+  });
+
+  currentHintState = loadInitialHintState();
+  if (currentHintState) {
+    handleHintState(currentHintState);
+  }
+
   function calcGap(cols) {
     if (cols <= 4) return "10px";
     if (cols <= 6) return "8px";
@@ -272,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Challenge report failed:", err);
         }
       }
-      handleGameCompletion(flag.dataset.champ, isExtra, betInfo, challengeData);
+      handleGameCompletion(normalizeDisplayText(flag.dataset.champ), isExtra, betInfo, challengeData);
     }, 200);
   }
 
@@ -304,6 +425,10 @@ document.addEventListener("DOMContentLoaded", () => {
       updateBetTrackerUI(currentCount, data.won, betInfo);
     }
 
+    if (data.hint_state) {
+      handleHintState(data.hint_state);
+    }
+
     if (data.won) {
       const cells = row.querySelectorAll(".square");
       const last = cells[cells.length - 1];
@@ -320,7 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Challenge report failed:", err);
           }
         }
-        handleGameCompletion(data.attempt.name, !!extraId, betInfo, challengeData);
+        handleGameCompletion(normalizeDisplayText(data.attempt.name), !!extraId, betInfo, challengeData);
       };
       if (last) {
         last.addEventListener("animationend", runCompletion, { once: true });
@@ -331,7 +456,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function capitalize(text) {
-    return text.replace(/\b\w/g, char => char.toUpperCase());
+    const normalized = normalizeDisplayText(text);
+    return normalized.replace(/(^|\s|-|_)([a-z])/g, (_, sep, char) => sep + char.toUpperCase());
   }
 
   function wrapCellText(html) {
@@ -345,6 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = document.createElement("div");
     row.className = "attempt-row";
     row.style.display = "grid";
+    const displayName = normalizeDisplayText(name);
 
     // Lógica para la celda del personaje/ítem
     let characterCellHtml = "";
@@ -352,14 +479,14 @@ document.addEventListener("DOMContentLoaded", () => {
       characterCellHtml = `
         <img
           src="${guess_image_url}"
-          alt="${capitalize(name)}"
-          title="${capitalize(name)}"
+          alt="${capitalize(displayName)}"
+          title="${capitalize(displayName)}"
           style="width: 100px; height: 100px; object-fit: cover; object-position: top;"
           onerror="this.onerror=null; this.src='/static/images/default-character.png';"
         >
       `;
-    } else { // Fallback al nombre si no hay ni imagen ni icono
-      characterCellHtml = `<span class="champion-icon-name">${name}</span>`;
+    } else {
+      characterCellHtml = `<span class="champion-icon-name">${displayName}</span>`;
     }
 
     row.append(makeCell({
@@ -423,6 +550,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ───────── modal victoria ───────── */
   function showVictoryModal(name, isExtra = false, betInfo = null, challengeData = null) {
   injectKeyframes();
+  const displayName = normalizeDisplayText(name);
 
   const overlay = document.createElement("div");
   overlay.className = "arcade-modal-overlay";
@@ -467,7 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modal.innerHTML = `
   <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
-  <h2 class="arcade-modal__title">¡Correcto! ${name}</h2>
+  <h2 class="arcade-modal__title">¡Correcto! ${displayName}</h2>
   ${challengeMessageHtml}
   ${betMessageHtml}
   <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">

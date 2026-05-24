@@ -30,7 +30,8 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <div id="game-data"
      data-slug="{{ game.slug }}"
      {% if extra_play %}data-extra-id="{{ extra_play.id }}"{% endif %}
-     data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}">
+     data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}"
+     {% if reveal_hint_url %}data-reveal-url="{{ reveal_hint_url }}"{% endif %}>
 </div>
 
 <section class="container mx-auto text-center">
@@ -39,7 +40,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 
 {% if won %}
   <script id="won-flag"
-          data-champ="{{ target.name|escapejs }}"
+          data-champ="{{ target.name|escape }}"
           {% if extra_play %}
           data-is-extra="true"
           data-bet-won="{{ bet_won|yesno:'true,false' }}"
@@ -96,6 +97,13 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 
   <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
           {% if won %}disabled{% endif %}>Probar</button>
+
+  <div id="hint-controls" class="hint-controls hidden">
+    <button type="button" id="hint-use-btn" class="arcade-btn arcade-btn--hint arcade-btn--full mt-3">
+      Revelar pista
+    </button>
+  </div>
+  <div id="hint-messages" class="hint-messages" aria-live="polite"></div>
 </form>
 
 {% if game.attributes %}
@@ -111,6 +119,8 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
   </div>
   <div id="attempts-container"></div>
 </div>
+{% if game.attributes %}{{ game.attributes|json_script:"game-attributes-data" }}{% endif %}
+{% if hint_state %}{{ hint_state|json_script:"hint-state-data" }}{% endif %}
 {% if attempts %}{{ attempts|json_script:"initial-attempts" }}{% endif %}
 {% endif %}
 
