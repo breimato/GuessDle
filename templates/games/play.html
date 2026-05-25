@@ -16,16 +16,25 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
   const CHALLENGE_CURRENT_USER  = "{{ user.username|escapejs }}";
   const CSRF_TOKEN              = "{{ csrf_token }}";
 </script>
-  {% if game.audio_file %}
-  <audio autoplay loop>
-    <source src="{{ game.audio_file.url }}" type="audio/mpeg">
-  </audio>
-  {% endif %}
 {% endif %}
 
 <div class="w-full max-w-4xl flex justify-start">
   <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--ghost">Dashboard</a>
 </div>
+
+{% if is_challenge and game.audio_file %}
+<div class="challenge-volume" aria-label="Volumen de la música">
+  <span class="challenge-volume__icon" aria-hidden="true">🔊</span>
+  <button type="button" id="challenge-volume-up" class="challenge-volume__step" aria-label="Subir volumen">+</button>
+  <input type="range" id="challenge-volume-slider" class="challenge-volume__slider"
+         min="0" max="100" value="30"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
+  <button type="button" id="challenge-volume-down" class="challenge-volume__step" aria-label="Bajar volumen">−</button>
+</div>
+<audio id="challenge-bgm" loop playsinline>
+  <source src="{{ game.audio_file.url }}" type="audio/mpeg">
+</audio>
+{% endif %}
 
 <div id="game-data"
      data-slug="{{ game.slug }}"
@@ -35,7 +44,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 </div>
 
 <section class="container mx-auto text-center">
-  <h1 class="arcade-heading-lg">{{ game.name }}</h1>
+  <h1 class="arcade-heading-lg">{{ game.name }}{% if game_mode %} — {{ game_mode.label }}{% endif %}</h1>
 </section>
 
 {% if won %}
@@ -138,4 +147,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
 <script src="{% static 'js/attempts-live.js' %}" defer></script>
+{% if is_challenge and game.audio_file %}
+<script src="{% static 'js/challenge-audio.js' %}" defer></script>
+{% endif %}
 {% endblock %}

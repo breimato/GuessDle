@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} – Dificultad{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center gap-8 py-10 px-4
+{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-4xl flex justify-start">
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--ghost">Dashboard</a>
+</div>
+
+<section class="container mx-auto text-center max-w-lg">
+  <h1 class="arcade-heading-lg">{{ game.name }}</h1>
+  <p class="arcade-text mt-4 mb-8">Elige la dificultad del reto diario</p>
+  <div class="flex flex-col gap-4">
+    {% for entry in modes %}
+    <a href="{{ entry.play_url }}" class="arcade-btn arcade-btn--secondary arcade-btn--full">
+      {{ entry.mode.label }}
+      {% if entry.resolved %}
+      <span class="text-sm opacity-70">(completado hoy)</span>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

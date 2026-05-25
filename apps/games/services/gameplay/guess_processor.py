@@ -1,6 +1,7 @@
 """Service to validate and process guess attempts, register attempts, and trigger outcome score updates."""
 
 from apps.games.models import GameAttempt
+from apps.games.services.item_pool_service import ItemPoolService
 from apps.accounts.services.score_service import ScoreService
 from .result_updater import ResultUpdater
 from .play_session_service import PlaySessionService
@@ -22,7 +23,8 @@ class GuessProcessor:
             raise ValueError("Must specify exactly one of daily_target, challenge, or extra_play.")
 
         guess_name = request.POST.get("guess", "").strip()
-        guessed_item = self.game.items.filter(name__iexact=guess_name).first()
+        mode = self._resolve_mode(daily_target=daily_target, extra_play=extra_play, challenge=challenge)
+        guessed_item = ItemPoolService(self.game, mode).get_queryset().filter(name__iexact=guess_name).first()
         if not guessed_item:
             return False, False, {}
 
@@ -64,7 +66,7 @@ class GuessProcessor:
         else:
             attempts_count = GameAttempt.objects.filter(session=play_session).count()
             if extra_play:
-                score_service = ScoreService(self.user, self.game)
+                score_service = ScoreService(self.user, self.game, mode=extra_play.mode)
                 global_average = score_service.calculate_global_average_of_averages(exclude_user=True)
                 if global_average is None:
                     global_average = score_service.calculate_user_average_attempts()
@@ -93,3 +95,13 @@ class GuessProcessor:
                 }
 
         return True, is_correct, points_data
+
+    @staticmethod
+    def _resolve_mode(*, daily_target=None, extra_play=None, challenge=None):
+        if daily_target:
+            return daily_target.mode
+        if extra_play:
+            return extra_play.mode
+        if challenge:
+            return challenge.mode
+        return None

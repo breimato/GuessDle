@@ -63,6 +63,25 @@ class Game(models.Model):
                 ),
             })
 
+    def has_modes(self) -> bool:
+        return self.modes.filter(active=True).exists()
+
+
+class GameMode(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="modes")
+    slug = models.SlugField()
+    label = models.CharField(max_length=50)
+    sort_order = models.PositiveSmallIntegerField(default=0)
+    item_filter = models.JSONField(default=dict, blank=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ("game", "slug")
+        ordering = ("sort_order", "slug")
+
+    def __str__(self):
+        return f"{self.game.slug}:{self.slug}"
+
 
 class GameItem(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='items')
@@ -115,12 +134,24 @@ class DailyTarget(models.Model):
     target = models.ForeignKey(GameItem, on_delete=models.CASCADE)
     date = models.DateField()
     is_team = models.BooleanField(default=False, help_text="¿Es un target de equipo?")
+    mode = models.ForeignKey(GameMode, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
-        unique_together = (("game", "date", "is_team"),)
+        constraints = [
+            models.UniqueConstraint(
+                fields=["game", "date", "is_team"],
+                condition=models.Q(mode__isnull=True),
+                name="unique_daily_target_no_mode",
+            ),
+            models.UniqueConstraint(
+                fields=["game", "date", "is_team", "mode"],
+                condition=models.Q(mode__isnull=False),
+                name="unique_daily_target_with_mode",
+            ),
+        ]
 
     @classmethod
-    def get_current(cls, game, user):
+    def get_current(cls, game, user, mode=None):
         now = timezone.localtime()
         target_date = now.date()
         if now.time() >= time(23, 0):
@@ -128,12 +159,16 @@ class DailyTarget(models.Model):
 
         is_team = getattr(getattr(user, "profile", None), "is_team_account", False)
 
-        return (
-            cls.objects
-            .filter(game=game, date=target_date, is_team=is_team)
-            .select_related("target")
-            .first()
+        queryset = cls.objects.filter(
+            game=game,
+            date=target_date,
+            is_team=is_team,
         )
+        if mode is None:
+            queryset = queryset.filter(mode__isnull=True)
+        else:
+            queryset = queryset.filter(mode=mode)
+        return queryset.select_related("target", "mode").first()
 
 
 class GameAttempt(models.Model):
@@ -157,6 +192,7 @@ class ExtraDailyPlay(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     target = models.ForeignKey('games.GameItem', on_delete=models.CASCADE)
+    mode = models.ForeignKey(GameMode, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     bet_amount = models.FloatField(default=0)
     completed = models.BooleanField(default=False)
@@ -176,6 +212,7 @@ class PlaySessionType(models.TextChoices):
 class PlaySession(models.Model):
     user         = models.ForeignKey(User, on_delete=models.CASCADE, related_name="play_sessions")
     game         = models.ForeignKey('games.Game', on_delete=models.CASCADE, related_name="play_sessions")
+    mode         = models.ForeignKey(GameMode, on_delete=models.CASCADE, null=True, blank=True)
     session_type = models.CharField(max_length=10, choices=PlaySessionType.choices)
     reference_id = models.PositiveIntegerField(null=True, blank=True, help_text="PK de DailyTarget / ExtraDailyPlay / Challenge")
     revealed_hints = models.JSONField(

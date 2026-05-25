@@ -102,25 +102,35 @@ def dashboard_view(request):
         if not extra.completed:
             active_extra_by_slug.setdefault(slug, extra.id)
 
-    available_games = stats.fetch_active_games()
-    daily_targets_by_slug = {
-        game.slug: bool(not TargetService(game, request.user).is_daily_resolved())
-        for game in available_games
-    }
+    from apps.games.services.mode_resolver import ModeResolver
+
+    available_games = list(
+        stats.fetch_active_games().prefetch_related("modes")
+    )
 
     for game in available_games:
         slug = game.slug
+        service = TargetService(game, request.user)
+        has_pending = service.has_any_unresolved_mode()
+
         if slug in active_extra_by_slug:
-            game.redirect_url = reverse("play_extra_daily", args=[active_extra_by_slug[slug]])
+            game.redirect_url = reverse(
+                "play_extra_daily", args=[active_extra_by_slug[slug]]
+            )
         elif (
             slug in latest_extra_by_slug
             and ExtraDailyService(request.user, game).max_reached()
         ):
-            game.redirect_url = reverse("play_extra_daily", args=[latest_extra_by_slug[slug]])
-        elif daily_targets_by_slug.get(slug):
-            game.redirect_url = reverse("play", args=[game.slug])
+            game.redirect_url = reverse(
+                "play_extra_daily", args=[latest_extra_by_slug[slug]]
+            )
         else:
             game.redirect_url = reverse("play", args=[game.slug])
+
+        game.has_pending_daily = has_pending
+        game.active_modes = list(
+            ModeResolver(game).active_modes()
+        ) if game.has_modes() else []
 
     notifications = []
 
@@ -192,6 +202,10 @@ def dashboard_view(request):
         },
         "global_ranking": stats.generate_global_ranking(),
         "ranking_by_game": stats.generate_ranking_per_game(),
+        "ranking_has_modes": {
+            game.slug: game.has_modes()
+            for game in available_games
+        },
         "pending_challenges": pending_challenges,
         "active_challenges": active_challenges,
         "active_challenges_to_play": active_challenges_to_play,

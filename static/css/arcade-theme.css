@@ -905,3 +905,57 @@ body {
   .xl\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .xl\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+
+.challenge-volume {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.4rem;
+  background: var(--cab-panel);
+  border: 2px solid var(--cab-panel-border);
+  box-shadow: 3px 3px 0 var(--cab-panel-border);
+}
+
+.challenge-volume__icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.challenge-volume__step {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 2px solid var(--cab-panel-border);
+  background: var(--cab-yellow);
+  color: var(--cab-ink);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--cab-panel-border);
+}
+
+.challenge-volume__step:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--cab-panel-border);
+}
+
+.challenge-volume__step:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.challenge-volume__slider {
+  width: 1.75rem;
+  height: 5.5rem;
+  margin: 0;
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  accent-color: var(--cab-yellow);
+  cursor: pointer;
+}

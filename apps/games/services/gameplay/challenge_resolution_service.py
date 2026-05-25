@@ -47,7 +47,9 @@ class ChallengeResolutionService:
             challenge=self.challenge
         )
         loser_attempts_count = GameAttempt.objects.filter(session=loser_play_session).count()
-        loser_score_service = ScoreService(loser, self.challenge.game)
+        loser_score_service = ScoreService(
+            loser, self.challenge.game, mode=self.challenge.mode
+        )
         loser_score_service.add_points_for_attempts(loser_attempts_count)
 
         ResultUpdater(self.challenge.game, winner).update_for_game(challenge=self.challenge)

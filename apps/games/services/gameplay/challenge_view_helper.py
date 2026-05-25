@@ -9,6 +9,7 @@ from apps.accounts.models import Challenge
 from apps.games.models import Game
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
 from apps.games.services.gameplay.target_service import TargetService
+from apps.games.services.mode_resolver import ModeResolver
 
 
 class ChallengeViewHelper:
@@ -72,6 +73,7 @@ class ChallengeViewHelper:
 
         opponent_id = request.POST.get("opponent")
         game_id = request.POST.get("game")
+        mode_slug = request.POST.get("mode", "").strip() or None
 
         if not opponent_id or not game_id:
             return None, "Missing parameters"
@@ -82,13 +84,19 @@ class ChallengeViewHelper:
         except Exception:
             return None, "Opponent or game does not exist"
 
+        resolver = ModeResolver(game)
+        mode = resolver.resolve(mode_slug) if mode_slug else None
+        if resolver.has_modes() and not mode:
+            return None, "Debes elegir una dificultad."
+
         with transaction.atomic():
-            target = TargetService(game, request.user).get_random_item()
+            target = TargetService(game, request.user, mode=mode).get_random_item()
             challenge = Challenge.objects.create(
                 challenger=request.user,
                 opponent=opponent,
                 game=game,
-                target=target
+                mode=mode,
+                target=target,
             )
 
         return challenge, None

@@ -36,7 +36,7 @@ class ResultUpdater:
         attempts_count = GameAttempt.objects.filter(session=play_session).count()
 
         if daily_target:
-            score_service = ScoreService(self.user, self.game)
+            score_service = ScoreService(self.user, self.game, mode=daily_target.mode)
             points_awarded = score_service.add_points_for_attempts(attempts_count)
             return {
                 "points_awarded": points_awarded,
@@ -48,7 +48,7 @@ class ResultUpdater:
 
         if extra_play:
             bet_amount = ExtraDailyPlay.objects.get(pk=extra_play.id, user=self.user).bet_amount
-            score_service = ScoreService(self.user, self.game)
+            score_service = ScoreService(self.user, self.game, mode=extra_play.mode)
             global_average = score_service.calculate_global_average_of_averages(exclude_user=True)
 
             if global_average is not None:
@@ -92,7 +92,7 @@ class ResultUpdater:
                 for tied_user in tied_users:
                     user_session = PlaySessionService.get_or_create(tied_user, self.game, challenge=challenge)
                     tied_user_attempts = GameAttempt.objects.filter(session=user_session).count()
-                    score_service = ScoreService(tied_user, self.game)
+                    score_service = ScoreService(tied_user, self.game, mode=challenge.mode)
                     base_points = score_service.add_points_for_attempts(tied_user_attempts)
                     total_points += base_points
 
@@ -120,7 +120,7 @@ class ResultUpdater:
                 challenge=challenge
             )
             winner_attempts_count = GameAttempt.objects.filter(session=winner_play_session).count()
-            score_service = ScoreService(winner, self.game)
+            score_service = ScoreService(winner, self.game, mode=challenge.mode)
             base_points = score_service.add_points_for_attempts(winner_attempts_count)
             score_service.score_obj.elo += self.CHALLENGE_WINNER_BONUS
             score_service.score_obj.save(update_fields=("elo",))

@@ -6,11 +6,23 @@ class GameElo(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey('games.Game', on_delete=models.CASCADE)
+    mode = models.ForeignKey('games.GameMode', on_delete=models.CASCADE, null=True, blank=True)
     elo = models.FloatField(default=0)
     partidas = models.PositiveIntegerField(default=0)
 
     class Meta:
-        unique_together = ('user', 'game')
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'game'],
+                condition=models.Q(mode__isnull=True),
+                name='unique_game_elo_no_mode',
+            ),
+            models.UniqueConstraint(
+                fields=['user', 'game', 'mode'],
+                condition=models.Q(mode__isnull=False),
+                name='unique_game_elo_with_mode',
+            ),
+        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.game.slug}: {int(self.elo)}"
@@ -21,6 +33,7 @@ class Challenge(models.Model):
     challenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_sent')
     opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_received')
     game = models.ForeignKey('games.Game', on_delete=models.CASCADE)
+    mode = models.ForeignKey('games.GameMode', on_delete=models.CASCADE, null=True, blank=True)
     target = models.ForeignKey('games.GameItem', on_delete=models.CASCADE, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
