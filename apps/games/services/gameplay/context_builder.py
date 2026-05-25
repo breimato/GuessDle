@@ -3,6 +3,7 @@ import json
 from django.urls import reverse
 
 from apps.games.attempts import build_attempts
+from apps.games.services.mode_resolver import ModeResolver
 from apps.games.models import GameAttempt
 from apps.accounts.services.score_service import ScoreService
 from apps.games.services.item_pool_service import ItemPoolService
@@ -68,7 +69,6 @@ class ContextBuilder:
         hint_service = HintRevealService(session, self.game, target_item)
         hint_state = hint_service.get_hint_state()
         mode = self._active_mode()
-
         context = {
             "game": self.game,
             "target": target_item,
@@ -81,6 +81,9 @@ class ContextBuilder:
             "reveal_hint_url": self._get_reveal_hint_url(),
             "game_mode": mode,
         }
+
+        if mode and ModeResolver(self.game).has_modes() and not self.challenge:
+            context["back_to_modes_url"] = reverse("play", args=[self.game.slug])
 
         if self.daily_target or self.extra_play:
             context["guess_url"] = self._get_guess_url()

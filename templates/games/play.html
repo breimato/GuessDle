@@ -18,9 +18,14 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 </script>
 {% endif %}
 
-<div class="w-full max-w-4xl flex justify-start">
-  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--ghost">Dashboard</a>
-</div>
+<nav class="play-nav w-full max-w-4xl" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
 
 {% if is_challenge and game.audio_file %}
 <div class="challenge-volume" aria-label="Volumen de la música">
@@ -40,6 +45,8 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
      data-slug="{{ game.slug }}"
      {% if extra_play %}data-extra-id="{{ extra_play.id }}"{% endif %}
      data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}"
+     data-panel-url="{% url 'dashboard' %}"
+     {% if back_to_modes_url %}data-modes-url="{{ back_to_modes_url }}"{% endif %}
      {% if reveal_hint_url %}data-reveal-url="{{ reveal_hint_url }}"{% endif %}>
 </div>
 

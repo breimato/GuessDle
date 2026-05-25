@@ -44,9 +44,25 @@
 .gd-champ-cell img {
   width: 3.5rem;
   height: 3.5rem;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center bottom;
   border: 2px solid var(--cab-panel-border, #111);
   margin-top: .25rem;
+  image-rendering: auto;
+}
+
+/* Retratos de ítems en el tablero — contain evita recortes duros en PNG con alpha */
+.guess-portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: calc(var(--cell, 110px) - 10px);
+  max-height: calc(var(--cell, 110px) - 10px);
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
 }
 
 .gd-cell--ok   { background: var(--cab-green, #3d8c40); color: #fff; }

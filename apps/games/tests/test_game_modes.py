@@ -43,6 +43,16 @@ class GameModeTests(TestCase):
         self.assertTrue(ItemPoolService(self.game, self.normal).contains_name("mewtwo"))
         self.assertEqual(radical_count, 4)
 
+    def test_pool_description(self):
+        self.assertEqual(
+            self.normal.pool_description(),
+            "Este modo incluye las 3 primeras generaciones.",
+        )
+        self.assertEqual(
+            self.radical.pool_description(),
+            "Este modo incluye todas las generaciones.",
+        )
+
     def test_elo_per_mode(self):
         user = User.objects.create_user(username="player", password="x")
         GameElo.objects.create(user=user, game=self.game, mode=self.normal, elo=100)

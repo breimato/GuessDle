@@ -154,11 +154,7 @@ def play_daily_game(request, slug: str, mode_slug=None):
         return render(
             request,
             "games/mode_select.html",
-            {
-                "game": game,
-                "modes": modes,
-                "background_url": resolve_background_url(game),
-            },
+            {"game": game, "modes": modes},
         )
 
     game, mode, resolver, daily_target = _resolve_play_context(request, slug, mode_slug)

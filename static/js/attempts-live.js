@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ? (modeSlug ? `/games/start-extra/${slug}/${modeSlug}/` : `/games/start-extra/${slug}/`)
     : null;
   const maxExtrasReached = document.getElementById("game-data")?.dataset.maxExtrasReached === "true";
+  const modesUrl = gameData?.dataset.modesUrl || null;
+  const panelUrl = gameData?.dataset.panelUrl || "/accounts/";
 
 
 
@@ -484,7 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
           src="${guess_image_url}"
           alt="${capitalize(displayName)}"
           title="${capitalize(displayName)}"
-          style="width: 100px; height: 100px; object-fit: cover; object-position: top;"
+          class="guess-portrait"
           onerror="this.onerror=null; this.src='/static/images/default-character.png';"
         >
       `;
@@ -596,25 +598,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  modal.innerHTML = `
-  <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
-  <h2 class="arcade-modal__title">¡Correcto! ${displayName}</h2>
-  ${challengeMessageHtml}
-  ${betMessageHtml}
-  <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
-    <a href="/accounts" class="arcade-btn arcade-btn--primary arcade-btn--full">Volver al Dashboard</a>
-
-    ${!isChallengeModal ? (maxExtrasReached ? `
-      <div class="arcade-alert arcade-alert--error text-center">Ya has jugado tus 2 partidas extra hoy.</div>` : startExtraURL ? `
-      <div id="extra-play-wrapper" class="flex flex-col gap-2 w-full">
-        <button id="show-bet-form" class="arcade-btn arcade-btn--secondary arcade-btn--full">Apostar y jugar extra</button>
+  const extraSectionHtml = !isChallengeModal
+    ? (maxExtrasReached
+      ? `<div class="arcade-alert arcade-alert--error text-center">Ya has jugado tus 2 partidas extra hoy.</div>`
+      : startExtraURL
+        ? `<div id="extra-play-wrapper" class="flex flex-col gap-2 w-full">
+        <button id="show-bet-form" class="arcade-btn arcade-btn--primary arcade-btn--full">Apostar y jugar extra</button>
         <form method="post" action="${startExtraURL}" id="bet-form" class="flex flex-col gap-2 hidden">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrf}">
           <label for="bet" class="arcade-label">¿Cuánto quieres apostar?</label>
           <input type="number" name="bet" min="10" step="1" required class="arcade-input" />
           <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full">¡Jugar ahora!</button>
         </form>
-      </div>` : '') : ''}
+      </div>`
+        : "")
+    : "";
+
+  const modesLinkHtml = modesUrl
+    ? `<a href="${modesUrl}" class="arcade-btn arcade-btn--secondary arcade-btn--full">Cambiar modo</a>`
+    : "";
+
+  const hasHigherPriorityCta = Boolean(extraSectionHtml) || Boolean(modesLinkHtml);
+  const dashboardBtnClass = hasHigherPriorityCta
+    ? "arcade-btn arcade-btn--danger arcade-btn--full"
+    : "arcade-btn arcade-btn--primary arcade-btn--full";
+
+  const panelLinkHtml = `<a href="${panelUrl}" class="${dashboardBtnClass}">Dashboard</a>`;
+
+  modal.innerHTML = `
+  <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
+  <h2 class="arcade-modal__title">¡Correcto! ${displayName}</h2>
+  ${challengeMessageHtml}
+  ${betMessageHtml}
+  <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
+    ${extraSectionHtml}
+    ${modesLinkHtml}
+    ${panelLinkHtml}
   </div>`;
 
 

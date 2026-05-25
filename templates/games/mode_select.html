@@ -3,21 +3,42 @@
 
 {% block title %}{{ game.name }} – Dificultad{% endblock %}
 
+{% block body_class %}cabinet-page{% endblock %}
+
 {% block main_class %}
 min-h-screen flex flex-col items-center gap-8 py-10 px-4
 {% endblock %}
 
 {% block content %}
 <div class="w-full max-w-4xl flex justify-start">
-  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--ghost">Dashboard</a>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary">← Dashboard</a>
 </div>
 
-<section class="container mx-auto text-center max-w-lg">
-  <h1 class="arcade-heading-lg">{{ game.name }}</h1>
-  <p class="arcade-text mt-4 mb-8">Elige la dificultad del reto diario</p>
-  <div class="flex flex-col gap-4">
+<section class="container mx-auto text-center max-w-lg w-full">
+  <div class="mode-select-header">
+    <h1 class="arcade-heading-xl">{{ game.name }}</h1>
+    <button
+      type="button"
+      class="mode-select-info-btn"
+      id="mode-info-btn"
+      aria-label="Información sobre los modos"
+      aria-haspopup="dialog"
+      aria-controls="mode-info-modal"
+    >ℹ</button>
+  </div>
+</section>
+
+<div class="mode-select-stage">
+  <img
+    src="{% static 'img/mode-select/trainer-red.png' %}"
+    alt=""
+    class="mode-select-trainer mode-select-trainer--left"
+    aria-hidden="true"
+    decoding="async"
+  >
+  <div class="mode-select-modes">
     {% for entry in modes %}
-    <div class="flex flex-col gap-2">
+    <div class="mode-select-modes__group">
       <a href="{{ entry.play_url }}" class="arcade-btn arcade-btn--secondary arcade-btn--full">
         {{ entry.mode.label }}
         {% if entry.resolved %}
@@ -32,5 +53,49 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
     </div>
     {% endfor %}
   </div>
-</section>
+  <img
+    src="{% static 'img/mode-select/trainer-blue.png' %}"
+    alt=""
+    class="mode-select-trainer mode-select-trainer--right"
+    aria-hidden="true"
+    decoding="async"
+  >
+</div>
+
+<div id="mode-info-modal" class="arcade-modal-overlay mode-select-info-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="mode-info-title">
+  <div class="arcade-modal mode-select-info-modal">
+    <button type="button" class="arcade-modal__close" data-close-mode-info aria-label="Cerrar">&times;</button>
+    <h2 id="mode-info-title" class="arcade-modal__title">Modos de juego</h2>
+    <ul class="mode-select-info-list">
+      {% for entry in modes %}
+      <li>
+        <strong>{{ entry.mode.label }}</strong>
+        <p>{{ entry.mode.pool_description }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function () {
+  const btn = document.getElementById("mode-info-btn");
+  const overlay = document.getElementById("mode-info-modal");
+  if (!btn || !overlay) return;
+
+  const close = () => { overlay.hidden = true; };
+  const open = () => { overlay.hidden = false; };
+
+  btn.addEventListener("click", open);
+  overlay.querySelector("[data-close-mode-info]").addEventListener("click", close);
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !overlay.hidden) close();
+  });
+})();
+</script>
 {% endblock %}

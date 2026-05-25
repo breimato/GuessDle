@@ -85,6 +85,20 @@ class GameMode(models.Model):
     def __str__(self):
         return f"{self.game.slug}:{self.slug}"
 
+    def pool_description(self) -> str:
+        filt = self.item_filter or {}
+        if "generacion__lte" in filt:
+            count = int(filt["generacion__lte"])
+            if count == 1:
+                return "Este modo incluye la 1.ª generación."
+            return f"Este modo incluye las {count} primeras generaciones."
+        if "generacion__gte" in filt:
+            count = int(filt["generacion__gte"])
+            return f"Este modo incluye desde la generación {count}."
+        if not filt:
+            return "Este modo incluye todas las generaciones."
+        return "Este modo incluye un conjunto personalizado de personajes."
+
 
 class GameItem(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='items')
