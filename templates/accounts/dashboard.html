@@ -4,7 +4,6 @@
 {% block title %}Dashboard – GuessDle{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/challenge-toast.css' %}">
 {% endblock %}
 
 {% block main_class %}
@@ -171,82 +170,8 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
 {% endblock %}
 
 {% block extra_scripts %}
-{{ challenge_notifications|json_script:"challenge-notifications-data" }}
 <script src="{% static 'js/ranking-tabs.js' %}" defer></script>
 <script src="{% static 'js/pending-tabs.js' %}" defer></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const notificationsData = document.getElementById('challenge-notifications-data');
-  if (notificationsData) {
-    const notifications = JSON.parse(notificationsData.textContent);
-    if (notifications && notifications.length > 0) {
-      let container = document.getElementById('challenge-toast-container');
-      if (!container) {
-        container = document.createElement('div');
-        container.id = 'challenge-toast-container';
-        document.body.appendChild(container);
-      }
-      notifications.forEach(notification => {
-        const toast = document.createElement('div');
-        let toastClass = 'toast-loss';
-        let iconText = '💀';
-        if (notification.type === 'win') { toastClass = 'toast-win'; iconText = '🏆'; }
-        else if (notification.type === 'tie') { toastClass = 'toast-tie'; iconText = '🤝'; }
-        toast.className = `challenge-toast ${toastClass}`;
-        const content = document.createElement('div');
-        content.className = 'challenge-toast-content';
-        const icon = document.createElement('span');
-        icon.className = 'challenge-toast-icon';
-        icon.textContent = iconText;
-        const text = document.createElement('div');
-        text.className = 'challenge-toast-text';
-        if (notification.type === 'win') {
-          text.textContent = `¡Has ganado el reto de ${notification.game_name} contra ${notification.opponent_username}!`;
-        } else if (notification.type === 'tie') {
-          text.textContent = `¡Empate en ${notification.game_name} contra ${notification.opponent_username}!`;
-        } else {
-          text.textContent = `¡Has perdido el reto de ${notification.game_name} contra ${notification.opponent_username}!`;
-        }
-        content.appendChild(icon);
-        content.appendChild(text);
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'challenge-toast-close';
-        closeBtn.innerHTML = '&times;';
-        closeBtn.addEventListener('click', () => {
-          toast.classList.add('toast-hide');
-          toast.addEventListener('animationend', () => toast.remove());
-        });
-        toast.appendChild(content);
-        toast.appendChild(closeBtn);
-        container.appendChild(toast);
-        setTimeout(() => {
-          if (toast.parentNode) {
-            toast.classList.add('toast-hide');
-            toast.addEventListener('animationend', () => toast.remove());
-          }
-        }, 10000);
-      });
-    }
-  }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.view-btn');
-  const panels  = document.querySelectorAll('.view-panel');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('arcade-tab--active'));
-      btn.classList.add('arcade-tab--active');
-      panels.forEach(p => p.classList.add('hidden'));
-      document.getElementById('view-' + btn.dataset.view)?.classList.remove('hidden');
-    });
-  });
-});
-</script>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const gameSelect = document.getElementById('game');
@@ -267,34 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gameSelect.addEventListener('change', syncChallengeMode);
     syncChallengeMode();
   }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
-  const headers = { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/x-www-form-urlencoded' };
-  const form = document.querySelector('#challenge-form');
-  if (form) {
-    form.addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      const body = new URLSearchParams(new FormData(form));
-      const res = await fetch(form.action, { method: 'POST', headers, body });
-      const data = await res.json();
-      if (data.status === 'ok') {
-        document.querySelector('#view-sent').insertAdjacentHTML('afterbegin', data.card);
-        form.reset();
-      }
-    });
-  }
-  document.body.addEventListener('click', async (ev) => {
-    const btn = ev.target.closest('.ajax-delete');
-    if (!btn) return;
-    ev.preventDefault();
-    const res = await fetch(btn.dataset.url, { method: 'POST', headers });
-    const data = await res.json();
-    if (data.status === 'ok') btn.closest('.challenge-card')?.remove();
-  });
 });
 </script>
 {% endblock %}

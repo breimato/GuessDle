@@ -1,7 +1,7 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.contrib import admin
-from apps.accounts.models import UserProfile, GameElo, Challenge
+from apps.accounts.models import UserProfile, GameElo, Challenge, Notification
 from django.db.models import F
 
 
@@ -39,6 +39,12 @@ class GameEloAdmin(admin.ModelAdmin):
     def sumar_elo(self, request, queryset):
         updated = queryset.update(elo=F('elo') + 50)
         self.message_user(request, f"Sumados 50 puntos de elo a {updated} usuarios.")
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ("user", "type", "created_at", "read_at")
+    list_filter = ("type", "read_at")
+    search_fields = ("user__username",)
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):

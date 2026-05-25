@@ -33,9 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (data.status === 'ok') {
-        // nueva tarjeta en “Enviados” sin refrescar
-        document.querySelector('#view-enviados')
-                .insertAdjacentHTML('afterbegin', data.card);
+        const sentPanel = document.querySelector('#view-sent');
+        if (sentPanel) {
+          sentPanel.querySelectorAll('.arcade-empty').forEach((node) => node.remove());
+          sentPanel.insertAdjacentHTML('afterbegin', data.card);
+        }
         form.reset();
       }
     });

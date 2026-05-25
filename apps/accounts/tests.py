@@ -1,13 +1,14 @@
 from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
-from apps.accounts.models import Challenge
+
+from apps.accounts.models import Challenge, Notification
+from apps.accounts.services.notification_service import NotificationService, NotificationType
 from apps.games.models import Game, GameItem, PlaySession, PlaySessionType, GameAttempt
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 
 
 class ChallengeBackendTests(TestCase):
-    """Test suite for the challenge modal backend features."""
 
     CHALLENGER_USERNAME = "challenger_user"
     OPPONENT_USERNAME = "opponent_user"
@@ -26,10 +27,11 @@ class ChallengeBackendTests(TestCase):
     USER_PASSWORD = "password123"
     URL_DASHBOARD = "dashboard"
     URL_PLAY_CHALLENGE = "play_challenge"
+    URL_NOTIFICATIONS_POLL = "notifications_poll"
+    URL_NOTIFICATIONS_ACK = "notifications_ack"
+    URL_CREATE_CHALLENGE = "create_challenge"
 
     def setUp(self):
-        """Set up test data before each test case."""
-
         self.challenger = User.objects.create_user(
             username=self.CHALLENGER_USERNAME,
             password=self.USER_PASSWORD
@@ -57,8 +59,6 @@ class ChallengeBackendTests(TestCase):
         self.client = Client()
 
     def test_ajax_post_returns_json_metadata_on_resolution(self):
-        """Verify that an AJAX POST request to play_challenge_game view returns challenge completion metadata."""
-
         self.client.force_login(self.challenger)
         url = reverse(self.URL_PLAY_CHALLENGE, args=[self.challenge.id])
 
@@ -86,14 +86,9 @@ class ChallengeBackendTests(TestCase):
         json_data = response.json()
         self.assertTrue(json_data["completed"])
         self.assertEqual(json_data["winner"], self.CHALLENGER_USERNAME)
-        self.assertEqual(json_data["challenger"], self.CHALLENGER_USERNAME)
-        self.assertEqual(json_data["opponent"], self.OPPONENT_USERNAME)
-        self.assertEqual(json_data["current_user"], self.OPPONENT_USERNAME)
         self.assertEqual(json_data["result_status"], self.STATUS_WINNER)
 
     def test_challenge_resolution_notifies_winner_and_loser(self):
-        """Verify that resolving a challenge immediately notifies the active player."""
-
         self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
         self.challenge.opponent_attempts = self.ATTEMPT_COUNT_FIVE
         self.challenge.save()
@@ -105,12 +100,22 @@ class ChallengeBackendTests(TestCase):
         self.challenge.refresh_from_db()
         self.assertTrue(self.challenge.completed)
         self.assertEqual(self.challenge.winner, self.challenger)
-        self.assertTrue(self.challenge.loser_notified)
-        self.assertFalse(self.challenge.winner_notified)
+
+        win_notification = Notification.objects.filter(
+            user=self.challenger,
+            type=NotificationType.CHALLENGE_WIN,
+            challenge=self.challenge,
+        )
+        self.assertTrue(win_notification.exists())
+        self.assertFalse(
+            Notification.objects.filter(
+                user=self.opponent,
+                type=NotificationType.CHALLENGE_WIN,
+                challenge=self.challenge,
+            ).exists()
+        )
 
     def test_challenge_resolution_notifies_acting_user_on_tie(self):
-        """Verify that resolving a tie immediately notifies the acting player."""
-
         self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
         self.challenge.opponent_attempts = self.ATTEMPT_COUNT_THREE
         self.challenge.save()
@@ -122,36 +127,88 @@ class ChallengeBackendTests(TestCase):
         self.challenge.refresh_from_db()
         self.assertTrue(self.challenge.completed)
         self.assertIsNone(self.challenge.winner)
-        self.assertTrue(self.challenge.winner_notified)
-        self.assertFalse(self.challenge.loser_notified)
 
-    def test_dashboard_view_queries_and_tracks_ties(self):
-        """Verify dashboard_view fetches, marks, and appends tie notifications."""
+        tie_notification = Notification.objects.filter(
+            user=self.opponent,
+            type=NotificationType.CHALLENGE_TIE,
+            challenge=self.challenge,
+        )
+        self.assertTrue(tie_notification.exists())
+        self.assertFalse(
+            Notification.objects.filter(
+                user=self.challenger,
+                type=NotificationType.CHALLENGE_TIE,
+                challenge=self.challenge,
+            ).exists()
+        )
 
-        self.challenge.completed = True
-        self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
-        self.challenge.opponent_attempts = self.ATTEMPT_COUNT_THREE
-        self.challenge.winner = None
-        self.challenge.winner_notified = False
-        self.challenge.loser_notified = True
-        self.challenge.save()
-
+    def test_create_challenge_notifies_opponent(self):
         self.client.force_login(self.challenger)
-        url = reverse(self.URL_DASHBOARD)
-        response = self.client.get(url)
+        response = self.client.post(
+            reverse(self.URL_CREATE_CHALLENGE),
+            {
+                "opponent": self.opponent.id,
+                "game": self.game.id,
+            },
+        )
 
         self.assertEqual(response.status_code, self.HTTP_OK)
-        notifications = response.context["challenge_notifications"]
-        self.assertEqual(len(notifications), 1)
-        self.assertEqual(notifications[0]["type"], self.STATUS_TIE)
-        self.assertEqual(notifications[0]["opponent_username"], self.OPPONENT_USERNAME)
+        notification = Notification.objects.filter(
+            user=self.opponent,
+            type=NotificationType.CHALLENGE_RECEIVED,
+        )
+        self.assertEqual(notification.count(), 1)
 
-        self.challenge.refresh_from_db()
-        self.assertTrue(self.challenge.winner_notified)
+    def test_notifications_poll_and_ack(self):
+        NotificationService.create(
+            self.challenger,
+            NotificationType.CHALLENGE_WIN,
+            {
+                "challenge_id": self.challenge.id,
+                "game_name": self.game.name,
+                "opponent_username": self.opponent.username,
+            },
+            self.challenge,
+        )
+
+        self.client.force_login(self.challenger)
+        poll_response = self.client.get(reverse(self.URL_NOTIFICATIONS_POLL))
+        self.assertEqual(poll_response.status_code, self.HTTP_OK)
+        poll_data = poll_response.json()
+        self.assertEqual(len(poll_data["notifications"]), 1)
+        notification_id = poll_data["notifications"][0]["id"]
+
+        ack_response = self.client.post(
+            reverse(self.URL_NOTIFICATIONS_ACK),
+            {"ids": str(notification_id)},
+        )
+        self.assertEqual(ack_response.status_code, self.HTTP_OK)
+
+        poll_response = self.client.get(reverse(self.URL_NOTIFICATIONS_POLL))
+        poll_data = poll_response.json()
+        self.assertEqual(len(poll_data["notifications"]), 0)
+
+    def test_reject_challenge_notifies_challenger(self):
+        pending = Challenge.objects.create(
+            challenger=self.challenger,
+            opponent=self.opponent,
+            game=self.game,
+            target=self.target,
+        )
+
+        self.client.force_login(self.opponent)
+        response = self.client.post(reverse("reject_challenge", args=[pending.id]))
+        self.assertEqual(response.status_code, self.HTTP_OK)
+
+        notification = Notification.objects.filter(
+            user=self.challenger,
+            type=NotificationType.CHALLENGE_REJECTED,
+        )
+        self.assertEqual(notification.count(), 1)
+        self.assertEqual(notification.first().payload["challenge_id"], pending.id)
 
 
 class PlayerStatsServiceTests(TestCase):
-    """Ensure dashboard stats and rankings use the same formulas."""
 
     USERNAME = "stats_user"
     GAME_NAME = "Test Game"

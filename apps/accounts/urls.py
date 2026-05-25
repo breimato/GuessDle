@@ -5,6 +5,8 @@ from .views import (
     LoginView,
     cancel_challenge,
     dashboard_view,
+    notifications_ack,
+    notifications_poll,
     reject_challenge,
     register_view,
     complete_challenge,
@@ -24,4 +26,6 @@ urlpatterns = [
     path("challenges/<int:challenge_id>/reveal-hint/", reveal_challenge_hint, name="ajax_reveal_hint_challenge"),
     path("challenge/<int:challenge_id>/reject/", reject_challenge, name="reject_challenge"),
     path("challenge/<int:challenge_id>/cancel/", cancel_challenge, name="cancel_challenge"),
+    path("notifications/poll/", notifications_poll, name="notifications_poll"),
+    path("notifications/ack/", notifications_ack, name="notifications_ack"),
 ]

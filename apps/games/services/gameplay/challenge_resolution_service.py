@@ -1,24 +1,18 @@
-"""Service to manage and orchestrate the resolution and point assignments for a challenge between two players."""
-
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
 from apps.games.services.gameplay.result_updater import ResultUpdater
 from apps.games.services.gameplay.play_session_service import PlaySessionService
+from apps.accounts.services.notification_service import NotificationService
 from apps.accounts.services.score_service import ScoreService
 from apps.games.models import GameAttempt
 
 
 class ChallengeResolutionService:
-    """Orchestrates challenge resolution: determines winner/tie, updates game scores, and marks challenge complete."""
 
     def __init__(self, challenge, acting_user=None):
-        """Initialize challenge resolution service."""
-
         self.challenge = challenge
         self.acting_user = acting_user or challenge.challenger
 
     def resolve_and_assign_points(self):
-        """Calculate the winner/tie for the challenge, assign base/bonus points, and finalize the challenge status."""
-
         challenge_manager = ChallengeManager(user=self.acting_user, challenge=self.challenge)
         challenge_manager.calculate_winner()
 
@@ -28,11 +22,8 @@ class ChallengeResolutionService:
         if self.challenge.winner is None:
             ResultUpdater(self.challenge.game, self.acting_user).update_for_game(challenge=self.challenge)
             self.challenge.points_assigned = True
-            if self.acting_user == self.challenge.challenger:
-                self.challenge.winner_notified = True
-            elif self.acting_user == self.challenge.opponent:
-                self.challenge.loser_notified = True
-            self.challenge.save(update_fields=["points_assigned", "winner_notified", "loser_notified"])
+            self.challenge.save(update_fields=["points_assigned"])
+            NotificationService.notify_challenge_outcome(self.challenge, self.acting_user)
             return {
                 "status": "tie",
                 "users": challenge_manager.get_tied_users(),
@@ -55,11 +46,8 @@ class ChallengeResolutionService:
         ResultUpdater(self.challenge.game, winner).update_for_game(challenge=self.challenge)
 
         self.challenge.points_assigned = True
-        if self.acting_user == winner:
-            self.challenge.winner_notified = True
-        elif self.acting_user == loser:
-            self.challenge.loser_notified = True
-        self.challenge.save(update_fields=["points_assigned", "winner_notified", "loser_notified"])
+        self.challenge.save(update_fields=["points_assigned"])
+        NotificationService.notify_challenge_outcome(self.challenge, self.acting_user)
 
         return {
             "status": "winner",

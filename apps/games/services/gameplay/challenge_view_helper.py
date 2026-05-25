@@ -6,6 +6,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 
 from apps.accounts.models import Challenge
+from apps.accounts.services.notification_service import NotificationService
 from apps.games.models import Game
 from apps.games.services.gameplay.challenger_manager import ChallengeManager
 from apps.games.services.gameplay.target_service import TargetService
@@ -24,11 +25,10 @@ class ChallengeViewHelper:
         self.challenge_manager = ChallengeManager(user=self.user, challenge=challenge)
 
     def accept_if_needed(self):
-        """Accept the challenge automatically if the current user is the opponent and has not accepted yet."""
-
         if not self.challenge.accepted and self.challenge.opponent == self.user:
             self.challenge.accepted = True
             self.challenge.save(update_fields=["accepted"])
+            NotificationService.notify_challenge_accepted(self.challenge)
 
     def ensure_participant(self):
         """Verify if the current user is a valid participant (challenger or opponent) in the challenge."""
@@ -98,6 +98,7 @@ class ChallengeViewHelper:
                 mode=mode,
                 target=target,
             )
+            NotificationService.notify_challenge_received(challenge)
 
         return challenge, None
 
@@ -115,6 +116,7 @@ class ChallengeViewHelper:
         if not challenge:
             return False
 
+        NotificationService.notify_challenge_cancelled(challenge)
         challenge.delete()
         return True
 
@@ -132,5 +134,6 @@ class ChallengeViewHelper:
         if not challenge:
             return False
 
+        NotificationService.notify_challenge_rejected(challenge)
         challenge.delete()
         return True

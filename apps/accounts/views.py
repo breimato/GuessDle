@@ -16,6 +16,7 @@ from django.template.loader import render_to_string
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.dashboard_stats import DashboardStats
+from apps.accounts.services.notification_service import NotificationService
 from apps.games.models import ExtraDailyPlay
 from apps.games.services.gameplay.target_service import TargetService
 from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
@@ -140,68 +141,8 @@ def dashboard_view(request):
             for mode in game.active_modes
         }
 
-    notifications = []
+    NotificationService.migrate_legacy_unread(request.user)
 
-    won_challenges = Challenge.objects.filter(
-        completed=True,
-        winner=request.user,
-        winner_notified=False
-    ).select_related("challenger", "opponent", "game")
-
-    for challenge in won_challenges:
-        opponent_user = challenge.opponent if challenge.challenger == request.user else challenge.challenger
-        notifications.append({
-            "id": challenge.id,
-            "type": "win",
-            "game_name": challenge.game.name,
-            "opponent_username": opponent_user.username,
-        })
-        challenge.winner_notified = True
-        challenge.save(update_fields=["winner_notified"])
-
-    lost_challenges = Challenge.objects.filter(
-        completed=True,
-        loser_notified=False
-    ).filter(
-        models.Q(challenger=request.user) | models.Q(opponent=request.user)
-    ).exclude(
-        winner=request.user
-    ).exclude(
-        winner__isnull=True
-    ).select_related("winner", "game")
-
-    for challenge in lost_challenges:
-        notifications.append({
-            "id": challenge.id,
-            "type": "loss",
-            "game_name": challenge.game.name,
-            "opponent_username": challenge.winner.username,
-        })
-        challenge.loser_notified = True
-        challenge.save(update_fields=["loser_notified"])
-
-    tie_challenges = Challenge.objects.filter(
-        completed=True,
-        winner__isnull=True
-    ).filter(
-        (models.Q(challenger=request.user) & models.Q(winner_notified=False)) |
-        (models.Q(opponent=request.user) & models.Q(loser_notified=False))
-    ).select_related("challenger", "opponent", "game")
-
-    for challenge in tie_challenges:
-        opponent_user = challenge.opponent if challenge.challenger == request.user else challenge.challenger
-        notifications.append({
-            "id": challenge.id,
-            "type": "tie",
-            "game_name": challenge.game.name,
-            "opponent_username": opponent_user.username,
-        })
-        if challenge.challenger == request.user:
-            challenge.winner_notified = True
-            challenge.save(update_fields=["winner_notified"])
-        else:
-            challenge.loser_notified = True
-            challenge.save(update_fields=["loser_notified"])
     context = {
         "available_games": available_games,
         "user_stats": {
@@ -219,10 +160,43 @@ def dashboard_view(request):
         "active_challenges_to_play": active_challenges_to_play,
         "sent_pending_challenges": sent_pending_challenges,
         "users": users,
-        "challenge_notifications": notifications,
     }
 
     return render(request, "accounts/dashboard.html", context)
+
+
+@login_required
+@never_cache
+def notifications_poll(request):
+    NotificationService.migrate_legacy_unread(request.user)
+    unread = list(NotificationService.fetch_unread(request.user))
+    payload = {
+        "notifications": [
+            NotificationService.serialize(notification)
+            for notification in unread
+        ],
+    }
+    if request.GET.get("include_dashboard") == "1":
+        payload["dashboard_sync"] = NotificationService.build_dashboard_sync(
+            request.user,
+            unread,
+            request,
+        )
+    return json_success(payload)
+
+
+@require_POST
+@login_required
+@csrf_protect
+def notifications_ack(request):
+    raw_ids = request.POST.get("ids", "")
+    notification_ids = [
+        int(value)
+        for value in raw_ids.split(",")
+        if value.strip().isdigit()
+    ]
+    acked_count = NotificationService.ack(request.user, notification_ids)
+    return json_success({"acked": acked_count})
 
 
 def register_view(request):

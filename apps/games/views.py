@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Challenge
+from apps.accounts.services.notification_service import NotificationService
 from apps.games.models import ExtraDailyPlay, Game
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
 from apps.games.services.gameplay.challenge_view_helper import ChallengeViewHelper
@@ -250,6 +251,10 @@ def play_challenge_game(request, challenge_id: int):
             if is_ajax:
                 return JsonResponse({"error": "Invalid attempts value."}, status=400)
             return redirect("play_challenge", challenge_id=challenge.id)
+
+        challenge.refresh_from_db()
+        if not challenge.completed:
+            NotificationService.notify_rival_finished(challenge, request.user)
 
         resolution_result = ChallengeResolutionService(
             challenge, acting_user=request.user
