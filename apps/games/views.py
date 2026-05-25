@@ -22,6 +22,7 @@ from apps.games.services.gameplay.hint_reveal_service import HintRevealService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
 from apps.games.services.gameplay.target_service import TargetService
 from apps.games.services.mode_resolver import ModeResolver
+from apps.games.services.play_background import resolve_background_url
 
 
 def _hint_state_from_context(context):
@@ -130,14 +131,35 @@ def play_daily_game(request, slug: str, mode_slug=None):
         modes = []
         for mode in resolver.active_modes():
             service = TargetService(game, user, mode=mode)
+            extra_service = ExtraDailyService(user, game, mode=mode)
+            active_extra = ExtraDailyPlay.objects.filter(
+                user=user,
+                game=game,
+                mode=mode,
+                created_at__date=localtime().date(),
+                completed=False,
+            ).first()
             modes.append(
                 {
                     "mode": mode,
                     "resolved": service.is_daily_resolved(),
                     "play_url": reverse("play_mode", args=[slug, mode.slug]),
+                    "active_extra_id": active_extra.id if active_extra else None,
+                    "can_start_extra": service.is_daily_resolved()
+                    and not extra_service.max_reached()
+                    and not active_extra,
+                    "max_extras_reached": extra_service.max_reached(),
                 }
             )
-        return render(request, "games/mode_select.html", {"game": game, "modes": modes})
+        return render(
+            request,
+            "games/mode_select.html",
+            {
+                "game": game,
+                "modes": modes,
+                "background_url": resolve_background_url(game),
+            },
+        )
 
     game, mode, resolver, daily_target = _resolve_play_context(request, slug, mode_slug)
 
@@ -146,7 +168,11 @@ def play_daily_game(request, slug: str, mode_slug=None):
         return render(
             request,
             "games/play.html",
-            {"game": game, "game_mode": mode},
+            {
+                "game": game,
+                "game_mode": mode,
+                "background_url": resolve_background_url(game, mode),
+            },
         )
 
     is_ajax = request.headers.get("x-requested-with") == "XMLHttpRequest"
@@ -199,6 +225,7 @@ def play_daily_game(request, slug: str, mode_slug=None):
             "slug": game.slug,
             "extra_id": None,
             "max_extras_reached": extra_daily_service.max_reached(),
+            "background_url": resolve_background_url(game, mode),
         }
     )
     return render(request, "games/play.html", context)

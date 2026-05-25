@@ -73,6 +73,9 @@ class GameMode(models.Model):
     label = models.CharField(max_length=50)
     sort_order = models.PositiveSmallIntegerField(default=0)
     item_filter = models.JSONField(default=dict, blank=True)
+    background_image = models.ImageField(
+        upload_to="game_mode_background/", blank=True, null=True
+    )
     active = models.BooleanField(default=True)
 
     class Meta:

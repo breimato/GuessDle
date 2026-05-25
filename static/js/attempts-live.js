@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const header = document.getElementById("attempts-header");
   const form = document.getElementById("guess-form");
   const csrf = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
-  const slugMatch = location.pathname.match(/\/play(?:-extra)?\/([^\/]+)/);
   const gameData = document.getElementById("game-data");
   const slug = gameData?.dataset.slug;
   const extraId = gameData?.dataset.extraId;
-  const startExtraURL = slug ? `/games/start-extra/${slug}/` : null;
+  const modeMatch = location.pathname.match(/\/play\/[^/]+\/([^/]+)\/?$/);
+  const modeSlug = modeMatch?.[1];
+  const startExtraURL = slug
+    ? (modeSlug ? `/games/start-extra/${slug}/${modeSlug}/` : `/games/start-extra/${slug}/`)
+    : null;
   const maxExtrasReached = document.getElementById("game-data")?.dataset.maxExtrasReached === "true";
 
 

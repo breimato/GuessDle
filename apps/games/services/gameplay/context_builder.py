@@ -6,6 +6,7 @@ from apps.games.attempts import build_attempts
 from apps.games.models import GameAttempt
 from apps.accounts.services.score_service import ScoreService
 from apps.games.services.item_pool_service import ItemPoolService
+from apps.games.services.play_background import resolve_background_url
 from .hint_reveal_service import HintRevealService
 from .play_session_service import PlaySessionService
 from .target_service import TargetService
@@ -83,8 +84,8 @@ class ContextBuilder:
 
         if self.daily_target or self.extra_play:
             context["guess_url"] = self._get_guess_url()
-            context["background_url"] = (
-                self.game.background_image.url if self.game.background_image else None
+            context["background_url"] = resolve_background_url(
+                self.game, self._active_mode()
             )
 
             if self.daily_target:

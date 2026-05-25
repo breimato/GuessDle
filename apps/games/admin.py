@@ -51,7 +51,7 @@ class GameAdminForm(forms.ModelForm):
 class GameModeInline(admin.TabularInline):
     model = GameMode
     extra = 0
-    fields = ("slug", "label", "sort_order", "item_filter", "active")
+    fields = ("slug", "label", "sort_order", "item_filter", "background_image", "active")
 
 
 @admin.register(Game)

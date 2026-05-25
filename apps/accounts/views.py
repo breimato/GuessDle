@@ -96,11 +96,14 @@ def dashboard_view(request):
 
     active_extra_by_slug = {}
     latest_extra_by_slug = {}
+    active_extra_by_game_mode = {}
     for extra in today_extras:
         slug = extra.game.slug
         latest_extra_by_slug.setdefault(slug, extra.id)
         if not extra.completed:
             active_extra_by_slug.setdefault(slug, extra.id)
+            if extra.mode_id:
+                active_extra_by_game_mode[(slug, extra.mode.slug)] = extra.id
 
     from apps.games.services.mode_resolver import ModeResolver
 
@@ -110,10 +113,13 @@ def dashboard_view(request):
 
     for game in available_games:
         slug = game.slug
+        resolver = ModeResolver(game)
         service = TargetService(game, request.user)
         has_pending = service.has_any_unresolved_mode()
 
-        if slug in active_extra_by_slug:
+        if resolver.has_modes():
+            game.redirect_url = reverse("play", args=[game.slug])
+        elif slug in active_extra_by_slug:
             game.redirect_url = reverse(
                 "play_extra_daily", args=[active_extra_by_slug[slug]]
             )
@@ -128,9 +134,11 @@ def dashboard_view(request):
             game.redirect_url = reverse("play", args=[game.slug])
 
         game.has_pending_daily = has_pending
-        game.active_modes = list(
-            ModeResolver(game).active_modes()
-        ) if game.has_modes() else []
+        game.active_modes = list(resolver.active_modes()) if resolver.has_modes() else []
+        game.active_extra_by_mode = {
+            mode.slug: active_extra_by_game_mode.get((slug, mode.slug))
+            for mode in game.active_modes
+        }
 
     notifications = []
 
