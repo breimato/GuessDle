@@ -1,7 +1,4 @@
 const PLAY_VOLUME_KEY = "guessdle-play-volume";
-const BGM_STATE_KEY = "guessdle-bgm-state";
-const BGM_HANDOFF_KEY = "guessdle-bgm-handoff";
-const BGM_FADE_IN_KEY = "guessdle-radical-fade-in";
 const RADICAL_ENTER_PARAM = "radical_enter";
 const DEFAULT_VOLUME = 0.3;
 
@@ -25,50 +22,6 @@ function applyVolumeToAudio(audio, percent) {
   audio.volume = Math.min(1, Math.max(0, percent / 100));
 }
 
-function readPersistedState() {
-  const raw = sessionStorage.getItem(BGM_STATE_KEY);
-  if (!raw) {
-    return null;
-  }
-  try {
-    return JSON.parse(raw);
-  } catch (_error) {
-    return null;
-  }
-}
-
-function writePersistedState() {
-  const audio = getGlobalBgmAudio();
-  if (!audio || !audio.src) {
-    return;
-  }
-
-  sessionStorage.setItem(
-    BGM_STATE_KEY,
-    JSON.stringify({
-      src: audio.currentSrc || audio.src,
-      time: audio.currentTime,
-      playing: !audio.paused,
-      loop: audio.loop,
-    })
-  );
-}
-
-function clearPersistedState() {
-  sessionStorage.removeItem(BGM_STATE_KEY);
-}
-
-function hasRadicalEnterSignal() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get(RADICAL_ENTER_PARAM) === "1") {
-    return true;
-  }
-  return (
-    sessionStorage.getItem(BGM_HANDOFF_KEY) === "1"
-    || sessionStorage.getItem(BGM_FADE_IN_KEY) === "1"
-  );
-}
-
 function clearRadicalEnterUrlParam() {
   const url = new URL(window.location.href);
   if (!url.searchParams.has(RADICAL_ENTER_PARAM)) {
@@ -77,20 +30,6 @@ function clearRadicalEnterUrlParam() {
   url.searchParams.delete(RADICAL_ENTER_PARAM);
   const nextPath = `${url.pathname}${url.search}${url.hash}`;
   history.replaceState(null, "", nextPath || url.pathname);
-}
-
-function markHandoff() {
-  writePersistedState();
-  sessionStorage.setItem(BGM_HANDOFF_KEY, "1");
-  sessionStorage.setItem(BGM_FADE_IN_KEY, "1");
-}
-
-function consumeRadicalEnter() {
-  const hadEnter = hasRadicalEnterSignal();
-  sessionStorage.removeItem(BGM_HANDOFF_KEY);
-  sessionStorage.removeItem(BGM_FADE_IN_KEY);
-  clearRadicalEnterUrlParam();
-  return hadEnter;
 }
 
 function normalizeSourcePath(src) {
@@ -108,13 +47,6 @@ function sourcesMatch(audio, targetSrc) {
   return normalizeSourcePath(audio.src) === normalizeSourcePath(targetSrc);
 }
 
-function resolvePlaybackSource(pageSrc, persistedSrc) {
-  if (persistedSrc) {
-    return persistedSrc;
-  }
-  return pageSrc;
-}
-
 function waitForSourceReady(audio) {
   if (audio.readyState >= 1) {
     return Promise.resolve();
@@ -125,12 +57,10 @@ function waitForSourceReady(audio) {
 }
 
 async function configureSource(audio, src, loop) {
-  const needsNewSource = !sourcesMatch(audio, src);
   audio.loop = loop;
-  if (!needsNewSource) {
+  if (sourcesMatch(audio, src)) {
     return;
   }
-
   audio.src = src;
   await waitForSourceReady(audio);
 }
@@ -141,12 +71,11 @@ async function seekAndPlay(audio, targetTime) {
 
   try {
     await audio.play();
-    writePersistedState();
     return true;
   } catch (_error) {
     const resumeOnGesture = () => {
       audio.currentTime = resumeTime;
-      audio.play().then(writePersistedState).catch(() => {});
+      audio.play().catch(() => {});
     };
     document.addEventListener("click", resumeOnGesture, { once: true });
     document.addEventListener("keydown", resumeOnGesture, { once: true });
@@ -157,13 +86,8 @@ async function seekAndPlay(audio, targetTime) {
 const GuessDleBgm = {
   getAudio: getGlobalBgmAudio,
   readStoredVolumePercent,
-  persist: writePersistedState,
-  clearPersisted: clearPersistedState,
-  markHandoff,
-  hasRadicalEnterSignal,
-  consumeRadicalEnter,
 
-  async start({ src, loop = true, restart = false }) {
+  async start({ src, loop = true, restart = true }) {
     const audio = getGlobalBgmAudio();
     if (!audio || !src) {
       return;
@@ -179,22 +103,6 @@ const GuessDleBgm = {
     await seekAndPlay(audio, audio.currentTime);
   },
 
-  async restoreHandoff(pageConfig) {
-    const audio = getGlobalBgmAudio();
-    if (!audio || !pageConfig?.src) {
-      return false;
-    }
-
-    const persisted = readPersistedState();
-    const playbackSrc = resolvePlaybackSource(pageConfig.src, persisted?.src);
-    const loop = pageConfig.loop !== false;
-    const resumeTime = persisted?.time ?? 0;
-
-    await configureSource(audio, playbackSrc, loop);
-    applyVolumeToAudio(audio, readStoredVolumePercent());
-    return seekAndPlay(audio, resumeTime);
-  },
-
   async ensurePagePlayback(pageConfig) {
     if (!pageConfig?.src) {
       return;
@@ -203,7 +111,7 @@ const GuessDleBgm = {
     await GuessDleBgm.start({
       src: pageConfig.src,
       loop: pageConfig.loop !== false,
-      restart: pageConfig.resume !== true,
+      restart: true,
     });
   },
 
@@ -247,34 +155,17 @@ window.GuessDlePlayBgm = {
   bindPlayBgmControls: GuessDleBgm.bindVolumeControls,
 };
 
-function persistOnHide() {
-  writePersistedState();
-}
-
-window.addEventListener("pagehide", persistOnHide);
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") {
-    persistOnHide();
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const audio = getGlobalBgmAudio();
   const pageConfig = window.GuessDleBgmPage;
-  const isRadicalEnter = consumeRadicalEnter();
 
   if (pageConfig) {
-    if (pageConfig.resume && isRadicalEnter) {
-      GuessDleBgm.restoreHandoff(pageConfig);
-      return;
-    }
-
-    GuessDleBgm.ensurePagePlayback(pageConfig);
+    await GuessDleBgm.ensurePagePlayback(pageConfig);
+    clearRadicalEnterUrlParam();
     return;
   }
 
   if (audio && !audio.paused) {
     audio.pause();
   }
-  clearPersistedState();
 });

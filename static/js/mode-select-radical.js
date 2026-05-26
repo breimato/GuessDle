@@ -4,9 +4,8 @@
   const stage = document.querySelector(".mode-select-stage");
   const transition = document.getElementById("mode-select-radical-transition");
   const transitionVeil = transition?.querySelector(".mode-select-radical-transition__veil");
-  const bgmUrl = transition?.dataset.bgmUrl;
 
-  if (!radicalLink || !bubble || !stage || !transition || !bgmUrl || !window.GuessDleBgm) {
+  if (!radicalLink || !bubble || !stage || !transition) {
     return;
   }
 
@@ -14,7 +13,7 @@
   const dotCount = 8;
   const dotIntervalMs = 170;
   const holdAfterDotsMs = 500;
-  const navigateDelayMs = 2600;
+  const navigateDelayMs = 2000;
 
   const playUrl = radicalLink.getAttribute("href");
   if (!playUrl || !textElement) {
@@ -33,17 +32,7 @@
       transitionVeil?.classList.add("is-zooming");
     });
 
-    window.GuessDleBgm.start({ src: bgmUrl, loop: true, restart: true });
-
-    const persistInterval = window.setInterval(() => {
-      window.GuessDleBgm.persist();
-    }, 200);
-
     window.setTimeout(() => {
-      window.clearInterval(persistInterval);
-      window.GuessDleBgm.persist();
-      window.GuessDleBgm.markHandoff();
-
       const targetUrl = new URL(playUrl, window.location.href);
       targetUrl.searchParams.set("radical_enter", "1");
       window.location.assign(targetUrl.toString());

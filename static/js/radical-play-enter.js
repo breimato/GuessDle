@@ -1,6 +1,5 @@
 (function () {
-  const fromIntro = window.GuessDleBgm?.hasRadicalEnterSignal?.()
-    ?? new URLSearchParams(window.location.search).get("radical_enter") === "1";
+  const fromIntro = new URLSearchParams(window.location.search).get("radical_enter") === "1";
 
   if (!fromIntro) {
     document.getElementById("radical-enter-veil")?.remove();
@@ -25,7 +24,7 @@
     requestAnimationFrame(() => {
       veil.classList.add("is-revealing");
       veil.addEventListener("transitionend", finishReveal, { once: true });
-      window.setTimeout(finishReveal, 1200);
+      window.setTimeout(finishReveal, 1550);
     });
   });
 })();
