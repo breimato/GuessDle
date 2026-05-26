@@ -124,4 +124,6 @@ html, body {
   border: 3px solid var(--cab-panel-border, #111);
   padding: 0.35em 0.5em;
   text-transform: uppercase;
+  text-align: center;
+  min-width: 0;
 }
