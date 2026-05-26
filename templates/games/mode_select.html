@@ -29,17 +29,26 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 </section>
 
 <div class="mode-select-stage">
-  <img
-    src="{% static 'img/mode-select/trainer-red.png' %}"
-    alt=""
-    class="mode-select-trainer mode-select-trainer--left"
-    aria-hidden="true"
-    decoding="async"
-  >
+  <div class="mode-select-red-column">
+    <img
+      src="{% static 'img/mode-select/trainer-red.png' %}"
+      alt=""
+      class="mode-select-trainer mode-select-trainer--left"
+      aria-hidden="true"
+      decoding="async"
+    >
+    <div id="mode-select-red-bubble" class="mode-select-gb-bubble" hidden>
+      <p class="mode-select-gb-bubble__text" aria-live="polite"></p>
+    </div>
+  </div>
   <div class="mode-select-modes">
     {% for entry in modes %}
     <div class="mode-select-modes__group">
-      <a href="{{ entry.play_url }}" class="arcade-btn arcade-btn--secondary arcade-btn--full">
+      <a
+        href="{{ entry.play_url }}"
+        class="arcade-btn arcade-btn--secondary arcade-btn--full"
+        {% if entry.mode.slug == 'radical' and not entry.resolved %}data-radical-intro{% endif %}
+      >
         {{ entry.mode.label }}
         {% if entry.resolved %}
         <span class="text-sm opacity-70">(completado hoy)</span>
@@ -76,9 +85,20 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
     </ul>
   </div>
 </div>
+
+<div
+  id="mode-select-radical-transition"
+  class="mode-select-radical-transition"
+  hidden
+  aria-hidden="true"
+>
+  <div class="mode-select-radical-transition__veil"></div>
+  <div class="mode-select-radical-transition__flash"></div>
+</div>
 {% endblock %}
 
 {% block extra_scripts %}
+<script src="{% static 'js/mode-select-radical.js' %}" defer></script>
 <script>
 (function () {
   const btn = document.getElementById("mode-info-btn");

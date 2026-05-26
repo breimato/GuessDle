@@ -27,18 +27,47 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
   <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
 </nav>
 
-{% if is_challenge and game.audio_file %}
-<div class="challenge-volume" aria-label="Volumen de la música">
-  <span class="challenge-volume__icon" aria-hidden="true">🔊</span>
-  <button type="button" id="challenge-volume-up" class="challenge-volume__step" aria-label="Subir volumen">+</button>
-  <input type="range" id="challenge-volume-slider" class="challenge-volume__slider"
+{% if game_mode and game_mode.slug == 'radical' and can_play %}
+<div id="radical-enter-veil" class="radical-enter-veil" aria-hidden="true"></div>
+<script>
+(function () {
+  const fromIntro = new URLSearchParams(window.location.search).get("radical_enter") === "1";
+  if (!fromIntro) {
+    document.getElementById("radical-enter-veil")?.remove();
+    return;
+  }
+  document.documentElement.classList.add("radical-enter-pending");
+})();
+</script>
+<div class="play-bgm-volume" aria-label="Volumen de la música">
+  <span class="play-bgm-volume__icon" aria-hidden="true">🔊</span>
+  <button type="button" id="play-bgm-volume-up" class="play-bgm-volume__step" aria-label="Subir volumen">+</button>
+  <input type="range" id="play-bgm-volume-slider" class="play-bgm-volume__slider"
          min="0" max="100" value="30"
          aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
-  <button type="button" id="challenge-volume-down" class="challenge-volume__step" aria-label="Bajar volumen">−</button>
+  <button type="button" id="play-bgm-volume-down" class="play-bgm-volume__step" aria-label="Bajar volumen">−</button>
 </div>
-<audio id="challenge-bgm" loop playsinline>
-  <source src="{{ game.audio_file.url }}" type="audio/mpeg">
-</audio>
+<script>
+  window.GuessDleBgmPage = {
+    src: "{% static 'audio/pokemon-oro-red.mp3' %}",
+    loop: true,
+  };
+</script>
+{% elif is_challenge and game.audio_file %}
+<div class="play-bgm-volume challenge-volume" aria-label="Volumen de la música">
+  <span class="play-bgm-volume__icon challenge-volume__icon" aria-hidden="true">🔊</span>
+  <button type="button" id="challenge-volume-up" class="play-bgm-volume__step challenge-volume__step" aria-label="Subir volumen">+</button>
+  <input type="range" id="challenge-volume-slider" class="play-bgm-volume__slider challenge-volume__slider"
+         min="0" max="100" value="30"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
+  <button type="button" id="challenge-volume-down" class="play-bgm-volume__step challenge-volume__step" aria-label="Bajar volumen">−</button>
+</div>
+<script>
+  window.GuessDleBgmPage = {
+    src: "{{ game.audio_file.url|escapejs }}",
+    loop: true,
+  };
+</script>
 {% endif %}
 
 <div id="game-data"
@@ -154,7 +183,10 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
 <script src="{% static 'js/attempts-live.js' %}" defer></script>
-{% if is_challenge and game.audio_file %}
-<script src="{% static 'js/challenge-audio.js' %}" defer></script>
+{% if game_mode and game_mode.slug == 'radical' and can_play %}
+<script src="{% static 'js/radical-play-enter.js' %}" defer></script>
+{% endif %}
+{% if game_mode and game_mode.slug == 'radical' or is_challenge and game.audio_file %}
+<script src="{% static 'js/play-bgm.js' %}" defer></script>
 {% endif %}
 {% endblock %}
