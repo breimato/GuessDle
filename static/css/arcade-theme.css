@@ -1377,7 +1377,7 @@ html.radical-enter-pending body {
   font-size: 1rem;
   font-weight: 800;
   line-height: 1;
-  cursor: pointer;
+  cursor: url('/static/cursors/lol.cur'), auto;
   box-shadow: 2px 2px 0 var(--cab-panel-border);
 }
 
@@ -1399,7 +1399,15 @@ html.radical-enter-pending body {
   height: 5.5rem;
   margin: 0;
   -webkit-appearance: slider-vertical;
+  -moz-appearance: slider-vertical;
   appearance: slider-vertical;
   accent-color: var(--cab-yellow);
-  cursor: pointer;
+  cursor: url('/static/cursors/lol.cur'), auto;
+}
+
+@supports (-moz-appearance: slider-vertical) {
+  .challenge-volume__slider,
+  .play-bgm-volume__slider {
+    writing-mode: vertical-lr;
+  }
 }

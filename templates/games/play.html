@@ -47,7 +47,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <div class="play-bgm-volume" aria-label="Volumen de la música">
   <span class="play-bgm-volume__icon" aria-hidden="true">🔊</span>
   <button type="button" id="play-bgm-volume-up" class="play-bgm-volume__step" aria-label="Subir volumen">+</button>
-  <input type="range" id="play-bgm-volume-slider" class="play-bgm-volume__slider"
+  <input type="range" id="play-bgm-volume-slider" class="play-bgm-volume__slider" orient="vertical"
          min="0" max="100" value="30"
          aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
   <button type="button" id="play-bgm-volume-down" class="play-bgm-volume__step" aria-label="Bajar volumen">−</button>
@@ -62,7 +62,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <div class="play-bgm-volume challenge-volume" aria-label="Volumen de la música">
   <span class="play-bgm-volume__icon challenge-volume__icon" aria-hidden="true">🔊</span>
   <button type="button" id="challenge-volume-up" class="play-bgm-volume__step challenge-volume__step" aria-label="Subir volumen">+</button>
-  <input type="range" id="challenge-volume-slider" class="play-bgm-volume__slider challenge-volume__slider"
+  <input type="range" id="challenge-volume-slider" class="play-bgm-volume__slider challenge-volume__slider" orient="vertical"
          min="0" max="100" value="30"
          aria-valuemin="0" aria-valuemax="100" aria-valuenow="30">
   <button type="button" id="challenge-volume-down" class="play-bgm-volume__step challenge-volume__step" aria-label="Bajar volumen">−</button>
