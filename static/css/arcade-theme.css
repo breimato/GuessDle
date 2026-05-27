@@ -1220,12 +1220,12 @@ html.radical-enter-pending body {
   background: var(--cab-red);
   color: #fff;
   border-color: var(--cab-panel-border);
-  --cab-btn-shadow: var(--cab-red-dark);
+  --cab-btn-shadow: var(--cab-panel-border);
   font-weight: 700;
 }
 
 .arcade-btn--surrender:hover:not(:disabled) {
-  background: var(--cab-red-dark);
+  background: var(--cab-red);
   color: #fff;
 }
 
