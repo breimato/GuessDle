@@ -4,6 +4,7 @@ env/
 ENV/
 node_modules/
 staticfiles/
+scripts/
 
 .env
 # Database
