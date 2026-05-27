@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from .views import (
     LoginView,
     cancel_challenge,
+    accept_challenge,
     dashboard_view,
     notifications_ack,
     notifications_poll,
@@ -32,6 +33,7 @@ urlpatterns = [
     path("challenges/<int:challenge_id>/surrender/", surrender_challenge_game, name="ajax_surrender_challenge"),
     path("challenge/<int:challenge_id>/reject/", reject_challenge, name="reject_challenge"),
     path("challenge/<int:challenge_id>/cancel/", cancel_challenge, name="cancel_challenge"),
+    path("challenge/<int:challenge_id>/accept/", accept_challenge, name="accept_challenge"),
     path("notifications/poll/", notifications_poll, name="notifications_poll"),
     path("notifications/ack/", notifications_ack, name="notifications_ack"),
 ]

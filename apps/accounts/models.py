@@ -46,6 +46,8 @@ class Challenge(models.Model):
     points_assigned = models.BooleanField(default=False)
     winner_notified = models.BooleanField(default=False)
     loser_notified = models.BooleanField(default=False)
+    stake_points = models.FloatField(default=0)
+    stake_settled = models.BooleanField(default=False)
 
 
     def __str__(self):

@@ -1,4 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const showModalMessage = (message, title = 'Aviso') => {
+    const overlay = document.createElement('div');
+    overlay.className = 'arcade-modal-overlay';
+    const modal = document.createElement('div');
+    modal.className = 'arcade-modal';
+    const titleClass = title === 'Error'
+      ? 'arcade-modal__title arcade-modal__title--error'
+      : 'arcade-modal__title';
+    modal.innerHTML = `
+      <button type="button" class="arcade-modal__close" aria-label="Cerrar">&times;</button>
+      <h2 class="${titleClass}">${title}</h2>
+      <p class="arcade-modal__message">${message}</p>
+      <div class="arcade-modal__actions">
+        <button type="button" class="arcade-btn arcade-btn--primary arcade-btn--full">Aceptar</button>
+      </div>
+    `;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    const close = () => overlay.remove();
+    modal.querySelector('.arcade-modal__close')?.addEventListener('click', close);
+    modal.querySelector('.arcade-btn')?.addEventListener('click', close);
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay) {
+        close();
+      }
+    });
+  };
+
   const buttons = document.querySelectorAll('.view-btn');
   const panels  = document.querySelectorAll('.view-panel');
   /* ---------- CSRF ---------- */
@@ -39,12 +68,33 @@ document.addEventListener('DOMContentLoaded', () => {
           sentPanel.insertAdjacentHTML('afterbegin', data.card);
         }
         form.reset();
+        return;
+      }
+
+      if (data.message) {
+        showModalMessage(data.message, 'Error');
       }
     });
   }
 
   /* ---------- Cancelar o Rechazar ---------- */
   document.body.addEventListener('click', async (ev) => {
+    const acceptBtn = ev.target.closest('.ajax-accept');
+    if (acceptBtn) {
+      ev.preventDefault();
+      const res = await fetch(acceptBtn.dataset.url, { method: 'POST', headers });
+      const data = await res.json();
+      if (data.status === 'ok' && data.play_url) {
+        window.location.href = data.play_url;
+        return;
+      }
+      showModalMessage(
+        data.message || 'No puedes aceptar este reto porque todavía no es seguro que tengas esos puntos.',
+        'Error'
+      );
+      return;
+    }
+
     const btn = ev.target.closest('.ajax-delete');
     if (!btn) return;
 

@@ -5,6 +5,7 @@
     <span class="cabinet-accent-alt">{{ challenge.opponent.username }}</span>
   </div>
   <div class="text-xs arcade-text-muted">{{ challenge.game.name }}</div>
+  <div class="text-xs arcade-text-muted">Apuesta: {{ challenge.stake_points|floatformat:0 }} ELO</div>
 
   {% if user == challenge.challenger and challenge.challenger_attempts == None %}
     <a href="{% url 'play_challenge' challenge.id %}" class="arcade-btn arcade-btn--primary">Jugar</a>

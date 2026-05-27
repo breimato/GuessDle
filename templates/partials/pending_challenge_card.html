@@ -2,9 +2,14 @@
   <div class="arcade-challenge-card__title">
     <span class="arcade-challenge-card__line"><strong class="cabinet-accent-alt">{{ challenge.challenger.username }}</strong> te ha retado</span>
     <span class="arcade-challenge-card__line">en <strong class="cabinet-accent">{{ challenge.game.name }}</strong></span>
+    <span class="arcade-challenge-card__line">Apuesta: <strong class="cabinet-accent">{{ challenge.stake_points|floatformat:0 }} ELO</strong></span>
   </div>
   <div class="arcade-challenge-card__actions flex gap-3 flex-wrap justify-center">
-    <a href="{% url 'play_challenge' challenge.id %}" class="arcade-btn arcade-btn--primary">Aceptar</a>
+    <button type="button"
+            class="arcade-btn arcade-btn--primary ajax-accept"
+            data-url="{% url 'accept_challenge' challenge.id %}">
+      Aceptar
+    </button>
     <button type="button"
             class="arcade-btn arcade-btn--danger ajax-delete"
             data-url="{% url 'reject_challenge' challenge.id %}">

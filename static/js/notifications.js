@@ -31,10 +31,24 @@
     return Boolean(document.getElementById(dashboardPanels.active));
   }
 
+  function hasDashboardStats() {
+    return Boolean(document.getElementById("user-stats-body"));
+  }
+
+  function hasRankingPanels() {
+    return Boolean(document.querySelector("[data-ranking-tab]"));
+  }
+
   function buildPollUrl() {
     const url = new URL(pollUrl, window.location.origin);
     if (hasDashboardPanels()) {
       url.searchParams.set("include_dashboard", "1");
+    }
+    if (hasDashboardStats()) {
+      url.searchParams.set("include_stats", "1");
+    }
+    if (hasRankingPanels()) {
+      url.searchParams.set("include_rankings", "1");
     }
     return url.toString();
   }
@@ -64,29 +78,47 @@
     return "💀";
   }
 
+  function buildDeltaLabel(notification) {
+    const pointsDelta = Number(notification.payload.points_delta);
+    const hasDelta = !Number.isNaN(pointsDelta) && pointsDelta !== 0;
+    if (!hasDelta) {
+      return "";
+    }
+    return pointsDelta > 0 ? `+${pointsDelta} ELO` : `${pointsDelta} ELO`;
+  }
+
   function toastMessage(notification) {
     const gameName = notification.payload.game_name || "";
     const rival = notification.payload.opponent_username || "";
 
     switch (notification.type) {
       case "challenge_received":
-        return `${rival} te ha retado en ${gameName}`;
+        return { mainText: `${rival} te ha retado en ${gameName}`, deltaText: "" };
       case "challenge_accepted":
-        return `${rival} ha aceptado tu reto en ${gameName}`;
+        return { mainText: `${rival} ha aceptado tu reto en ${gameName}`, deltaText: "" };
       case "challenge_rejected":
-        return `${rival} ha rechazado tu reto en ${gameName}`;
+        return { mainText: `${rival} ha rechazado tu reto en ${gameName}`, deltaText: "" };
       case "challenge_cancelled":
-        return `${rival} ha cancelado el reto en ${gameName}`;
+        return { mainText: `${rival} ha cancelado el reto en ${gameName}`, deltaText: "" };
       case "challenge_win":
-        return `¡Has ganado el reto de ${gameName} contra ${rival}!`;
+        return {
+          mainText: `¡Has ganado el reto de ${gameName} contra ${rival}!`,
+          deltaText: buildDeltaLabel(notification),
+        };
       case "challenge_tie":
-        return `¡Empate en ${gameName} contra ${rival}!`;
+        return {
+          mainText: `¡Empate en ${gameName} contra ${rival}!`,
+          deltaText: buildDeltaLabel(notification),
+        };
       case "challenge_loss":
-        return `¡Has perdido el reto de ${gameName} contra ${rival}!`;
+        return {
+          mainText: `¡Has perdido el reto de ${gameName} contra ${rival}!`,
+          deltaText: buildDeltaLabel(notification),
+        };
       case "rival_finished":
-        return `${rival} ha terminado en ${gameName}. ¡Es tu turno!`;
+        return { mainText: `${rival} ha terminado en ${gameName}. ¡Es tu turno!`, deltaText: "" };
       default:
-        return `Nueva notificación de ${gameName}`;
+        return { mainText: `Nueva notificación de ${gameName}`, deltaText: "" };
     }
   }
 
@@ -108,9 +140,18 @@
     icon.className = "challenge-toast-icon";
     icon.textContent = toastIconForType(notification.type);
 
-    const text = document.createElement("div");
-    text.className = "challenge-toast-text";
-    text.textContent = toastMessage(notification);
+    const textWrap = document.createElement("div");
+    textWrap.className = "challenge-toast-text";
+    const message = toastMessage(notification);
+    const mainLine = document.createElement("div");
+    mainLine.textContent = message.mainText;
+    textWrap.appendChild(mainLine);
+    if (message.deltaText) {
+      const deltaLine = document.createElement("div");
+      deltaLine.className = "challenge-toast-delta";
+      deltaLine.textContent = message.deltaText;
+      textWrap.appendChild(deltaLine);
+    }
 
     const closeBtn = document.createElement("button");
     closeBtn.type = "button";
@@ -122,7 +163,7 @@
     });
 
     content.appendChild(icon);
-    content.appendChild(text);
+    content.appendChild(textWrap);
     toast.appendChild(content);
     toast.appendChild(closeBtn);
     container.appendChild(toast);
@@ -207,6 +248,122 @@
     });
   }
 
+  function formatPoints(value) {
+    const numericValue = Number(value || 0);
+    return String(Math.round(numericValue));
+  }
+
+  function formatAverage(value) {
+    const numericValue = Number(value || 0);
+    return numericValue.toFixed(2);
+  }
+
+  function renderUserStatsRows(rows) {
+    if (!rows || !rows.length) {
+      return `
+        <tr>
+          <td colspan="3" class="arcade-empty">Sin datos</td>
+        </tr>
+      `;
+    }
+    return rows.map((row) => `
+      <tr>
+        <td>${row.name}</td>
+        <td>${formatAverage(row.average_attempts)}</td>
+        <td><strong>${formatPoints(row.points)}</strong></td>
+      </tr>
+    `).join("");
+  }
+
+  function applyStatsSync(statsSync) {
+    if (!statsSync) {
+      return;
+    }
+    const badge = document.getElementById("global-elo-badge");
+    if (badge && statsSync.global_elo != null) {
+      badge.textContent = `${formatPoints(statsSync.global_elo)} ELO`;
+    }
+    const tableBody = document.getElementById("user-stats-body");
+    if (tableBody) {
+      tableBody.innerHTML = renderUserStatsRows(statsSync.games || []);
+    }
+  }
+
+  function renderRankingRows(rows) {
+    if (!rows || !rows.length) {
+      return `
+        <tr>
+          <td colspan="5" class="arcade-empty">Sin datos</td>
+        </tr>
+      `;
+    }
+    return rows.map((row, index) => {
+      const position = index + 1;
+      const rankVariant = position === 1 ? "1" : (position === 2 ? "2" : (position === 3 ? "3" : "n"));
+      const rankLabel = position === 1 ? "🥇" : (position === 2 ? "🥈" : (position === 3 ? "🥉" : String(position)));
+      const averageLabel = row.average_attempts == null ? "–" : formatAverage(row.average_attempts);
+      return `
+        <tr>
+          <td>
+            <div class="arcade-rank-badge arcade-rank-badge--${rankVariant}">
+              ${rankLabel}
+            </div>
+          </td>
+          <td>${row.username}</td>
+          <td><strong>${formatPoints(row.points)}</strong></td>
+          <td>${averageLabel}</td>
+          <td>${row.games_finished}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function renderRankingTable(rows) {
+    return `
+      <table class="arcade-table">
+        <thead>
+          <tr>
+            ${rows && rows.length ? "<th></th>" : ""}
+            <th>Jugador</th>
+            <th>Puntos</th>
+            <th>Media</th>
+            <th>Partidas</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${renderRankingRows(rows)}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function applyRankingSync(rankingSync) {
+    if (!rankingSync) {
+      return;
+    }
+    const globalPanel = document.querySelector('[data-ranking-tab="global"]');
+    if (globalPanel) {
+      globalPanel.innerHTML = renderRankingTable(rankingSync.global_ranking || []);
+    }
+
+    const rankingByGame = rankingSync.ranking_by_game || {};
+    Object.entries(rankingByGame).forEach(([gameSlug, gameRanking]) => {
+      if (gameRanking && !Array.isArray(gameRanking) && typeof gameRanking === "object") {
+        Object.entries(gameRanking).forEach(([modeSlug, modeRows]) => {
+          const panel = document.querySelector(`[data-ranking-tab="${gameSlug}-${modeSlug}"]`);
+          if (panel) {
+            panel.innerHTML = renderRankingTable(modeRows || []);
+          }
+        });
+        return;
+      }
+      const panel = document.querySelector(`[data-ranking-tab="${gameSlug}"]`);
+      if (panel) {
+        panel.innerHTML = renderRankingTable(gameRanking || []);
+      }
+    });
+  }
+
   async function pollNotifications() {
     if (document.hidden) {
       return;
@@ -226,6 +383,8 @@
       }
 
       applyDashboardSync(data.dashboard_sync);
+      applyStatsSync(data.stats_sync);
+      applyRankingSync(data.ranking_sync);
 
       const freshNotifications = (data.notifications || []).filter(
         (notification) => !shownNotificationIds.has(notification.id)

@@ -2,6 +2,7 @@
   <div class="arcade-challenge-card__title">
     <span class="arcade-challenge-card__line">Has retado a <strong class="cabinet-accent-alt">{{ challenge.opponent.username }}</strong></span>
     <span class="arcade-challenge-card__line">en <strong class="cabinet-accent">{{ challenge.game.name }}</strong></span>
+    <span class="arcade-challenge-card__line">Apuesta: <strong class="cabinet-accent">{{ challenge.stake_points|floatformat:0 }} ELO</strong></span>
   </div>
   <button type="button"
           class="arcade-btn arcade-btn--danger ajax-delete"

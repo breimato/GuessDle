@@ -120,8 +120,8 @@ class ContextBuilder:
                         bet_won = True
 
                 bet_amount = self.extra_play.bet_amount
-                bonus_points = bet_amount * 1.5 if bet_won else 0
-                net_profit = bonus_points - bet_amount if bet_won else 0
+                bonus_points = bet_amount if bet_won else 0
+                net_profit = bonus_points if bet_won else 0
 
                 context.update(
                     {

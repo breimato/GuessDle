@@ -31,6 +31,17 @@ def _hint_state_from_context(context):
     return context.get("hint_state", {})
 
 
+def _challenge_points_delta_for_user(challenge, user):
+    if not challenge.completed:
+        return None
+    stake_points = float(challenge.stake_points or 0)
+    if challenge.winner is None:
+        return -stake_points
+    if challenge.winner == user:
+        return stake_points
+    return -stake_points
+
+
 def _resolve_play_context(request, slug, mode_slug=None):
     game = get_object_or_404(Game, slug=slug)
     resolver = ModeResolver(game)
@@ -236,7 +247,11 @@ def play_challenge_game(request, challenge_id: int):
     challenge = get_object_or_404(Challenge, id=challenge_id)
     challenge_view_helper = ChallengeViewHelper(request, challenge)
 
-    challenge_view_helper.accept_if_needed()
+    accepted, acceptance_error = challenge_view_helper.accept_if_needed()
+    if not accepted:
+        messages.error(request, acceptance_error or "No se pudo aceptar el reto.")
+        return redirect("dashboard")
+    challenge = challenge_view_helper.challenge
     if not challenge_view_helper.ensure_participant():
         return redirect("dashboard")
 
@@ -260,8 +275,12 @@ def play_challenge_game(request, challenge_id: int):
         resolution_result = ChallengeResolutionService(
             challenge, acting_user=request.user
         ).resolve_and_assign_points()
+        challenge.refresh_from_db()
 
         if is_ajax:
+            points_delta = _challenge_points_delta_for_user(challenge, request.user)
+            if resolution_result.get("point_deltas"):
+                points_delta = resolution_result["point_deltas"].get(request.user.username, points_delta)
             return JsonResponse(
                 {
                     "completed": challenge.completed,
@@ -272,6 +291,8 @@ def play_challenge_game(request, challenge_id: int):
                     "challenger_attempts": challenge.challenger_attempts,
                     "opponent_attempts": challenge.opponent_attempts,
                     "result_status": resolution_result.get("status"),
+                    "stake_points": float(challenge.stake_points or 0),
+                    "points_delta": points_delta,
                 }
             )
         return redirect("dashboard")

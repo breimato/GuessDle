@@ -19,7 +19,7 @@ class NotificationType:
 class NotificationService:
 
     @staticmethod
-    def challenge_payload(challenge, opponent_username=None):
+    def challenge_payload(challenge, opponent_username=None, points_delta=None):
         rival = opponent_username
         if rival is None:
             rival = (
@@ -27,11 +27,14 @@ class NotificationService:
                 if challenge.challenger_id != challenge.opponent_id
                 else challenge.challenger.username
             )
-        return {
+        payload = {
             "challenge_id": challenge.id,
             "game_name": challenge.game.name,
             "opponent_username": rival,
         }
+        if points_delta is not None:
+            payload["points_delta"] = points_delta
+        return payload
 
     @staticmethod
     def create(user, notification_type, payload, challenge=None):
@@ -109,6 +112,14 @@ class NotificationService:
             if finished_user == challenge.challenger
             else challenge.challenger
         )
+        recipient_has_finished = (
+            challenge.opponent_attempts is not None
+            if recipient == challenge.opponent
+            else challenge.challenger_attempts is not None
+        )
+        if recipient_has_finished:
+            return
+
         payload = NotificationService.challenge_payload(
             challenge,
             opponent_username=finished_user.username,
@@ -127,6 +138,7 @@ class NotificationService:
             return
 
         winner = challenge.winner
+        stake_points = float(challenge.stake_points or 0)
         loser = (
             challenge.challenger
             if winner == challenge.opponent
@@ -137,6 +149,7 @@ class NotificationService:
             win_payload = NotificationService.challenge_payload(
                 challenge,
                 opponent_username=loser.username,
+                points_delta=stake_points,
             )
             NotificationService.create(
                 winner,
@@ -149,6 +162,7 @@ class NotificationService:
             loss_payload = NotificationService.challenge_payload(
                 challenge,
                 opponent_username=winner.username,
+                points_delta=-stake_points,
             )
             NotificationService.create(
                 loser,
@@ -159,6 +173,7 @@ class NotificationService:
 
     @staticmethod
     def _notify_tie(challenge, acting_user):
+        stake_points = float(challenge.stake_points or 0)
         for participant in (challenge.challenger, challenge.opponent):
             if participant == acting_user:
                 continue
@@ -170,6 +185,7 @@ class NotificationService:
             tie_payload = NotificationService.challenge_payload(
                 challenge,
                 opponent_username=rival.username,
+                points_delta=-stake_points,
             )
             NotificationService.create(
                 participant,
@@ -285,7 +301,11 @@ class NotificationService:
             NotificationService.create(
                 user,
                 NotificationType.CHALLENGE_WIN,
-                NotificationService.challenge_payload(challenge, rival.username),
+                NotificationService.challenge_payload(
+                    challenge,
+                    rival.username,
+                    points_delta=float(challenge.stake_points or 0),
+                ),
                 challenge,
             )
             challenge.winner_notified = True
@@ -302,7 +322,11 @@ class NotificationService:
             NotificationService.create(
                 user,
                 NotificationType.CHALLENGE_LOSS,
-                NotificationService.challenge_payload(challenge, challenge.winner.username),
+                NotificationService.challenge_payload(
+                    challenge,
+                    challenge.winner.username,
+                    points_delta=-float(challenge.stake_points or 0),
+                ),
                 challenge,
             )
             challenge.loser_notified = True
@@ -325,7 +349,11 @@ class NotificationService:
             NotificationService.create(
                 user,
                 NotificationType.CHALLENGE_TIE,
-                NotificationService.challenge_payload(challenge, rival.username),
+                NotificationService.challenge_payload(
+                    challenge,
+                    rival.username,
+                    points_delta=-float(challenge.stake_points or 0),
+                ),
                 challenge,
             )
             if challenge.challenger == user:

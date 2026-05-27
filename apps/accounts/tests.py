@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from apps.accounts.models import Challenge, Notification
+from apps.accounts.models import Challenge, GameElo, Notification
 from apps.accounts.services.notification_service import NotificationService, NotificationType
 from apps.games.models import Game, GameItem, PlaySession, PlaySessionType, GameAttempt
 from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
@@ -30,6 +30,7 @@ class ChallengeBackendTests(TestCase):
     URL_NOTIFICATIONS_POLL = "notifications_poll"
     URL_NOTIFICATIONS_ACK = "notifications_ack"
     URL_CREATE_CHALLENGE = "create_challenge"
+    URL_ACCEPT_CHALLENGE = "accept_challenge"
 
     def setUp(self):
         self.challenger = User.objects.create_user(
@@ -53,8 +54,11 @@ class ChallengeBackendTests(TestCase):
             opponent=self.opponent,
             game=self.game,
             target=self.target,
-            accepted=True
+            accepted=True,
+            stake_points=30,
         )
+        GameElo.objects.create(user=self.challenger, game=self.game, elo=100)
+        GameElo.objects.create(user=self.opponent, game=self.game, elo=100)
 
         self.client = Client()
 
@@ -107,6 +111,7 @@ class ChallengeBackendTests(TestCase):
             challenge=self.challenge,
         )
         self.assertTrue(win_notification.exists())
+        self.assertEqual(win_notification.first().payload.get("points_delta"), 30.0)
         self.assertFalse(
             Notification.objects.filter(
                 user=self.opponent,
@@ -134,6 +139,7 @@ class ChallengeBackendTests(TestCase):
             challenge=self.challenge,
         )
         self.assertTrue(tie_notification.exists())
+        self.assertEqual(tie_notification.first().payload.get("points_delta"), -30.0)
         self.assertFalse(
             Notification.objects.filter(
                 user=self.challenger,
@@ -149,6 +155,7 @@ class ChallengeBackendTests(TestCase):
             {
                 "opponent": self.opponent.id,
                 "game": self.game.id,
+                "stake_points": 20,
             },
         )
 
@@ -158,6 +165,130 @@ class ChallengeBackendTests(TestCase):
             type=NotificationType.CHALLENGE_RECEIVED,
         )
         self.assertEqual(notification.count(), 1)
+
+    def test_create_challenge_rejects_stake_above_opponent_available_points(self):
+        opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
+        opponent_score.elo = 10
+        opponent_score.save(update_fields=["elo"])
+
+        self.client.force_login(self.challenger)
+        response = self.client.post(
+            reverse(self.URL_CREATE_CHALLENGE),
+            {
+                "opponent": self.opponent.id,
+                "game": self.game.id,
+                "stake_points": 20,
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["status"], "error")
+
+    def test_accept_challenge_fails_when_opponent_points_are_held(self):
+        locked_challenge = Challenge.objects.create(
+            challenger=self.challenger,
+            opponent=self.opponent,
+            game=self.game,
+            target=self.target,
+            accepted=True,
+            completed=False,
+            stake_points=95,
+            stake_settled=False,
+        )
+        self.assertIsNotNone(locked_challenge.pk)
+
+        pending_challenge = Challenge.objects.create(
+            challenger=self.challenger,
+            opponent=self.opponent,
+            game=self.game,
+            target=self.target,
+            accepted=False,
+            completed=False,
+            stake_points=20,
+            stake_settled=False,
+        )
+
+        self.client.force_login(self.opponent)
+        response = self.client.get(reverse(self.URL_PLAY_CHALLENGE, args=[pending_challenge.id]))
+        self.assertEqual(response.status_code, 302)
+
+        pending_challenge.refresh_from_db()
+        self.assertFalse(pending_challenge.accepted)
+
+    def test_accept_challenge_endpoint_returns_error_when_points_are_held(self):
+        Challenge.objects.create(
+            challenger=self.challenger,
+            opponent=self.opponent,
+            game=self.game,
+            target=self.target,
+            accepted=True,
+            completed=False,
+            stake_points=95,
+            stake_settled=False,
+        )
+        pending_challenge = Challenge.objects.create(
+            challenger=self.challenger,
+            opponent=self.opponent,
+            game=self.game,
+            target=self.target,
+            accepted=False,
+            completed=False,
+            stake_points=20,
+            stake_settled=False,
+        )
+
+        self.client.force_login(self.opponent)
+        response = self.client.post(reverse(self.URL_ACCEPT_CHALLENGE, args=[pending_challenge.id]))
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["status"], "error")
+        pending_challenge.refresh_from_db()
+        self.assertFalse(pending_challenge.accepted)
+
+    def test_resolution_transfers_stake_points_to_winner(self):
+        self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
+        self.challenge.opponent_attempts = self.ATTEMPT_COUNT_FIVE
+        self.challenge.save(update_fields=["challenger_attempts", "opponent_attempts"])
+
+        resolution_service = ChallengeResolutionService(self.challenge, acting_user=self.challenger)
+        result = resolution_service.resolve_and_assign_points()
+
+        self.assertEqual(result["status"], self.STATUS_WINNER)
+        self.challenge.refresh_from_db()
+        self.assertTrue(self.challenge.stake_settled)
+        challenger_score = GameElo.objects.get(user=self.challenger, game=self.game, mode__isnull=True)
+        opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
+        self.assertEqual(challenger_score.elo, 130)
+        self.assertEqual(opponent_score.elo, 70)
+
+    def test_resolution_tie_deducts_stake_from_both_users(self):
+        self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
+        self.challenge.opponent_attempts = self.ATTEMPT_COUNT_THREE
+        self.challenge.save(update_fields=["challenger_attempts", "opponent_attempts"])
+
+        resolution_service = ChallengeResolutionService(self.challenge, acting_user=self.challenger)
+        result = resolution_service.resolve_and_assign_points()
+
+        self.assertEqual(result["status"], self.STATUS_TIE)
+        challenger_score = GameElo.objects.get(user=self.challenger, game=self.game, mode__isnull=True)
+        opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
+        self.assertEqual(challenger_score.elo, 70)
+        self.assertEqual(opponent_score.elo, 70)
+
+    def test_resolution_is_idempotent_after_stake_settlement(self):
+        self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
+        self.challenge.opponent_attempts = self.ATTEMPT_COUNT_FIVE
+        self.challenge.save(update_fields=["challenger_attempts", "opponent_attempts"])
+
+        resolution_service = ChallengeResolutionService(self.challenge, acting_user=self.challenger)
+        first_result = resolution_service.resolve_and_assign_points()
+        second_result = resolution_service.resolve_and_assign_points()
+
+        self.assertEqual(first_result["status"], self.STATUS_WINNER)
+        self.assertEqual(second_result["status"], self.STATUS_WINNER)
+        challenger_score = GameElo.objects.get(user=self.challenger, game=self.game, mode__isnull=True)
+        opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
+        self.assertEqual(challenger_score.elo, 130)
+        self.assertEqual(opponent_score.elo, 70)
 
     def test_notifications_poll_and_ack(self):
         NotificationService.create(
@@ -188,6 +319,25 @@ class ChallengeBackendTests(TestCase):
         poll_data = poll_response.json()
         self.assertEqual(len(poll_data["notifications"]), 0)
 
+    def test_notifications_poll_includes_stats_and_rankings_when_requested(self):
+        self.client.force_login(self.challenger)
+        poll_response = self.client.get(
+            reverse(self.URL_NOTIFICATIONS_POLL),
+            {
+                "include_stats": "1",
+                "include_rankings": "1",
+            },
+        )
+        self.assertEqual(poll_response.status_code, self.HTTP_OK)
+        payload = poll_response.json()
+        self.assertEqual(payload["status"], "ok")
+        self.assertIn("stats_sync", payload)
+        self.assertIn("ranking_sync", payload)
+        self.assertIn("games", payload["stats_sync"])
+        self.assertIn("global_elo", payload["stats_sync"])
+        self.assertIn("global_ranking", payload["ranking_sync"])
+        self.assertIn("ranking_by_game", payload["ranking_sync"])
+
     def test_reject_challenge_notifies_challenger(self):
         pending = Challenge.objects.create(
             challenger=self.challenger,
@@ -206,6 +356,20 @@ class ChallengeBackendTests(TestCase):
         )
         self.assertEqual(notification.count(), 1)
         self.assertEqual(notification.first().payload["challenge_id"], pending.id)
+
+    def test_notify_rival_finished_skips_when_recipient_already_finished(self):
+        self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
+        self.challenge.opponent_attempts = self.ATTEMPT_COUNT_FIVE
+        self.challenge.save(update_fields=["challenger_attempts", "opponent_attempts"])
+
+        NotificationService.notify_rival_finished(self.challenge, self.challenger)
+
+        notification = Notification.objects.filter(
+            user=self.opponent,
+            type=NotificationType.RIVAL_FINISHED,
+            challenge=self.challenge,
+        )
+        self.assertFalse(notification.exists())
 
 
 class PlayerStatsServiceTests(TestCase):

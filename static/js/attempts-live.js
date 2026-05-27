@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const nextState = await postRevealHint(pickable[0].attribute);
       handleHintState(nextState);
     } catch (err) {
-      alert(err.message || "Error");
+      showErrorModal(err.message || "Error");
       hintUseBtn.disabled = false;
     }
   });
@@ -356,6 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
       winner: data.winner ?? data.winner_username ?? null,
       challenger_attempts: data.challenger_attempts,
       opponent_attempts: data.opponent_attempts,
+      stake_points: Number(data.stake_points || 0),
+      points_delta: data.points_delta != null ? Number(data.points_delta) : null,
     };
   }
 
@@ -422,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const data = await res.json();
-    if (!res.ok) { alert(data.error || "Error"); return; }
+    if (!res.ok) { showErrorModal(data.error || "Error"); return; }
 
     form.reset();
     const row = renderAttempt(data.attempt, true);
@@ -572,6 +574,38 @@ document.addEventListener("DOMContentLoaded", () => {
     return `¡Correcto! ${displayName}`;
   }
 
+  function showErrorModal(message, title = "Error") {
+    injectKeyframes();
+    const overlay = document.createElement("div");
+    overlay.className = "arcade-modal-overlay";
+
+    const modal = document.createElement("div");
+    modal.className = "arcade-modal animate-bounceInCenter";
+    const titleClass = title === "Error"
+      ? "arcade-modal__title arcade-modal__title--error"
+      : "arcade-modal__title arcade-modal__title--confirm";
+    modal.innerHTML = `
+      <button type="button" class="arcade-modal__close" aria-label="Cerrar">&times;</button>
+      <h2 class="${titleClass}">${title}</h2>
+      <p class="arcade-modal__message">${message}</p>
+      <div class="arcade-modal__actions">
+        <button type="button" class="arcade-btn arcade-btn--primary arcade-btn--full">Aceptar</button>
+      </div>
+    `;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    const close = () => overlay.remove();
+    modal.querySelector(".arcade-modal__close")?.addEventListener("click", close);
+    modal.querySelector(".arcade-btn")?.addEventListener("click", close);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) {
+        close();
+      }
+    });
+  }
+
   function showSurrenderConfirmModal() {
     injectKeyframes();
 
@@ -641,7 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = await response.json();
     if (!response.ok) {
-      alert(data.error || "Error");
+      showErrorModal(data.error || "Error");
       return;
     }
 
@@ -730,11 +764,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!normalizedChallenge.completed) {
       challengeMessageHtml = `<p class="arcade-msg--wait">Partida completada (${attemptsLabel}). Esperando a tu rival…</p>`;
     } else if (normalizedChallenge.winner === normalizedChallenge.current_user) {
-      challengeMessageHtml = `<p class="arcade-msg--win">¡Has ganado el reto contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts})</p>`;
+      const pointsWon = normalizedChallenge.points_delta != null
+        ? normalizedChallenge.points_delta
+        : normalizedChallenge.stake_points;
+      challengeMessageHtml = `<p class="arcade-msg--win">¡Has ganado el reto contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts})<br>+${formatEloAmount(pointsWon)} ELO</p>`;
     } else if (normalizedChallenge.winner) {
-      challengeMessageHtml = `<p class="arcade-msg--loss">Has perdido el reto contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})</p>`;
+      const pointsLost = normalizedChallenge.points_delta != null
+        ? Math.abs(normalizedChallenge.points_delta)
+        : normalizedChallenge.stake_points;
+      challengeMessageHtml = `<p class="arcade-msg--loss">Has perdido el reto contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})<br>-${formatEloAmount(pointsLost)} ELO</p>`;
     } else {
-      challengeMessageHtml = `<p class="arcade-msg--tie">Empate contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})</p>`;
+      const pointsLost = normalizedChallenge.points_delta != null
+        ? Math.abs(normalizedChallenge.points_delta)
+        : normalizedChallenge.stake_points;
+      challengeMessageHtml = `<p class="arcade-msg--tie">Empate contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})<br>-${formatEloAmount(pointsLost)} ELO</p>`;
     }
   }
 

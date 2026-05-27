@@ -58,6 +58,12 @@
   line-height: 1.4;
 }
 
+.challenge-toast-delta {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .challenge-toast-close {
   background: transparent;
   border: none;

@@ -21,7 +21,7 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
   <p class="dashboard-hero__welcome">
     Bienvenido, <span class="cabinet-accent">{{ user.username }}</span>
   </p>
-  <div class="arcade-points-badge dashboard-hero__badge">{{ user_stats.global_elo|floatformat:0 }} ELO</div>
+  <div id="global-elo-badge" class="arcade-points-badge dashboard-hero__badge">{{ user_stats.global_elo|floatformat:0 }} ELO</div>
   <form action="{% url 'logout' %}" method="post" class="dashboard-hero__logout">
     {% csrf_token %}
     <button type="submit" class="dashboard-logout-link">Cerrar sesión</button>
@@ -40,7 +40,7 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
           <th>Puntos</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="user-stats-body">
         {% for j in user_stats.games %}
         <tr>
           <td>{{ j.name }}</td>
@@ -100,6 +100,10 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
         {% endfor %}
       </select>
     </div>
+    <div>
+      <label for="stake-points" class="arcade-label">Puntos a apostar</label>
+      <input id="stake-points" name="stake_points" type="number" min="1" step="1" required class="arcade-input" />
+    </div>
     <button type="submit" class="arcade-btn arcade-btn--secondary arcade-btn--full">Enviar reto</button>
   </form>
 
@@ -148,20 +152,20 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
       {% endif %}
     {% endfor %}
   </div>
-  <div id="tab-global" class="rank-panel ranking-scroll">
+  <div id="tab-global" class="rank-panel ranking-scroll" data-ranking-tab="global">
     {% include "partials/ranking_table.html" with rows=global_ranking %}
   </div>
   {% for game in available_games %}
     {% if ranking_has_modes|get_item:game.slug %}
       {% for mode in game.active_modes %}
-      <div id="tab-{{ game.slug }}-{{ mode.slug }}" class="rank-panel ranking-scroll hidden">
+      <div id="tab-{{ game.slug }}-{{ mode.slug }}" class="rank-panel ranking-scroll hidden" data-ranking-tab="{{ game.slug }}-{{ mode.slug }}">
         {% with mode_rows=ranking_by_game|get_item:game.slug|get_item:mode.slug %}
         {% include "partials/ranking_table.html" with rows=mode_rows %}
         {% endwith %}
       </div>
       {% endfor %}
     {% else %}
-    <div id="tab-{{ game.slug }}" class="rank-panel ranking-scroll hidden">
+    <div id="tab-{{ game.slug }}" class="rank-panel ranking-scroll hidden" data-ranking-tab="{{ game.slug }}">
       {% include "partials/ranking_table.html" with rows=ranking_by_game|get_item:game.slug %}
     </div>
     {% endif %}

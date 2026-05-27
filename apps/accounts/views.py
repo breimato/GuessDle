@@ -25,6 +25,27 @@ from apps.games.services.gameplay.challenge_resolution_service import ChallengeR
 from apps.common.utils import json_success, json_error
 
 
+def _build_stats_sync_payload(user):
+    stats = DashboardStats(user)
+    return {
+        "games": stats.calculate_user_statistics(),
+        "global_elo": stats.calculate_global_elo_score(),
+    }
+
+
+def _build_ranking_sync_payload(user):
+    stats = DashboardStats(user)
+    available_games = list(stats.fetch_active_games().prefetch_related("modes"))
+    return {
+        "global_ranking": stats.generate_global_ranking(),
+        "ranking_by_game": stats.generate_ranking_per_game(),
+        "ranking_has_modes": {
+            game.slug: game.has_modes()
+            for game in available_games
+        },
+    }
+
+
 @login_required
 @csrf_protect
 def create_challenge(request):
@@ -62,6 +83,25 @@ def reject_challenge(request, challenge_id):
     if not is_rejected:
         return json_error("Could not reject challenge")
     return json_success({"id": challenge_id})
+
+
+@require_POST
+@login_required
+def accept_challenge(request, challenge_id):
+    challenge = get_object_or_404(Challenge, pk=challenge_id, accepted=False, completed=False)
+    challenge_view_helper = ChallengeViewHelper(request, challenge)
+    accepted, acceptance_error = challenge_view_helper.accept_if_needed()
+    if not accepted:
+        return json_error(
+            acceptance_error
+            or "No puedes aceptar este reto porque todavía no es seguro que tengas esos puntos."
+        )
+    return json_success(
+        {
+            "id": challenge_id,
+            "play_url": reverse("play_challenge", args=[challenge_id]),
+        }
+    )
 
 
 @never_cache
@@ -182,6 +222,10 @@ def notifications_poll(request):
             unread,
             request,
         )
+    if request.GET.get("include_stats") == "1":
+        payload["stats_sync"] = _build_stats_sync_payload(request.user)
+    if request.GET.get("include_rankings") == "1":
+        payload["ranking_sync"] = _build_ranking_sync_payload(request.user)
     return json_success(payload)
 
 

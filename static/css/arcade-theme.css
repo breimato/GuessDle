@@ -1200,6 +1200,10 @@ html.radical-enter-pending body {
   color: var(--cab-red-dark);
 }
 
+.arcade-modal__title--error {
+  color: var(--cab-red);
+}
+
 .arcade-modal__message {
   font-size: 0.95rem;
   line-height: 1.5;
