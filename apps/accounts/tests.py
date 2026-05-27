@@ -275,3 +275,28 @@ class PlayerStatsServiceTests(TestCase):
         self.assertEqual(canonical["points"], 120)
         self.assertEqual(canonical["games_finished"], 1)
         self.assertEqual(canonical["average_attempts"], 2.0)
+
+    def test_surrender_attempts_worsen_average_without_adding_finished_game(self):
+        from apps.accounts.services.player_stats_service import PlayerStatsService
+
+        surrendered_session = PlaySession.objects.create(
+            user=self.user,
+            game=self.game,
+            session_type=PlaySessionType.DAILY,
+            reference_id=3,
+            surrendered=True,
+        )
+        wrong_guess = GameItem.objects.create(game=self.game, name="Wrong Hero")
+        for _ in range(4):
+            GameAttempt.objects.create(
+                user=self.user,
+                game=self.game,
+                guess=wrong_guess,
+                is_correct=False,
+                session=surrendered_session,
+            )
+
+        stats = PlayerStatsService.get_game_stats(self.user, self.game)
+
+        self.assertEqual(stats["games_finished"], 1)
+        self.assertEqual(stats["average_attempts"], 6.0)

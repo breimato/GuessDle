@@ -8,6 +8,8 @@ from .views import (
     play_extra_daily_game,
     process_extra_guess,
     reveal_extra_hint,
+    surrender_daily_game,
+    surrender_extra_game,
 )
 
 
@@ -18,9 +20,12 @@ urlpatterns = [
     path("<slug:slug>/<slug:mode_slug>/guess/", process_daily_guess, name="ajax_guess_mode"),
     path("<slug:slug>/reveal-hint/", reveal_daily_hint, name="ajax_reveal_hint"),
     path("<slug:slug>/<slug:mode_slug>/reveal-hint/", reveal_daily_hint, name="ajax_reveal_hint_mode"),
+    path("<slug:slug>/surrender/", surrender_daily_game, name="ajax_surrender"),
+    path("<slug:slug>/<slug:mode_slug>/surrender/", surrender_daily_game, name="ajax_surrender_mode"),
     path("start-extra/<slug:slug>/", start_extra_daily_game, name="start_extra_daily"),
     path("start-extra/<slug:slug>/<slug:mode_slug>/", start_extra_daily_game, name="start_extra_daily_mode"),
     path("play-extra/<int:extra_id>/", play_extra_daily_game, name="play_extra_daily"),
     path("ajax/guess-extra/<int:extra_id>/", process_extra_guess, name="ajax_guess_extra"),
     path("ajax/reveal-hint-extra/<int:extra_id>/", reveal_extra_hint, name="ajax_reveal_hint_extra"),
+    path("ajax/surrender-extra/<int:extra_id>/", surrender_extra_game, name="ajax_surrender_extra"),
 ]

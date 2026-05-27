@@ -23,6 +23,11 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
     {% if back_to_modes_url %}
     <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
     {% endif %}
+    {% if can_play and surrender_url %}
+    <button type="button" id="surrender-btn" class="arcade-btn arcade-btn--surrender play-nav__surrender">
+      Rendirse
+    </button>
+    {% endif %}
   </div>
   <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
 </nav>
@@ -76,7 +81,8 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
      data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}"
      data-panel-url="{% url 'dashboard' %}"
      {% if back_to_modes_url %}data-modes-url="{{ back_to_modes_url }}"{% endif %}
-     {% if reveal_hint_url %}data-reveal-url="{{ reveal_hint_url }}"{% endif %}>
+     {% if reveal_hint_url %}data-reveal-url="{{ reveal_hint_url }}"{% endif %}
+     {% if surrender_url %}data-surrender-url="{{ surrender_url }}"{% endif %}>
 </div>
 
 <section class="container mx-auto text-center">
@@ -91,6 +97,14 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
           data-bet-won="{{ bet_won|yesno:'true,false' }}"
           data-points-awarded="{{ points_awarded|default:0 }}"
           data-net-profit="{{ net_profit|default:0 }}"
+          data-bet-amount="{{ bet_amount|default:0 }}"
+          {% endif %}></script>
+{% elif surrendered %}
+  <script id="surrender-flag"
+          data-champ="{{ target.name|escape }}"
+          {% if extra_play %}
+          data-is-extra="true"
+          data-bet-won="false"
           data-bet-amount="{{ bet_amount|default:0 }}"
           {% endif %}></script>
 {% endif %}
@@ -120,7 +134,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <form id="guess-form"
       action="{{ guess_url }}"
       method="post"
-      class="arcade-card w-full max-w-xl mb-24 {% if won %}opacity-50 pointer-events-none{% endif %}"
+      class="arcade-card w-full max-w-xl mb-24 {% if won or surrendered %}opacity-50 pointer-events-none{% endif %}"
       novalidate>
   {% csrf_token %}
   <label for="guess" class="arcade-label">¿Quién crees que es?</label>
@@ -135,13 +149,13 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
            placeholder="Escribe un nombre"
            autocomplete="off" required
            data-names="{{ remaining_names_json|escape }}"
-           {% if won %}disabled{% endif %}>
+           {% if won or surrendered %}disabled{% endif %}>
     <ul id="suggestions" role="listbox"
         class="hidden w-full absolute left-0 top-full arcade-card rounded-t-none max-h-56 overflow-y-auto z-50 p-0"></ul>
   </div>
 
   <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
-          {% if won %}disabled{% endif %}>Probar</button>
+          {% if won or surrendered %}disabled{% endif %}>Probar</button>
 
   <div id="hint-controls" class="hint-controls hidden">
     <button type="button" id="hint-use-btn" class="arcade-btn arcade-btn--hint arcade-btn--full mt-3">

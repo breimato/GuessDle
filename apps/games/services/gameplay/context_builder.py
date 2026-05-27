@@ -56,7 +56,7 @@ class ContextBuilder:
         )
 
         has_won = attempts_query.filter(is_correct=True).exists()
-        can_play = not has_won
+        can_play = not has_won and not session.surrendered
 
         guessed_item_ids = [attempt.guess_id for attempt in attempts_query]
         pool = ItemPoolService(self.game, self._active_mode())
@@ -75,6 +75,7 @@ class ContextBuilder:
             "attempts": attempts,
             "previous_guesses": [attempt.guess for attempt in attempts_query],
             "won": has_won,
+            "surrendered": session.surrendered,
             "can_play": can_play,
             "remaining_names_json": json.dumps(remaining_names),
             "hint_state": hint_state,
@@ -84,6 +85,8 @@ class ContextBuilder:
 
         if mode and ModeResolver(self.game).has_modes() and not self.challenge:
             context["back_to_modes_url"] = reverse("play", args=[self.game.slug])
+
+        context["surrender_url"] = self._get_surrender_url()
 
         if self.daily_target or self.extra_play:
             context["guess_url"] = self._get_guess_url()
@@ -139,6 +142,16 @@ class ContextBuilder:
                 )
 
         return context
+
+    def _get_surrender_url(self):
+        if self.extra_play:
+            return reverse("ajax_surrender_extra", args=[self.extra_play.id])
+        if self.challenge:
+            return reverse("ajax_surrender_challenge", args=[self.challenge.id])
+        mode = self._active_mode()
+        if mode:
+            return reverse("ajax_surrender_mode", args=[self.game.slug, mode.slug])
+        return reverse("ajax_surrender", args=[self.game.slug])
 
     def _get_guess_url(self):
         if self.extra_play:

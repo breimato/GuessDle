@@ -237,6 +237,7 @@ class PlaySession(models.Model):
         blank=True,
         help_text='Pistas de columna usadas: [{"attribute": "tipo_1", "value": "Fuego", "at_attempt": 5}]',
     )
+    surrendered = models.BooleanField(default=False)
     completed_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

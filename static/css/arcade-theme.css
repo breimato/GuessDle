@@ -747,6 +747,10 @@ html.radical-enter-pending body {
   margin-left: auto;
 }
 
+.play-nav__surrender {
+  flex-shrink: 0;
+}
+
 /* ─── Form controls ─── */
 .arcade-label,
 .cabinet-label {
@@ -1190,6 +1194,39 @@ html.radical-enter-pending body {
   color: var(--cab-green);
   line-height: 1.7;
   margin-bottom: 1rem;
+}
+
+.arcade-modal__title--confirm {
+  color: var(--cab-red-dark);
+}
+
+.arcade-modal__message {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--cab-ink);
+  margin: 0 0 1.25rem;
+  max-width: 22rem;
+}
+
+.arcade-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 18rem;
+}
+
+.arcade-btn--surrender {
+  background: var(--cab-red);
+  color: #fff;
+  border-color: var(--cab-panel-border);
+  --cab-btn-shadow: var(--cab-red-dark);
+  font-weight: 700;
+}
+
+.arcade-btn--surrender:hover:not(:disabled) {
+  background: var(--cab-red-dark);
+  color: #fff;
 }
 
 .arcade-msg--win,

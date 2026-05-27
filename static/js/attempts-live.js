@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxExtrasReached = document.getElementById("game-data")?.dataset.maxExtrasReached === "true";
   const modesUrl = gameData?.dataset.modesUrl || null;
   const panelUrl = gameData?.dataset.panelUrl || "/accounts/";
+  const surrenderUrl = gameData?.dataset.surrenderUrl || null;
+  const surrenderBtn = document.getElementById("surrender-btn");
 
 
 
@@ -378,16 +380,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const flag = document.getElementById("won-flag");
   if (flag) {
     disableForm();
+    hideSurrenderButton();
     setTimeout(async () => {
       launchConfettiSides();
       const isExtra = flag.dataset.isExtra === "true";
-      const betInfo = isExtra
-        ? {
-            betAmount: parseFloat(flag.dataset.betAmount || "0"),
-            betWon: flag.dataset.betWon === "true",
-            netProfit: parseFloat(flag.dataset.netProfit || "0"),
-          }
-        : null;
+      const betInfo = isExtra ? buildBetInfoFromDataset(flag.dataset) : null;
       const isChallengeReload = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
       let challengeData = null;
       if (isChallengeReload) {
@@ -401,6 +398,19 @@ document.addEventListener("DOMContentLoaded", () => {
       handleGameCompletion(normalizeDisplayText(flag.dataset.champ), isExtra, betInfo, challengeData);
     }, 200);
   }
+
+  const surrenderFlag = document.getElementById("surrender-flag");
+  if (surrenderFlag) {
+    disableForm();
+    hideSurrenderButton();
+    setTimeout(() => {
+      const isExtra = surrenderFlag.dataset.isExtra === "true";
+      const betInfo = isExtra ? buildBetInfoFromDataset(surrenderFlag.dataset) : null;
+      handleSurrenderCompletion(normalizeDisplayText(surrenderFlag.dataset.champ), isExtra, betInfo);
+    }, 200);
+  }
+
+  surrenderBtn?.addEventListener("click", submitSurrender);
 
   /* ───────── 3· envío normal ───────── */
   form?.addEventListener("submit", async e => {
@@ -543,19 +553,149 @@ document.addEventListener("DOMContentLoaded", () => {
     form?.classList.add("opacity-50", "pointer-events-none");
   }
 
-
-  /**
-   * Decide which completion overlay or modal to show.
-   */
-
-  function handleGameCompletion(targetName, isExtra, betInfo = null, challengeData = null) {
-    showVictoryModal(targetName, isExtra, betInfo, challengeData);
+  function hideSurrenderButton() {
+    surrenderBtn?.remove();
   }
 
-  /* ───────── modal victoria ───────── */
-  function showVictoryModal(name, isExtra = false, betInfo = null, challengeData = null) {
+  function buildBetInfoFromDataset(dataset) {
+    return {
+      betAmount: parseFloat(dataset.betAmount || "0"),
+      betWon: dataset.betWon === "true",
+      netProfit: parseFloat(dataset.netProfit || "0"),
+    };
+  }
+
+  function buildModalTitle(outcome, displayName) {
+    if (outcome === "surrender") {
+      return `¡Qué lástima! El personaje era ${displayName}`;
+    }
+    return `¡Correcto! ${displayName}`;
+  }
+
+  function showSurrenderConfirmModal() {
+    injectKeyframes();
+
+    return new Promise((resolve) => {
+      const overlay = document.createElement("div");
+      overlay.className = "arcade-modal-overlay";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-labelledby", "surrender-confirm-title");
+
+      const modal = document.createElement("div");
+      modal.className = "arcade-modal animate-bounceInCenter";
+      modal.innerHTML = `
+        <button type="button" class="arcade-modal__close" data-surrender-dismiss aria-label="Cerrar">&times;</button>
+        <h2 id="surrender-confirm-title" class="arcade-modal__title arcade-modal__title--confirm">¿Rendirse?</h2>
+        <p class="arcade-modal__message">
+          Se revelará la respuesta. Tus intentos contarán en el ranking, pero no sumará como partida ganada.
+        </p>
+        <div class="arcade-modal__actions">
+          <button type="button" class="arcade-btn arcade-btn--secondary arcade-btn--full" data-surrender-dismiss>
+            Seguir jugando
+          </button>
+          <button type="button" class="arcade-btn arcade-btn--surrender arcade-btn--full" data-surrender-confirm>
+            Sí, rendirme
+          </button>
+        </div>
+      `;
+
+      const closeConfirmModal = (confirmed) => {
+        overlay.remove();
+        resolve(confirmed);
+      };
+
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+
+      modal.querySelectorAll("[data-surrender-dismiss]").forEach((button) => {
+        button.addEventListener("click", () => closeConfirmModal(false));
+      });
+
+      modal.querySelector("[data-surrender-confirm]")?.addEventListener("click", () => {
+        closeConfirmModal(true);
+      });
+
+      overlay.addEventListener("click", (event) => {
+        if (event.target !== overlay) return;
+        closeConfirmModal(false);
+      });
+    });
+  }
+
+  async function submitSurrender() {
+    if (!surrenderUrl) return;
+
+    const confirmed = await showSurrenderConfirmModal();
+    if (!confirmed) return;
+
+    const response = await fetch(surrenderUrl, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": csrf,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ csrfmiddlewaretoken: csrf }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      alert(data.error || "Error");
+      return;
+    }
+
+    disableForm();
+    hideSurrenderButton();
+
+    const betInfo = extraId ? buildBetInfoFromResponse(data) : null;
+    if (betData) {
+      mergeBetResponse(data);
+      updateBetTrackerUI(
+        document.querySelectorAll("#attempts-container > *").length,
+        false,
+        betInfo,
+      );
+    }
+
+    const challengeData = data.challenge ? normalizeChallengeData(data.challenge) : null;
+    handleSurrenderCompletion(
+      normalizeDisplayText(data.target_name),
+      Boolean(extraId),
+      betInfo,
+      challengeData,
+    );
+  }
+
+  function handleGameCompletion(targetName, isExtra, betInfo = null, challengeData = null) {
+    showGameEndModal({
+      targetName,
+      outcome: "victory",
+      isExtra,
+      betInfo,
+      challengeData,
+    });
+  }
+
+  function handleSurrenderCompletion(targetName, isExtra, betInfo = null, challengeData = null) {
+    showGameEndModal({
+      targetName,
+      outcome: "surrender",
+      isExtra,
+      betInfo,
+      challengeData,
+    });
+  }
+
+  function showGameEndModal({
+    targetName,
+    outcome,
+    isExtra = false,
+    betInfo = null,
+    challengeData = null,
+  }) {
   injectKeyframes();
-  const displayName = normalizeDisplayText(name);
+  const displayName = normalizeDisplayText(targetName);
 
   const overlay = document.createElement("div");
   overlay.className = "arcade-modal-overlay";
@@ -627,7 +767,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modal.innerHTML = `
   <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
-  <h2 class="arcade-modal__title">¡Correcto! ${displayName}</h2>
+  <h2 class="arcade-modal__title">${buildModalTitle(outcome, displayName)}</h2>
   ${challengeMessageHtml}
   ${betMessageHtml}
   <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">

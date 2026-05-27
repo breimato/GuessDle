@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Count, Q, Sum
+from django.db.models import Sum
 
 from apps.accounts.models import GameElo
 from apps.games.models import Game, GameAttempt, PlaySession
@@ -23,6 +23,37 @@ class PlayerStatsService:
         return queryset.filter(mode__isnull=True)
 
     @staticmethod
+    def _winning_sessions(base_sessions):
+        return base_sessions.filter(attempts__is_correct=True).distinct()
+
+    @staticmethod
+    def _surrendered_sessions(base_sessions):
+        return base_sessions.filter(surrendered=True)
+
+    @staticmethod
+    def _count_finished_games(base_sessions):
+        return PlayerStatsService._winning_sessions(base_sessions).count()
+
+    @staticmethod
+    def _count_ranking_attempts(base_sessions):
+        winning_sessions = PlayerStatsService._winning_sessions(base_sessions)
+        winning_attempts = GameAttempt.objects.filter(session__in=winning_sessions).count()
+
+        surrendered_sessions = PlayerStatsService._surrendered_sessions(base_sessions)
+        surrendered_attempts = GameAttempt.objects.filter(session__in=surrendered_sessions).count()
+
+        return winning_attempts + surrendered_attempts
+
+    @staticmethod
+    def _calculate_ranking_average(base_sessions):
+        games_finished = PlayerStatsService._count_finished_games(base_sessions)
+        if games_finished == 0:
+            return None
+
+        total_ranking_attempts = PlayerStatsService._count_ranking_attempts(base_sessions)
+        return total_ranking_attempts / games_finished
+
+    @staticmethod
     def get_game_stats(user, game, mode=None) -> dict:
         elo_record = GameElo.objects.filter(
             user=user, **PlayerStatsService._elo_lookup(game, mode)
@@ -30,21 +61,8 @@ class PlayerStatsService:
         points = elo_record.elo if elo_record else 0
 
         base_sessions = PlayerStatsService._session_queryset(user, game, mode)
-        session_stats = base_sessions.aggregate(
-            games_finished=Count(
-                "id", filter=Q(attempts__is_correct=True), distinct=True
-            ),
-        )
-        games_finished = session_stats["games_finished"] or 0
-        if games_finished:
-            total_attempts = GameAttempt.objects.filter(
-                session__in=base_sessions.filter(attempts__is_correct=True)
-            ).count()
-        else:
-            total_attempts = 0
-        average_attempts = (
-            total_attempts / games_finished if games_finished > 0 else None
-        )
+        games_finished = PlayerStatsService._count_finished_games(base_sessions)
+        average_attempts = PlayerStatsService._calculate_ranking_average(base_sessions)
 
         return {
             "points": points,
@@ -96,16 +114,9 @@ class PlayerStatsService:
     @staticmethod
     def get_global_stats(user) -> dict:
         base_sessions = PlaySession.objects.filter(user=user, game__active=True)
-        games_finished = base_sessions.filter(attempts__is_correct=True).distinct().count()
-        if games_finished:
-            total_attempts = GameAttempt.objects.filter(
-                session__in=base_sessions.filter(attempts__is_correct=True)
-            ).count()
-        else:
-            total_attempts = 0
-        average_attempts = (
-            total_attempts / games_finished if games_finished > 0 else None
-        )
+        games_finished = PlayerStatsService._count_finished_games(base_sessions)
+        average_attempts = PlayerStatsService._calculate_ranking_average(base_sessions)
+
         return {
             "points": PlayerStatsService.get_global_elo(user),
             "games_finished": games_finished,
@@ -167,3 +178,28 @@ class PlayerStatsService:
     def calculate_user_average_attempts(user, game, mode=None) -> float | None:
         stats = PlayerStatsService.get_game_stats(user, game, mode=mode)
         return stats["average_attempts"]
+
+    @staticmethod
+    def list_user_averages_for_game(game, mode=None, exclude_user=None) -> list[float]:
+        play_sessions = PlaySession.objects.filter(game=game)
+        if mode:
+            play_sessions = play_sessions.filter(mode=mode)
+        else:
+            play_sessions = play_sessions.filter(mode__isnull=True)
+
+        user_ids = play_sessions.values_list("user_id", flat=True).distinct()
+        if exclude_user is not None:
+            user_ids = user_ids.exclude(user_id=exclude_user.id)
+
+        averages = []
+        for user in User.objects.filter(id__in=user_ids):
+            average_attempts = PlayerStatsService.calculate_user_average_attempts(
+                user,
+                game,
+                mode=mode,
+            )
+            if average_attempts is None:
+                continue
+            averages.append(average_attempts)
+
+        return averages

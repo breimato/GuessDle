@@ -21,6 +21,7 @@ from apps.games.services.gameplay.extra_daily_service import ExtraDailyService
 from apps.games.services.gameplay.guess_processor import GuessProcessor
 from apps.games.services.gameplay.hint_reveal_service import HintRevealService
 from apps.games.services.gameplay.play_session_service import PlaySessionService
+from apps.games.services.gameplay.surrender import SurrenderRequestProcessor
 from apps.games.services.gameplay.target_service import TargetService
 from apps.games.services.mode_resolver import ModeResolver
 from apps.games.services.play_background import resolve_background_url
@@ -487,3 +488,42 @@ def reveal_extra_hint(request, extra_id: int):
         target=extra_play.target,
         extra_play=extra_play,
     )
+
+
+def _process_surrender(request, *, game, daily_target=None, extra_play=None, challenge=None):
+    return SurrenderRequestProcessor(request, game).process(
+        daily_target=daily_target,
+        extra_play=extra_play,
+        challenge=challenge,
+    )
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def surrender_daily_game(request, slug: str, mode_slug=None):
+    game, mode, _, daily_target = _resolve_play_context(request, slug, mode_slug)
+    if not daily_target:
+        return JsonResponse({"error": "No daily target set."}, status=400)
+    return _process_surrender(request, game=game, daily_target=daily_target)
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def surrender_extra_game(request, extra_id: int):
+    extra_play = get_object_or_404(ExtraDailyPlay, pk=extra_id, user=request.user)
+    return _process_surrender(request, game=extra_play.game, extra_play=extra_play)
+
+
+@require_POST
+@login_required
+@never_cache
+@csrf_protect
+def surrender_challenge_game(request, challenge_id: int):
+    challenge = get_object_or_404(Challenge, pk=challenge_id)
+    if request.user not in (challenge.challenger, challenge.opponent):
+        return JsonResponse({"error": "Unauthorized."}, status=403)
+    return _process_surrender(request, game=challenge.game, challenge=challenge)

@@ -1,11 +1,8 @@
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.db.models import Avg, Count, ExpressionWrapper, FloatField, Q
-from django.db.models.functions import Cast
 
 from apps.accounts.models import GameElo
 from apps.accounts.services.player_stats_service import PlayerStatsService
-from apps.games.models import PlaySession, ScoringRule
+from apps.games.models import ScoringRule
 
 
 class ScoreService:
@@ -33,33 +30,15 @@ class ScoreService:
         )
 
     def calculate_global_average_of_averages(self, exclude_user=True) -> float | None:
-        play_sessions = PlaySession.objects.filter(game=self.game)
-        if self.mode:
-            play_sessions = play_sessions.filter(mode=self.mode)
-        else:
-            play_sessions = play_sessions.filter(mode__isnull=True)
-        if exclude_user:
-            play_sessions = play_sessions.exclude(user=self.user)
-
-        user_averages = (
-            play_sessions.values("user")
-            .annotate(
-                total_attempts=Count("attempts"),
-                completed_sessions=Count(
-                    "id", filter=Q(attempts__is_correct=True), distinct=True
-                ),
-            )
-            .filter(completed_sessions__gt=0)
-            .annotate(
-                user_avg=ExpressionWrapper(
-                    Cast("total_attempts", FloatField())
-                    / Cast("completed_sessions", FloatField()),
-                    output_field=FloatField(),
-                )
-            )
+        user_averages = PlayerStatsService.list_user_averages_for_game(
+            self.game,
+            mode=self.mode,
+            exclude_user=self.user if exclude_user else None,
         )
-        global_average_result = user_averages.aggregate(avg_of_avgs=Avg("user_avg"))
-        return global_average_result["avg_of_avgs"]
+        if not user_averages:
+            return None
+
+        return sum(user_averages) / len(user_averages)
 
     def _calculate_points_for_attempts(self, attempts_count: int) -> int:
         scoring_rule = (
