@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const playMessages = window.GuessDlePlayMessages;
+  const formatEloAmount = (amount) => playMessages.formatEloAmount(amount);
+
   /* ───────── nodos básicos ───────── */
   const cont = document.getElementById("attempts-container");
   const header = document.getElementById("attempts-header");
@@ -270,12 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function formatEloAmount(amount) {
-    const n = Number(amount);
-    if (Number.isNaN(n)) return "0";
-    return Number.isInteger(n) ? n : n.toFixed(1);
-  }
-
   function getBetAverage() {
     const avg = betData?.global_average;
     if (avg == null || avg === "") return null;
@@ -311,19 +308,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const betAmount = betInfo?.betAmount ?? getBetAmount();
 
     if (statusMsg) {
-      if (won) {
+      const status = playMessages.buildBetStatusMessage({
+        won,
+        betInfo,
+        betAmount,
+        average,
+        currentAttempts,
+      });
+      if (status.visible) {
         statusMsg.classList.remove("hidden");
-        if (betInfo?.betWon) {
-          statusMsg.textContent = `¡Apuesta ganada! +${formatEloAmount(betInfo.netProfit)} ELO`;
-          statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-win";
-        } else {
-          statusMsg.textContent = `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`;
-          statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-loss";
-        }
-      } else if (average !== null && Number(currentAttempts) > average) {
-        statusMsg.classList.remove("hidden");
-        statusMsg.textContent = `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`;
-        statusMsg.className = "mt-2 font-bold text-center text-lg arcade-msg--bet-loss";
+        statusMsg.textContent = status.text;
+        statusMsg.className = status.className;
       } else {
         statusMsg.classList.add("hidden");
       }
@@ -344,22 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateBetTrackerUI(currentCount, initialWon, initialBetInfo);
   }
 
-  function normalizeChallengeData(data) {
-    if (!data) return null;
-    const currentUser = data.current_user
-      ?? (typeof CHALLENGE_CURRENT_USER !== "undefined" ? CHALLENGE_CURRENT_USER : "");
-    return {
-      completed: Boolean(data.completed),
-      current_user: currentUser,
-      challenger: data.challenger ?? data.challenger_username ?? "",
-      opponent: data.opponent ?? data.opponent_username ?? "",
-      winner: data.winner ?? data.winner_username ?? null,
-      challenger_attempts: data.challenger_attempts,
-      opponent_attempts: data.opponent_attempts,
-      stake_points: Number(data.stake_points || 0),
-      points_delta: data.points_delta != null ? Number(data.points_delta) : null,
-    };
-  }
+  const normalizeChallengeData = (data) => playMessages.normalizeChallengeData(data);
 
   async function fetchChallengeReport(attempts) {
     const reportUrl = typeof CHALLENGE_REPORT_URL !== "undefined" ? CHALLENGE_REPORT_URL : "";
@@ -378,26 +358,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return normalizeChallengeData(await challengeRes.json());
   }
 
+  function updateChallengeModalSection(overlay, challengeData) {
+    const slot = overlay?.querySelector("[data-challenge-message]");
+    if (!slot) return;
+    const html = playMessages.buildChallengeMessageHtml(challengeData);
+    slot.innerHTML = html || '<p class="arcade-msg--wait">No se pudo cargar el resultado del reto.</p>';
+  }
+
+  async function completeVictoryFlow(targetName, isExtra, betInfo) {
+    const isChallenge = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
+    const overlay = showGameEndModal({
+      targetName,
+      outcome: "victory",
+      isExtra,
+      betInfo,
+      challengeData: null,
+      challengePending: isChallenge,
+    });
+    if (!isChallenge) return;
+    const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
+    try {
+      const challengeData = await fetchChallengeReport(attemptsPlayed);
+      updateChallengeModalSection(overlay, challengeData);
+    } catch (err) {
+      console.error("Challenge report failed:", err);
+    }
+  }
+
   /* ───────── 2· ya ganado previamente ───────── */
   const flag = document.getElementById("won-flag");
   if (flag) {
     disableForm();
     hideSurrenderButton();
-    setTimeout(async () => {
-      launchConfettiSides();
+    setTimeout(() => {
       const isExtra = flag.dataset.isExtra === "true";
       const betInfo = isExtra ? buildBetInfoFromDataset(flag.dataset) : null;
-      const isChallengeReload = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
-      let challengeData = null;
-      if (isChallengeReload) {
-        const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
-        try {
-          challengeData = await fetchChallengeReport(attemptsPlayed);
-        } catch (err) {
-          console.error("Challenge report failed:", err);
-        }
-      }
-      handleGameCompletion(normalizeDisplayText(flag.dataset.champ), isExtra, betInfo, challengeData);
+      void completeVictoryFlow(normalizeDisplayText(flag.dataset.champ), isExtra, betInfo);
     }, 200);
   }
 
@@ -449,20 +445,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (data.won) {
       const cells = row.querySelectorAll(".square");
       const last = cells[cells.length - 1];
-      const runCompletion = async () => {
+      const runCompletion = () => {
         disableForm();
-        launchConfettiSides();
-        const isChallenge = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
-        let challengeData = null;
-        if (isChallenge) {
-          const attemptsPlayed = document.querySelectorAll("#attempts-container > *").length;
-          try {
-            challengeData = await fetchChallengeReport(attemptsPlayed);
-          } catch (err) {
-            console.error("Challenge report failed:", err);
-          }
-        }
-        handleGameCompletion(normalizeDisplayText(data.attempt.name), !!extraId, betInfo, challengeData);
+        void completeVictoryFlow(normalizeDisplayText(data.attempt.name), !!extraId, betInfo);
       };
       if (last) {
         last.addEventListener("animationend", runCompletion, { once: true });
@@ -565,13 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
       betWon: dataset.betWon === "true",
       netProfit: parseFloat(dataset.netProfit || "0"),
     };
-  }
-
-  function buildModalTitle(outcome, displayName) {
-    if (outcome === "surrender") {
-      return `¡Qué lástima! El personaje era ${displayName}`;
-    }
-    return `¡Correcto! ${displayName}`;
   }
 
   function showErrorModal(message, title = "Error") {
@@ -702,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleGameCompletion(targetName, isExtra, betInfo = null, challengeData = null) {
-    showGameEndModal({
+    return showGameEndModal({
       targetName,
       outcome: "victory",
       isExtra,
@@ -727,6 +705,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isExtra = false,
     betInfo = null,
     challengeData = null,
+    challengePending = false,
   }) {
   injectKeyframes();
   const displayName = normalizeDisplayText(targetName);
@@ -737,49 +716,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.createElement("div");
   modal.className = "arcade-modal animate-bounceInCenter";
 
-  let betMessageHtml = "";
-  if (isExtra && betInfo) {
-    if (betInfo.betWon) {
-      betMessageHtml = `<p class="arcade-msg--bet-win">¡Apuesta ganada! +${formatEloAmount(betInfo.netProfit)} ELO</p>`;
-    } else {
-      betMessageHtml = `<p class="arcade-msg--bet-loss">Apuesta perdida. Has perdido ${formatEloAmount(betInfo.betAmount)} ELO.</p>`;
-    }
-  }
-
+  const betMessageHtml = isExtra && betInfo ? playMessages.buildBetMessageHtml(betInfo) : "";
   const isChallengeModal = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
-
   let challengeMessageHtml = "";
-  const normalizedChallenge = normalizeChallengeData(challengeData);
-  if (normalizedChallenge) {
-    const isChallenger = normalizedChallenge.current_user === normalizedChallenge.challenger;
-    const rivalUsername = isChallenger ? normalizedChallenge.opponent : normalizedChallenge.challenger;
-    const userAttempts = isChallenger
-      ? normalizedChallenge.challenger_attempts
-      : normalizedChallenge.opponent_attempts;
-    const rivalAttempts = isChallenger
-      ? normalizedChallenge.opponent_attempts
-      : normalizedChallenge.challenger_attempts;
-    const attemptsLabel = userAttempts != null ? `${userAttempts} intentos` : "tus intentos";
-
-    if (!normalizedChallenge.completed) {
-      challengeMessageHtml = `<p class="arcade-msg--wait">Partida completada (${attemptsLabel}). Esperando a tu rival…</p>`;
-    } else if (normalizedChallenge.winner === normalizedChallenge.current_user) {
-      const pointsWon = normalizedChallenge.points_delta != null
-        ? normalizedChallenge.points_delta
-        : normalizedChallenge.stake_points;
-      challengeMessageHtml = `<p class="arcade-msg--win">¡Has ganado el reto contra ${rivalUsername}! (${userAttempts} vs ${rivalAttempts})<br>+${formatEloAmount(pointsWon)} ELO</p>`;
-    } else if (normalizedChallenge.winner) {
-      const pointsLost = normalizedChallenge.points_delta != null
-        ? Math.abs(normalizedChallenge.points_delta)
-        : normalizedChallenge.stake_points;
-      challengeMessageHtml = `<p class="arcade-msg--loss">Has perdido el reto contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})<br>-${formatEloAmount(pointsLost)} ELO</p>`;
+  if (isChallengeModal) {
+    if (challengePending && !challengeData) {
+      challengeMessageHtml = '<p class="arcade-msg--wait">Cargando resultado del reto…</p>';
     } else {
-      const pointsLost = normalizedChallenge.points_delta != null
-        ? Math.abs(normalizedChallenge.points_delta)
-        : normalizedChallenge.stake_points;
-      challengeMessageHtml = `<p class="arcade-msg--tie">Empate contra ${rivalUsername}. (${userAttempts} vs ${rivalAttempts})<br>-${formatEloAmount(pointsLost)} ELO</p>`;
+      challengeMessageHtml = playMessages.buildChallengeMessageHtml(challengeData);
     }
   }
+  const challengeSectionHtml = isChallengeModal
+    ? `<div data-challenge-message>${challengeMessageHtml}</div>`
+    : "";
 
   const extraSectionHtml = !isChallengeModal
     ? (maxExtrasReached
@@ -810,8 +759,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modal.innerHTML = `
   <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
-  <h2 class="arcade-modal__title">${buildModalTitle(outcome, displayName)}</h2>
-  ${challengeMessageHtml}
+  <h2 class="arcade-modal__title">${playMessages.buildModalTitle(outcome, displayName)}</h2>
+  ${challengeSectionHtml}
   ${betMessageHtml}
   <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
     ${extraSectionHtml}
@@ -849,6 +798,12 @@ document.addEventListener("DOMContentLoaded", () => {
       betForm.classList.remove("hidden");
     });
   }
+
+  if (outcome === "victory") {
+    launchConfettiSides();
+  }
+
+  return overlay;
 }
 
 

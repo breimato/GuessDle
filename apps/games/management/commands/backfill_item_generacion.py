@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from apps.games.models import Game, GameItem
-from apps.games.services.generation_utils import enrich_item_data
+from apps.games.services.catalog.generation_utils import enrich_item_data
 
 
 class Command(BaseCommand):

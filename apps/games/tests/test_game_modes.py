@@ -3,10 +3,10 @@ from django.db.models import Sum
 from django.test import TestCase
 
 from apps.accounts.models import GameElo
-from apps.accounts.services.player_stats_service import PlayerStatsService
+from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
 from apps.games.models import Game, GameItem, GameMode
-from apps.games.services.generation_utils import generation_from_national_id, enrich_item_data
-from apps.games.services.item_pool_service import ItemPoolService
+from apps.games.services.catalog.generation_utils import generation_from_national_id, enrich_item_data
+from apps.games.services.catalog.item_pool_service import ItemPoolService
 
 
 class GameModeTests(TestCase):

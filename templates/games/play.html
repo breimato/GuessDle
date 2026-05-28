@@ -196,6 +196,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+<script src="{% static 'js/play/play-messages.js' %}" defer></script>
 <script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% if game_mode and game_mode.slug == 'radical' and can_play %}
 <script src="{% static 'js/radical-play-enter.js' %}" defer></script>

@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from apps.games.models import DailyTarget, Game, GameItem, PlaySession, PlaySessionType
-from apps.games.services.gameplay.play_session_service import PlaySessionService
-from apps.games.services.gameplay.surrender import SurrenderService
+from apps.games.services.play_session.play_session_service import PlaySessionService
+from apps.games.services.surrender.surrender_service import SurrenderService
 
 User = get_user_model()
 

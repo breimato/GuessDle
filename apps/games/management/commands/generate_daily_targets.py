@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from apps.games.models import DailyTarget, Game, GameItem
-from apps.games.services.item_pool_service import ItemPoolService
+from apps.games.services.catalog.item_pool_service import ItemPoolService
 
 
 class Command(BaseCommand):

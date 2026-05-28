@@ -3,9 +3,12 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from apps.accounts.models import Challenge, GameElo, Notification
-from apps.accounts.services.notification_service import NotificationService, NotificationType
+from apps.accounts.services.notifications.notification_service import NotificationService
+from apps.accounts.services.notifications.notification_types import NotificationType
 from apps.games.models import Game, GameItem, PlaySession, PlaySessionType, GameAttempt
-from apps.games.services.gameplay.challenge_resolution_service import ChallengeResolutionService
+from apps.accounts.services.challenges.challenge_resolution_service import ChallengeResolutionService
+from apps.accounts.services.challenges.challenger_manager import ChallengeManager
+from apps.games.services.play_session.play_session_service import PlaySessionService
 
 
 class ChallengeBackendTests(TestCase):
@@ -274,6 +277,57 @@ class ChallengeBackendTests(TestCase):
         self.assertEqual(challenger_score.elo, 70)
         self.assertEqual(opponent_score.elo, 70)
 
+    def test_winner_when_one_solves_and_other_surrenders_with_same_attempt_count(self):
+        wrong_guess = GameItem.objects.create(game=self.game, name="Wrong Guess")
+        self.challenge.stake_points = 100
+        self.challenge.save(update_fields=["stake_points"])
+
+        challenger_session = PlaySessionService.get_or_create(
+            self.challenger,
+            self.game,
+            challenge=self.challenge,
+        )
+        opponent_session = PlaySessionService.get_or_create(
+            self.opponent,
+            self.game,
+            challenge=self.challenge,
+        )
+        GameAttempt.objects.create(
+            user=self.challenger,
+            game=self.game,
+            session=challenger_session,
+            guess=self.target,
+            is_correct=True,
+        )
+        GameAttempt.objects.create(
+            user=self.opponent,
+            game=self.game,
+            session=opponent_session,
+            guess=wrong_guess,
+            is_correct=False,
+        )
+        opponent_session.surrendered = True
+        opponent_session.save(update_fields=["surrendered"])
+
+        self.challenge.challenger_attempts = 1
+        self.challenge.opponent_attempts = 1
+        self.challenge.save(update_fields=["challenger_attempts", "opponent_attempts"])
+
+        ChallengeManager(user=self.opponent, challenge=self.challenge).calculate_winner()
+        self.challenge.refresh_from_db()
+
+        self.assertTrue(self.challenge.completed)
+        self.assertEqual(self.challenge.winner, self.challenger)
+
+        resolution_result = ChallengeResolutionService(
+            self.challenge, acting_user=self.opponent
+        ).resolve_and_assign_points()
+        self.assertEqual(resolution_result["status"], self.STATUS_WINNER)
+        self.assertEqual(
+            resolution_result["point_deltas"][self.OPPONENT_USERNAME],
+            -100.0,
+        )
+
     def test_resolution_is_idempotent_after_stake_settlement(self):
         self.challenge.challenger_attempts = self.ATTEMPT_COUNT_THREE
         self.challenge.opponent_attempts = self.ATTEMPT_COUNT_FIVE
@@ -289,6 +343,31 @@ class ChallengeBackendTests(TestCase):
         opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
         self.assertEqual(challenger_score.elo, 130)
         self.assertEqual(opponent_score.elo, 70)
+
+    def test_notification_create_deduplicates_unread_challenge_notifications(self):
+        NotificationService.create(
+            self.opponent,
+            NotificationType.CHALLENGE_RECEIVED,
+            NotificationService.challenge_payload(self.challenge, self.challenger.username),
+            self.challenge,
+        )
+        duplicate = NotificationService.create(
+            self.opponent,
+            NotificationType.CHALLENGE_RECEIVED,
+            NotificationService.challenge_payload(self.challenge, self.challenger.username),
+            self.challenge,
+        )
+
+        self.assertIsNone(duplicate)
+        self.assertEqual(
+            Notification.objects.filter(
+                user=self.opponent,
+                type=NotificationType.CHALLENGE_RECEIVED,
+                challenge=self.challenge,
+                read_at__isnull=True,
+            ).count(),
+            1,
+        )
 
     def test_notifications_poll_and_ack(self):
         NotificationService.create(
@@ -423,12 +502,10 @@ class PlayerStatsServiceTests(TestCase):
         )
 
     def test_dashboard_and_ranking_stats_match(self):
-        from apps.accounts.services.dashboard_stats import DashboardStats
-        from apps.accounts.services.player_stats_service import PlayerStatsService
+        from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
 
-        dashboard = DashboardStats(self.user)
-        user_row = dashboard.calculate_user_statistics()[0]
-        ranking_row = dashboard.generate_ranking_per_game()[self.GAME_SLUG][0]
+        user_row = PlayerStatsService.get_user_games_stats(self.user)[0]
+        ranking_row = PlayerStatsService.build_ranking_per_game()[self.GAME_SLUG][0]
 
         self.assertEqual(user_row["points"], ranking_row["points"])
         self.assertEqual(user_row["average_attempts"], ranking_row["average_attempts"])
@@ -441,7 +518,7 @@ class PlayerStatsServiceTests(TestCase):
         self.assertEqual(canonical["average_attempts"], 2.0)
 
     def test_surrender_attempts_worsen_average_without_adding_finished_game(self):
-        from apps.accounts.services.player_stats_service import PlayerStatsService
+        from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
 
         surrendered_session = PlaySession.objects.create(
             user=self.user,
@@ -464,3 +541,26 @@ class PlayerStatsServiceTests(TestCase):
 
         self.assertEqual(stats["games_finished"], 1)
         self.assertEqual(stats["average_attempts"], 6.0)
+
+
+class RegistrationTests(TestCase):
+    URL_REGISTER = "register"
+    URL_LOGIN = "login"
+    USER_PASSWORD = "password123"
+
+    def test_register_when_valid_payload_then_creates_user_without_email(self):
+        response = self.client.post(
+            reverse(self.URL_REGISTER),
+            {
+                "username": "new_player",
+                "first_name": "Breixo",
+                "password1": self.USER_PASSWORD,
+                "password2": self.USER_PASSWORD,
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse(self.URL_LOGIN))
+        user = User.objects.get(username="new_player")
+        self.assertEqual(user.email, "")
+        self.assertEqual(user.first_name, "Breixo")

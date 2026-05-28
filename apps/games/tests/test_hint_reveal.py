@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from apps.games.attempts import build_attempts
+from apps.games.services.catalog.attempts import build_attempts
 from apps.games.models import Game, GameItem, GameAttempt, PlaySession, PlaySessionType
-from apps.games.services.gameplay.hint_reveal_service import HintRevealService, HINT_INTERVAL
+from apps.games.services.hints.hint_reveal_service import HintRevealService, HINT_INTERVAL
 
 
 class HintRevealServiceTests(TestCase):

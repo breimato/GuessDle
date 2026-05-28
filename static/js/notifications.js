@@ -289,6 +289,21 @@
     }
   }
 
+  const RANK_LABELS = { 1: "🥇", 2: "🥈", 3: "🥉" };
+  const RANK_VARIANTS = { 1: "1", 2: "2", 3: "3" };
+
+  function rankLabelFor(position) {
+    return RANK_LABELS[position] || String(position);
+  }
+
+  function rankVariantFor(position) {
+    return RANK_VARIANTS[position] || "n";
+  }
+
+  function isModeRankingMap(ranking) {
+    return ranking && !Array.isArray(ranking) && typeof ranking === "object";
+  }
+
   function renderRankingRows(rows) {
     if (!rows || !rows.length) {
       return `
@@ -299,8 +314,8 @@
     }
     return rows.map((row, index) => {
       const position = index + 1;
-      const rankVariant = position === 1 ? "1" : (position === 2 ? "2" : (position === 3 ? "3" : "n"));
-      const rankLabel = position === 1 ? "🥇" : (position === 2 ? "🥈" : (position === 3 ? "🥉" : String(position)));
+      const rankVariant = rankVariantFor(position);
+      const rankLabel = rankLabelFor(position);
       const averageLabel = row.average_attempts == null ? "–" : formatAverage(row.average_attempts);
       return `
         <tr>
@@ -348,7 +363,7 @@
 
     const rankingByGame = rankingSync.ranking_by_game || {};
     Object.entries(rankingByGame).forEach(([gameSlug, gameRanking]) => {
-      if (gameRanking && !Array.isArray(gameRanking) && typeof gameRanking === "object") {
+      if (isModeRankingMap(gameRanking)) {
         Object.entries(gameRanking).forEach(([modeSlug, modeRows]) => {
           const panel = document.querySelector(`[data-ranking-tab="${gameSlug}-${modeSlug}"]`);
           if (panel) {
@@ -357,6 +372,7 @@
         });
         return;
       }
+
       const panel = document.querySelector(`[data-ranking-tab="${gameSlug}"]`);
       if (panel) {
         panel.innerHTML = renderRankingTable(gameRanking || []);

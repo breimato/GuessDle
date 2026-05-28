@@ -6,7 +6,7 @@ import requests
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from apps.games.services.generation_utils import generation_from_national_id
+from apps.games.services.catalog.generation_utils import generation_from_national_id
 
 TYPE_ES = {
     "normal": "Normal",

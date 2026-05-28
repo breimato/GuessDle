@@ -11,7 +11,7 @@ from django.core.management import call_command
 from django.utils import timezone
 
 from apps.accounts.models import Challenge
-from apps.games.services.generation_utils import enrich_item_data
+from apps.games.services.catalog.generation_utils import enrich_item_data
 
 from .models import (
     DailyTarget,
