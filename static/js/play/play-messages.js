@@ -88,37 +88,11 @@
     return `<p class="arcade-msg--bet-loss">Apuesta perdida. Has perdido ${formatEloAmount(betInfo.betAmount)} ELO.</p>`;
   }
 
-  function buildBetStatusMessage({ won, betInfo, betAmount, average, currentAttempts }) {
-    if (won) {
-      if (betInfo?.betWon) {
-        return {
-          text: `¡Apuesta ganada! +${formatEloAmount(betInfo.netProfit)} ELO`,
-          className: "mt-2 font-bold text-center text-lg arcade-msg--bet-win",
-          visible: true,
-        };
-      }
-      return {
-        text: `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`,
-        className: "mt-2 font-bold text-center text-lg arcade-msg--bet-loss",
-        visible: true,
-      };
-    }
-    if (average !== null && Number(currentAttempts) > average) {
-      return {
-        text: `¡Apuesta perdida! Has perdido ${formatEloAmount(betAmount)} ELO.`,
-        className: "mt-2 font-bold text-center text-lg arcade-msg--bet-loss",
-        visible: true,
-      };
-    }
-    return { text: "", className: "", visible: false };
-  }
-
   global.GuessDlePlayMessages = {
     formatEloAmount,
     buildModalTitle,
     normalizeChallengeData,
     buildChallengeMessageHtml,
     buildBetMessageHtml,
-    buildBetStatusMessage,
   };
 })(window);

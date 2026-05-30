@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import math
 
 EXTRA_BET_PROFIT_RATIO = 0.5
 
@@ -8,6 +9,19 @@ class ExtraBetPayout:
     credit: float
     net_profit: float
     points_awarded: float
+
+
+def extra_bet_goal_threshold(global_average: float | None) -> int | None:
+    if global_average is None:
+        return None
+    return math.ceil(float(global_average))
+
+
+def format_extra_bet_goal(global_average: float | None) -> str | None:
+    threshold = extra_bet_goal_threshold(global_average)
+    if threshold is None:
+        return None
+    return f"< {threshold}"
 
 
 def evaluate_extra_bet_won(attempts_count: int, score_service) -> bool:

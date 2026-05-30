@@ -4,7 +4,7 @@ from django.test import TestCase
 from apps.accounts.models import GameElo
 from apps.accounts.services.wallet.score_service import ScoreService
 from apps.games.models import ExtraDailyPlay, Game, GameAttempt, GameItem, PlaySession, PlaySessionType
-from apps.games.services.extra.payout import compute_extra_bet_payout, evaluate_extra_bet_won
+from apps.games.services.extra.payout import compute_extra_bet_payout, evaluate_extra_bet_won, format_extra_bet_goal
 from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.play_session.play_session_service import PlaySessionService
 from apps.games.services.play_session.result_updater import ResultUpdater
@@ -152,6 +152,12 @@ class ResultUpdaterExtraBetTests(TestCase):
 
         self.assertEqual(extra_play.bet_amount, 100)
         self.assertEqual(ScoreService(self.user, self.game).score_obj.elo, 0)
+
+    def test_format_extra_bet_goal_uses_integer_threshold(self):
+        self.assertEqual(format_extra_bet_goal(4.3), "Menos de 5 intentos")
+        self.assertEqual(format_extra_bet_goal(4.0), "Menos de 4 intentos")
+        self.assertEqual(format_extra_bet_goal(1.0), "Menos de 1 intento")
+        self.assertEqual(format_extra_bet_goal(None), None)
 
     def test_evaluate_extra_bet_won_when_below_global_average(self):
         for index, username in enumerate(("rival_a", "rival_b"), start=1):

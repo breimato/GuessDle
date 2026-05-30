@@ -121,12 +121,10 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
     <div class="bet-tracker__col">
       <span class="bet-tracker__label bet-tracker__label--goal">🎯 Objetivo</span>
       <span id="bet-tracker-average" class="bet-tracker__value">
-        {% if global_average %}{{ global_average|floatformat:1 }}{% else %}Sin media{% endif %}
-        <span class="bet-tracker__unit">intentos</span>
+        {% if global_average %}{{ global_average|extra_bet_goal }}{% else %}Sin media <span class="bet-tracker__unit">intentos</span>{% endif %}
       </span>
     </div>
   </div>
-  <div id="bet-status-msg" class="mt-2 font-bold text-center text-lg hidden"></div>
 </div>
 {{ bet_tracking|json_script:"bet-tracking-data" }}
 {% endif %}

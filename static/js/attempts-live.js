@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const modesUrl = gameData?.dataset.modesUrl || null;
   const panelUrl = gameData?.dataset.panelUrl || "/accounts/";
   const surrenderUrl = gameData?.dataset.surrenderUrl || null;
+
+  function hideSurrenderButton() {
+    document.getElementById("surrender-btn")?.remove();
+  }
+
   const surrenderBtn = document.getElementById("surrender-btn");
 
 
@@ -273,17 +278,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function getBetAverage() {
-    const avg = betData?.global_average;
-    if (avg == null || avg === "") return null;
-    const n = Number(avg);
-    return Number.isNaN(n) ? null : n;
-  }
-
-  function getBetAmount() {
-    return Number(betData?.bet_amount ?? 0);
-  }
-
   function buildBetInfoFromResponse(data) {
     if (!data || data.bet_amount == null) return null;
     const betAmount = Number(data.bet_amount);
@@ -298,45 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!betData || !data) return;
     if (data.bet_amount != null) betData.bet_amount = Number(data.bet_amount);
     if (data.global_average != null) betData.global_average = data.global_average;
-  }
-
-  function updateBetTrackerUI(currentAttempts, won = false, betInfo = null) {
-    if (!betData) return;
-
-    const statusMsg = document.getElementById("bet-status-msg");
-    const average = getBetAverage();
-    const betAmount = betInfo?.betAmount ?? getBetAmount();
-
-    if (statusMsg) {
-      const status = playMessages.buildBetStatusMessage({
-        won,
-        betInfo,
-        betAmount,
-        average,
-        currentAttempts,
-      });
-      if (status.visible) {
-        statusMsg.classList.remove("hidden");
-        statusMsg.textContent = status.text;
-        statusMsg.className = status.className;
-      } else {
-        statusMsg.classList.add("hidden");
-      }
-    }
-  }
-
-  if (betData) {
-    const currentCount = document.querySelectorAll("#attempts-container > *").length;
-    const wonFlagEl = document.getElementById("won-flag");
-    const initialWon = wonFlagEl !== null;
-    const initialBetInfo = wonFlagEl && wonFlagEl.dataset.isExtra === "true"
-      ? {
-          betAmount: parseFloat(wonFlagEl.dataset.betAmount || "0"),
-          betWon: wonFlagEl.dataset.betWon === "true",
-          netProfit: parseFloat(wonFlagEl.dataset.netProfit || "0"),
-        }
-      : null;
-    updateBetTrackerUI(currentCount, initialWon, initialBetInfo);
   }
 
   const normalizeChallengeData = (data) => playMessages.normalizeChallengeData(data);
@@ -366,6 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function completeVictoryFlow(targetName, isExtra, betInfo) {
+    hideSurrenderButton();
     const isChallenge = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
     const overlay = showGameEndModal({
       targetName,
@@ -434,8 +390,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const betInfo = extraId ? buildBetInfoFromResponse(data) : null;
     if (betData) {
       mergeBetResponse(data);
-      const currentCount = document.querySelectorAll("#attempts-container > *").length;
-      updateBetTrackerUI(currentCount, data.won, betInfo);
     }
 
     if (data.hint_state) {
@@ -443,9 +397,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (data.won) {
+      hideSurrenderButton();
       const cells = row.querySelectorAll(".square");
       const last = cells[cells.length - 1];
       const runCompletion = () => {
+        hideSurrenderButton();
         disableForm();
         void completeVictoryFlow(normalizeDisplayText(data.attempt.name), !!extraId, betInfo);
       };
@@ -538,10 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function disableForm() {
     form?.querySelectorAll("input,button").forEach(el => el.disabled = true);
     form?.classList.add("opacity-50", "pointer-events-none");
-  }
-
-  function hideSurrenderButton() {
-    surrenderBtn?.remove();
   }
 
   function buildBetInfoFromDataset(dataset) {
@@ -663,11 +615,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const betInfo = extraId ? buildBetInfoFromResponse(data) : null;
     if (betData) {
       mergeBetResponse(data);
-      updateBetTrackerUI(
-        document.querySelectorAll("#attempts-container > *").length,
-        false,
-        betInfo,
-      );
     }
 
     const challengeData = data.challenge ? normalizeChallengeData(data.challenge) : null;
@@ -690,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleSurrenderCompletion(targetName, isExtra, betInfo = null, challengeData = null) {
+    hideSurrenderButton();
     showGameEndModal({
       targetName,
       outcome: "surrender",
@@ -707,6 +655,7 @@ document.addEventListener("DOMContentLoaded", () => {
     challengeData = null,
     challengePending = false,
   }) {
+  hideSurrenderButton();
   injectKeyframes();
   const displayName = normalizeDisplayText(targetName);
 
