@@ -10,6 +10,10 @@ from .views import (
     reveal_extra_hint,
     surrender_daily_game,
     surrender_extra_game,
+    play_rosco_game,
+    rosco_answer,
+    rosco_pass,
+    rosco_surrender,
 )
 
 
@@ -28,4 +32,7 @@ urlpatterns = [
     path("ajax/guess-extra/<int:extra_id>/", process_extra_guess, name="ajax_guess_extra"),
     path("ajax/reveal-hint-extra/<int:extra_id>/", reveal_extra_hint, name="ajax_reveal_hint_extra"),
     path("ajax/surrender-extra/<int:extra_id>/", surrender_extra_game, name="ajax_surrender_extra"),
+    path("<slug:slug>/<slug:mode_slug>/rosco/answer/", rosco_answer, name="rosco_answer"),
+    path("<slug:slug>/<slug:mode_slug>/rosco/pass/", rosco_pass, name="rosco_pass"),
+    path("<slug:slug>/<slug:mode_slug>/rosco/surrender/", rosco_surrender, name="rosco_surrender"),
 ]

@@ -44,17 +44,28 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
   <div class="mode-select-modes">
     {% for entry in modes %}
     <div class="mode-select-modes__group">
+      {% if entry.is_rosco and entry.rosco_unavailable %}
+      <span class="arcade-btn arcade-btn--secondary arcade-btn--full opacity-60 cursor-not-allowed" aria-disabled="true">
+        {{ entry.mode.label }}
+        <span class="text-sm opacity-70">({{ entry.rosco_status_label }})</span>
+      </span>
+      {% else %}
       <a
         href="{{ entry.play_url }}"
         class="arcade-btn arcade-btn--secondary arcade-btn--full"
         {% if entry.mode.slug == 'radical' and not entry.resolved %}data-radical-intro{% endif %}
       >
         {{ entry.mode.label }}
-        {% if entry.resolved %}
+        {% if entry.is_rosco %}
+        <span class="text-sm opacity-70">({{ entry.rosco_status_label }})</span>
+        {% elif entry.resolved %}
         <span class="text-sm opacity-70">(completado hoy)</span>
         {% endif %}
       </a>
-      {% if entry.active_extra_id %}
+      {% endif %}
+      {% if entry.is_rosco and not entry.rosco_unavailable %}
+      <p class="text-sm opacity-80 text-center">Bote acumulado: {{ entry.pot_amount|floatformat:0 }} ELO</p>
+      {% elif entry.active_extra_id %}
       <a href="{% url 'play_extra_daily' entry.active_extra_id %}" class="arcade-btn arcade-btn--ghost arcade-btn--full text-sm">
         Continuar apuesta extra
       </a>

@@ -18,6 +18,7 @@ from apps.games.services.daily.flow import (
 )
 
 from apps.games.views.helpers import process_reveal_hint, resolve_play_context
+from apps.games.views.rosco_views import play_rosco_game
 
 
 @require_POST
@@ -68,6 +69,9 @@ def play_daily_game(request, slug: str, mode_slug=None):
         return render_mode_select(request, game, user, slug)
 
     game, mode, resolver, daily_target = resolve_play_context(request, slug, mode_slug)
+    if mode and mode.is_rosco:
+        return play_rosco_game(request, slug, mode_slug)
+
     if not daily_target:
         return render_missing_daily_target(request, game, mode)
 

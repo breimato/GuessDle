@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from apps.games.models import DailyTarget, GameAttempt, PlaySession, PlaySessionType
+from apps.games.models import DailyTarget, GameAttempt, GameModePlayType, PlaySession, PlaySessionType
 from apps.games.services.catalog.item_pool_service import ItemPoolService
 
 
@@ -76,9 +76,16 @@ class TargetService:
         from apps.games.services.catalog.mode_resolver import ModeResolver
 
         resolver = ModeResolver(self.game)
-        if not resolver.has_modes():
+        wordle_modes = [
+            mode
+            for mode in resolver.active_modes()
+            if mode.play_type != GameModePlayType.ROSCO
+        ]
+        if not wordle_modes:
+            if resolver.has_modes():
+                return False
             return not self.is_daily_resolved()
         return any(
             not TargetService(self.game, self.user, mode=mode).is_daily_resolved()
-            for mode in resolver.active_modes()
+            for mode in wordle_modes
         )

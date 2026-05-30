@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from apps.games.models import DailyTarget, Game, GameItem
+from apps.games.models import DailyTarget, Game, GameModePlayType
 from apps.games.services.catalog.item_pool_service import ItemPoolService
 
 
@@ -49,7 +49,11 @@ class Command(BaseCommand):
         return True
 
     def modes_for_game(self, game):
-        modes = list(game.modes.filter(active=True).order_by("sort_order", "slug"))
+        modes = list(
+            game.modes.filter(active=True, play_type=GameModePlayType.WORDLE).order_by(
+                "sort_order", "slug"
+            )
+        )
         return modes if modes else [None]
 
     def handle(self, *args, **options):

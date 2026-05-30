@@ -10,6 +10,12 @@ from apps.games.views.extra_views import (
     reveal_extra_hint,
     start_extra_daily_game,
 )
+from apps.games.views.rosco_views import (
+    play_rosco_game,
+    rosco_answer,
+    rosco_pass,
+    rosco_surrender,
+)
 from apps.games.views.surrender_views import (
     surrender_challenge_game,
     surrender_daily_game,
@@ -30,4 +36,8 @@ __all__ = [
     "process_challenge_guess",
     "reveal_challenge_hint",
     "surrender_challenge_game",
+    "play_rosco_game",
+    "rosco_answer",
+    "rosco_pass",
+    "rosco_surrender",
 ]

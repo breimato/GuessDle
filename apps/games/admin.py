@@ -21,7 +21,13 @@ from .models import (
     GameItem,
     GameMode,
     PlaySession,
+    RoscoJackpotWinner,
+    RoscoLetterAttempt,
+    RoscoQuestion,
+    RoscoWeeklyPot,
     ScoringRule,
+    WeeklyRosco,
+    WeeklyRoscoEntry,
 )
 
 
@@ -51,7 +57,7 @@ class GameAdminForm(forms.ModelForm):
 class GameModeInline(admin.TabularInline):
     model = GameMode
     extra = 0
-    fields = ("slug", "label", "sort_order", "item_filter", "background_image", "active")
+    fields = ("slug", "label", "play_type", "sort_order", "item_filter", "background_image", "active")
 
 
 @admin.register(Game)
@@ -506,4 +512,42 @@ class ExtraDailyPlayAdmin(admin.ModelAdmin):
 class PlaySessionAdmin(admin.ModelAdmin):
     list_display = ("user", "game", "session_type", "reference_id", "completed_at")
     list_filter = ("game", "session_type")
+    search_fields = ("user__username",)
+
+
+@admin.register(RoscoQuestion)
+class RoscoQuestionAdmin(admin.ModelAdmin):
+    list_display = ("game", "letter", "question_type", "category", "active", "prompt")
+    list_filter = ("game", "letter", "active", "question_type")
+    search_fields = ("prompt", "acceptable_answers")
+
+
+class WeeklyRoscoEntryInline(admin.TabularInline):
+    model = WeeklyRoscoEntry
+    extra = 0
+    readonly_fields = ("letter", "sort_order", "question", "prompt_snapshot")
+
+
+@admin.register(WeeklyRosco)
+class WeeklyRoscoAdmin(admin.ModelAdmin):
+    list_display = ("game", "mode", "week_start", "is_team", "created_at")
+    list_filter = ("game", "mode", "is_team")
+    inlines = [WeeklyRoscoEntryInline]
+
+
+@admin.register(RoscoWeeklyPot)
+class RoscoWeeklyPotAdmin(admin.ModelAdmin):
+    list_display = ("weekly_rosco", "pot_amount", "weekly_contribution", "rollover_amount", "settled")
+    list_filter = ("settled",)
+
+
+@admin.register(RoscoLetterAttempt)
+class RoscoLetterAttemptAdmin(admin.ModelAdmin):
+    list_display = ("session", "letter", "is_correct", "answer_text", "created_at")
+    list_filter = ("is_correct",)
+
+
+@admin.register(RoscoJackpotWinner)
+class RoscoJackpotWinnerAdmin(admin.ModelAdmin):
+    list_display = ("weekly_rosco", "user", "share_amount", "created_at")
     search_fields = ("user__username",)

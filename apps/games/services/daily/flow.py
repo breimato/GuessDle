@@ -14,7 +14,10 @@ from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.play_session.guess_processor import GuessProcessor
 from apps.games.services.catalog.mode_resolver import ModeResolver
 from apps.games.services.catalog.play_background import resolve_background_url
+from apps.games.services.rosco.weekly_pot_service import WeeklyPotService
+from apps.games.services.rosco.weekly_rosco_service import WeeklyRoscoService
 from apps.games.services.daily.target_service import TargetService
+from apps.games.models import RoscoSessionStatus
 
 from apps.games.views.guess_responses import build_attempt_payload, reject_if_not_playable
 from apps.accounts.services.challenges.challenge_points import challenge_points_delta_for_user
@@ -27,6 +30,37 @@ def should_show_mode_select(game: Game, mode_slug) -> bool:
 def render_mode_select(request, game: Game, user, slug: str):
     modes = []
     for mode in ModeResolver(game).active_modes():
+        if mode.is_rosco:
+            if not WeeklyRoscoService.has_question_bank(game):
+                modes.append(
+                    {
+                        "mode": mode,
+                        "is_rosco": True,
+                        "rosco_unavailable": True,
+                        "play_url": reverse("play_mode", args=[slug, mode.slug]),
+                        "pot_amount": 0,
+                        "rosco_status_label": "No disponible",
+                    }
+                )
+                continue
+
+            rosco_service = WeeklyRoscoService(game, mode, user)
+            weekly_rosco = rosco_service.ensure_current_weekly_rosco()
+            session = rosco_service.get_or_create_session(weekly_rosco)
+            pot = WeeklyPotService(weekly_rosco).get_pot()
+            status = session.rosco_status or RoscoSessionStatus.IN_PROGRESS
+            modes.append(
+                {
+                    "mode": mode,
+                    "is_rosco": True,
+                    "play_url": reverse("play_mode", args=[slug, mode.slug]),
+                    "pot_amount": pot.pot_amount,
+                    "rosco_status": status,
+                    "rosco_status_label": _rosco_status_label(status),
+                }
+            )
+            continue
+
         service = TargetService(game, user, mode=mode)
         extra_service = ExtraDailyService(user, game, mode=mode)
         active_extra = ExtraDailyPlay.objects.filter(
@@ -39,6 +73,7 @@ def render_mode_select(request, game: Game, user, slug: str):
         modes.append(
             {
                 "mode": mode,
+                "is_rosco": False,
                 "resolved": service.is_daily_resolved(),
                 "play_url": reverse("play_mode", args=[slug, mode.slug]),
                 "active_extra_id": active_extra.id if active_extra else None,
@@ -50,6 +85,17 @@ def render_mode_select(request, game: Game, user, slug: str):
         )
 
     return render(request, "games/mode_select.html", {"game": game, "modes": modes})
+
+
+def _rosco_status_label(status: str) -> str:
+    labels = {
+        RoscoSessionStatus.IN_PROGRESS: "En curso",
+        RoscoSessionStatus.FAILED: "Fallaste esta semana",
+        RoscoSessionStatus.COMPLETED: "Completado esta semana",
+        RoscoSessionStatus.WON_PERFECT: "¡Rosco completo!",
+        RoscoSessionStatus.SURRENDERED: "Rendida",
+    }
+    return labels.get(status, "En curso")
 
 
 def render_missing_daily_target(request, game: Game, mode):

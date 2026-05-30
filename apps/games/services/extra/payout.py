@@ -21,7 +21,8 @@ def format_extra_bet_goal(global_average: float | None) -> str | None:
     threshold = extra_bet_goal_threshold(global_average)
     if threshold is None:
         return None
-    return f"< {threshold}"
+    noun = "intento" if threshold == 1 else "intentos"
+    return f"Menos de {threshold} {noun}"
 
 
 def evaluate_extra_bet_won(attempts_count: int, score_service) -> bool:

@@ -16,7 +16,7 @@ class ChallengeBackendTests(TestCase):
     CHALLENGER_USERNAME = "challenger_user"
     OPPONENT_USERNAME = "opponent_user"
     GAME_NAME = "League of Legends"
-    GAME_SLUG = "lol"
+    GAME_SLUG = "league-of-legends"
     TARGET_NAME = "Ezreal"
     ATTEMPT_COUNT_THREE = 3
     ATTEMPT_COUNT_FIVE = 5

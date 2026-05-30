@@ -20,6 +20,9 @@ ROOT_URLCONF = 'GuessDle.urls'
 # Configuración del modelo ScoringRule
 SCORING_FALLBACK = {"decrement": 10, "floor": 0}
 
+# Bote semanal del rosco Pasapalabra (ELO aportado cada semana)
+ROSCO_WEEKLY_POT_CONTRIBUTION = float(os.getenv("ROSCO_WEEKLY_POT_CONTRIBUTION", "1000"))
+
 
 # Redirecciones
 LOGIN_REDIRECT_URL = 'dashboard'
