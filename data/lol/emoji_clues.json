@@ -1,0 +1,1722 @@
+[
+  {
+    "item_name": "Aatrox",
+    "clues": [
+      "🩸",
+      "🪽",
+      "🗡️",
+      "😈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ahri",
+    "clues": [
+      "🦊",
+      "❤️",
+      "🐾",
+      "🥵"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Akali",
+    "clues": [
+      "💨",
+      "⭐",
+      "🥷",
+      "🗡️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Akshan",
+    "clues": [
+      "🪝",
+      "🔫",
+      "⚖️",
+      "😎"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Alistar",
+    "clues": [
+      "🐂",
+      "💪",
+      "💥",
+      "🔊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ambessa",
+    "clues": [
+      "⛓️",
+      "🐺",
+      "⚔️",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Amumu",
+    "clues": [
+      "😢",
+      "🩹",
+      "💀",
+      "⚰️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Anivia",
+    "clues": [
+      "🥚",
+      "❄️",
+      "🦅",
+      "🔥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Annie",
+    "clues": [
+      "👧",
+      "🔥",
+      "🧸",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Aphelios",
+    "clues": [
+      "🌙",
+      "🔇",
+      "🔫",
+      "🗡️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ashe",
+    "clues": [
+      "🏹",
+      "❄️",
+      "🦅",
+      "👸"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Aurelion Sol",
+    "clues": [
+      "⭐",
+      "🌌",
+      "🐉",
+      "☄️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Aurora",
+    "clues": [
+      "🧵",
+      "✨",
+      "🌈",
+      "👯"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Azir",
+    "clues": [
+      "🏜️",
+      "☀️",
+      "🐦",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Bard",
+    "clues": [
+      "🔔",
+      "🎵",
+      "🌀",
+      "🎺"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Bel'Veth",
+    "clues": [
+      "🍽️",
+      "🌊",
+      "🦑",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Blitzcrank",
+    "clues": [
+      "🤖",
+      "🪝",
+      "⚡",
+      "👊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Brand",
+    "clues": [
+      "🔥",
+      "🧙",
+      "💥",
+      "☄️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Braum",
+    "clues": [
+      "💪",
+      "🥛",
+      "🛡️",
+      "🐻"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Briar",
+    "clues": [
+      "⛓️",
+      "🩸",
+      "🧛",
+      "😵‍💫"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Caitlyn",
+    "clues": [
+      "🪤",
+      "🔭",
+      "🔫",
+      "👮"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Camille",
+    "clues": [
+      "⚙️",
+      "🪝",
+      "🦿",
+      "👠"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Cassiopeia",
+    "clues": [
+      "👁️",
+      "☠️",
+      "🐍",
+      "💚"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Cho'Gath",
+    "clues": [
+      "👹",
+      "🦷",
+      "🍖",
+      "👄"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Corki",
+    "clues": [
+      "💣",
+      "🧔",
+      "✈️",
+      "🔥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Darius",
+    "clues": [
+      "🩸",
+      "🪓",
+      "⚔️",
+      "💪"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Diana",
+    "clues": [
+      "🌑",
+      "🌙",
+      "⚔️",
+      "👸"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Dr. Mundo",
+    "clues": [
+      "🧪",
+      "💉",
+      "🔪",
+      "🟣"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Draven",
+    "clues": [
+      "✨",
+      "🪓",
+      "🏆",
+      "😎"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ekko",
+    "clues": [
+      "⏪",
+      "⏰",
+      "🏏",
+      "👟"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Elise",
+    "clues": [
+      "👩",
+      "🕸️",
+      "🕷️",
+      "🧛"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Evelynn",
+    "clues": [
+      "🖤",
+      "💋",
+      "💅",
+      "😈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ezreal",
+    "clues": [
+      "🗺️",
+      "💎",
+      "✨",
+      "😉"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Fiddlesticks",
+    "clues": [
+      "🌾",
+      "🐦‍⬛",
+      "😱",
+      "🎃"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Fiora",
+    "clues": [
+      "🎯",
+      "⚔️",
+      "🗡️",
+      "👸"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Fizz",
+    "clues": [
+      "🐟",
+      "🌊",
+      "🔱",
+      "🦈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Galio",
+    "clues": [
+      "🗿",
+      "💨",
+      "🛡️",
+      "✊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Gangplank",
+    "clues": [
+      "🍊",
+      "🛢️",
+      "⚓",
+      "🏴‍☠️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Garen",
+    "clues": [
+      "🛡️",
+      "🌀",
+      "⚔️",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Gnar",
+    "clues": [
+      "🪃",
+      "🦴",
+      "😡",
+      "🦍"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Gragas",
+    "clues": [
+      "🍻",
+      "🛢️",
+      "💥",
+      "🧔"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Graves",
+    "clues": [
+      "💨",
+      "🚬",
+      "🔫",
+      "😎"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Gwen",
+    "clues": [
+      "🧵",
+      "🪡",
+      "✂️",
+      "🪆"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Hecarim",
+    "clues": [
+      "🐴",
+      "👻",
+      "⚡",
+      "💀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Heimerdinger",
+    "clues": [
+      "🧪",
+      "🔧",
+      "🤖",
+      "🚀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Hwei",
+    "clues": [
+      "🎨",
+      "🖌️",
+      "😢",
+      "🎭"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Illaoi",
+    "clues": [
+      "🐙",
+      "⛩️",
+      "🛐",
+      "👊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Irelia",
+    "clues": [
+      "💃",
+      "🌸",
+      "⚔️",
+      "🌀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ivern",
+    "clues": [
+      "🌳",
+      "🌿",
+      "🌼",
+      "🪨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Janna",
+    "clues": [
+      "💨",
+      "🌪️",
+      "🛡️",
+      "👼"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Jarvan IV",
+    "clues": [
+      "👑",
+      "🚩",
+      "🏰",
+      "⭕"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Jax",
+    "clues": [
+      "🏮",
+      "🥊",
+      "👁️",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Jayce",
+    "clues": [
+      "🔨",
+      "🔫",
+      "⚡",
+      "🔄"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Jhin",
+    "clues": [
+      "🎭",
+      "4️⃣",
+      "🔫",
+      "🎨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Jinx",
+    "clues": [
+      "💙",
+      "🔫",
+      "🚀",
+      "💣"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "K'Sante",
+    "clues": [
+      "🦁",
+      "🛡️",
+      "🏔️",
+      "🦏"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kai'Sa",
+    "clues": [
+      "🕳️",
+      "👧",
+      "🚀",
+      "🦋"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kalista",
+    "clues": [
+      "👻",
+      "🗡️",
+      "⚖️",
+      "🔗"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Karma",
+    "clues": [
+      "☯️",
+      "🙏",
+      "✨",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Karthus",
+    "clues": [
+      "💀",
+      "🎤",
+      "🎵",
+      "⏱️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kassadin",
+    "clues": [
+      "🕳️",
+      "👨",
+      "⚡",
+      "🔮"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Katarina",
+    "clues": [
+      "🗡️",
+      "💃",
+      "🌹",
+      "🔄"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kayle",
+    "clues": [
+      "👼",
+      "⚔️",
+      "🔥",
+      "🪽"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kayn",
+    "clues": [
+      "🌑",
+      "🔴",
+      "🔵",
+      "⚰️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kennen",
+    "clues": [
+      "⚡",
+      "🥷",
+      "⭐",
+      "🌀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kha'Zix",
+    "clues": [
+      "🦗",
+      "🕳️",
+      "🦘",
+      "👁️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kindred",
+    "clues": [
+      "🐺",
+      "🐑",
+      "💀",
+      "🎭"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kled",
+    "clues": [
+      "🦎",
+      "🍺",
+      "⚔️",
+      "🔫"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Kog'Maw",
+    "clues": [
+      "👶",
+      "🤮",
+      "👄",
+      "🎯"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "LeBlanc",
+    "clues": [
+      "🪞",
+      "✨",
+      "🎭",
+      "💜"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lee Sin",
+    "clues": [
+      "🥋",
+      "🦵",
+      "👁️",
+      "💨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Leona",
+    "clues": [
+      "☀️",
+      "🛡️",
+      "🔱",
+      "🌅"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lillia",
+    "clues": [
+      "🦌",
+      "💤",
+      "🌸",
+      "🌙"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lissandra",
+    "clues": [
+      "❄️",
+      "👑",
+      "🧊",
+      "🔮"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lucian",
+    "clues": [
+      "🔫",
+      "💡",
+      "⚡",
+      "💔"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lulu",
+    "clues": [
+      "🧚",
+      "🦄",
+      "🐑",
+      "✨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Lux",
+    "clues": [
+      "✨",
+      "💡",
+      "🌈",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Malphite",
+    "clues": [
+      "🪨",
+      "🛡️",
+      "💥",
+      "🗻"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Malzahar",
+    "clues": [
+      "🕳️",
+      "👁️",
+      "🐛",
+      "🌀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Maokai",
+    "clues": [
+      "🌳",
+      "🌱",
+      "👻",
+      "🌊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Master Yi",
+    "clues": [
+      "🧘",
+      "⚔️",
+      "👓",
+      "💨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Mel",
+    "clues": [
+      "👑",
+      "✨",
+      "🪞",
+      "🔫"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Milio",
+    "clues": [
+      "🔥",
+      "💊",
+      "🫕",
+      "🏔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Miss Fortune",
+    "clues": [
+      "🏴‍☠️",
+      "🔫",
+      "💰",
+      "👩"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Mordekaiser",
+    "clues": [
+      "⚙️",
+      "💀",
+      "🔨",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Morgana",
+    "clues": [
+      "🪽",
+      "⛓️",
+      "🛡️",
+      "💜"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Naafiri",
+    "clues": [
+      "🐕",
+      "🗡️",
+      "👥",
+      "🌑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nami",
+    "clues": [
+      "🧜‍♀️",
+      "🌊",
+      "🔱",
+      "💧"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nasus",
+    "clues": [
+      "🐕",
+      "📚",
+      "⏳",
+      "💀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nautilus",
+    "clues": [
+      "🌊",
+      "⚓",
+      "🔗",
+      "🤖"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Neeko",
+    "clues": [
+      "🦎",
+      "🎭",
+      "💚",
+      "✨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nidalee",
+    "clues": [
+      "🌿",
+      "🐆",
+      "🪤",
+      "🏹"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nilah",
+    "clues": [
+      "💧",
+      "😊",
+      "⚔️",
+      "🌊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nocturne",
+    "clues": [
+      "🌙",
+      "😱",
+      "👁️",
+      "⚫"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Nunu & Willump",
+    "clues": [
+      "👦",
+      "🐻",
+      "❄️",
+      "⛄"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Olaf",
+    "clues": [
+      "🪓",
+      "🛡️",
+      "😤",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Orianna",
+    "clues": [
+      "⚙️",
+      "🤖",
+      "🎱",
+      "💨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ornn",
+    "clues": [
+      "🐏",
+      "🔥",
+      "🔨",
+      "⛰️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Pantheon",
+    "clues": [
+      "🛡️",
+      "🗡️",
+      "⭐",
+      "🏛️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Poppy",
+    "clues": [
+      "🔨",
+      "👧",
+      "⚔️",
+      "🛡️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Pyke",
+    "clues": [
+      "🎣",
+      "💀",
+      "🌊",
+      "🔪"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Qiyana",
+    "clues": [
+      "👑",
+      "🌿",
+      "💎",
+      "🗺️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Quinn",
+    "clues": [
+      "🦅",
+      "🏹",
+      "🛡️",
+      "💨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rakan",
+    "clues": [
+      "🪶",
+      "💃",
+      "❤️",
+      "💨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rammus",
+    "clues": [
+      "🐢",
+      "📦",
+      "⚡",
+      "🌀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rek'Sai",
+    "clues": [
+      "🕳️",
+      "🏜️",
+      "👑",
+      "🔊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rell",
+    "clues": [
+      "🐴",
+      "🧲",
+      "🛡️",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Renata Glasc",
+    "clues": [
+      "💰",
+      "🧪",
+      "🎩",
+      "💊"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Renekton",
+    "clues": [
+      "🐊",
+      "😡",
+      "⚔️",
+      "🌞"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rengar",
+    "clues": [
+      "🦁",
+      "🌿",
+      "👁️",
+      "🗡️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Riven",
+    "clues": [
+      "⚔️",
+      "💚",
+      "🏃‍♀️",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Rumble",
+    "clues": [
+      "🤖",
+      "🔥",
+      "⚡",
+      "👦"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ryze",
+    "clues": [
+      "📜",
+      "🔮",
+      "⚡",
+      "🌀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Samira",
+    "clues": [
+      "🔫",
+      "⚔️",
+      "⭐",
+      "💃"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sejuani",
+    "clues": [
+      "❄️",
+      "🐗",
+      "🔨",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Senna",
+    "clues": [
+      "🔫",
+      "👻",
+      "🌫️",
+      "✨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Seraphine",
+    "clues": [
+      "🎤",
+      "🎵",
+      "💖",
+      "🌈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sett",
+    "clues": [
+      "🥊",
+      "💪",
+      "👊",
+      "🏟️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Shaco",
+    "clues": [
+      "🤡",
+      "📦",
+      "🔪",
+      "😈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Shen",
+    "clues": [
+      "🥷",
+      "⚔️",
+      "🛡️",
+      "👻"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Shyvana",
+    "clues": [
+      "🐉",
+      "🔥",
+      "👸",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Singed",
+    "clues": [
+      "🧪",
+      "☠️",
+      "💨",
+      "🏃"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sion",
+    "clues": [
+      "💀",
+      "🪓",
+      "🏃",
+      "🧱"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sivir",
+    "clues": [
+      "🪃",
+      "🏜️",
+      "💰",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Skarner",
+    "clues": [
+      "🦂",
+      "💎",
+      "👑",
+      "⛏️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Smolder",
+    "clues": [
+      "🐲",
+      "🔥",
+      "👶",
+      "✈️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sona",
+    "clues": [
+      "🎻",
+      "🎵",
+      "💫",
+      "🔇"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Soraka",
+    "clues": [
+      "⭐",
+      "💚",
+      "🍌",
+      "✨"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Swain",
+    "clues": [
+      "🐦‍⬛",
+      "👁️",
+      "🦵",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Sylas",
+    "clues": [
+      "⛓️",
+      "🏰",
+      "✨",
+      "🔓"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Syndra",
+    "clues": [
+      "⚫",
+      "🔮",
+      "💥",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Tahm Kench",
+    "clues": [
+      "🐸",
+      "👅",
+      "💰",
+      "🍽️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Taliyah",
+    "clues": [
+      "🏜️",
+      "🪨",
+      "🌊",
+      "🛹"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Talon",
+    "clues": [
+      "🗡️",
+      "🌑",
+      "🏃",
+      "💀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Taric",
+    "clues": [
+      "💎",
+      "✨",
+      "🛡️",
+      "🌟"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Teemo",
+    "clues": [
+      "🍄",
+      "🐿️",
+      "💣",
+      "☠️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Thresh",
+    "clues": [
+      "⛓️",
+      "🏮",
+      "👻",
+      "🎣"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Tristana",
+    "clues": [
+      "🐹",
+      "💣",
+      "🚀",
+      "🎯"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Trundle",
+    "clues": [
+      "🧊",
+      "🏏",
+      "💪",
+      "👑"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Tryndamere",
+    "clues": [
+      "⚔️",
+      "😡",
+      "💪",
+      "♾️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Twisted Fate",
+    "clues": [
+      "🃏",
+      "🎰",
+      "✨",
+      "💰"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Twitch",
+    "clues": [
+      "🐀",
+      "☣️",
+      "🏹",
+      "👁️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Udyr",
+    "clues": [
+      "🐻",
+      "🐢",
+      "🦅",
+      "🔥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Urgot",
+    "clues": [
+      "⚙️",
+      "🦿",
+      "💀",
+      "⛓️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Varus",
+    "clues": [
+      "🏹",
+      "💜",
+      "☠️",
+      "💔"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Vayne",
+    "clues": [
+      "🌙",
+      "🏹",
+      "💨",
+      "🧛"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Veigar",
+    "clues": [
+      "👿",
+      "🔮",
+      "⭕",
+      "📈"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Vel'Koz",
+    "clues": [
+      "👁️",
+      "🔴",
+      "💥",
+      "🧠"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Vex",
+    "clues": [
+      "🌑",
+      "💀",
+      "😒",
+      "🖤"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Vi",
+    "clues": [
+      "👊",
+      "🔧",
+      "💥",
+      "🚔"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Viego",
+    "clues": [
+      "👑",
+      "⚔️",
+      "🌫️",
+      "💀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Viktor",
+    "clues": [
+      "🤖",
+      "⚡",
+      "🔬",
+      "⬆️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Vladimir",
+    "clues": [
+      "🩸",
+      "🛁",
+      "🧛",
+      "🍷"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Volibear",
+    "clues": [
+      "🐻",
+      "⚡",
+      "🌩️",
+      "⛰️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Warwick",
+    "clues": [
+      "🐺",
+      "🩸",
+      "👃",
+      "🔬"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Wukong",
+    "clues": [
+      "🐵",
+      "🪄",
+      "👥",
+      "☁️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Xayah",
+    "clues": [
+      "🪶",
+      "🐦",
+      "💕",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Xerath",
+    "clues": [
+      "⚡",
+      "🔷",
+      "💫",
+      "⛓️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Xin Zhao",
+    "clues": [
+      "🏰",
+      "🔱",
+      "🛡️",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Yasuo",
+    "clues": [
+      "🌪️",
+      "🧱",
+      "💨",
+      "⚔️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Yone",
+    "clues": [
+      "👹",
+      "🌙",
+      "⚔️",
+      "👻"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Yorick",
+    "clues": [
+      "🪦",
+      "⛏️",
+      "👻",
+      "🌫️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Yunara",
+    "clues": [
+      "📿",
+      "🏯",
+      "✨",
+      "🔴"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Yuumi",
+    "clues": [
+      "🐱",
+      "📖",
+      "🧙",
+      "💕"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zaahen",
+    "clues": [
+      "🔱",
+      "⚔️",
+      "💪",
+      "♻️"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zac",
+    "clues": [
+      "🧪",
+      "💚",
+      "🏀",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zed",
+    "clues": [
+      "🥷",
+      "🌑",
+      "⚡",
+      "💀"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zeri",
+    "clues": [
+      "⚡",
+      "🔫",
+      "🏃",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Ziggs",
+    "clues": [
+      "💣",
+      "🧨",
+      "🏃",
+      "💥"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zilean",
+    "clues": [
+      "⏰",
+      "💣",
+      "⏪",
+      "👴"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zoe",
+    "clues": [
+      "😴",
+      "🌙",
+      "⭐",
+      "🎾"
+    ],
+    "active": true
+  },
+  {
+    "item_name": "Zyra",
+    "clues": [
+      "🌱",
+      "🌿",
+      "🌸",
+      "🌵"
+    ],
+    "active": true
+  }
+]

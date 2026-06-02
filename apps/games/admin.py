@@ -15,6 +15,7 @@ from apps.games.services.catalog.generation_utils import enrich_item_data
 
 from .models import (
     DailyTarget,
+    EmojiClueSet,
     ExtraDailyPlay,
     Game,
     GameAttempt,
@@ -520,6 +521,18 @@ class RoscoQuestionAdmin(admin.ModelAdmin):
     list_display = ("game", "letter", "question_type", "category", "active", "prompt")
     list_filter = ("game", "letter", "active", "question_type")
     search_fields = ("prompt", "acceptable_answers")
+
+
+@admin.register(EmojiClueSet)
+class EmojiClueSetAdmin(admin.ModelAdmin):
+    list_display = ("game", "item", "clue_count", "active", "updated_at")
+    list_filter = ("game", "active")
+    search_fields = ("item__name",)
+    readonly_fields = ("created_at", "updated_at")
+
+    @admin.display(description="Pistas")
+    def clue_count(self, obj):
+        return len(obj.clues or [])
 
 
 class WeeklyRoscoEntryInline(admin.TabularInline):

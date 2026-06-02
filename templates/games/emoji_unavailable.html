@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center gap-6 py-10 px-4
+{% endblock %}
+
+{% block content %}
+<nav class="play-nav w-full max-w-4xl" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
+
+<section class="container mx-auto text-center max-w-lg w-full">
+  <h1 class="arcade-heading-lg">{{ game.name }} — {{ game_mode.label }}</h1>
+  <div class="arcade-card mt-6 text-left">
+    <p class="arcade-alert arcade-alert--error">{{ message }}</p>
+    <p class="arcade-text-muted mt-3">
+      Importa pistas con <code>import_emoji_clues</code> y vuelve a intentarlo.
+    </p>
+  </div>
+</section>
+{% endblock %}

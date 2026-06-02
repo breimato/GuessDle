@@ -15,10 +15,22 @@ def resolve_outcome(game, user, play_context: PlayContext) -> dict:
 
 
 def _update_daily(game, user, play_context: PlayContext, attempts_count: int) -> dict:
+    if play_context.mode and play_context.mode.is_emoji:
+        return _zero_points_payload(attempts_count)
     score_service = ScoreService(user, game, mode=play_context.mode)
     points_awarded = score_service.add_points_for_attempts(attempts_count)
     return {
         "points_awarded": points_awarded,
+        "bet_amount": None,
+        "global_average": None,
+        "current_attempts": attempts_count,
+        "bet_won": None,
+    }
+
+
+def _zero_points_payload(attempts_count: int) -> dict:
+    return {
+        "points_awarded": 0,
         "bet_amount": None,
         "global_average": None,
         "current_attempts": attempts_count,

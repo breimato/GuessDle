@@ -135,6 +135,13 @@
   color: #f0e6d2;
 }
 
+.lol-launcher__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
 .lol-launcher__modes {
   display: flex;
   flex-direction: column;

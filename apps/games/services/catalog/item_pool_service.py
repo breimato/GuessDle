@@ -27,6 +27,13 @@ class ItemPoolService:
             return None
         return queryset[secrets.randbelow(count)]
 
+    def pick_random_with_emoji_clues(self) -> GameItem | None:
+        queryset = self.get_queryset().filter(emoji_clues__active=True).distinct()
+        count = queryset.count()
+        if count == 0:
+            return None
+        return queryset[secrets.randbelow(count)]
+
     def contains_name(self, name: str) -> bool:
         return self.get_queryset().filter(name__iexact=name).exists()
 

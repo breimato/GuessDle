@@ -14,6 +14,8 @@ from .views import (
     rosco_answer,
     rosco_pass,
     rosco_surrender,
+    play_emoji_game,
+    emoji_guess,
 )
 
 
@@ -35,4 +37,5 @@ urlpatterns = [
     path("<slug:slug>/<slug:mode_slug>/rosco/answer/", rosco_answer, name="rosco_answer"),
     path("<slug:slug>/<slug:mode_slug>/rosco/pass/", rosco_pass, name="rosco_pass"),
     path("<slug:slug>/<slug:mode_slug>/rosco/surrender/", rosco_surrender, name="rosco_surrender"),
+    path("<slug:slug>/<slug:mode_slug>/emoji/guess/", emoji_guess, name="emoji_guess"),
 ]

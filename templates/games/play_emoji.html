@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/emoji-mode.css' %}">
+{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center py-8 px-4 emoji-play
+{% endblock %}
+
+{% block content %}
+{% static 'images/default-character.png' as default_portrait_url %}
+<nav class="play-nav w-full max-w-4xl" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+    {% if can_play %}
+    <button type="button" id="emoji-surrender-btn" class="arcade-btn arcade-btn--surrender play-nav__surrender">
+      Rendirse
+    </button>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
+
+<div id="emoji-game-data"
+     data-guess-url="{{ guess_url }}"
+     data-surrender-url="{{ surrender_url }}"
+     data-can-play="{{ can_play|yesno:'true,false' }}"
+     data-modes-url="{{ back_to_modes_url }}"
+     data-panel-url="{% url 'dashboard' %}"
+     data-default-portrait="{{ default_portrait_url }}">
+</div>
+
+{% if won %}
+<script id="emoji-won-flag" data-champ="{{ target.name|escape }}"></script>
+{% elif surrendered %}
+<script id="emoji-surrender-flag" data-champ="{{ target.name|escape }}"></script>
+{% endif %}
+
+<div class="emoji-layout">
+  <header class="emoji-layout__header">
+    <h1 class="arcade-heading-lg">{{ game.name }} — {{ game_mode.label }}</h1>
+  </header>
+
+  <section class="emoji-stage arcade-card" aria-label="Emojis del día">
+    <p class="emoji-stage__label arcade-label">Emojis del día</p>
+    <div id="emoji-clues-display" class="emoji-clues" aria-live="polite">
+      {% for clue in revealed_clues %}
+      <span class="emoji-clues__item">{{ clue }}</span>
+      {% endfor %}
+    </div>
+    <p class="emoji-stage__progress">
+      <span id="emoji-clues-count">{{ revealed_clues|length }}</span> / {{ max_clues }} emojis
+    </p>
+  </section>
+
+  <form id="emoji-guess-form"
+        class="emoji-guess-form arcade-card {% if won or surrendered %}opacity-50 pointer-events-none{% endif %}"
+        novalidate>
+    {% csrf_token %}
+    <label for="guess" class="arcade-label">¿Qué campeón es?</label>
+    <p id="emoji-guess-error" class="arcade-alert arcade-alert--error mt-2 hidden" role="alert"></p>
+    <div class="relative mt-2">
+      <input type="text"
+             name="guess"
+             id="guess"
+             class="arcade-input rounded-b-none"
+             placeholder="Escribe un nombre"
+             autocomplete="off"
+             required
+             data-names="{{ remaining_names_json|escape }}"
+             {% if won or surrendered %}disabled{% endif %}>
+      <ul id="suggestions"
+          role="listbox"
+          class="hidden w-full absolute left-0 top-full arcade-card rounded-t-none max-h-56 overflow-y-auto z-50 p-0"></ul>
+    </div>
+    <button type="submit"
+            class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
+            {% if won or surrendered %}disabled{% endif %}>
+      Probar
+    </button>
+  </form>
+
+  <section class="emoji-guesses" aria-label="Intentos">
+    <div id="emoji-guesses-list" class="emoji-guesses__list">
+      {% for attempt in attempts reversed %}
+      <div class="emoji-guess-card square show {% if attempt.is_correct %}square-good{% else %}square-bad{% endif %}">
+        <div class="square-content emoji-guess-card__content">
+          <img src="{% if attempt.guess_image_url %}{{ attempt.guess_image_url }}{% else %}{{ default_portrait_url }}{% endif %}"
+               alt="{{ attempt.name }}"
+               title="{{ attempt.name }}"
+               class="guess-portrait emoji-guess-card__portrait"
+               onerror="this.onerror=null; this.src='{{ default_portrait_url }}';">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if yesterday_target_name %}
+  <div class="emoji-yesterday arcade-card text-center">
+    <p class="arcade-text-muted">
+      El campeón de ayer fue: <strong class="cabinet-accent">{{ yesterday_target_name }}</strong>
+    </p>
+  </div>
+  {% endif %}
+</div>
+
+<div id="emoji-modal-root"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+<script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+<script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/emoji-live.js' %}" defer></script>
+{% endblock %}

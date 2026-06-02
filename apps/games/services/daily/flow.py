@@ -15,6 +15,7 @@ from apps.games.services.play_session.guess_processor import GuessProcessor
 from apps.games.services.catalog.mode_resolver import ModeResolver
 from apps.games.services.catalog.play_background import resolve_background_url
 from apps.games.constants import is_league_game
+from apps.games.services.emoji.daily_target_service import EmojiDailyTargetService
 from apps.games.services.rosco.rosco_access import user_can_see_rosco, rosco_is_available_today
 from apps.games.services.rosco.week_utils import week_label
 from apps.games.services.rosco.weekly_pot_service import WeeklyPotService
@@ -64,6 +65,34 @@ def render_mode_select(request, game: Game, user, slug: str):
                     "week_label": week_label(weekly_rosco),
                     "rosco_status": status,
                     "rosco_status_label": _rosco_status_label(status),
+                }
+            )
+            continue
+
+        if mode.is_emoji:
+            service = TargetService(game, user, mode=mode)
+            if not EmojiDailyTargetService.has_clue_bank(game):
+                modes.append(
+                    {
+                        "mode": mode,
+                        "is_rosco": False,
+                        "is_emoji": True,
+                        "emoji_unavailable": True,
+                        "resolved": False,
+                        "play_url": reverse("play_mode", args=[slug, mode.slug]),
+                        "emoji_status_label": "No disponible",
+                    }
+                )
+                continue
+
+            modes.append(
+                {
+                    "mode": mode,
+                    "is_rosco": False,
+                    "is_emoji": True,
+                    "emoji_unavailable": False,
+                    "resolved": service.is_daily_resolved(),
+                    "play_url": reverse("play_mode", args=[slug, mode.slug]),
                 }
             )
             continue

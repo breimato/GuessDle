@@ -36,6 +36,13 @@
 
       <aside class="lol-launcher__panel">
         <h2 class="lol-launcher__panel-title">Selección de modo</h2>
+        {% if messages %}
+        <div class="lol-launcher__messages">
+          {% for message in messages %}
+          <p class="arcade-alert arcade-alert--{% if message.tags == 'error' %}error{% else %}info{% endif %}">{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
         <div class="lol-launcher__modes mode-select-modes">
           {% for entry in modes %}
           <div class="lol-launcher__mode-group mode-select-modes__group">
@@ -43,6 +50,11 @@
             <span class="lol-launcher__mode-btn--disabled" aria-disabled="true">
               {{ entry.mode.label }}
               <span>({{ entry.rosco_status_label }})</span>
+            </span>
+            {% elif entry.is_emoji and entry.emoji_unavailable %}
+            <span class="lol-launcher__mode-btn--disabled" aria-disabled="true">
+              {{ entry.mode.label }}
+              <span>({{ entry.emoji_status_label }})</span>
             </span>
             {% else %}
             <a

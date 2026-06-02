@@ -70,6 +70,11 @@ class Game(models.Model):
 class GameModePlayType(models.TextChoices):
     WORDLE = "wordle", "Wordle"
     ROSCO = "rosco", "Rosco"
+    EMOJI = "emoji", "Emoji"
+
+
+MIN_EMOJI_CLUES = 3
+MAX_EMOJI_CLUES = 6
 
 
 class GameMode(models.Model):
@@ -101,6 +106,11 @@ class GameMode(models.Model):
                 "Rosco semanal Pasapalabra para cuentas de equipo: disponible solo los sábados, "
                 "27 letras, un intento por letra y bote de ELO acumulado."
             )
+        if self.play_type == GameModePlayType.EMOJI:
+            return (
+                "Minijuego diario con pistas de emojis progresivas. "
+                "Sin puntuación ELO: acierta el campeón del día o ríndete para ver la respuesta."
+            )
         filt = self.item_filter or {}
         if "generacion__lte" in filt:
             count = int(filt["generacion__lte"])
@@ -117,6 +127,45 @@ class GameMode(models.Model):
     @property
     def is_rosco(self) -> bool:
         return self.play_type == GameModePlayType.ROSCO
+
+    @property
+    def is_emoji(self) -> bool:
+        return self.play_type == GameModePlayType.EMOJI
+
+
+class EmojiClueSet(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="emoji_clue_sets")
+    item = models.ForeignKey("GameItem", on_delete=models.CASCADE, related_name="emoji_clues")
+    clues = models.JSONField(default=list, help_text="Lista de 3 a 6 pistas emoji en orden de revelado.")
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["game", "item"], name="unique_emoji_clue_set_per_item"),
+        ]
+        ordering = ("item__name",)
+
+    def __str__(self):
+        return f"{self.game.slug}:{self.item.name} ({len(self.clues or [])} clues)"
+
+    def clean(self):
+        super().clean()
+        clues = self.clues or []
+        if not isinstance(clues, list):
+            raise ValidationError({"clues": "Debe ser una lista de strings."})
+        if not MIN_EMOJI_CLUES <= len(clues) <= MAX_EMOJI_CLUES:
+            raise ValidationError(
+                {
+                    "clues": (
+                        f"Cada set debe tener entre {MIN_EMOJI_CLUES} y {MAX_EMOJI_CLUES} pistas."
+                    ),
+                }
+            )
+        for index, clue in enumerate(clues, start=1):
+            if not isinstance(clue, str) or not clue.strip():
+                raise ValidationError({"clues": f"La pista #{index} no puede estar vacía."})
 
 
 class RoscoQuestionType(models.TextChoices):
@@ -385,6 +434,7 @@ class PlaySession(models.Model):
         help_text='Pistas de columna usadas: [{"attribute": "tipo_1", "value": "Fuego", "at_attempt": 5}]',
     )
     surrendered = models.BooleanField(default=False)
+    emoji_clues_revealed = models.PositiveSmallIntegerField(default=1)
     rosco_current_letter = models.CharField(max_length=2, blank=True, default="")
     rosco_status = models.CharField(
         max_length=20,

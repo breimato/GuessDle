@@ -26,7 +26,11 @@ class Command(BaseCommand):
             )
             return False
 
-        item = ItemPoolService(game, mode).pick_random()
+        item = (
+            ItemPoolService(game, mode).pick_random_with_emoji_clues()
+            if mode and mode.is_emoji
+            else ItemPoolService(game, mode).pick_random()
+        )
         if not item:
             self.stdout.write(
                 f"{game.name} sin ítems en pool "
@@ -50,9 +54,10 @@ class Command(BaseCommand):
 
     def modes_for_game(self, game):
         modes = list(
-            game.modes.filter(active=True, play_type=GameModePlayType.WORDLE).order_by(
-                "sort_order", "slug"
-            )
+            game.modes.filter(
+                active=True,
+                play_type__in=[GameModePlayType.WORDLE, GameModePlayType.EMOJI],
+            ).order_by("sort_order", "slug")
         )
         return modes if modes else [None]
 

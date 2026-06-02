@@ -1,0 +1,142 @@
+.emoji-play {
+  background: linear-gradient(180deg, rgba(1, 10, 19, 0.35), transparent 45%);
+}
+
+.emoji-play .play-nav {
+  margin-bottom: 0.5rem;
+}
+
+.emoji-layout {
+  width: 100%;
+  max-width: 36rem;
+  margin: 2.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.emoji-layout__header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.emoji-stage {
+  width: 100%;
+  max-width: 40rem;
+  margin: 2rem auto 0;
+  text-align: center;
+  padding: 1.25rem 1rem 1rem;
+}
+
+.emoji-stage__label {
+  margin-bottom: 0.75rem;
+}
+
+.emoji-clues {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  min-height: 4.5rem;
+}
+
+.emoji-clues__item {
+  font-size: clamp(1.85rem, 5vw, 3rem);
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.emoji-stage__progress {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 1rem auto 0;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  font: 700 0.95rem/1.2 var(--font-ui);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cab-ink, #1a1208);
+  background: linear-gradient(180deg, #ffe082 0%, #f5c400 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.35) inset,
+    0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.emoji-stage__progress #emoji-clues-count {
+  font-size: 1.05rem;
+}
+
+.emoji-guess-form {
+  width: 100%;
+  margin-top: 2.25rem;
+  padding: 1.1rem 1rem 1rem;
+}
+
+.emoji-guesses {
+  width: 100%;
+  margin-top: 1.75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emoji-guesses__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.emoji-guess-card {
+  --cell: 128px;
+  width: var(--cell);
+  min-width: var(--cell);
+  height: var(--cell);
+  min-height: var(--cell);
+  flex: 0 0 var(--cell);
+}
+
+.emoji-guess-card__content {
+  padding: 0.25rem;
+}
+
+.emoji-guess-card__portrait {
+  width: 100%;
+  height: 100%;
+  max-width: calc(var(--cell) - 12px);
+  max-height: calc(var(--cell) - 12px);
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.emoji-yesterday {
+  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .emoji-stage {
+    margin-top: 1.5rem;
+  }
+
+  .emoji-guess-form {
+    margin-top: 1.75rem;
+  }
+
+  .emoji-guess-card {
+    --cell: 112px;
+  }
+}
