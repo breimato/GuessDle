@@ -1,0 +1,110 @@
+{% load static %}
+
+<div class="lol-launcher">
+  <section class="lol-launcher__window" aria-label="Selección de modo de {{ game.name }}">
+    <header class="lol-launcher__titlebar">
+      <span class="lol-launcher__titlebar-brand">GuessDle · {{ game.name }}</span>
+      <span class="lol-launcher__titlebar-controls" aria-hidden="true">
+        <span>—</span>
+        <span>□</span>
+        <span>×</span>
+      </span>
+    </header>
+
+    <div class="lol-launcher__viewport">
+      <video
+        class="lol-launcher__video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="{% static 'video/ahri_video.mp4' %}" type="video/mp4">
+      </video>
+      <div class="lol-launcher__vignette" aria-hidden="true"></div>
+
+      <div class="lol-launcher__logo">
+        <img
+          src="{% static 'lol-logo.png' %}"
+          alt="League of Legends"
+          class="lol-launcher__logo-image"
+          decoding="async"
+        >
+      </div>
+
+      <aside class="lol-launcher__panel">
+        <h2 class="lol-launcher__panel-title">Selección de modo</h2>
+        <div class="lol-launcher__modes mode-select-modes">
+          {% for entry in modes %}
+          <div class="lol-launcher__mode-group mode-select-modes__group">
+            {% if entry.is_rosco and entry.rosco_unavailable %}
+            <span class="lol-launcher__mode-btn--disabled" aria-disabled="true">
+              {{ entry.mode.label }}
+              <span>({{ entry.rosco_status_label }})</span>
+            </span>
+            {% else %}
+            <a
+              href="{{ entry.play_url }}"
+              class="lol-launcher__mode-btn"
+              {% if entry.mode.slug == 'radical' and not entry.resolved %}data-radical-intro{% endif %}
+            >
+              {{ entry.mode.label }}
+              {% if entry.is_rosco %}
+              ({{ entry.rosco_status_label }})
+              {% elif entry.resolved %}
+              (completado hoy)
+              {% endif %}
+            </a>
+            {% endif %}
+
+            {% if entry.active_extra_id %}
+            <a href="{% url 'play_extra_daily' entry.active_extra_id %}" class="lol-launcher__mode-extra">
+              Continuar apuesta extra
+            </a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="lol-launcher__panel-links">
+          <button
+            type="button"
+            class="lol-launcher__panel-link"
+            id="mode-info-btn"
+            aria-haspopup="dialog"
+            aria-controls="mode-info-modal"
+          >
+            ¿Qué incluye cada modo?
+          </button>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="lol-launcher__footer">
+      <span class="lol-launcher__footer-brand">GuessDle</span>
+      <a href="{% url 'dashboard' %}" class="lol-launcher__footer-link">← Volver al panel</a>
+      <label class="lol-launcher__footer-option">
+        <input type="checkbox" id="lol-launcher-mute">
+        Silenciar música
+      </label>
+      <div class="lol-launcher__footer-volume" aria-label="Volumen de la música">
+        <span class="lol-launcher__footer-volume-icon" aria-hidden="true">🔊</span>
+        <button type="button" id="play-bgm-volume-down" class="lol-launcher__footer-volume-step" aria-label="Bajar volumen">−</button>
+        <input
+          type="range"
+          id="play-bgm-volume-slider"
+          class="lol-launcher__footer-volume-slider"
+          min="0"
+          max="100"
+          value="30"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="30"
+        >
+        <button type="button" id="play-bgm-volume-up" class="lol-launcher__footer-volume-step" aria-label="Subir volumen">+</button>
+      </div>
+    </footer>
+  </section>
+</div>

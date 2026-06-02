@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/rosco.css' %}">
+{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center gap-6 py-8 px-4 rosco-play
+{% endblock %}
+
+{% block content %}
+<nav class="play-nav w-full max-w-4xl" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+    {% if can_play %}
+    <button type="button" id="rosco-surrender-btn" class="arcade-btn arcade-btn--surrender play-nav__surrender">
+      Rendirse
+    </button>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
+
+<header class="rosco-header">
+  <h1 class="rosco-header__title">{{ game.name }}</h1>
+  <p class="rosco-header__mode">{{ game_mode.label }}</p>
+  <p class="rosco-header__pot">
+    Bote: <span id="rosco-pot-amount">{{ pot_amount|floatformat:0 }}</span> ELO
+  </p>
+</header>
+
+<div id="rosco-game-data"
+     data-answer-url="{{ answer_url }}"
+     data-pass-url="{{ pass_url }}"
+     data-surrender-url="{{ surrender_url }}"
+     data-can-play="{{ can_play|yesno:'true,false' }}"
+     data-session-status="{{ session_status }}">
+</div>
+
+<div class="rosco-layout">
+  <div class="rosco-wheel" id="rosco-wheel" aria-label="Rosco de letras">
+    {% for letter, state in rosco_state.letters.items %}
+    <div class="rosco-spoke" style="--i: {{ forloop.counter0 }};">
+      <div class="rosco-letter rosco-letter--{{ state }}" data-letter="{{ letter }}">
+        <span>{{ letter }}</span>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="rosco-wheel__center rosco-panel arcade-card">
+      <p class="rosco-panel__label arcade-label">Letra actual</p>
+      <div class="rosco-panel__letter-badge{% if can_play %} rosco-panel__letter-badge--active{% endif %}" id="rosco-current-letter" aria-live="polite">{{ rosco_state.current_letter }}</div>
+      <p id="rosco-prompt" class="rosco-panel__prompt">{{ rosco_state.prompt }}</p>
+      {% if can_play %}
+      <form id="rosco-answer-form" class="rosco-panel__form">
+        {% csrf_token %}
+        <input type="text" id="rosco-answer-input" class="arcade-input" placeholder="Tu respuesta" autocomplete="off" required>
+        <div class="rosco-panel__actions">
+          <button type="submit" class="arcade-btn arcade-btn--primary">Contestar</button>
+          <button type="button" id="rosco-pass-btn" class="arcade-btn arcade-btn--secondary">Pasapalabra</button>
+        </div>
+      </form>
+      {% else %}
+      <p class="rosco-panel__status{% if session_status == 'won_perfect' %} rosco-panel__status--win{% elif session_status == 'failed' or session_status == 'completed' %} rosco-panel__status--lose{% endif %}">
+        {% if session_status == "won_perfect" %}
+          ¡Has completado el rosco! El bote se repartirá al cierre de la semana.
+        {% elif session_status == "completed" %}
+          Has contestado todas las letras. Vuelve la semana que viene para otro rosco.
+        {% elif session_status == "failed" %}
+          Partida terminada. Vuelve la semana que viene.
+        {% elif session_status == "surrendered" %}
+          Te rendiste esta semana.
+        {% endif %}
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div id="rosco-modal-root"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/rosco-live.js' %}" defer></script>
+{% endblock %}

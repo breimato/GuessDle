@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: campeon relativamente nuevo; una maga vastaya.",
+    "acceptable_answers": ["aurora"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por B: vampira reciente que puede entrar en frenesí y perseguir rivales.",
+    "acceptable_answers": ["briar"],
+    "category": "champion"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por C: streamer coreano famoso por one-trick de Master Yi en SoloQ.",
+    "acceptable_answers": ["cowsep"],
+    "category": "streamer"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por D: toplaner de T1.",
+    "acceptable_answers": ["doran"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por E: ítem de asesino mitológico que escala letalidad y omnivampirismo y da escudo.",
+    "acceptable_answers": ["eclipse"],
+    "category": "item"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: toplaner australiano de C9, referente de la LCS moderna.",
+    "acceptable_answers": ["fudge"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por G: costurera de Islas Benditas que puede volverse inalcanzable con su W.",
+    "acceptable_answers": ["gwen"],
+    "category": "champion"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por H: creador NA conocido por toplaners off-meta y análisis de picks.",
+    "acceptable_answers": ["hashinshin"],
+    "category": "streamer"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por I: support coreano de KT, famoso por sus engages de Thresh.",
+    "acceptable_answers": ["ignar"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: jungla de EDG, campeón del mundo 2021.",
+    "acceptable_answers": ["jiejie"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por K: toplaner coreano campeón del mundo 2022 con DRX.",
+    "acceptable_answers": ["kingen"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem AP que ejecuta rivales con poca vida usando críticos mágicos.",
+    "acceptable_answers": ["llamasombría", "shadowflame"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por M: planificar rotaciones, objetivos y oleadas a largo plazo.",
+    "acceptable_answers": ["macro"],
+    "category": "term"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por N: perro del Vacío reciente que puede marcar presas y perseguirlas.",
+    "acceptable_answers": ["naafiri"],
+    "category": "champion"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: zona elevada del mapa donde suele haber peleas por visión.",
+    "acceptable_answers": ["montaña", "montana"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por O: jungla de T1, pieza clave del tricampeonato reciente.",
+    "acceptable_answers": ["oner"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por P: proteger al carry aliado para que no muera en la pelea.",
+    "acceptable_answers": ["peel", "despeel"],
+    "category": "term"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Q: ítem que te limpia CC y te da resistencias al activarlo.",
+    "acceptable_answers": ["quitamiedos", "qss"],
+    "category": "item"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por R: support montada que puede entrar con W y stunear en área.",
+    "acceptable_answers": ["rell"],
+    "category": "champion"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por S: dragón reciente que escupe fuego y gana daño al farmear.",
+    "acceptable_answers": ["smolder"],
+    "category": "champion"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: organización china de JackeyLove y la LPL moderna.",
+    "acceptable_answers": ["top esports", "tes"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por U: ítem de tirador que ignora armadura con daño verdadero en autos.",
+    "acceptable_answers": ["ultimo suspiro", "último suspiro", "last whisper"],
+    "category": "item"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por V: ítem de tirador cuyo tercer auto pega extra contra tanques.",
+    "acceptable_answers": ["verdugo de kraken", "kraken slayer"],
+    "category": "item"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: creador que analiza replays profesionales y macro en profundidad.",
+    "acceptable_answers": ["wykr"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por X: creador que hace tier lists y análisis de parches en NA.",
+    "acceptable_answers": ["xdx"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Y: creador NA famoso por Yasuo y clips de SoloQ tóxica.",
+    "acceptable_answers": ["yassuo"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Z: creador polaco conocido por contenido de highlights en EUW.",
+    "acceptable_answers": ["zolarex"],
+    "category": "streamer"
+  }
+]

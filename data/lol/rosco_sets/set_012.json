@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: campeón reworkeado que pasó años siendo uno de los campeones menos jugados del juego.",
+    "acceptable_answers": ["aurelion sol", "aurelion", "aurelionsol"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: creador de contenido que convenció a media comunidad de que morir 12 veces era worth (el mesías de callos).",
+    "acceptable_answers": ["baus", "thebausffs"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: apodo burlón que se le da al supuesto mejor laner del mundo en la actualidad.",
+    "acceptable_answers": ["choky"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por D: objeto con el que parece que cualquier asesino AD va full build.",
+    "acceptable_answers": ["daga dentada", "daga"],
+    "category": "item"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: doctor especializado en diagnosticar retrasos mentales cada vez que abre SoloQ.",
+    "acceptable_answers": ["elmillor"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: considerado por la mayoría como el mejor jugador de la historia de League of Legends.",
+    "acceptable_answers": ["faker"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por G: campeón cuyo combo más famoso consiste básicamente en correr hacia delante girando sobre sí mismo.",
+    "acceptable_answers": ["garen"],
+    "category": "champion"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por H: mago ioniano relativamente reciente capaz de combinar múltiples hechizos a partir de tres trazos básicos.",
+    "acceptable_answers": ["hwei"],
+    "category": "champion"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por I: jugada popularizada por un jugador coreano que consiste en desplazar a un rival hacia tu equipo con Lee Sin.",
+    "acceptable_answers": ["insec"],
+    "category": "term"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por J: tiradora de Zaun que ha robado más barones con su definitiva de los que debería.",
+    "acceptable_answers": ["jinx"],
+    "category": "champion"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por K: support coreano egirl considerado el mejor support del mundo.",
+    "acceptable_answers": ["keria"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por L: creador de contenido conocido por sus montajes de Zed y por ser uno de los one-tricks más famosos del juego.",
+    "acceptable_answers": ["llstylish", "stylish"],
+    "category": "streamer"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por M: organización europea que ganó la LEC y alcanzó semifinales de Worlds en 2021.",
+    "acceptable_answers": ["mad lions", "mad"],
+    "category": "team"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por N: campeón favorito de vidi..",
+    "acceptable_answers": ["nautilus", "tilas"],
+    "category": "champion"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: estadística que desaparece misteriosamente cuando tu compañero dice 'trust me bro'.",
+    "acceptable_answers": ["daño", "dano"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por O: creador de contenido español conocido tanto por sus mecánicas como por uno de los beefs más famosos de la comunidad con ElMillor.",
+    "acceptable_answers": ["ojoninja", "elojoninja", "elojeteninja"],
+    "category": "streamer"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por P: OTP que comparte nombre con un objeto del juego.",
+    "acceptable_answers": ["pink", "pink ward", "pinkward"],
+    "category": "item"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Q: Uno de los campeones más rápidos del juego.",
+    "acceptable_answers": ["quinn", "quin"],
+    "category": "champion"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por R: ADC coreano con nombre de objeto de medicion.",
+    "acceptable_answers": ["ruler"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por S: Objeto que cuesta 250 de oro y que da AP y vida.",
+    "acceptable_answers": ["sello oscuro", "dark seal"],
+    "category": "streamer"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por T: creador de contenido norteamericano capaz de alcanzar Challenger jugando prácticamente cualquier rol.",
+    "acceptable_answers": ["tyler1"],
+    "category": "streamer"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por U: legendario tirador chino considerado uno de los mejores ADC de todos los tiempos pese a no ganar Worlds.",
+    "acceptable_answers": ["uzi"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por V: tiradora asesina que corre más cuando te persigue.",
+    "acceptable_answers": ["vayne"],
+    "category": "champion"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: ex-jugador profesional español conocido por el control de oleadas y por haber competido en la LCS europea.",
+    "acceptable_answers": ["werlyb"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por X: jugador español inmortalizado por una de las backdoors más famosas de la historia competitiva.",
+    "acceptable_answers": ["xpeke", "xpeke"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Y: campeon que pilla el powerspike real yendo 0/10. Experto en comerse torretazos",
+    "acceptable_answers": ["yasuo"],
+    "category": "champion"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: asesino de Jonia especializado en hacer desaparecer ADCs desde las sombras.",
+    "acceptable_answers": ["zed"],
+    "category": "champion"
+  }
+]

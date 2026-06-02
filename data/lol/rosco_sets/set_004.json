@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: emperador de Shurima que mueve soldados y torretas destruidas.",
+    "acceptable_answers": ["azir"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: creador chino conocido por SoloQ de alto elo y clips de outplays.",
+    "acceptable_answers": ["baolan"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: mid de Gen.G, apodado el mejor mecánico de la LCK.",
+    "acceptable_answers": ["chovy"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por D: ADC legendario de DRX, MVP de Worlds 2022.",
+    "acceptable_answers": ["deft"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por E: organización china campeona del mundo en 2021 con Viper y Scout.",
+    "acceptable_answers": ["edg", "edward gaming"],
+    "category": "team"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: mid coreano considerado el GOAT del competitivo.",
+    "acceptable_answers": ["faker"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por G: ítem de ataque que acumula daño en cada golpe consecutivo.",
+    "acceptable_answers": ["guinsoo rabia de nashor", "guinsoo", "rageblade"],
+    "category": "item"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por H: ítem de tanque que quema enemigos cerca y escala con tu vida.",
+    "acceptable_answers": ["hielo de fuego", "sunfire aegis"],
+    "category": "item"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por I: ex-pro y streamer coreano famoso por su Riven y SoloQ.",
+    "acceptable_answers": ["imp"],
+    "category": "streamer"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: ADC chino apodado JackeyLove, estrella de Top Esports.",
+    "acceptable_answers": ["jackeylove"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por K: streamer coreano conocido por guías de support y bot lane.",
+    "acceptable_answers": ["korean jg"],
+    "category": "streamer"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem de letalidad que te vuelve invisible un instante al castear.",
+    "acceptable_answers": ["lamina de la noche", "lámina de la noche", "duskblade"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por M: evolución del Manamune que escala daño con tu maná máximo.",
+    "acceptable_answers": ["muramana"],
+    "category": "item"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por N: ítem de support que escala curaciones según regeneración de maná.",
+    "acceptable_answers": ["nucleo albar", "núcleo albar"],
+    "category": "item"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: aviso visual en minimapa para avisar de peligro u objetivos.",
+    "acceptable_answers": ["señal", "señalizar", "señalizacion"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por O: forjador top que puede crear ítems fuera de base con su pasiva.",
+    "acceptable_answers": ["ornn"],
+    "category": "champion"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por P: proteger al carry aliado para que no muera en la pelea.",
+    "acceptable_answers": ["peel", "despeel"],
+    "category": "term"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Q: pájaro demaciano que vuela con su R y puede volver a base.",
+    "acceptable_answers": ["quinn"],
+    "category": "champion"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por R: ADC coreano de JDG, referente del bot lane en LPL.",
+    "acceptable_answers": ["ruler"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por S: mid de DAMWON/KIA, cerebro del título de Worlds 2020.",
+    "acceptable_answers": ["showmaker"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por T: ritmo de partida basado en objetivos, oleadas y ventajas temporales.",
+    "acceptable_answers": ["tempo"],
+    "category": "term"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por U: leyenda ADC china retirada, ícono de la LPL en streams.",
+    "acceptable_answers": ["uzi"],
+    "category": "streamer"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por V: rey arruinado que posee cuerpos y camina por el Rift.",
+    "acceptable_answers": ["viego"],
+    "category": "champion"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: support coreano retirado, conocido por enseñar bot lane en stream.",
+    "acceptable_answers": ["watch"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por X: mid chino veterano que sigue activo en contenido y competición.",
+    "acceptable_answers": ["xinyi"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Y: espadachín de Jonia cuya pared de viento bloquea proyectiles.",
+    "acceptable_answers": ["yasuo"],
+    "category": "champion"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: yordle bombardeador que lanza minas y satchel charges.",
+    "acceptable_answers": ["ziggs"],
+    "category": "champion"
+  }
+]

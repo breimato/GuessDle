@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por A: support español de KOI, pieza clave del roster LEC.",
+    "acceptable_answers": ["alvaro"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: toplaner que juega Sion como si fuera un FPS y el chat lo ama.",
+    "acceptable_answers": ["baus", "thebausffs"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por C: ítem de tanque que te regala vida máxima infinita si farmeas mucho.",
+    "acceptable_answers": ["corazon de acero", "corazón de acero", "warmog"],
+    "category": "item"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por D: miembro de Los Ratones, OTP de campeones raros y caóticos.",
+    "acceptable_answers": ["dorkis"],
+    "category": "streamer"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: mote meme del dueño de KOI que suena a marketplace.",
+    "acceptable_answers": ["ebay"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: ADC de KOI que brilla en teamfights con picks agresivos.",
+    "acceptable_answers": ["flakked"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por G: coloso demaciano que puede hacer un flash-in con su definitiva.",
+    "acceptable_answers": ["galio"],
+    "category": "champion"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por H: mantener la oleada congelada bajo torre para obligar al rival a overextend.",
+    "acceptable_answers": ["holdear", "hold"],
+    "category": "term"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por I: caster español dueño de KOI, rey de eventos y costreams masivos.",
+    "acceptable_answers": ["ibai"],
+    "category": "streamer"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por J: tiradora caótica que roba barones con cohetes.",
+    "acceptable_answers": ["jinx"],
+    "category": "champion"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por K: organización española que renació de MAD Lions bajo Ibai.",
+    "acceptable_answers": ["koi", "koi esports"],
+    "category": "team"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem AP que ejecuta rivales con poca vida usando críticos mágicos.",
+    "acceptable_answers": ["llamasombría", "llamasombria", "shadowflame"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por M: toplaner polaco de KOI, conocido por picks agresivos.",
+    "acceptable_answers": ["myrwn"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por N: belga ex-Fnatic que juega mid en Los Ratones con Baus.",
+    "acceptable_answers": ["nemesis"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: oleada reforzada que aparece tras destruir un inhibidor.",
+    "acceptable_answers": ["cañón", "cañones", "cannon"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por O: jungla checo de Vitality, famoso por su Lee Sin.",
+    "acceptable_answers": ["odo"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por P: ítem de tanque que reduce el daño de críticos enemigos.",
+    "acceptable_answers": ["presagio de randuin", "randuin"],
+    "category": "item"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Q: ítem que te limpia CC y te da resistencias al activarlo.",
+    "acceptable_answers": ["quitamiedos", "mercurial scimitar", "qss"],
+    "category": "item"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por R: catalán que organizó torneos legendarios con la comunidad española.",
+    "acceptable_answers": ["rubius"],
+    "category": "streamer"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por S: ADC de KOI, referente del bot lane en la LEC.",
+    "acceptable_answers": ["supa"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por T: intercambiar daño en la ruta sin buscar kill, solo ventaja.",
+    "acceptable_answers": ["trade", "tradeo", "tradear"],
+    "category": "term"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por U: ADC británico de Fnatic, famoso por Ezreal y farm.",
+    "acceptable_answers": ["upset"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por V: ítem de mago que ignora parte de la resistencia mágica enemiga.",
+    "acceptable_answers": ["baston del vacio", "bastón del vacío", "void staff"],
+    "category": "item"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por W: mono que deja un clon invisible y puede entrar con la W.",
+    "acceptable_answers": ["wukong"],
+    "category": "champion"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por X: mago de Shurima que bombardea desde lejos inmovilizado.",
+    "acceptable_answers": ["xerath"],
+    "category": "champion"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Y: hermano del campeón más jugado, según el meme del chat.",
+    "acceptable_answers": ["yasuo"],
+    "category": "champion"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: asesino de Jonia que marca rivales y puede perseguirlos con la R.",
+    "acceptable_answers": ["zed"],
+    "category": "champion"
+  }
+]

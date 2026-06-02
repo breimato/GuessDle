@@ -97,7 +97,10 @@ class GameMode(models.Model):
 
     def pool_description(self) -> str:
         if self.play_type == GameModePlayType.ROSCO:
-            return "Rosco semanal Pasapalabra: 27 letras, un intento por letra y bote de ELO acumulado."
+            return (
+                "Rosco semanal Pasapalabra para cuentas de equipo: disponible solo los sábados, "
+                "27 letras, un intento por letra y bote de ELO acumulado."
+            )
         filt = self.item_filter or {}
         if "generacion__lte" in filt:
             count = int(filt["generacion__lte"])
@@ -142,7 +145,7 @@ class RoscoQuestion(models.Model):
 class WeeklyRosco(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="weekly_roscos")
     mode = models.ForeignKey(GameMode, on_delete=models.CASCADE, related_name="weekly_roscos")
-    week_start = models.DateField(help_text="Lunes ISO de la semana del rosco")
+    week_start = models.DateField(help_text="Inicio del periodo de 7 días del rosco (desde el primer Pasapalabra)")
     is_team = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

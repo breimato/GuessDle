@@ -14,6 +14,9 @@ from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.play_session.guess_processor import GuessProcessor
 from apps.games.services.catalog.mode_resolver import ModeResolver
 from apps.games.services.catalog.play_background import resolve_background_url
+from apps.games.constants import is_league_game
+from apps.games.services.rosco.rosco_access import user_can_see_rosco, rosco_is_available_today
+from apps.games.services.rosco.week_utils import week_label
 from apps.games.services.rosco.weekly_pot_service import WeeklyPotService
 from apps.games.services.rosco.weekly_rosco_service import WeeklyRoscoService
 from apps.games.services.daily.target_service import TargetService
@@ -31,6 +34,9 @@ def render_mode_select(request, game: Game, user, slug: str):
     modes = []
     for mode in ModeResolver(game).active_modes():
         if mode.is_rosco:
+            if not user_can_see_rosco(user) or not rosco_is_available_today():
+                continue
+
             if not WeeklyRoscoService.has_question_bank(game):
                 modes.append(
                     {
@@ -55,6 +61,7 @@ def render_mode_select(request, game: Game, user, slug: str):
                     "is_rosco": True,
                     "play_url": reverse("play_mode", args=[slug, mode.slug]),
                     "pot_amount": pot.pot_amount,
+                    "week_label": week_label(weekly_rosco),
                     "rosco_status": status,
                     "rosco_status_label": _rosco_status_label(status),
                 }
@@ -84,7 +91,15 @@ def render_mode_select(request, game: Game, user, slug: str):
             }
         )
 
-    return render(request, "games/mode_select.html", {"game": game, "modes": modes})
+    return render(
+        request,
+        "games/mode_select.html",
+        {
+            "game": game,
+            "modes": modes,
+            "is_league_mode_select": is_league_game(game.slug),
+        },
+    )
 
 
 def _rosco_status_label(status: str) -> str:

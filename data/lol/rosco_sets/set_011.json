@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por A: jugador alemán famoso por one-trick de Katarina y por grind de Challenger en EUW con teclado o mando.",
+    "acceptable_answers": ["agurin"],
+    "category": "streamer"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por B: toplaner danés, finalista de Worlds 2018 con Fnatic y conocido por picks excéntricos y entrevistas meme.",
+    "acceptable_answers": ["bwipo"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: jungla de Gen.G, referente de la LCK moderna por su pathing y control de objetivos.",
+    "acceptable_answers": ["canyon"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por D: objeto AP/AS cuya pasiva añade daño mágico en cada ataque básico.",
+    "acceptable_answers": ["diente de nashor", "nashor"],
+    "category": "item"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: mote meme que le ponen al caster y creador de contenido español dueño de KOI.",
+    "acceptable_answers": ["ebay"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por F: técnica de oleada en la que mantienes la wave congelada cerca de tu torre para obligar al rival al overextend.",
+    "acceptable_answers": ["freeze", "congelar", "congelada", "freezear"],
+    "category": "term"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por G: organización europea con el logo de samurái que ganó Worlds 2019 y múltiples títulos de LEC.",
+    "acceptable_answers": ["g2", "g2 esports"],
+    "category": "team"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por H: yordle científico que despliega torretas y gana velocidad de movimiento cerca de torres y de sus torretas.",
+    "acceptable_answers": ["heimerdinger"],
+    "category": "champion"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por I: entrar en la jungla enemiga temprano para robar campamentos o forzar un 2v2/3v3 a favor.",
+    "acceptable_answers": ["invade", "invasion", "invadir"],
+    "category": "term"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por J: objeto de tanque cuya Resiliencia del Vacío aumenta armadura y resistencia mágica tras 5 segundos en combate con campeones.",
+    "acceptable_answers": ["jaksho el proteico", "jak'sho el proteico", "jaksho", "jak sho"],
+    "category": "item"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por K: top de Shurima que entra en forma Órdago con su definitiva y puede empujar a rivales contra paredes.",
+    "acceptable_answers": ["ksante", "k'sante", "k sante"],
+    "category": "champion"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por L: coach y creador conocido por analizar drafts y por contenido educativo de macro en inglés.",
+    "acceptable_answers": ["limit"],
+    "category": "streamer"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por M: objeto de mago cuya pasiva Niebla del odio quema el suelo tras dañar con la definitiva y reduce resistencia mágica.",
+    "acceptable_answers": ["malignidad", "malignance"],
+    "category": "item"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por N: exjugador de fnatic y compañero de baus en Los Ratones como midlaner.",
+    "acceptable_answers": ["nemesis"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: Lo que le le metió Xoel a la botella.",
+    "acceptable_answers": ["puño", "puños"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por O: jungla de T1, pieza clave del roster que ganó Worlds 2023 y varios títulos de LCK.",
+    "acceptable_answers": ["oner"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por P: midlane croata con historial en G2 y Vitality, famoso por Azir y por el meme del 'permaban'.",
+    "acceptable_answers": ["perkz"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Q: asesina de Ixtal cuya W encanta su arma según el elemento del terreno.",
+    "acceptable_answers": ["qiyana"],
+    "category": "champion"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por R: objeto de crítico cuya pasiva Muerte ejecuta automáticamente a campeones con menos del 5% de vida.",
+    "acceptable_answers": ["recaudadora", "collector", "the collector"],
+    "category": "item"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por S: objeto de mago cuya Tensión tormentosa aplica Alarido tras infligir mucho daño rápido a un campeón.",
+    "acceptable_answers": ["sobrecarga tormentosa", "stormsurge"],
+    "category": "item"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por T: Campeon yordle de 2009.",
+    "acceptable_answers": ["tristana"],
+    "category": "champion"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por U: campeon toplaner de Zaun que tiene un execute.",
+    "acceptable_answers": ["urgot"],
+    "category": "champion"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por V: ADC coreano de EDG, MVP de Worlds 2021 y referencia del bot lane en LPL.",
+    "acceptable_answers": ["viper"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por W: guerrero de Jonia cuya W Guerrero pícaro le permite volverse invisible, deslizarse y dejar un clon que ataca.",
+    "acceptable_answers": ["wukong"],
+    "category": "champion"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por X: mago de que se inmoviliza al canalizar su definitiva para bombardear el mapa.",
+    "acceptable_answers": ["xerath"],
+    "category": "champion"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Y: hermano del campeón más jugado.",
+    "acceptable_answers": ["yone"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por Z: toplaner de T1, MVP de Worlds 2023 que comparte nombre con un dios.",
+    "acceptable_answers": ["zeus"],
+    "category": "pro_player"
+  }
+]

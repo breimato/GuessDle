@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: arquera de Freljord que puede lanzar una flecha global.",
+    "acceptable_answers": ["ashe"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por B: toplaner danés, finalista de Worlds 2018 con Fnatic.",
+    "acceptable_answers": ["bwipo"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por C: coloso del Vacío que se alimenta de súbditos para crecer.",
+    "acceptable_answers": ["chogath", "cho'gath"],
+    "category": "champion"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por D: mid chino de FPX, MVP de Worlds 2019.",
+    "acceptable_answers": ["doinb"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por E: ítem de asesino mitológico que escala letalidad y omnivampirismo.",
+    "acceptable_answers": ["eclipse"],
+    "category": "item"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por F: invocador que te permite escapar de un engage en milisegundos.",
+    "acceptable_answers": ["flash"],
+    "category": "term"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por G: ítem de tanque que escala vida y daño contra tanques en split.",
+    "acceptable_answers": ["guanteletes de hullbreaker", "hullbreaker"],
+    "category": "item"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por H: centauro que puede entrar en teamfights con su definitiva a toda velocidad.",
+    "acceptable_answers": ["hecarim"],
+    "category": "champion"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por I: ex-pro y caster NA conocido por flamear en SoloQ con estilo.",
+    "acceptable_answers": ["imls", "imls1"],
+    "category": "streamer"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: jungla de EDG, campeón del mundo 2021.",
+    "acceptable_answers": ["jiejie"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por K: asesina de Noxus que brilla cuando hay muchos enemigos low.",
+    "acceptable_answers": ["katarina"],
+    "category": "champion"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por L: creador que analiza parches y picks con tono irónico en EUW.",
+    "acceptable_answers": ["lourlo"],
+    "category": "streamer"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por M: support de JDG, referente del bot lane en LPL.",
+    "acceptable_answers": ["missing"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por N: titán de agua que puede anclar enemigos con su gancho.",
+    "acceptable_answers": ["nautilus"],
+    "category": "champion"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: zona elevada del mapa donde suele haber peleas por visión.",
+    "acceptable_answers": ["montaña", "montana"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por O: jungla checo de Vitality, famoso por su Lee Sin.",
+    "acceptable_answers": ["odo"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por P: OTP cuyo nick recuerda a un trinket rosa de visión.",
+    "acceptable_answers": ["pinkward", "pink"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Q: asesina de Ixtal cuya W encanta su arma según el elemento del terreno.",
+    "acceptable_answers": ["qiyana"],
+    "category": "champion"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por R: ex-jungla de C9, famoso por mecánicas agresivas en stream.",
+    "acceptable_answers": ["rush"],
+    "category": "streamer"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por S: ítem de luchador que te da escudo y resistencias al quedar low.",
+    "acceptable_answers": ["sterak", "steraks gage", "garra de sterak"],
+    "category": "item"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: organización coreana dueña de Faker y múltiples títulos de LCK.",
+    "acceptable_answers": ["t1", "sk telecom"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por U: creador que hace guías de montage y contenido educativo en inglés.",
+    "acceptable_answers": ["uuugle"],
+    "category": "streamer"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por V: support de C9, referente del bot lane en NA.",
+    "acceptable_answers": ["vulcan"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por W: ítem de tanque que te regala vida máxima infinita si farmeas mucho.",
+    "acceptable_answers": ["warmog", "corazon de acero de warmog"],
+    "category": "item"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por X: creador que hace tier lists y análisis de parches en NA.",
+    "acceptable_answers": ["xdx"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por Y: pelear por un objetivo cuando el rival no puede responder.",
+    "acceptable_answers": ["yoink", "robar objetivo"],
+    "category": "term"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Z: ítem de mago que te congela en stasis y salva de burst.",
+    "acceptable_answers": ["zhonya", "reloj de arena de zhonya"],
+    "category": "item"
+  }
+]

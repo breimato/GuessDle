@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: arquera de Freljord que puede lanzar una flecha global.",
+    "acceptable_answers": ["ashe"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por B: objetivo neutral que da oro y stats globales al equipo.",
+    "acceptable_answers": ["baron", "baron nashor"],
+    "category": "term"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por C: yordle piloto que puede entregar un paquete con su R global.",
+    "acceptable_answers": ["corki"],
+    "category": "champion"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por D: organización coreana campeona del mundo en 2022 con Deft y BeryL.",
+    "acceptable_answers": ["drx"],
+    "category": "team"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por E: ítem de tanque que quema enemigos cerca y escala con tu vida.",
+    "acceptable_answers": ["egida solar", "sunfire aegis", "capa de fuego solar", "capa de fuego"],
+    "category": "item"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: mid coreano considerado el GOAT del competitivo.",
+    "acceptable_answers": ["faker"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por G: yordle top que crece y encoge con su barra de furia.",
+    "acceptable_answers": ["gnar"],
+    "category": "champion"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por H: centauro que puede entrar en teamfights con su definitiva a toda velocidad.",
+    "acceptable_answers": ["hecarim"],
+    "category": "champion"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por I: caster español dueño de KOI, rey de eventos y costreams masivos.",
+    "acceptable_answers": ["ibai"],
+    "category": "streamer"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: ADC chino apodado JackeyLove, estrella de Top Esports.",
+    "acceptable_answers": ["jackeylove"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por K: yordle que lanza shurikens.",
+    "acceptable_answers": ["kennen"],
+    "category": "champion"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem de letalidad eliminado que en su salida simulaba una R de Zed.",
+    "acceptable_answers": ["draktar", "duskblade", "drakhtar"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por M: ítem de maná que evoluciona y escala daño con tu maná máximo.",
+    "acceptable_answers": ["manamune"],
+    "category": "item"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por N: belga ex-Fnatic que juega mid en Los Ratones con Baus.",
+    "acceptable_answers": ["nemesis"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: lo que le metió Xoel a la botella en el meme del chat.",
+    "acceptable_answers": ["puño", "puños"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por O: creador NA que hace guías de montage y contenido educativo.",
+    "acceptable_answers": ["oddorange"],
+    "category": "streamer"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por P: mid coreano de EDG, pieza del título mundial 2014.",
+    "acceptable_answers": ["pawn"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Q: ítem de tanque que te da resistencias y limpia CC al activarlo.",
+    "acceptable_answers": ["quicksilver sash", "fajin de mercurio", "fajin"],
+    "category": "item"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por R: ADC coreano de JDG, referente del bot lane en LPL.",
+    "acceptable_answers": ["ruler"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por S: mid de DAMWON/KIA, cerebro del título de Worlds 2020 y considerado de los mejores midlaners de la historia.",
+    "acceptable_answers": ["showmaker"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por T: intercambiar daño en la ruta sin buscar kill, solo ventaja.",
+    "acceptable_answers": ["trade", "tradeo", "tradear"],
+    "category": "term"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por U: leyenda ADC china retirada, ícono de la LPL en streams.",
+    "acceptable_answers": ["uzi"],
+    "category": "streamer"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por V: rey arruinado que posee cuerpos y camina por el Rift.",
+    "acceptable_answers": ["viego"],
+    "category": "champion"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: creador de contenido español con un cabezón, exproplayer.",
+    "acceptable_answers": ["werlyb"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por X: español inmortalizado por la backdoor más famosa de la historia.",
+    "acceptable_answers": ["xpeke"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Y: creador NA famoso por ser OTP Yasuo.",
+    "acceptable_answers": ["yassuo"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Z: ítem de tanque que vincula daño y curación con tu compañero.",
+    "acceptable_answers": ["convergencia de zeke", "zekes convergence", "zeke"],
+    "category": "item"
+  }
+]

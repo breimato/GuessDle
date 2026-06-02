@@ -3,13 +3,20 @@
 
 {% block title %}{{ game.name }} – Dificultad{% endblock %}
 
-{% block body_class %}cabinet-page{% endblock %}
+{% block body_class %}{% if is_league_mode_select %}lol-launcher-body{% else %}cabinet-page{% endif %}{% endblock %}
 
-{% block main_class %}
-min-h-screen flex flex-col items-center gap-8 py-10 px-4
+{% block main_class %}{% if is_league_mode_select %}lol-launcher-main{% else %}min-h-screen flex flex-col items-center gap-8 py-10 px-4{% endif %}{% endblock %}
+
+{% block extra_css %}
+{% if is_league_mode_select %}
+<link rel="stylesheet" href="{% static 'css/lol-launcher.css' %}">
+{% endif %}
 {% endblock %}
 
 {% block content %}
+{% if is_league_mode_select %}
+{% include "partials/mode_select_lol_launcher.html" %}
+{% else %}
 <div class="w-full max-w-4xl flex justify-start">
   <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary">← Dashboard</a>
 </div>
@@ -63,9 +70,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
         {% endif %}
       </a>
       {% endif %}
-      {% if entry.is_rosco and not entry.rosco_unavailable %}
-      <p class="text-sm opacity-80 text-center">Bote acumulado: {{ entry.pot_amount|floatformat:0 }} ELO</p>
-      {% elif entry.active_extra_id %}
+      {% if entry.active_extra_id %}
       <a href="{% url 'play_extra_daily' entry.active_extra_id %}" class="arcade-btn arcade-btn--ghost arcade-btn--full text-sm">
         Continuar apuesta extra
       </a>
@@ -81,6 +86,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
     decoding="async"
   >
 </div>
+{% endif %}
 
 <div id="mode-info-modal" class="arcade-modal-overlay mode-select-info-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="mode-info-title">
   <div class="arcade-modal mode-select-info-modal">
@@ -109,6 +115,16 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 {% endblock %}
 
 {% block extra_scripts %}
+{% if is_league_mode_select %}
+<script>
+  window.GuessDleBgmPage = {
+    src: "{% static 'audio/ahri_song.mp3' %}",
+    loop: true,
+  };
+</script>
+<script src="{% static 'js/play-bgm.js' %}" defer></script>
+<script src="{% static 'js/lol-launcher.js' %}" defer></script>
+{% endif %}
 <script src="{% static 'js/mode-select-radical.js' %}" defer></script>
 <script>
 (function () {

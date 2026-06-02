@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: momia de Shurima que llora y puede stunear en área con su R.",
+    "acceptable_answers": ["amumu"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: creador que enseña macro y pathing con tono calmado en inglés.",
+    "acceptable_answers": ["balori"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: jungla veterano chino, leyenda de EDG en la era clásica.",
+    "acceptable_answers": ["clearlove"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por D: maga lunar que puede enganchar enemigos con su ulti global.",
+    "acceptable_answers": ["diana"],
+    "category": "champion"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: creador que analiza parches y picks con humor en inglés.",
+    "acceptable_answers": ["eskay"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por F: espantapájaros del Rift que canaliza un terror en área.",
+    "acceptable_answers": ["fiddlesticks"],
+    "category": "champion"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por G: support coreano veterano, múltiple campeón de LCK.",
+    "acceptable_answers": ["gorilla"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por H: toplaner coreano campeón del mundo 2016 con SKT.",
+    "acceptable_answers": ["huni"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por I: ítem de AP barato que acumula stacks de maná y AP al farmear.",
+    "acceptable_answers": ["idolo espectral", "ídolo espectral", "lost chapter"],
+    "category": "item"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: mid danés de C9, referente de la era clásica de NA.",
+    "acceptable_answers": ["jensen"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por K: jungla coreano veterano, mito de la era ROX/SKT.",
+    "acceptable_answers": ["kakao"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por L: coach y analista conocido por contenido educativo de macro.",
+    "acceptable_answers": ["limit"],
+    "category": "streamer"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por M: mago del Vacío que suprime y abre portales bajo tus pies.",
+    "acceptable_answers": ["malzahar"],
+    "category": "champion"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por N: perro de Shurima que acumula stacks de daño con cada minuto.",
+    "acceptable_answers": ["nasus"],
+    "category": "champion"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: aliado que comparte la ruta contigo en bot o mid.",
+    "acceptable_answers": ["compañero", "companero"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por O: support coreano veterano, pieza del título de Worlds 2013.",
+    "acceptable_answers": ["olleh"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por P: OTP cuyo nick recuerda a un trinket rosa de visión.",
+    "acceptable_answers": ["pinkward", "pink"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por Q: esperar en la cola de ranked hasta encontrar partida.",
+    "acceptable_answers": ["queue", "cola", "queuing"],
+    "category": "term"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por R: ítem de tanque que refleja daño mágico y cura en peleas largas.",
+    "acceptable_answers": ["rebanada del rey", "rebanada"],
+    "category": "item"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por S: químico de Zaun que deja nubes venenosas por el mapa.",
+    "acceptable_answers": ["singed"],
+    "category": "champion"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: taiwaneses sorpresa campeones del mundo en 2012 con su TF.",
+    "acceptable_answers": ["taipei assassins", "tpa"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por U: ítem de tanque que ralentiza y reduce daño de quien te golpee.",
+    "acceptable_answers": ["umbral glacial", "frozen heart"],
+    "category": "item"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por V: ítem de support que cura aliados al dañar con habilidades.",
+    "acceptable_answers": ["vestiduras del cuidador", "staff of flowing water"],
+    "category": "item"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: ex-pro español conocido por wave control y la LCS EU.",
+    "acceptable_answers": ["werlyb"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por X: recurso que ganas al matar súbditos, monstruos y campeones.",
+    "acceptable_answers": ["experiencia", "xp"],
+    "category": "term"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Y: ítem de asesino que te da velocidad y daño extra tras salir de sigilo.",
+    "acceptable_answers": ["youmuu fantasma", "youmuus ghostblade", "youmuu"],
+    "category": "item"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Z: creador polaco conocido por contenido de highlights en EUW.",
+    "acceptable_answers": ["zolarex"],
+    "category": "streamer"
+  }
+]

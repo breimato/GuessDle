@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por A: tirador de Piltover con cinco armas diferentes en su arsenal.",
+    "acceptable_answers": ["aphelios"],
+    "category": "champion"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: creador brasileño famoso por contenido de humor y SoloQ.",
+    "acceptable_answers": ["baiano"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: jungla de TL, pieza clave del roster campeón de LCS 2024.",
+    "acceptable_answers": ["closer"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por D: rotación agresiva de varios jugadores para matar a uno aislado.",
+    "acceptable_answers": ["dive", "volcada"],
+    "category": "term"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por E: ítem de mago cuyo Eco dispara cargas de daño mágico extra.",
+    "acceptable_answers": ["eco de luden", "luden", "ludens echo"],
+    "category": "item"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por F: toplaner australiano de C9, referente de la LCS moderna.",
+    "acceptable_answers": ["fudge"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por G: ADC coreano de T1, apodado príncipe de la bot lane.",
+    "acceptable_answers": ["ghost"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por H: mago de agua reciente que puede nadar por el mapa con su pasiva.",
+    "acceptable_answers": ["hwei"],
+    "category": "champion"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por I: support coreano de KT, famoso por sus engages de Thresh.",
+    "acceptable_answers": ["ignar"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por J: tirador de Jonia que planta lotos y puede ultar a distancia.",
+    "acceptable_answers": ["jhin"],
+    "category": "champion"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por K: top de Shurima que entra en forma Órdago con su definitiva.",
+    "acceptable_answers": ["ksante", "k'sante"],
+    "category": "champion"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem de mago que quema enemigos al castear habilidades de daño.",
+    "acceptable_answers": ["liandry", "tormento de liandry"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por M: ítem de mago que aplica reducción de curación en área.",
+    "acceptable_answers": ["morellonomicon", "moralizador"],
+    "category": "item"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por N: ítem de tanque que cura al recibir daño mágico en peleas.",
+    "acceptable_answers": ["negacion gloriosa", "negación gloriosa"],
+    "category": "item"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: acción de sumar oro o ventaja tras una jugada exitosa.",
+    "acceptable_answers": ["añadir", "anadir"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por O: creador NA que hace guías de montage y contenido educativo.",
+    "acceptable_answers": ["oddorange"],
+    "category": "streamer"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por P: proteger al carry aliado para que no muera en la pelea.",
+    "acceptable_answers": ["peel", "despeel"],
+    "category": "term"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Q: ítem de tanque que te da resistencias y limpia CC al activarlo.",
+    "acceptable_answers": ["quicksilver sash", "fajin de mercurio"],
+    "category": "item"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por R: mid chino de JDG, campeón del mundo 2018 con iG.",
+    "acceptable_answers": ["rookie"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por S: creador conocido por guías de wave control y macro en inglés.",
+    "acceptable_answers": ["sanchowest"],
+    "category": "streamer"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: organización china de JackeyLove y la LPL moderna.",
+    "acceptable_answers": ["top esports", "tes"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por U: creador que hace guías de montage y contenido educativo en inglés.",
+    "acceptable_answers": ["uuugle"],
+    "category": "streamer"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por V: ADC coreano de HLE, referente del bot lane en LCK.",
+    "acceptable_answers": ["viper"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: creador que analiza replays profesionales y macro en profundidad.",
+    "acceptable_answers": ["wykr"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por X: creador que hace tier lists y análisis de parches en NA.",
+    "acceptable_answers": ["xdx"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Y: luchador de las Islas Benditas que invoca un ejército de muertos.",
+    "acceptable_answers": ["yorick"],
+    "category": "champion"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: blob verde del Vacío que se divide al morir.",
+    "acceptable_answers": ["zac"],
+    "category": "champion"
+  }
+]

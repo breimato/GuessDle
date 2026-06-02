@@ -9,6 +9,9 @@
     if (outcome === "surrender") {
       return `¡Qué lástima! El personaje era ${displayName}`;
     }
+    if (outcome === "wrong_answer") {
+      return `¡Qué lástima! La respuesta era ${displayName}`;
+    }
     return `¡Correcto! ${displayName}`;
   }
 

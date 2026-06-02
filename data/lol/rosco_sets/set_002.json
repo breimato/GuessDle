@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por A: alemán que sube a Challenger one-tricking Katarina, a veces con mando.",
+    "acceptable_answers": ["agurin"],
+    "category": "streamer"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: OTP de Yasuo que popularizó el windwall en streams de NA.",
+    "acceptable_answers": ["boxbox"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por C: mid español de G2, rey del Azir y de los pentakills en finals.",
+    "acceptable_answers": ["caps"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por D: componente inicial de ADC que da daño y un poco de robo de vida.",
+    "acceptable_answers": ["daga de doran", "dorans blade"],
+    "category": "item"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: doctor de SoloQ que diagnostica retrasos mentales en cada cola.",
+    "acceptable_answers": ["elmillor"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por F: ítem de crítico legendario que multiplica tu daño crítico.",
+    "acceptable_answers": ["filo infinito", "infinity edge"],
+    "category": "item"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por G: ADC de T1, apodado príncipe de la bot lane en la LCK.",
+    "acceptable_answers": ["gumayusi"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por H: ítem on-hit que roba vida y escala con tu vida máxima.",
+    "acceptable_answers": ["hoja del rey arruinado", "botrk"],
+    "category": "item"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por I: duelista de Jonia cuya pasiva apila stacks al pegar habilidades.",
+    "acceptable_answers": ["irelia"],
+    "category": "champion"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: mid coreano de DRX, campeón del mundo 2022.",
+    "acceptable_answers": ["jojopyun"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por K: support de T1, famoso por los hooks de Thresh en clutch.",
+    "acceptable_answers": ["keria"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por L: ítem de luchador que devuelve maná y acelera tus habilidades.",
+    "acceptable_answers": ["lanza de shojin", "shojin"],
+    "category": "item"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por M: jefe de sombras que se vuelve inmune y arrastra enemigos con su R.",
+    "acceptable_answers": ["mordekaiser"],
+    "category": "champion"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por N: austriaco que hace contenido de highlights y reacciones en EUW.",
+    "acceptable_answers": ["noway4u"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: castigo que te come oro si te desconectas o afk.",
+    "acceptable_answers": ["peñalización", "penalizacion"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por O: maga de Piltover cuyo balón protege aliados y daña enemigos.",
+    "acceptable_answers": ["orianna"],
+    "category": "champion"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por P: jungla campeón del mundo 2022 con DRX y su Gragas.",
+    "acceptable_answers": ["pyosik"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por Q: acción de ir a derribar torres enemigas tras ganar una pelea.",
+    "acceptable_answers": ["quemar", "quemada"],
+    "category": "term"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por R: ítem de mago que te congela en stasis y salva de burst.",
+    "acceptable_answers": ["reloj de arena de zhonya", "zhonya"],
+    "category": "item"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por S: acumular súbditos lentamente para empujar la oleada hacia la torre rival.",
+    "acceptable_answers": ["slow push", "slowpush", "empuje lento"],
+    "category": "term"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: organización NA con caballo en el logo y base en California.",
+    "acceptable_answers": ["team liquid", "liquid", "tl"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por U: toplaner de Zaun que ejecuta rivales por debajo de un umbral de vida.",
+    "acceptable_answers": ["urgot"],
+    "category": "champion"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por V: mid francés de MAD Lions, conocido por su Orianna.",
+    "acceptable_answers": ["vetheo"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: ex-pro toplaner que enseñaba wave control en la LCS EU antigua.",
+    "acceptable_answers": ["wickd"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por X: guerrero demaciano que carga y puede mandar enemigos al cielo.",
+    "acceptable_answers": ["xin zhao", "xinzhao"],
+    "category": "champion"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por Y: creadora vinculada a la escena de LoL y costreams en NA.",
+    "acceptable_answers": ["yvonnie"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: support de plantas que enraíza con su definitiva en área.",
+    "acceptable_answers": ["zyra"],
+    "category": "champion"
+  }
+]

@@ -1,0 +1,299 @@
+/* Rosco — tema cabinet GuessDle (variables de arcade-theme.css) */
+
+.rosco-play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.rosco-header {
+  width: 100%;
+  max-width: min(96vw, 720px);
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.rosco-header__title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.75rem, 3.2vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--cab-yellow);
+  text-shadow:
+    2px 2px 0 #000,
+    0 0 12px rgba(0, 0, 0, 0.45);
+  letter-spacing: 0.06em;
+}
+
+.rosco-header__mode {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-ui);
+  font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cab-panel);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.rosco-header__pot {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(0.9rem, 2.4vw, 1.05rem);
+  font-weight: 700;
+  color: var(--cab-yellow);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.rosco-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(96vw, 720px);
+  margin: clamp(1.25rem, 4vw, 2rem) auto 0;
+}
+
+.rosco-wheel {
+  --wheel-size: min(96vw, 720px);
+  --pill-size: clamp(2.9rem, 6.5vw, 3.75rem);
+  --letter-count: 27;
+  --ring-r: calc((var(--wheel-size) - var(--pill-size)) / 2);
+  /* Hueco circular ≈ wheel − 2×pastilla; cuadrado inscrito (~68%) para no tapar letras */
+  --hole-diameter: calc(var(--wheel-size) - 2 * var(--pill-size));
+  --center-size: calc(var(--hole-diameter) * 0.68);
+
+  position: relative;
+  width: var(--wheel-size);
+  height: var(--wheel-size);
+  flex-shrink: 0;
+}
+
+.rosco-spoke {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: rotate(calc(360deg / var(--letter-count) * var(--i)));
+}
+
+.rosco-letter {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - var(--ring-r) - var(--pill-size) / 2);
+  width: var(--pill-size);
+  height: var(--pill-size);
+  z-index: 2;
+  transform: translateX(-50%)
+    rotate(calc(-360deg / var(--letter-count) * var(--i)));
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  border-radius: 50%;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.65rem, 2.8vw, 0.95rem);
+  line-height: 1;
+  color: var(--cab-ink);
+  background: var(--cab-panel);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow:
+    3px 3px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.rosco-letter span {
+  display: block;
+}
+
+.rosco-letter--current {
+  z-index: 2;
+  background: var(--cab-yellow);
+  color: var(--cab-ink);
+  box-shadow:
+    4px 4px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.45);
+  transform: translateX(-50%)
+    rotate(calc(-360deg / var(--letter-count) * var(--i)))
+    scale(1.1);
+}
+
+.rosco-letter--correct {
+  background: var(--cab-green);
+  color: #fff;
+  border-color: var(--cab-panel-border);
+  box-shadow:
+    3px 3px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.25);
+}
+
+.rosco-letter--wrong {
+  background: var(--cab-red);
+  color: #fff;
+  border-color: var(--cab-panel-border);
+  box-shadow:
+    3px 3px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.rosco-wheel__center.rosco-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: var(--center-size);
+  max-width: var(--center-size);
+  height: auto;
+  max-height: var(--center-size);
+  margin: 0;
+  padding: clamp(0.5rem, 1.5vw, 0.85rem);
+  overflow-y: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--cab-shadow-sm);
+}
+
+.rosco-panel__letter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.65rem;
+  border-radius: 50%;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+  line-height: 1;
+  color: var(--cab-ink);
+  background: var(--cab-panel);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow:
+    3px 3px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rosco-panel__letter-badge--active {
+  background: var(--cab-yellow);
+  box-shadow:
+    4px 4px 0 var(--cab-panel-border),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.45);
+  transform: scale(1.06);
+}
+
+.rosco-panel__prompt {
+  margin: 0 0 1rem;
+  font-size: clamp(1rem, 2.8vw, 1.1rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--cab-ink);
+}
+
+.rosco-panel__form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.rosco-panel__form .arcade-input,
+.rosco-panel__actions .arcade-btn {
+  min-height: 2.65rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.rosco-panel__form .arcade-input {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.65rem 0.75rem;
+  border: 3px solid var(--cab-panel-border);
+}
+
+.rosco-panel__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rosco-panel__actions .arcade-btn {
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0.4rem;
+  font-size: 0.72rem;
+}
+
+.rosco-panel__status {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.rosco-panel__status--win {
+  color: var(--cab-green);
+}
+
+.rosco-panel__status--lose {
+  color: var(--cab-red-dark);
+}
+
+@media (max-width: 520px) {
+  .rosco-wheel {
+    --wheel-size: min(94vw, 400px);
+    --pill-size: 2.5rem;
+  }
+
+  .rosco-letter {
+    font-size: clamp(0.6rem, 2.5vw, 0.8rem);
+  }
+
+  .rosco-wheel__center.rosco-panel {
+    padding: 0.55rem;
+  }
+
+  .rosco-panel__actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .rosco-wheel {
+    --wheel-size: min(96vw, 340px);
+    --pill-size: 2.15rem;
+  }
+
+  .rosco-letter {
+    font-size: 0.55rem;
+    border-width: 2px;
+  }
+
+  .rosco-panel__letter-badge {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .rosco-panel__prompt {
+    font-size: 0.9rem;
+    margin-bottom: 0.65rem;
+  }
+}

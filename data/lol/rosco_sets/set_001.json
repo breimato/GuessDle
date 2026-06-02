@@ -1,0 +1,191 @@
+[
+  {
+    "letter": "A",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por A: OTP velkoz de EUW.",
+    "acceptable_answers": ["azzapp"],
+    "category": "streamer"
+  },
+  {
+    "letter": "B",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por B: irlandés ex-jungla de Fnatic famoso por leer chat y por tiltearse con elegancia.",
+    "acceptable_answers": ["broxah"],
+    "category": "streamer"
+  },
+  {
+    "letter": "C",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por C: ex-pro y caster que pasó de jugar mid en G2 a ser la voz del macro en stream.",
+    "acceptable_answers": ["caedrel"],
+    "category": "streamer"
+  },
+  {
+    "letter": "D",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por D: ADC de Noxus que puede atrapar hachas y regenerar maná si las recoge.",
+    "acceptable_answers": ["draven"],
+    "category": "champion"
+  },
+  {
+    "letter": "E",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por E: streamer español que se cree mejor de lo que es y falló su intento de llegar a master.",
+    "acceptable_answers": ["elxokas", "xokas"],
+    "category": "streamer"
+  },
+  {
+    "letter": "F",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por F: organización británica histórica de la LEC con logo naranja y Worlds 2011.",
+    "acceptable_answers": ["fnatic", "fnc"],
+    "category": "team"
+  },
+  {
+    "letter": "G",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por G: borracho de la grieta que carga un barril.",
+    "acceptable_answers": ["gragas"],
+    "category": "champion"
+  },
+  {
+    "letter": "H",
+    "question_type": "starts_with",
+    "prompt": "[TÉRMINO] Empieza por H: mecánica de pegar al campeón enemigo justo cuando va a lasthittear.",
+    "acceptable_answers": ["hostigar", "hostigamiento", "harass"],
+    "category": "term"
+  },
+  {
+    "letter": "I",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por I: top de islas que invoca tentáculos y castiga farmear cerca de paredes.",
+    "acceptable_answers": ["illaoi"],
+    "category": "champion"
+  },
+  {
+    "letter": "J",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por J: exjungla polaco de G2.",
+    "acceptable_answers": ["jankos"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "K",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por K: ADC del Vacío que evoluciona habilidades al farmear.",
+    "acceptable_answers": ["kaisa", "kai'sa"],
+    "category": "champion"
+  },
+  {
+    "letter": "L",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por L: support turco de EUW.",
+    "acceptable_answers": ["labrov"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "M",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por M: maga de Noxus reciente que lanza proyectiles extra con cada habilidad.",
+    "acceptable_answers": ["mel"],
+    "category": "champion"
+  },
+  {
+    "letter": "N",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por N: creador que popularizó reaccionar a highlights de SoloQ en NA.",
+    "acceptable_answers": ["nightblue3", "nightblue"],
+    "category": "streamer"
+  },
+  {
+    "letter": "Ñ",
+    "question_type": "contains",
+    "prompt": "[TÉRMINO] Contiene la Ñ: lo que te falta cuando el rival tiene dos ítems de ventaja.",
+    "acceptable_answers": ["desventaja"],
+    "category": "term"
+  },
+  {
+    "letter": "O",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por O: jungla que puede tirarse la R y seguir pegando con poca vida.",
+    "acceptable_answers": ["olaf"],
+    "category": "champion"
+  },
+  {
+    "letter": "P",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por P: jungla veterano de la LCK, mito de ROX Tigers y Gen.G.",
+    "acceptable_answers": ["peanut"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "Q",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por Q: objeto de letalidad que añade daño verdadero con habilidades.",
+    "acceptable_answers": ["quiebrabastiones", "axiom arc"],
+    "category": "item"
+  },
+  {
+    "letter": "R",
+    "question_type": "starts_with",
+    "prompt": "[JUGADOR PROFESIONAL] Empieza por R: ADC europeo mito de Fnatic, famoso por farm infinito.",
+    "acceptable_answers": ["rekkles"],
+    "category": "pro_player"
+  },
+  {
+    "letter": "S",
+    "question_type": "starts_with",
+    "prompt": "[OBJETO] Empieza por S: sombrero legendario que escala tu AP total un 30%.",
+    "acceptable_answers": ["sombrero mortal de rabadon", "rabadon"],
+    "category": "item"
+  },
+  {
+    "letter": "T",
+    "question_type": "starts_with",
+    "prompt": "[EQUIPO] Empieza por T: organización coreana con tres copas del mundo en la LCK.",
+    "acceptable_answers": ["t1", "sk telecom"],
+    "category": "team"
+  },
+  {
+    "letter": "U",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por U: jungla que cambia de postura y puede correr por el mapa sin botas.",
+    "acceptable_answers": ["udyr"],
+    "category": "champion"
+  },
+  {
+    "letter": "V",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por V: tirador que acumula stacks de blight y puede ultar a distancia.",
+    "acceptable_answers": ["varus"],
+    "category": "champion"
+  },
+  {
+    "letter": "W",
+    "question_type": "starts_with",
+    "prompt": "[STREAMER] Empieza por W: toplaner que streamea off-meta y mantiene el meme del 'Wunder diff'.",
+    "acceptable_answers": ["wunder"],
+    "category": "streamer"
+  },
+  {
+    "letter": "X",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por X: maga que lanza plumas y puede volverse inalcanzable con su R.",
+    "acceptable_answers": ["xayah"],
+    "category": "champion"
+  },
+  {
+    "letter": "Y",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Y: gata sup que se engancha a un aliado y no puede atacar sola.",
+    "acceptable_answers": ["yuumi"],
+    "category": "champion"
+  },
+  {
+    "letter": "Z",
+    "question_type": "starts_with",
+    "prompt": "[CAMPEÓN] Empieza por Z: maga de burbujas que duerme enemigos y lanza una bomba de portal.",
+    "acceptable_answers": ["zoe"],
+    "category": "champion"
+  }
+]

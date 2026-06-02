@@ -22,6 +22,12 @@ SCORING_FALLBACK = {"decrement": 10, "floor": 0}
 
 # Bote semanal del rosco Pasapalabra (ELO aportado cada semana)
 ROSCO_WEEKLY_POT_CONTRIBUTION = float(os.getenv("ROSCO_WEEKLY_POT_CONTRIBUTION", "1000"))
+# Días en los que se puede jugar Pasapalabra (0=lunes … 6=domingo).
+ROSCO_PLAY_WEEKDAYS = [
+    int(day.strip())
+    for day in os.getenv("ROSCO_PLAY_WEEKDAYS", "5").split(",")
+    if day.strip()
+]
 
 
 # Redirecciones
