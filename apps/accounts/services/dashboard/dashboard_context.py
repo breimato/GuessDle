@@ -8,6 +8,7 @@ from apps.accounts.services.dashboard.extra_play_index import (
     resolve_game_redirect_url,
 )
 from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
+from apps.accounts.services.dashboard.ranking_scope import ranking_modes_for_game
 from apps.games.models import ExtraDailyPlay, Game
 from apps.games.services.catalog.mode_resolver import ModeResolver
 from apps.games.services.daily.target_service import TargetService
@@ -31,6 +32,7 @@ def enrich_available_games(request, available_games):
         game.redirect_url = resolve_game_redirect_url(game, extra_index, request.user)
         game.has_pending_daily = service.has_any_unresolved_mode()
         game.active_modes = list(resolver.active_modes()) if resolver.has_modes() else []
+        game.ranking_modes = ranking_modes_for_game(game)
         game.active_extra_by_mode = {
             mode.slug: extra_index.active_by_game_mode.get((game.slug, mode.slug))
             for mode in game.active_modes
@@ -53,7 +55,7 @@ def build_dashboard_context(request):
         "global_ranking": PlayerStatsService.build_global_ranking(),
         "ranking_by_game": PlayerStatsService.build_ranking_per_game(),
         "ranking_has_modes": {
-            game.slug: game.has_modes()
+            game.slug: bool(game.ranking_modes)
             for game in available_games
         },
         "pending_challenges": Challenge.objects.filter(opponent=user, accepted=False),

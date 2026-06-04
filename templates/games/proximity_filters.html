@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — Filtros {{ game_mode.label }}{% endblock %}
+
+{% block body_class %}cabinet-page{% if background_url %} cabinet-page--game{% endif %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/proximity-mode.css' %}">
+{% endblock %}
+
+{% block content %}
+<nav class="play-nav w-full max-w-3xl mx-auto mb-6">
+  <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary">← Modos</a>
+</nav>
+
+<section class="proximity-filters arcade-card mx-auto p-6 max-w-4xl{% if game.slug == 'one-piece' %} proximity-filters--one-piece{% elif game.slug == 'league-of-legends' or game.slug == 'lol' %} proximity-filters--lol{% elif game.slug == 'pokemon' %} proximity-filters--pokemon{% endif %}">
+  <h1 class="arcade-heading-lg mb-2 proximity-filters__title">{{ game_mode.label }}</h1>
+  <p class="arcade-text-muted mb-4">Configura el pool del reto de hoy. {% if filters_locked %}Los filtros ya están bloqueados.{% endif %}</p>
+
+  <form method="post" class="proximity-filters__form">
+    {% csrf_token %}
+
+    {% if game.slug == 'one-piece' %}
+      <fieldset class="proximity-filters__fieldset proximity-filters__fieldset--compact" {% if filters_locked %}disabled{% endif %}>
+        <legend class="proximity-filters__legend">Formato</legend>
+        <div class="proximity-filter-tile-grid proximity-filter-tile-grid--duo">
+          <label class="proximity-filter-tile proximity-filter-tile--media">
+            <input type="radio" name="media" value="manga" class="proximity-filter-tile__input"
+              {% if saved_filters.media != 'anime' %}checked{% endif %}>
+            <span class="proximity-filter-tile__face">
+              {% if game.icon_image %}
+              <img src="{{ game.icon_image.url }}" alt="" class="proximity-filter-tile__watermark" aria-hidden="true" decoding="async">
+              {% endif %}
+              <span class="proximity-filter-tile__label">Manga</span>
+              <span class="proximity-filter-tile__hint">Capítulo</span>
+            </span>
+          </label>
+          <label class="proximity-filter-tile proximity-filter-tile--media">
+            <input type="radio" name="media" value="anime" class="proximity-filter-tile__input"
+              {% if saved_filters.media == 'anime' %}checked{% endif %}>
+            <span class="proximity-filter-tile__face">
+              {% if game.icon_image %}
+              <img src="{{ game.icon_image.url }}" alt="" class="proximity-filter-tile__watermark" aria-hidden="true" decoding="async">
+              {% endif %}
+              <span class="proximity-filter-tile__label">Anime</span>
+              <span class="proximity-filter-tile__hint">Episodio</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="proximity-filters__scroll proximity-filters__scroll--arcs">
+        <fieldset class="proximity-filters__fieldset proximity-filters__fieldset--arcs" {% if filters_locked %}disabled{% endif %}>
+          <legend class="proximity-filters__legend">¿Con qué arcos quieres jugar?</legend>
+          <div class="proximity-filter-tile-grid">
+            {% for arc in arc_choices %}
+            <label class="proximity-filter-tile proximity-filter-tile--arc">
+              <input type="checkbox" name="arcs" value="{{ arc.slug }}" class="proximity-filter-tile__input"
+                {% if not saved_filters.arcs or arc.slug in saved_filters.arcs %}checked{% endif %}>
+              <span class="proximity-filter-tile__face">
+                <img src="{% static 'img/one-piece-menu.jpg' %}" alt="" class="proximity-filter-tile__watermark proximity-filter-tile__watermark--scene" aria-hidden="true" decoding="async">
+                <span class="proximity-filter-tile__label">{{ arc.label }}</span>
+              </span>
+            </label>
+            {% empty %}
+            <p class="arcade-text-muted proximity-filters__empty">Importa personajes y ejecuta backfill_one_piece_arcs.</p>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+    {% elif game.slug == 'league-of-legends' or game.slug == 'lol' %}
+      <div class="proximity-filters__scroll proximity-filters__scroll--years">
+        <fieldset class="proximity-filters__fieldset proximity-filters__fieldset--years" {% if filters_locked %}disabled{% endif %}>
+          <legend class="proximity-filters__legend">¿Con qué años quieres jugar?</legend>
+          <div class="proximity-filter-tile-grid proximity-filter-tile-grid--lol-years">
+            {% for year in year_choices %}
+            <label class="proximity-filter-tile proximity-filter-tile--lol-year">
+              <input type="checkbox" name="years" value="{{ year }}" class="proximity-filter-tile__input"
+                {% if year in saved_filters.years %}checked{% endif %}>
+              <span class="proximity-filter-tile__face">
+                {% if game.icon_image %}
+                <img src="{{ game.icon_image.url }}" alt="" class="proximity-filter-tile__watermark" aria-hidden="true" decoding="async">
+                {% endif %}
+                <span class="proximity-filter-tile__label">{{ year }}</span>
+              </span>
+            </label>
+            {% empty %}
+            <p class="arcade-text-muted proximity-filters__empty">No hay campeones con año de lanzamiento en el catálogo.</p>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+    {% elif game.slug == 'pokemon' %}
+      <div class="proximity-filters__scroll proximity-filters__scroll--generations">
+        <fieldset class="proximity-filters__fieldset proximity-filters__fieldset--generations" {% if filters_locked %}disabled{% endif %}>
+          <legend class="proximity-filters__legend">¿Con qué generaciones quieres jugar?</legend>
+          <div class="proximity-filter-tile-grid proximity-filter-tile-grid--generations">
+            {% for gen in generations %}
+            <label class="proximity-filter-tile proximity-filter-tile--gen">
+              <input type="checkbox" name="generations" value="{{ gen }}" class="proximity-filter-tile__input"
+                {% if gen in saved_filters.generations %}checked{% endif %}>
+              <span class="proximity-filter-tile__face">
+                {% if game.icon_image %}
+                <img src="{{ game.icon_image.url }}" alt="" class="proximity-filter-tile__watermark" aria-hidden="true" decoding="async">
+                {% endif %}
+                <span class="proximity-filter-tile__kicker">Gen</span>
+                <span class="proximity-filter-tile__label">{{ gen }}</span>
+              </span>
+            </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+      </div>
+    {% endif %}
+
+    {% if not filters_locked %}
+    <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-6">
+      Guardar y jugar
+    </button>
+    {% else %}
+    <a href="{{ play_url }}" class="arcade-btn arcade-btn--primary arcade-btn--full mt-6">Continuar partida</a>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}{% endblock %}

@@ -1,6 +1,7 @@
 from django.urls import reverse
 
 from apps.games.models import RoscoJackpotWinner, RoscoSessionStatus
+from apps.games.services.catalog.play_mode_navigation import next_mode_navigation
 from apps.games.services.catalog.play_background import resolve_background_url
 from apps.games.services.rosco.rosco_session_state import session_is_playable
 from apps.games.services.rosco.rosco_turn_processor import RoscoTurnProcessor
@@ -53,4 +54,5 @@ class RoscoContextBuilder:
             "session_status": session.rosco_status or RoscoSessionStatus.IN_PROGRESS,
             "is_perfect_winner": bool(winner),
             "share_amount": winner.share_amount if winner else 0,
+            **next_mode_navigation(self.game, self.user, self.mode),
         }

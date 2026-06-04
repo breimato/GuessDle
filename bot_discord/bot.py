@@ -25,6 +25,7 @@ django.setup()
 from django.contrib.auth.models import User
 
 from apps.accounts.models import GameElo
+from apps.accounts.services.dashboard.ranking_scope import ranking_elo_filter_q
 from apps.games.models import Game
 
 intents = discord.Intents.default()
@@ -149,7 +150,11 @@ def format_ranking(game_slug=None):
                 "Error", f"❗ Game '{game_slug}' was not found", embed_color
             )
 
-        game_elos = GameElo.objects.filter(game=game).order_by("-elo")[:10]
+        game_elos = (
+            GameElo.objects.filter(game=game)
+            .filter(ranking_elo_filter_q())
+            .order_by("-elo")[:10]
+        )
         embed_title = f"🏆 Leaderboard for {game.name}"
 
         final_thumbnail_url = None
@@ -183,7 +188,8 @@ def format_ranking(game_slug=None):
     else:
         global_embed_color = discord.Color.blue()
         game_elos = (
-            GameElo.objects.values("user__username")
+            GameElo.objects.filter(ranking_elo_filter_q())
+            .values("user__username")
             .annotate(total_elo=Sum("elo"))
             .order_by("-total_elo")[:10]
         )

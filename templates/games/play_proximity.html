@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/proximity-mode.css' %}">
+{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center py-8 px-4 proximity-play
+{% endblock %}
+
+{% block content %}
+{% static 'images/default-character.png' as default_portrait_url %}
+<nav class="play-nav w-full max-w-4xl{% if not can_play or filters_locked %} play-nav--filters-hidden{% endif %}" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+    {% if can_play and not filters_locked %}
+    <a href="{{ filters_url }}" class="arcade-btn arcade-btn--secondary play-nav__filters">Filtros</a>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
+
+<div id="proximity-game-data"
+     data-guess-url="{{ guess_url }}"
+     data-timeout-url="{{ timeout_url }}"
+     data-can-play="{{ can_play|yesno:'true,false' }}"
+     data-filters-locked="{{ filters_locked|yesno:'true,false' }}"
+     data-modes-url="{{ back_to_modes_url }}"
+     data-panel-url="{% url 'dashboard' %}"
+     {% if next_mode_url %}data-next-mode-url="{{ next_mode_url }}"{% endif %}
+     {% if next_mode_label %}data-next-mode-label="{{ next_mode_label }}"{% endif %}
+     data-value-unit="{{ value_unit }}"
+     data-is-team-play="{{ is_team_play|yesno:'true,false' }}"
+     data-deadline-iso="{{ deadline_iso|default:'' }}"
+     data-timed-out="{{ timed_out|yesno:'true,false' }}"
+     data-default-portrait="{{ default_portrait_url }}">
+</div>
+
+{% if won %}
+<script id="proximity-finished-flag"
+        data-won="true"
+        data-answer="{{ answer_value }}"
+        data-score="{{ score_locked }}"
+        data-first-guess="{{ first_guess_value }}"></script>
+{% elif timed_out or not can_play %}
+<script id="proximity-finished-flag"
+        data-won="false"
+        data-answer="{{ answer_value }}"
+        data-score="{{ score_locked }}"
+        data-first-guess="{{ first_guess_value|default:'' }}"
+        data-timed-out="{{ timed_out|yesno:'true,false' }}"></script>
+{% endif %}
+
+<div class="proximity-layout">
+  <header class="proximity-layout__header">
+    <div class="proximity-layout__title-row">
+      <h1 class="arcade-heading-lg">{{ game.name }} — {{ game_mode.label }}</h1>
+      <button
+        type="button"
+        class="mode-select-info-btn proximity-info-btn"
+        id="proximity-info-btn"
+        aria-label="Información sobre el modo"
+        aria-haspopup="dialog"
+        aria-controls="proximity-info-modal"
+      >ℹ</button>
+    </div>
+  </header>
+
+  {% if is_team_play and can_play %}
+  <div id="proximity-timer" class="proximity-timer arcade-card" aria-live="polite">
+    <span class="proximity-timer__label">Tiempo</span>
+    <span id="proximity-timer-value" class="proximity-timer__value">--:--</span>
+  </div>
+  {% endif %}
+
+  <section class="proximity-prompt arcade-card" aria-label="Pista del día">
+    {% if is_event_prompt %}
+    <p class="proximity-prompt__event-text">{{ event_prompt_text }}</p>
+    {% elif prompt_image_url %}
+    {% if prompt_question %}
+    <p class="proximity-prompt__question">{{ prompt_question }}</p>
+    {% endif %}
+    <img src="{{ prompt_image_url }}" alt="{{ prompt_title }}" class="proximity-prompt__image"
+         onerror="this.onerror=null; this.src='{{ default_portrait_url }}';">
+    <p class="proximity-prompt__name">{{ prompt_title }}</p>
+    {% else %}
+    {% if prompt_question %}
+    <p class="proximity-prompt__question">{{ prompt_question }}</p>
+    {% endif %}
+    <p class="proximity-prompt__name">{{ prompt_title }}</p>
+    {% endif %}
+  </section>
+
+  <form id="proximity-guess-form"
+        class="proximity-guess-form arcade-card {% if not can_play %}opacity-50 pointer-events-none{% endif %}"
+        novalidate>
+    {% csrf_token %}
+    <label for="guess" class="arcade-label">Tu respuesta ({{ value_unit }})</label>
+    <p id="proximity-guess-error" class="arcade-alert arcade-alert--error mt-2 hidden" role="alert"></p>
+    <input type="number" name="guess" id="guess" class="arcade-input mt-2" inputmode="numeric" required
+           {% if not can_play %}disabled{% endif %}>
+    <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
+            {% if not can_play %}disabled{% endif %}>
+      Probar
+    </button>
+  </form>
+</div>
+
+<div id="proximity-modal-root"></div>
+
+<div id="proximity-info-modal" class="arcade-modal-overlay mode-select-info-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="proximity-info-title">
+  <div class="arcade-modal mode-select-info-modal">
+    <button type="button" class="arcade-modal__close" data-close-proximity-info aria-label="Cerrar">&times;</button>
+    <h2 id="proximity-info-title" class="arcade-modal__title">{{ game_mode.label }}</h2>
+    <p class="arcade-text-muted">{{ game_info_text }}</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+<script src="{% static 'js/play-modal-nav.js' %}" defer></script>
+<script src="{% static 'js/proximity-live.js' %}" defer></script>
+{% endblock %}

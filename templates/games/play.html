@@ -81,6 +81,8 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
      data-max-extras-reached="{{ max_extras_reached|yesno:'true,false' }}"
      data-panel-url="{% url 'dashboard' %}"
      {% if back_to_modes_url %}data-modes-url="{{ back_to_modes_url }}"{% endif %}
+     {% if next_mode_url %}data-next-mode-url="{{ next_mode_url }}"{% endif %}
+     {% if next_mode_label %}data-next-mode-label="{{ next_mode_label }}"{% endif %}
      {% if reveal_hint_url %}data-reveal-url="{{ reveal_hint_url }}"{% endif %}
      {% if surrender_url %}data-surrender-url="{{ surrender_url }}"{% endif %}>
 </div>
@@ -195,6 +197,7 @@ min-h-screen flex flex-col items-center gap-8 py-10 px-4
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
 <script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/play-modal-nav.js' %}" defer></script>
 <script src="{% static 'js/attempts-live.js' %}" defer></script>
 {% if game_mode and game_mode.slug == 'radical' and can_play %}
 <script src="{% static 'js/radical-play-enter.js' %}" defer></script>

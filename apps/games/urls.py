@@ -16,6 +16,10 @@ from .views import (
     rosco_surrender,
     play_emoji_game,
     emoji_guess,
+    play_proximity_game,
+    proximity_filters,
+    proximity_guess,
+    proximity_timeout,
 )
 
 
@@ -38,4 +42,15 @@ urlpatterns = [
     path("<slug:slug>/<slug:mode_slug>/rosco/pass/", rosco_pass, name="rosco_pass"),
     path("<slug:slug>/<slug:mode_slug>/rosco/surrender/", rosco_surrender, name="rosco_surrender"),
     path("<slug:slug>/<slug:mode_slug>/emoji/guess/", emoji_guess, name="emoji_guess"),
+    path(
+        "<slug:slug>/<slug:mode_slug>/proximidad/filters/",
+        proximity_filters,
+        name="proximity_filters",
+    ),
+    path("<slug:slug>/<slug:mode_slug>/proximidad/guess/", proximity_guess, name="proximity_guess"),
+    path(
+        "<slug:slug>/<slug:mode_slug>/proximidad/timeout/",
+        proximity_timeout,
+        name="proximity_timeout",
+    ),
 ]

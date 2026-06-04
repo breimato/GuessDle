@@ -14,6 +14,7 @@ from apps.accounts.models import Challenge
 from apps.games.services.catalog.generation_utils import enrich_item_data
 
 from .models import (
+    ArcCatalog,
     DailyTarget,
     EmojiClueSet,
     ExtraDailyPlay,
@@ -22,6 +23,9 @@ from .models import (
     GameItem,
     GameMode,
     PlaySession,
+    ProximityAttempt,
+    ProximityDailyAssignment,
+    ProximityPrompt,
     RoscoJackpotWinner,
     RoscoLetterAttempt,
     RoscoQuestion,
@@ -107,7 +111,7 @@ class GameAdmin(admin.ModelAdmin):
             if original_id_from_source is not None:
                 parsed["id"] = original_id_from_source
 
-            parsed = enrich_item_data(parsed)
+            parsed = enrich_item_data(parsed, game=game)
 
             # Determine the name for the GameItem
             # Uses field_mapping first, then common default names
@@ -533,6 +537,33 @@ class EmojiClueSetAdmin(admin.ModelAdmin):
     @admin.display(description="Pistas")
     def clue_count(self, obj):
         return len(obj.clues or [])
+
+
+@admin.register(ArcCatalog)
+class ArcCatalogAdmin(admin.ModelAdmin):
+    list_display = ("game", "slug", "label", "sort_order", "active")
+    list_filter = ("game", "active")
+    search_fields = ("slug", "label")
+
+
+@admin.register(ProximityPrompt)
+class ProximityPromptAdmin(admin.ModelAdmin):
+    list_display = ("game", "prompt_text", "answer_value", "answer_episode", "kind", "active")
+    list_filter = ("game", "kind", "active")
+    search_fields = ("prompt_text",)
+
+
+@admin.register(ProximityDailyAssignment)
+class ProximityDailyAssignmentAdmin(admin.ModelAdmin):
+    list_display = ("user", "game", "mode", "date", "answer_value", "is_team")
+    list_filter = ("game", "mode", "date", "is_team")
+    readonly_fields = ("created_at",)
+
+
+@admin.register(ProximityAttempt)
+class ProximityAttemptAdmin(admin.ModelAdmin):
+    list_display = ("session", "guess_value", "distance", "created_at")
+    list_filter = ("session__game",)
 
 
 class WeeklyRoscoEntryInline(admin.TabularInline):

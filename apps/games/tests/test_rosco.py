@@ -358,8 +358,39 @@ class LolModeSelectTests(TestCase):
         self.assertContains(response, "lol-logo.png")
         self.assertContains(response, "audio/ahri_song.mp3")
         self.assertContains(response, "GuessDleBgmPage")
-        self.assertContains(response, "Volver al panel")
+        self.assertContains(response, "Volver al dashboard")
+        self.assertContains(response, 'aria-label="Volver al dashboard"')
         self.assertNotContains(response, "trainer-red.png")
+
+
+class OnePieceModeSelectTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username="op_selector", password="pass")
+        self.client.login(username="op_selector", password="pass")
+        self.game = Game.objects.create(
+            name="One Piece",
+            slug="one-piece",
+            data_source_url="https://example.com",
+            attributes=["capitulo"],
+        )
+        GameMode.objects.create(
+            game=self.game,
+            slug="normal",
+            label="Diario",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=0,
+        )
+
+    def test_one_piece_mode_select_uses_menu_background(self):
+        response = self.client.get(reverse("play", args=[self.game.slug]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Diario")
+        self.assertContains(response, "mode-select-one-piece")
+        self.assertContains(response, "one-piece-mode-select.css")
+        self.assertNotContains(response, "op-launcher")
+        self.assertNotContains(response, "trainer-red.png")
+        self.assertNotContains(response, "trainer-blue.png")
 
 
 class RoscoViewTests(TestCase):

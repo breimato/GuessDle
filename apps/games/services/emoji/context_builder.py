@@ -2,6 +2,7 @@ from django.urls import reverse
 
 from apps.games.models import Game, GameAttempt, GameMode
 from apps.games.services.catalog.item_pool_service import ItemPoolService
+from apps.games.services.catalog.play_mode_navigation import next_mode_navigation
 from apps.games.services.catalog.play_background import resolve_background_url
 from apps.games.services.daily.target_service import TargetService
 from apps.games.services.emoji.clue_service import EmojiClueService
@@ -65,4 +66,5 @@ class EmojiContextBuilder:
             "yesterday_target_name": (
                 yesterday_target.target.name if yesterday_target else None
             ),
+            **next_mode_navigation(self.game, self.user, self.mode),
         }

@@ -71,6 +71,7 @@ class GameModePlayType(models.TextChoices):
     WORDLE = "wordle", "Wordle"
     ROSCO = "rosco", "Rosco"
     EMOJI = "emoji", "Emoji"
+    PROXIMITY = "proximity", "Proximidad"
 
 
 MIN_EMOJI_CLUES = 3
@@ -111,6 +112,10 @@ class GameMode(models.Model):
                 "Minijuego diario con pistas de emojis progresivas. "
                 "Sin puntuación ELO: acierta el campeón del día o ríndete para ver la respuesta."
             )
+        if self.play_type == GameModePlayType.PROXIMITY:
+            from apps.games.services.proximity.game_config import proximity_info_text
+
+            return proximity_info_text(self.game)
         filt = self.item_filter or {}
         if "generacion__lte" in filt:
             count = int(filt["generacion__lte"])
@@ -131,6 +136,91 @@ class GameMode(models.Model):
     @property
     def is_emoji(self) -> bool:
         return self.play_type == GameModePlayType.EMOJI
+
+    @property
+    def is_proximity(self) -> bool:
+        return self.play_type == GameModePlayType.PROXIMITY
+
+
+class ArcCatalog(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="arc_catalog")
+    slug = models.SlugField()
+    label = models.CharField(max_length=120)
+    sort_order = models.PositiveSmallIntegerField(default=0)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ("game", "slug")
+        ordering = ("sort_order", "label")
+
+    def __str__(self):
+        return f"{self.game.slug}:{self.slug}"
+
+
+class ProximityPrompt(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="proximity_prompts")
+    prompt_text = models.TextField()
+    answer_value = models.PositiveIntegerField()
+    answer_episode = models.PositiveIntegerField(null=True, blank=True)
+    arcs = models.JSONField(default=list, blank=True)
+    kind = models.CharField(max_length=40, blank=True, default="event")
+    active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.game.slug}: {self.prompt_text[:50]}"
+
+
+class ProximityDailyAssignment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="proximity_assignments")
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="proximity_assignments")
+    mode = models.ForeignKey(GameMode, on_delete=models.CASCADE, related_name="proximity_assignments")
+    date = models.DateField()
+    is_team = models.BooleanField(default=False)
+    filter_config = models.JSONField(default=dict)
+    target_item = models.ForeignKey(
+        "GameItem",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="proximity_assignments",
+    )
+    proximity_prompt = models.ForeignKey(
+        ProximityPrompt,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="daily_assignments",
+    )
+    answer_value = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "game", "mode", "date", "is_team"],
+                name="unique_proximity_daily_assignment",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.user_id} {self.game.slug} {self.date}"
+
+
+class ProximityAttempt(models.Model):
+    session = models.ForeignKey("PlaySession", on_delete=models.CASCADE, related_name="proximity_attempts")
+    guess_value = models.IntegerField()
+    distance = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("created_at",)
+
+    def __str__(self):
+        return f"{self.session_id}: {self.guess_value} (Δ{self.distance})"
 
 
 class EmojiClueSet(models.Model):
@@ -412,6 +502,7 @@ class PlaySessionType(models.TextChoices):
     EXTRA = "EXTRA", "Extra"
     CHALLENGE = "CHALLENGE", "Challenge"
     ROSCO = "ROSCO", "Rosco"
+    PROXIMITY = "PROXIMITY", "Proximity"
 
 
 class RoscoSessionStatus(models.TextChoices):
@@ -434,6 +525,12 @@ class PlaySession(models.Model):
         help_text='Pistas de columna usadas: [{"attribute": "tipo_1", "value": "Fuego", "at_attempt": 5}]',
     )
     surrendered = models.BooleanField(default=False)
+    proximity_filter = models.JSONField(default=dict, blank=True)
+    proximity_first_distance = models.PositiveIntegerField(null=True, blank=True)
+    proximity_score_locked = models.PositiveSmallIntegerField(null=True, blank=True)
+    proximity_completed = models.BooleanField(default=False)
+    proximity_started_at = models.DateTimeField(null=True, blank=True)
+    proximity_timed_out = models.BooleanField(default=False)
     emoji_clues_revealed = models.PositiveSmallIntegerField(default=1)
     rosco_current_letter = models.CharField(max_length=2, blank=True, default="")
     rosco_status = models.CharField(

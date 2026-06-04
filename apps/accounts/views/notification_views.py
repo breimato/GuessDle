@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 
 from apps.accounts.services.dashboard.dashboard_context import active_games_queryset
 from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
+from apps.accounts.services.dashboard.ranking_scope import ranking_modes_for_game
 from apps.accounts.services.notifications.notification_service import NotificationService
 from apps.common.utils import json_success
 
@@ -22,7 +23,7 @@ def _build_ranking_sync_payload(user):
         "global_ranking": PlayerStatsService.build_global_ranking(),
         "ranking_by_game": PlayerStatsService.build_ranking_per_game(),
         "ranking_has_modes": {
-            game.slug: game.has_modes()
+            game.slug: bool(ranking_modes_for_game(game))
             for game in available_games
         },
     }

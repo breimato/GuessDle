@@ -4,11 +4,13 @@
   <section class="lol-launcher__window" aria-label="Selección de modo de {{ game.name }}">
     <header class="lol-launcher__titlebar">
       <span class="lol-launcher__titlebar-brand">GuessDle · {{ game.name }}</span>
-      <span class="lol-launcher__titlebar-controls" aria-hidden="true">
-        <span>—</span>
-        <span>□</span>
-        <span>×</span>
-      </span>
+      <div class="lol-launcher__titlebar-actions">
+        <span class="lol-launcher__titlebar-controls" aria-hidden="true">
+          <span>—</span>
+          <span>□</span>
+        </span>
+        <a href="{% url 'dashboard' %}" class="lol-launcher__titlebar-close" aria-label="Volver al dashboard">×</a>
+      </div>
     </header>
 
     <div class="lol-launcher__viewport">
@@ -56,6 +58,11 @@
               {{ entry.mode.label }}
               <span>({{ entry.emoji_status_label }})</span>
             </span>
+            {% elif entry.is_proximity and entry.proximity_unavailable %}
+            <span class="lol-launcher__mode-btn--disabled" aria-disabled="true">
+              {{ entry.mode.label }}
+              <span>({{ entry.proximity_status_label }})</span>
+            </span>
             {% else %}
             <a
               href="{{ entry.play_url }}"
@@ -65,8 +72,10 @@
               {{ entry.mode.label }}
               {% if entry.is_rosco %}
               ({{ entry.rosco_status_label }})
+              {% elif entry.is_proximity and entry.resolved %}
+              (HECHO)
               {% elif entry.resolved %}
-              (completado hoy)
+              (HECHO)
               {% endif %}
             </a>
             {% endif %}
@@ -96,7 +105,7 @@
 
     <footer class="lol-launcher__footer">
       <span class="lol-launcher__footer-brand">GuessDle</span>
-      <a href="{% url 'dashboard' %}" class="lol-launcher__footer-link">← Volver al panel</a>
+      <a href="{% url 'dashboard' %}" class="lol-launcher__footer-link">← Volver al dashboard</a>
       <label class="lol-launcher__footer-option">
         <input type="checkbox" id="lol-launcher-mute">
         Silenciar música

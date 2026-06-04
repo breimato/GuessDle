@@ -2,11 +2,10 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.timezone import localtime
 
 from apps.accounts.models import Challenge
 from apps.accounts.services.notifications.notification_service import NotificationService
-from apps.games.models import ExtraDailyPlay, Game
+from apps.games.models import Game
 from apps.accounts.services.challenges.challenge_resolution_service import ChallengeResolutionService
 from apps.accounts.services.challenges.challenge_view_helper import ChallengeViewHelper
 from apps.games.services.play_session.context_builder import ContextBuilder
@@ -14,14 +13,9 @@ from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.play_session.guess_processor import GuessProcessor
 from apps.games.services.catalog.mode_resolver import ModeResolver
 from apps.games.services.catalog.play_background import resolve_background_url
-from apps.games.constants import is_league_game
-from apps.games.services.emoji.daily_target_service import EmojiDailyTargetService
-from apps.games.services.rosco.rosco_access import user_can_see_rosco, rosco_is_available_today
-from apps.games.services.rosco.week_utils import week_label
-from apps.games.services.rosco.weekly_pot_service import WeeklyPotService
-from apps.games.services.rosco.weekly_rosco_service import WeeklyRoscoService
+from apps.games.constants import is_league_game, is_one_piece_game
+from apps.games.services.catalog.mode_select_service import ModeSelectService
 from apps.games.services.daily.target_service import TargetService
-from apps.games.models import RoscoSessionStatus
 
 from apps.games.views.guess_responses import build_attempt_payload, reject_if_not_playable
 from apps.accounts.services.challenges.challenge_points import challenge_points_delta_for_user
@@ -32,93 +26,7 @@ def should_show_mode_select(game: Game, mode_slug) -> bool:
 
 
 def render_mode_select(request, game: Game, user, slug: str):
-    modes = []
-    for mode in ModeResolver(game).active_modes():
-        if mode.is_rosco:
-            if not user_can_see_rosco(user) or not rosco_is_available_today():
-                continue
-
-            if not WeeklyRoscoService.has_question_bank(game):
-                modes.append(
-                    {
-                        "mode": mode,
-                        "is_rosco": True,
-                        "rosco_unavailable": True,
-                        "play_url": reverse("play_mode", args=[slug, mode.slug]),
-                        "pot_amount": 0,
-                        "rosco_status_label": "No disponible",
-                    }
-                )
-                continue
-
-            rosco_service = WeeklyRoscoService(game, mode, user)
-            weekly_rosco = rosco_service.ensure_current_weekly_rosco()
-            session = rosco_service.get_or_create_session(weekly_rosco)
-            pot = WeeklyPotService(weekly_rosco).get_pot()
-            status = session.rosco_status or RoscoSessionStatus.IN_PROGRESS
-            modes.append(
-                {
-                    "mode": mode,
-                    "is_rosco": True,
-                    "play_url": reverse("play_mode", args=[slug, mode.slug]),
-                    "pot_amount": pot.pot_amount,
-                    "week_label": week_label(weekly_rosco),
-                    "rosco_status": status,
-                    "rosco_status_label": _rosco_status_label(status),
-                }
-            )
-            continue
-
-        if mode.is_emoji:
-            service = TargetService(game, user, mode=mode)
-            if not EmojiDailyTargetService.has_clue_bank(game):
-                modes.append(
-                    {
-                        "mode": mode,
-                        "is_rosco": False,
-                        "is_emoji": True,
-                        "emoji_unavailable": True,
-                        "resolved": False,
-                        "play_url": reverse("play_mode", args=[slug, mode.slug]),
-                        "emoji_status_label": "No disponible",
-                    }
-                )
-                continue
-
-            modes.append(
-                {
-                    "mode": mode,
-                    "is_rosco": False,
-                    "is_emoji": True,
-                    "emoji_unavailable": False,
-                    "resolved": service.is_daily_resolved(),
-                    "play_url": reverse("play_mode", args=[slug, mode.slug]),
-                }
-            )
-            continue
-
-        service = TargetService(game, user, mode=mode)
-        extra_service = ExtraDailyService(user, game, mode=mode)
-        active_extra = ExtraDailyPlay.objects.filter(
-            user=user,
-            game=game,
-            mode=mode,
-            created_at__date=localtime().date(),
-            completed=False,
-        ).first()
-        modes.append(
-            {
-                "mode": mode,
-                "is_rosco": False,
-                "resolved": service.is_daily_resolved(),
-                "play_url": reverse("play_mode", args=[slug, mode.slug]),
-                "active_extra_id": active_extra.id if active_extra else None,
-                "can_start_extra": service.is_daily_resolved()
-                and not extra_service.max_reached()
-                and not active_extra,
-                "max_extras_reached": extra_service.max_reached(),
-            }
-        )
+    modes = ModeSelectService(game, user).build_entries()
 
     return render(
         request,
@@ -127,19 +35,9 @@ def render_mode_select(request, game: Game, user, slug: str):
             "game": game,
             "modes": modes,
             "is_league_mode_select": is_league_game(game.slug),
+            "is_one_piece_mode_select": is_one_piece_game(game.slug),
         },
     )
-
-
-def _rosco_status_label(status: str) -> str:
-    labels = {
-        RoscoSessionStatus.IN_PROGRESS: "En curso",
-        RoscoSessionStatus.FAILED: "Fallaste esta semana",
-        RoscoSessionStatus.COMPLETED: "Completado esta semana",
-        RoscoSessionStatus.WON_PERFECT: "¡Rosco completo!",
-        RoscoSessionStatus.SURRENDERED: "Rendida",
-    }
-    return labels.get(status, "En curso")
 
 
 def render_missing_daily_target(request, game: Game, mode):

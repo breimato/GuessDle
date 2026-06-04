@@ -57,7 +57,8 @@ class Command(BaseCommand):
             game.modes.filter(
                 active=True,
                 play_type__in=[GameModePlayType.WORDLE, GameModePlayType.EMOJI],
-            ).order_by("sort_order", "slug")
+            )
+            .order_by("sort_order", "slug")
         )
         return modes if modes else [None]
 

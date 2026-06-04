@@ -1,0 +1,23 @@
+.mode-select-one-piece {
+  background-color: #000;
+  background-image:
+    linear-gradient(rgba(7, 24, 43, 0.35), rgba(7, 24, 43, 0.45)),
+    url("/static/img/one-piece-menu.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.mode-select-one-piece > main {
+  position: relative;
+  z-index: 1;
+}
+
+.mode-select-one-piece .mode-select-stage--no-trainers {
+  justify-content: center;
+}
+
+.mode-select-one-piece .mode-select-modes {
+  max-width: 22rem;
+}

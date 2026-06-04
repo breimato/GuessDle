@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-lg mx-auto text-center arcade-card p-8">
+  <h1 class="arcade-heading-lg mb-4">{{ game_mode.label }}</h1>
+  <p class="arcade-text-muted mb-6">{{ message }}</p>
+  <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--primary">Volver a modos</a>
+</div>
+{% endblock %}

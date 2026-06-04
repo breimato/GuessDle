@@ -1,0 +1,571 @@
+.proximity-play {
+  background: radial-gradient(ellipse at top, rgba(30, 58, 95, 0.35), transparent 60%);
+}
+
+.proximity-play .play-nav--filters-hidden .play-nav__filters {
+  display: none !important;
+}
+
+.proximity-layout {
+  width: 100%;
+  max-width: 42rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.proximity-layout__header {
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.proximity-layout__title-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.proximity-info-btn {
+  margin-top: 0.15rem;
+}
+
+.proximity-prompt {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.proximity-prompt__image {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+.proximity-prompt__question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: var(--cab-ink, #1a1a1a);
+}
+
+.proximity-prompt__name {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.proximity-prompt__event-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.proximity-score-locked {
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.proximity-score-locked__note {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-top: 0.25rem;
+}
+
+.proximity-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.proximity-timer__label {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.proximity-timer__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--cabinet-accent, #f5c542);
+}
+
+.proximity-filters__fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+}
+
+.proximity-filters__fieldset--compact {
+  margin-bottom: 1rem;
+}
+
+.proximity-filters__legend {
+  font-family: var(--font-marquee);
+  font-size: 0.62rem;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cab-muted);
+  margin-bottom: 0.75rem;
+  padding: 0;
+}
+
+.proximity-filters__scroll {
+  max-height: min(52vh, 26rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.35rem 0.35rem 0.35rem 0;
+  margin: 0 -0.15rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cab-yellow) rgba(0, 0, 0, 0.25);
+}
+
+.proximity-filters__scroll::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.proximity-filters__scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.18);
+  border: 2px solid var(--cab-panel-border);
+}
+
+.proximity-filters__scroll::-webkit-scrollbar-thumb {
+  background: var(--cab-yellow);
+  border: 2px solid var(--cab-panel-border);
+}
+
+.proximity-filters__empty {
+  grid-column: 1 / -1;
+}
+
+.proximity-filter-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.25rem, 1fr));
+  gap: 0.65rem;
+}
+
+.proximity-filter-tile-grid--duo {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.proximity-filter-tile {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: var(--cursor-lol);
+  text-align: center;
+  font: inherit;
+  color: inherit;
+}
+
+.proximity-filter-tile:active {
+  cursor: var(--cursor-blade);
+}
+
+.proximity-filter-tile__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.proximity-filter-tile__face {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 6.5rem;
+  padding: 0.65rem 0.45rem;
+  background: linear-gradient(165deg, #ede4d4 0%, #d8c9ad 100%);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow-sm);
+  overflow: hidden;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.proximity-filter-tile:hover .proximity-filter-tile__face {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-filter-tile:has(.proximity-filter-tile__input:checked) .proximity-filter-tile__face,
+.proximity-filter-tile--lol-era.is-active .proximity-filter-tile__face {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cab-panel-border);
+}
+
+.proximity-filter-tile:has(.proximity-filter-tile__input:focus-visible) .proximity-filter-tile__face,
+.proximity-filter-tile--lol-era:focus-visible .proximity-filter-tile__face {
+  outline: 3px solid var(--cab-blue);
+  outline-offset: 2px;
+}
+
+.proximity-filter-tile__watermark {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 3.75rem;
+  height: 3.75rem;
+  object-fit: contain;
+  opacity: 0.16;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.proximity-filter-tile--arc .proximity-filter-tile__watermark {
+  width: 4.25rem;
+  height: 4.25rem;
+  opacity: 0.2;
+}
+
+.proximity-filter-tile__kicker {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-marquee);
+  font-size: 0.45rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cab-muted);
+}
+
+.proximity-filter-tile__label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.48rem, 1.6vw, 0.58rem);
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--cab-ink);
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.proximity-filter-tile--gen .proximity-filter-tile__label {
+  font-size: clamp(0.85rem, 2.4vw, 1rem);
+  line-height: 1.2;
+}
+
+.proximity-filter-tile--media .proximity-filter-tile__label {
+  font-size: clamp(0.55rem, 1.8vw, 0.65rem);
+}
+
+.proximity-filter-tile__hint {
+  position: relative;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--cab-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.proximity-filter-tile--year-input .proximity-filter-tile__face {
+  min-height: 5.5rem;
+}
+
+.proximity-filter-tile__number {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 6rem;
+  margin: 0;
+  padding: 0.35rem 0.25rem;
+  border: 2px solid var(--cab-panel-border);
+  background: var(--cab-input-bg);
+  font-family: var(--font-marquee);
+  font-size: 0.72rem;
+  text-align: center;
+  color: var(--cab-ink);
+}
+
+.proximity-filter-tile__number:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--cab-blue);
+}
+
+.proximity-filters__range {
+  margin-top: 0.5rem;
+}
+
+.proximity-filters__fieldset:disabled .proximity-filter-tile {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .proximity-filter-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .proximity-filters__scroll {
+    max-height: min(58vh, 24rem);
+  }
+}
+
+.proximity-filters__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: var(--cursor-lol);
+}
+
+.proximity-filters__check:hover {
+  cursor: var(--cursor-lol);
+}
+
+.proximity-filters__check:active {
+  cursor: var(--cursor-blade);
+}
+
+.proximity-filters__check input[type="checkbox"] {
+  cursor: var(--cursor-lol);
+}
+
+.proximity-filters__check input[type="checkbox"]:active {
+  cursor: var(--cursor-blade);
+}
+
+/* —— One Piece / LoL / Pokémon: filtros —— */
+.proximity-filters--one-piece .proximity-filters__title,
+.proximity-filters--lol .proximity-filters__title,
+.proximity-filters--pokemon .proximity-filters__title {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  font-size: clamp(0.85rem, 2.8vw, 1.15rem);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: #fff8e7;
+  background: var(--cab-red-dark);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: 4px 4px 0 var(--cab-panel-border);
+  text-shadow: none;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--media .proximity-filter-tile__face {
+  min-height: 7.25rem;
+  padding: 0.85rem 0.65rem;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--media .proximity-filter-tile__label {
+  font-size: clamp(0.72rem, 2.4vw, 0.95rem);
+  line-height: 1.35;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--media .proximity-filter-tile__hint {
+  font-size: clamp(0.62rem, 1.8vw, 0.82rem);
+  letter-spacing: 0.05em;
+}
+
+.proximity-filters--one-piece .proximity-filters__scroll--arcs,
+.proximity-filters--lol .proximity-filters__scroll--years,
+.proximity-filters--pokemon .proximity-filters__scroll--generations {
+  max-height: min(68vh, 38rem);
+  margin-top: 0.25rem;
+  padding: 1rem 0.85rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.12);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.18);
+}
+
+.proximity-filters--one-piece .proximity-filters__fieldset--arcs,
+.proximity-filters--lol .proximity-filters__fieldset--years,
+.proximity-filters--pokemon .proximity-filters__fieldset--generations {
+  margin-bottom: 0;
+}
+
+.proximity-filters--one-piece .proximity-filters__fieldset--arcs .proximity-filters__legend,
+.proximity-filters--lol .proximity-filters__fieldset--years .proximity-filters__legend,
+.proximity-filters--pokemon .proximity-filters__fieldset--generations .proximity-filters__legend {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto 0.85rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: clamp(0.58rem, 1.9vw, 0.75rem);
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  color: #fff8e7;
+  background: var(--cab-red-dark);
+  border: 2px solid var(--cab-panel-border);
+  box-shadow: 3px 3px 0 var(--cab-panel-border);
+}
+
+.proximity-filters--one-piece .proximity-filters__scroll--arcs .proximity-filter-tile-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--arc .proximity-filter-tile__face {
+  min-height: 7.75rem;
+  padding: 0.8rem 0.6rem;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--arc .proximity-filter-tile__label {
+  font-size: clamp(0.55rem, 1.5vw, 0.68rem);
+  line-height: 1.4;
+  max-width: 100%;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile__face {
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile:hover .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile:hover .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile:hover .proximity-filter-tile__face {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-filters--one-piece .proximity-filter-tile:active .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile:active .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile:active .proximity-filter-tile__face {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--cab-panel-border);
+}
+
+.proximity-filters--one-piece .proximity-filter-tile:has(.proximity-filter-tile__input:checked) .proximity-filter-tile__face,
+.proximity-filters--one-piece .proximity-filter-tile:has(.proximity-filter-tile__input:checked):hover .proximity-filter-tile__face,
+.proximity-filters--one-piece .proximity-filter-tile:has(.proximity-filter-tile__input:checked):active .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile:has(.proximity-filter-tile__input:checked) .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile:has(.proximity-filter-tile__input:checked):hover .proximity-filter-tile__face,
+.proximity-filters--lol .proximity-filter-tile:has(.proximity-filter-tile__input:checked):active .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile:has(.proximity-filter-tile__input:checked) .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile:has(.proximity-filter-tile__input:checked):hover .proximity-filter-tile__face,
+.proximity-filters--pokemon .proximity-filter-tile:has(.proximity-filter-tile__input:checked):active .proximity-filter-tile__face {
+  background: linear-gradient(165deg, #e85a4a 0%, var(--cab-red) 42%, var(--cab-red-dark) 100%);
+  border-color: #5a1a14;
+  transform: translate(4px, 4px);
+  box-shadow: inset 0 3px 0 rgba(255, 220, 120, 0.35);
+}
+
+.proximity-filters--one-piece
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__label,
+.proximity-filters--one-piece
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__hint,
+.proximity-filters--one-piece
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__kicker,
+.proximity-filters--lol
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__label,
+.proximity-filters--pokemon
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__label,
+.proximity-filters--pokemon
+  .proximity-filter-tile:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__kicker {
+  color: #fff8e7;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.proximity-filters--pokemon .proximity-filter-tile-grid--generations {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.proximity-filters--pokemon .proximity-filter-tile--gen .proximity-filter-tile__face {
+  min-height: 7.25rem;
+  padding: 0.8rem 0.55rem;
+}
+
+.proximity-filters--pokemon .proximity-filter-tile--gen .proximity-filter-tile__label {
+  font-size: clamp(0.9rem, 2.6vw, 1.1rem);
+}
+
+.proximity-filters--pokemon .proximity-filter-tile--gen .proximity-filter-tile__kicker {
+  font-size: clamp(0.5rem, 1.6vw, 0.58rem);
+}
+
+.proximity-filters--pokemon .proximity-filter-tile--gen .proximity-filter-tile__watermark {
+  opacity: 0.14;
+}
+
+.proximity-filters--one-piece .proximity-filter-tile--arc .proximity-filter-tile__watermark--scene {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  transform: none;
+}
+
+.proximity-filters--one-piece
+  .proximity-filter-tile--arc:has(.proximity-filter-tile__input:checked)
+  .proximity-filter-tile__watermark--scene {
+  opacity: 0.55;
+  filter: saturate(1.15) brightness(1.05);
+}
+
+.proximity-filters--lol .proximity-filter-tile-grid--lol-years {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.proximity-filters--lol .proximity-filter-tile--lol-year .proximity-filter-tile__face {
+  min-height: 6.5rem;
+  padding: 0.75rem 0.5rem;
+}
+
+.proximity-filters--lol .proximity-filter-tile--lol-year .proximity-filter-tile__label {
+  font-size: clamp(0.8rem, 2.4vw, 1rem);
+  line-height: 1.25;
+}
+
+.proximity-filters--lol .proximity-filter-tile--lol-year .proximity-filter-tile__watermark {
+  opacity: 0.14;
+}
+
+@media (max-width: 640px) {
+  .proximity-filters--one-piece .proximity-filters__scroll--arcs .proximity-filter-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .proximity-filters--lol .proximity-filter-tile-grid--lol-years {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .proximity-filters--pokemon .proximity-filter-tile-grid--generations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .proximity-filters--one-piece .proximity-filters__scroll--arcs,
+  .proximity-filters--lol .proximity-filters__scroll--years,
+  .proximity-filters--pokemon .proximity-filters__scroll--generations {
+    max-height: min(62vh, 32rem);
+  }
+
+  .proximity-filters--lol .proximity-filter-tile-grid--lol-years {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -144,7 +144,7 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
     <button data-tab="global" class="rank-tab arcade-tab arcade-tab--active">Global</button>
     {% for game in available_games %}
       {% if ranking_has_modes|get_item:game.slug %}
-        {% for mode in game.active_modes %}
+        {% for mode in game.ranking_modes %}
         <button data-tab="{{ game.slug }}-{{ mode.slug }}" class="rank-tab arcade-tab">{{ game.name }} — {{ mode.label }}</button>
         {% endfor %}
       {% else %}
@@ -157,7 +157,7 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
   </div>
   {% for game in available_games %}
     {% if ranking_has_modes|get_item:game.slug %}
-      {% for mode in game.active_modes %}
+      {% for mode in game.ranking_modes %}
       <div id="tab-{{ game.slug }}-{{ mode.slug }}" class="rank-panel ranking-scroll hidden" data-ranking-tab="{{ game.slug }}-{{ mode.slug }}">
         {% with mode_rows=ranking_by_game|get_item:game.slug|get_item:mode.slug %}
         {% include "partials/ranking_table.html" with rows=mode_rows %}

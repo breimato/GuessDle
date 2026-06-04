@@ -28,7 +28,7 @@ class GameModeTests(TestCase):
             GameItem.objects.create(
                 game=self.game,
                 name=name,
-                data=enrich_item_data({"id": national_id, "nombre": name}),
+                data=enrich_item_data({"id": national_id, "nombre": name}, game=self.game),
             )
 
     def test_generation_mapping(self):

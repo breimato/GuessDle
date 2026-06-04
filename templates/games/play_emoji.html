@@ -33,6 +33,8 @@ min-h-screen flex flex-col items-center py-8 px-4 emoji-play
      data-can-play="{{ can_play|yesno:'true,false' }}"
      data-modes-url="{{ back_to_modes_url }}"
      data-panel-url="{% url 'dashboard' %}"
+     {% if next_mode_url %}data-next-mode-url="{{ next_mode_url }}"{% endif %}
+     {% if next_mode_label %}data-next-mode-label="{{ next_mode_label }}"{% endif %}
      data-default-portrait="{{ default_portrait_url }}">
 </div>
 
@@ -118,5 +120,6 @@ min-h-screen flex flex-col items-center py-8 px-4 emoji-play
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
 <script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/play-modal-nav.js' %}" defer></script>
 <script src="{% static 'js/emoji-live.js' %}" defer></script>
 {% endblock %}

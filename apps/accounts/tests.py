@@ -543,6 +543,60 @@ class PlayerStatsServiceTests(TestCase):
         self.assertEqual(stats["average_attempts"], 6.0)
 
 
+class RankingScopeTests(TestCase):
+    def setUp(self):
+        from apps.games.models import GameMode, GameModePlayType
+
+        self.user = User.objects.create_user(username="rank_player", password="x")
+        self.game = Game.objects.create(name="Test", slug="rank-scope-game")
+        self.normal = GameMode.objects.create(
+            game=self.game,
+            slug="normal",
+            label="Normal",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=0,
+        )
+        GameMode.objects.create(
+            game=self.game,
+            slug="proximidad",
+            label="Proximidad",
+            play_type=GameModePlayType.PROXIMITY,
+            sort_order=1,
+        )
+        GameMode.objects.create(
+            game=self.game,
+            slug="emoji",
+            label="Emoji",
+            play_type=GameModePlayType.EMOJI,
+            sort_order=2,
+        )
+        GameElo.objects.create(user=self.user, game=self.game, mode=self.normal, elo=100)
+        GameElo.objects.create(
+            user=self.user,
+            game=self.game,
+            mode=GameMode.objects.get(slug="proximidad"),
+            elo=500,
+        )
+
+    def test_ranking_modes_exclude_minigames(self):
+        from apps.accounts.services.dashboard.ranking_scope import ranking_modes_for_game
+
+        slugs = [mode.slug for mode in ranking_modes_for_game(self.game)]
+        self.assertEqual(slugs, ["normal"])
+
+    def test_global_elo_ignores_proximity_and_emoji(self):
+        from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
+
+        self.assertEqual(PlayerStatsService.get_global_elo(self.user), 100)
+
+    def test_ranking_per_game_excludes_minigame_tabs(self):
+        from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
+
+        rankings = PlayerStatsService.build_ranking_per_game()
+        game_rankings = rankings[self.game.slug]
+        self.assertEqual(list(game_rankings.keys()), ["normal"])
+
+
 class RegistrationTests(TestCase):
     URL_REGISTER = "register"
     URL_LOGIN = "login"

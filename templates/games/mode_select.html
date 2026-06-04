@@ -3,13 +3,15 @@
 
 {% block title %}{{ game.name }} – Dificultad{% endblock %}
 
-{% block body_class %}{% if is_league_mode_select %}lol-launcher-body{% else %}cabinet-page{% endif %}{% endblock %}
+{% block body_class %}{% if is_league_mode_select %}lol-launcher-body{% elif is_one_piece_mode_select %}cabinet-page mode-select-one-piece{% else %}cabinet-page{% endif %}{% endblock %}
 
 {% block main_class %}{% if is_league_mode_select %}lol-launcher-main{% else %}min-h-screen flex flex-col items-center gap-8 py-10 px-4{% endif %}{% endblock %}
 
 {% block extra_css %}
 {% if is_league_mode_select %}
 <link rel="stylesheet" href="{% static 'css/lol-launcher.css' %}">
+{% elif is_one_piece_mode_select %}
+<link rel="stylesheet" href="{% static 'css/one-piece-mode-select.css' %}">
 {% endif %}
 {% endblock %}
 
@@ -42,7 +44,8 @@
   </div>
 </section>
 
-<div class="mode-select-stage">
+<div class="mode-select-stage{% if is_one_piece_mode_select %} mode-select-stage--no-trainers{% endif %}">
+  {% if not is_one_piece_mode_select %}
   <div class="mode-select-red-column">
     <img
       src="{% static 'img/mode-select/trainer-red.png' %}"
@@ -55,6 +58,7 @@
       <p class="mode-select-gb-bubble__text" aria-live="polite"></p>
     </div>
   </div>
+  {% endif %}
   <div class="mode-select-modes">
     {% for entry in modes %}
     <div class="mode-select-modes__group">
@@ -68,6 +72,11 @@
         {{ entry.mode.label }}
         <span class="text-sm opacity-70">({{ entry.emoji_status_label }})</span>
       </span>
+      {% elif entry.is_proximity and entry.proximity_unavailable %}
+      <span class="arcade-btn arcade-btn--secondary arcade-btn--full opacity-60 cursor-not-allowed" aria-disabled="true">
+        {{ entry.mode.label }}
+        <span class="text-sm opacity-70">({{ entry.proximity_status_label }})</span>
+      </span>
       {% else %}
       <a
         href="{{ entry.play_url }}"
@@ -77,8 +86,10 @@
         {{ entry.mode.label }}
         {% if entry.is_rosco %}
         <span class="text-sm opacity-70">({{ entry.rosco_status_label }})</span>
+        {% elif entry.is_proximity and entry.resolved %}
+        <span class="text-sm opacity-70">(HECHO)</span>
         {% elif entry.resolved %}
-        <span class="text-sm opacity-70">(completado hoy)</span>
+        <span class="text-sm opacity-70">(HECHO)</span>
         {% endif %}
       </a>
       {% endif %}
@@ -90,6 +101,7 @@
     </div>
     {% endfor %}
   </div>
+  {% if not is_one_piece_mode_select %}
   <img
     src="{% static 'img/mode-select/trainer-blue.png' %}"
     alt=""
@@ -97,6 +109,7 @@
     aria-hidden="true"
     decoding="async"
   >
+  {% endif %}
 </div>
 {% endif %}
 

@@ -699,12 +699,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ? `<a href="${modesUrl}" class="arcade-btn arcade-btn--secondary arcade-btn--full">Cambiar modo</a>`
     : "";
 
-  const hasHigherPriorityCta = Boolean(extraSectionHtml) || Boolean(modesLinkHtml);
-  const dashboardBtnClass = hasHigherPriorityCta
-    ? "arcade-btn arcade-btn--danger arcade-btn--full"
-    : "arcade-btn arcade-btn--primary arcade-btn--full";
-
-  const panelLinkHtml = `<a href="${panelUrl}" class="${dashboardBtnClass}">Dashboard</a>`;
+  const navigationHtml = isChallengeModal
+    ? `<a href="${panelUrl}" class="arcade-btn arcade-btn--primary arcade-btn--full">Dashboard</a>`
+    : (window.GuessDlePlayModalNav?.buildActionsHtml(
+        window.GuessDlePlayModalNav?.readFromDataset(gameData) ?? { modesUrl, panelUrl }
+      ) ?? `<a href="${panelUrl}" class="arcade-btn arcade-btn--primary arcade-btn--full">Dashboard</a>`);
 
   modal.innerHTML = `
   <button id="close-modal-btn" class="arcade-modal__close">&times;</button>
@@ -713,8 +712,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ${betMessageHtml}
   <div class="flex flex-col gap-3 mt-4 w-full max-w-xs">
     ${extraSectionHtml}
-    ${modesLinkHtml}
-    ${panelLinkHtml}
+    ${isChallengeModal ? modesLinkHtml : ""}
+    ${navigationHtml}
   </div>`;
 
 

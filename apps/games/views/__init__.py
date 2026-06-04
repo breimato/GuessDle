@@ -17,6 +17,12 @@ from apps.games.views.rosco_views import (
     rosco_surrender,
 )
 from apps.games.views.emoji_views import play_emoji_game, emoji_guess
+from apps.games.views.proximity_views import (
+    play_proximity_game,
+    proximity_filters,
+    proximity_guess,
+    proximity_timeout,
+)
 from apps.games.views.surrender_views import (
     surrender_challenge_game,
     surrender_daily_game,
@@ -43,4 +49,8 @@ __all__ = [
     "rosco_surrender",
     "play_emoji_game",
     "emoji_guess",
+    "play_proximity_game",
+    "proximity_filters",
+    "proximity_guess",
+    "proximity_timeout",
 ]

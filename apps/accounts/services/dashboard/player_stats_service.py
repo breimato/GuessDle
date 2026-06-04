@@ -2,6 +2,11 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 
 from apps.accounts.models import GameElo
+from apps.accounts.services.dashboard.ranking_scope import (
+    ranking_elo_filter_q,
+    ranking_modes_for_game,
+    ranking_session_filter_q,
+)
 from apps.games.models import Game, GameAttempt, PlaySession
 
 
@@ -96,9 +101,9 @@ class PlayerStatsService:
     def get_user_games_stats(user) -> list[dict]:
         rows = []
         for game in Game.objects.filter(active=True).prefetch_related("modes").order_by("name"):
-            modes = [m for m in game.modes.all() if m.active]
+            modes = ranking_modes_for_game(game)
             if modes:
-                for mode in sorted(modes, key=lambda m: (m.sort_order, m.slug)):
+                for mode in modes:
                     rows.append(PlayerStatsService.build_stats_row(user, game, mode=mode))
             else:
                 rows.append(PlayerStatsService.build_stats_row(user, game))
@@ -108,15 +113,17 @@ class PlayerStatsService:
     @staticmethod
     def get_global_elo(user) -> float:
         return (
-            GameElo.objects.filter(user=user, game__active=True).aggregate(
-                total=Sum("elo")
-            )["total"]
+            GameElo.objects.filter(user=user, game__active=True)
+            .filter(ranking_elo_filter_q())
+            .aggregate(total=Sum("elo"))["total"]
             or 0
         )
 
     @staticmethod
     def get_global_stats(user) -> dict:
-        base_sessions = PlaySession.objects.filter(user=user, game__active=True)
+        base_sessions = PlaySession.objects.filter(user=user, game__active=True).filter(
+            ranking_session_filter_q()
+        )
         games_finished = PlayerStatsService._count_finished_games(base_sessions)
         average_attempts = PlayerStatsService._calculate_ranking_average(base_sessions)
 
@@ -130,6 +137,7 @@ class PlayerStatsService:
     def build_global_ranking() -> list[dict]:
         user_ids = (
             GameElo.objects.filter(game__active=True)
+            .filter(ranking_elo_filter_q())
             .values_list("user_id", flat=True)
             .distinct()
         )
@@ -167,11 +175,11 @@ class PlayerStatsService:
     def build_ranking_per_game() -> dict:
         rankings = {}
         for game in Game.objects.filter(active=True).prefetch_related("modes").order_by("name"):
-            modes = [m for m in game.modes.all() if m.active]
+            modes = ranking_modes_for_game(game)
             if modes:
                 rankings[game.slug] = {
                     mode.slug: PlayerStatsService._build_ranking_rows(game, mode=mode)
-                    for mode in sorted(modes, key=lambda m: (m.sort_order, m.slug))
+                    for mode in modes
                 }
             else:
                 rankings[game.slug] = PlayerStatsService._build_ranking_rows(game)

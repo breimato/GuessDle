@@ -79,7 +79,7 @@ class TargetService:
         wordle_modes = [
             mode
             for mode in resolver.active_modes()
-            if mode.play_type != GameModePlayType.ROSCO
+            if mode.play_type == GameModePlayType.WORDLE
         ]
         if not wordle_modes:
             if resolver.has_modes():

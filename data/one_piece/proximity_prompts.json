@@ -1,0 +1,569 @@
+[
+  {
+    "prompt": "Shanks entrega el Sombrero de Paja a Luffy",
+    "answer_chapter": 1,
+    "arcs": [
+      "romance_dawn"
+    ],
+    "kind": "intro_personaje",
+    "answer_episode": 1
+  },
+  {
+    "prompt": "Zoro promete a Kuina convertirse en el mejor espadachín",
+    "answer_chapter": 7,
+    "arcs": [
+      "romance_dawn"
+    ],
+    "kind": "event",
+    "answer_episode": 4
+  },
+  {
+    "prompt": "Luffy estira el brazo por primera vez contra los Alvida Pirates",
+    "answer_chapter": 2,
+    "arcs": [
+      "romance_dawn"
+    ],
+    "kind": "event",
+    "answer_episode": 1
+  },
+  {
+    "prompt": "Zoro se une a la tripulación de Luffy",
+    "answer_chapter": 8,
+    "arcs": [
+      "romance_dawn"
+    ],
+    "kind": "event",
+    "answer_episode": 1
+  },
+  {
+    "prompt": "Luffy derrota a Buggy en Orange Town",
+    "answer_chapter": 39,
+    "arcs": [
+      "orange_town"
+    ],
+    "kind": "event",
+    "answer_episode": 38
+  },
+  {
+    "prompt": "Nami traiciona a los Sombrero de Paja en Baratie",
+    "answer_chapter": 68,
+    "arcs": [
+      "baratie"
+    ],
+    "kind": "event",
+    "answer_episode": 31
+  },
+  {
+    "prompt": "Sanji cocina el arroz para Gin en el Baratie",
+    "answer_chapter": 58,
+    "arcs": [
+      "baratie"
+    ],
+    "kind": "event",
+    "answer_episode": 32
+  },
+  {
+    "prompt": "Nami pide ayuda a Luffy tras la derrota de Arlong",
+    "answer_chapter": 94,
+    "arcs": [
+      "arlong_park"
+    ],
+    "kind": "event",
+    "answer_episode": 42
+  },
+  {
+    "prompt": "Luffy destruye el mapa de Arlong Park",
+    "answer_chapter": 95,
+    "arcs": [
+      "arlong_park"
+    ],
+    "kind": "event",
+    "answer_episode": 45
+  },
+  {
+    "prompt": "Smoker persigue a Luffy en Loguetown",
+    "answer_chapter": 99,
+    "arcs": [
+      "loguetown"
+    ],
+    "kind": "event",
+    "answer_episode": 52
+  },
+  {
+    "prompt": "Zoro jura vencer a Mihawk algún día",
+    "answer_chapter": 52,
+    "arcs": [
+      "baratie"
+    ],
+    "kind": "event",
+    "answer_episode": 24
+  },
+  {
+    "prompt": "Chopper se une a los Sombrero de Paja",
+    "answer_chapter": 134,
+    "arcs": [
+      "isla_drum"
+    ],
+    "kind": "event",
+    "answer_episode": 81
+  },
+  {
+    "prompt": "Luffy derrota a Wapol en Drum Castle",
+    "answer_chapter": 144,
+    "arcs": [
+      "isla_drum"
+    ],
+    "kind": "event",
+    "answer_episode": 87
+  },
+  {
+    "prompt": "Crocodile es derrotado en los subsuelos de Alabasta",
+    "answer_chapter": 218,
+    "arcs": [
+      "arabasta"
+    ],
+    "kind": "event",
+    "answer_episode": 143
+  },
+  {
+    "prompt": "Luffy salva a Vivi en el palacio real de Alabasta",
+    "answer_chapter": 212,
+    "arcs": [
+      "arabasta"
+    ],
+    "kind": "event",
+    "answer_episode": 128
+  },
+  {
+    "prompt": "Bellamy es noqueado de un golpe en Jaya",
+    "answer_chapter": 231,
+    "arcs": [
+      "jaya"
+    ],
+    "kind": "event",
+    "answer_episode": 151
+  },
+  {
+    "prompt": "Luffy suena la campana dorada en Skypiea",
+    "answer_chapter": 302,
+    "arcs": [
+      "skypiea"
+    ],
+    "kind": "fin_arco",
+    "answer_episode": 195
+  },
+  {
+    "prompt": "Enel es derrotado por el Thunderbolt de Luffy",
+    "answer_chapter": 298,
+    "arcs": [
+      "skypiea"
+    ],
+    "kind": "event",
+    "answer_episode": 192
+  },
+  {
+    "prompt": "Robin se une oficialmente a los Sombrero de Paja",
+    "answer_chapter": 218,
+    "arcs": [
+      "arabasta"
+    ],
+    "kind": "event",
+    "answer_episode": 143
+  },
+  {
+    "prompt": "Luffy usa Gear Third por primera vez",
+    "answer_chapter": 403,
+    "arcs": [
+      "enies_lobby"
+    ],
+    "kind": "event",
+    "answer_episode": 283
+  },
+  {
+    "prompt": "Luffy activa el Gear Second por primera vez",
+    "answer_chapter": 388,
+    "arcs": [
+      "enies_lobby"
+    ],
+    "kind": "event",
+    "answer_episode": 272
+  },
+  {
+    "prompt": "Robin declara que quiere vivir",
+    "answer_chapter": 398,
+    "arcs": [
+      "enies_lobby"
+    ],
+    "kind": "event",
+    "answer_episode": 278
+  },
+  {
+    "prompt": "Los Sombrero de Paja queman el World Government flag",
+    "answer_chapter": 398,
+    "arcs": [
+      "enies_lobby"
+    ],
+    "kind": "event",
+    "answer_episode": 278
+  },
+  {
+    "prompt": "El Going Merry recibe un funeral en Water 7",
+    "answer_chapter": 430,
+    "arcs": [
+      "water_7"
+    ],
+    "kind": "event",
+    "answer_episode": 312
+  },
+  {
+    "prompt": "Franky revela el Thousand Sunny",
+    "answer_chapter": 436,
+    "arcs": [
+      "water_7"
+    ],
+    "kind": "event",
+    "answer_episode": 321
+  },
+  {
+    "prompt": "Bartholomew Kuma separa a la tripulación en Sabaody",
+    "answer_chapter": 516,
+    "arcs": [
+      "archipielago_sabaody"
+    ],
+    "kind": "event",
+    "answer_episode": 516
+  },
+  {
+    "prompt": "Luffy golpea a un Tenryuubito en Sabaody",
+    "answer_chapter": 502,
+    "arcs": [
+      "archipielago_sabaody"
+    ],
+    "kind": "event",
+    "answer_episode": 396
+  },
+  {
+    "prompt": "Zoro entrena con Mihawk durante el timeskip",
+    "answer_chapter": 597,
+    "arcs": [
+      "post_guerra"
+    ],
+    "kind": "event",
+    "answer_episode": 516
+  },
+  {
+    "prompt": "El timeskip: la tripulación se reúne en Sabaody dos años después",
+    "answer_chapter": 598,
+    "arcs": [
+      "retorno_a_sabaody"
+    ],
+    "kind": "event",
+    "answer_episode": 517
+  },
+  {
+    "prompt": "Luffy usa Haoshoku Haki en el retorno a Sabaody",
+    "answer_chapter": 599,
+    "arcs": [
+      "retorno_a_sabaody"
+    ],
+    "kind": "event",
+    "answer_episode": 518
+  },
+  {
+    "prompt": "Luffy derrota a Hody Jones en Isla Gyojin",
+    "answer_chapter": 645,
+    "arcs": [
+      "isla_gyojin"
+    ],
+    "kind": "event",
+    "answer_episode": 564
+  },
+  {
+    "prompt": "Law corta a Vergo y destruye la fábrica de Smile",
+    "answer_chapter": 690,
+    "arcs": [
+      "punk_hazard"
+    ],
+    "kind": "event",
+    "answer_episode": 616
+  },
+  {
+    "prompt": "Luffy y Law forman alianza para derrotar a Kaido",
+    "answer_chapter": 667,
+    "arcs": [
+      "punk_hazard"
+    ],
+    "kind": "event",
+    "answer_episode": 593
+  },
+  {
+    "prompt": "Luffy usa Gear Fourth por primera vez contra Doflamingo",
+    "answer_chapter": 784,
+    "arcs": [
+      "dressrosa"
+    ],
+    "kind": "event",
+    "answer_episode": 703
+  },
+  {
+    "prompt": "Luffy derrota a Doflamingo con King Kong Gun",
+    "answer_chapter": 790,
+    "arcs": [
+      "dressrosa"
+    ],
+    "kind": "event",
+    "answer_episode": 709
+  },
+  {
+    "prompt": "Law usa Counter Shock contra Doflamingo",
+    "answer_chapter": 780,
+    "arcs": [
+      "dressrosa"
+    ],
+    "kind": "event",
+    "answer_episode": 722
+  },
+  {
+    "prompt": "Sanji revela su vínculo con la familia Vinsmoke",
+    "answer_chapter": 826,
+    "arcs": [
+      "whole_cake_island"
+    ],
+    "kind": "event",
+    "answer_episode": 778
+  },
+  {
+    "prompt": "Jinbe se une oficialmente a los Sombrero de Paja",
+    "answer_chapter": 863,
+    "arcs": [
+      "whole_cake_island"
+    ],
+    "kind": "event",
+    "answer_episode": 877
+  },
+  {
+    "prompt": "Big Mom intenta matar a los Sombrero de Paja en la boda",
+    "answer_chapter": 863,
+    "arcs": [
+      "whole_cake_island"
+    ],
+    "kind": "event",
+    "answer_episode": 877
+  },
+  {
+    "prompt": "Luffy derrota a Cracker en el bosque de Broc Coli",
+    "answer_chapter": 838,
+    "arcs": [
+      "whole_cake_island"
+    ],
+    "kind": "event",
+    "answer_episode": 791
+  },
+  {
+    "prompt": "Pedro se sacrifica para ayudar a escapar del Whole Cake",
+    "answer_chapter": 877,
+    "arcs": [
+      "whole_cake_island"
+    ],
+    "kind": "event",
+    "answer_episode": 851
+  },
+  {
+    "prompt": "Luffy es encerrado en Udon tras perder contra Kaido",
+    "answer_chapter": 924,
+    "arcs": [
+      "wano"
+    ],
+    "kind": "event",
+    "answer_episode": 916
+  },
+  {
+    "prompt": "Yamato decide luchar junto a Luffy contra Kaido",
+    "answer_chapter": 989,
+    "arcs": [
+      "wano"
+    ],
+    "kind": "event",
+    "answer_episode": 994
+  },
+  {
+    "prompt": "Luffy despierta el Haki del Rey frente a Kaido",
+    "answer_chapter": 1010,
+    "arcs": [
+      "wano"
+    ],
+    "kind": "event",
+    "answer_episode": 984
+  },
+  {
+    "prompt": "Luffy despierta Gear Fifth por primera vez",
+    "answer_chapter": 1044,
+    "arcs": [
+      "wano"
+    ],
+    "kind": "event",
+    "answer_episode": 1071
+  },
+  {
+    "prompt": "Luffy derrota a Kaido con Bajrang Gun",
+    "answer_chapter": 1050,
+    "arcs": [
+      "wano"
+    ],
+    "kind": "fin_arco",
+    "answer_episode": 1080
+  },
+  {
+    "prompt": "Ace muere protegiendo a Luffy en Marineford",
+    "answer_chapter": 574,
+    "arcs": [
+      "marineford"
+    ],
+    "kind": "event",
+    "answer_episode": 483
+  },
+  {
+    "prompt": "Whitebeard proclama que One Piece existe",
+    "answer_chapter": 576,
+    "arcs": [
+      "marineford"
+    ],
+    "kind": "fin_arco",
+    "answer_episode": 484
+  },
+  {
+    "prompt": "Shanks detiene el ataque de Akainu en Marineford",
+    "answer_chapter": 579,
+    "arcs": [
+      "marineford"
+    ],
+    "kind": "event",
+    "answer_episode": 488
+  },
+  {
+    "prompt": "Imu destruye la isla de Lulusia",
+    "answer_chapter": 1060,
+    "arcs": [
+      "reverie"
+    ],
+    "kind": "event",
+    "answer_episode": 1088
+  },
+  {
+    "prompt": "Sabo es acusado del asesinato de Cobra en Reverie",
+    "answer_chapter": 1084,
+    "arcs": [
+      "reverie"
+    ],
+    "kind": "event",
+    "answer_episode": 1118
+  },
+  {
+    "prompt": "Usopp dispara a un pájaro desde la Torre de Gion en God Valley",
+    "answer_chapter": 1086,
+    "arcs": [
+      "egghead"
+    ],
+    "kind": "event",
+    "answer_episode": 1098
+  },
+  {
+    "prompt": "Vegapunk transmite su mensaje al mundo desde Egghead",
+    "answer_chapter": 1114,
+    "arcs": [
+      "egghead"
+    ],
+    "kind": "event",
+    "answer_episode": 1129
+  },
+  {
+    "prompt": "Luffy transforma a un Buster Call en goma en Egghead",
+    "answer_chapter": 1095,
+    "arcs": [
+      "egghead"
+    ],
+    "kind": "event",
+    "answer_episode": 1108
+  },
+  {
+    "prompt": "Zoro entrena con los Sombrero de Paja en Whiskey Peak",
+    "answer_chapter": 115,
+    "arcs": [
+      "whiskey_peak"
+    ],
+    "kind": "event",
+    "answer_episode": 70
+  },
+  {
+    "prompt": "Brook se une a los Sombrero de Paja en Thriller Bark",
+    "answer_chapter": 489,
+    "arcs": [
+      "thriller_bark"
+    ],
+    "kind": "event",
+    "answer_episode": 381
+  },
+  {
+    "prompt": "Zoro toma el dolor de Luffy de Kuma en Thriller Bark",
+    "answer_chapter": 485,
+    "arcs": [
+      "thriller_bark"
+    ],
+    "kind": "event",
+    "answer_episode": 377
+  },
+  {
+    "prompt": "Luffy libera a Hancock en Amazon Lily",
+    "answer_chapter": 523,
+    "arcs": [
+      "amazon_lily"
+    ],
+    "kind": "event",
+    "answer_episode": 417
+  },
+  {
+    "prompt": "Ivankov cura a Luffy del veneno de Magellan",
+    "answer_chapter": 548,
+    "arcs": [
+      "impel_down"
+    ],
+    "kind": "event",
+    "answer_episode": 451
+  },
+  {
+    "prompt": "Buggy y Alvida se reencuentran en Impel Down",
+    "answer_chapter": 526,
+    "arcs": [
+      "impel_down"
+    ],
+    "kind": "event",
+    "answer_episode": 422
+  },
+  {
+    "prompt": "Morgan corta la estatua de Marine en Shells Town",
+    "answer_chapter": 4,
+    "arcs": [
+      "romance_dawn"
+    ],
+    "kind": "event",
+    "answer_episode": 2
+  },
+  {
+    "prompt": "Usopp protege a Kaya de los Black Cat Pirates",
+    "answer_chapter": 41,
+    "arcs": [
+      "villa_syrup"
+    ],
+    "kind": "event",
+    "answer_episode": 17
+  },
+  {
+    "prompt": "Luffy derrota a Don Krieg en el Baratie",
+    "answer_chapter": 68,
+    "arcs": [
+      "baratie"
+    ],
+    "kind": "event",
+    "answer_episode": 31
+  }
+]

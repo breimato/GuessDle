@@ -12,6 +12,7 @@ from apps.games.services.extra.session import resolve_global_average
 from apps.games.services.hints.hint_reveal_service import HintRevealService
 from apps.games.services.catalog.item_pool_service import ItemPoolService
 from apps.games.services.catalog.play_background import resolve_background_url
+from apps.games.services.catalog.play_mode_navigation import next_mode_navigation
 from apps.games.services.play_session.play_context import PlayContext
 from apps.games.services.play_session.play_url_registry import PlayUrlRegistry
 from apps.games.services.play_session.session_context_loader import SessionContextLoader
@@ -76,6 +77,7 @@ class ContextBuilder:
 
         if mode and ModeResolver(self.game).has_modes() and not self.challenge:
             context["back_to_modes_url"] = reverse("play", args=[self.game.slug])
+            context.update(next_mode_navigation(self.game, self.request.user, mode))
 
         if self.daily_target or self.extra_play:
             context["guess_url"] = url_registry.guess_url()

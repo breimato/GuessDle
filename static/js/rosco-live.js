@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const passBtn = document.getElementById("rosco-pass-btn");
   const surrenderBtn = document.getElementById("rosco-surrender-btn");
   const modalRoot = document.getElementById("rosco-modal-root");
+  const modalNav = window.GuessDlePlayModalNav?.readFromDataset(gameData) ?? {};
 
   function postAction(url, body = new URLSearchParams()) {
     return fetch(url, {
@@ -75,21 +76,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
   }
 
-  function showModal(title, message, tone = "primary", onClose = null) {
+  function showModal(title, message, tone = "primary", onClose = null, actionsHtml = null) {
     if (!modalRoot) {
       onClose?.();
       return;
     }
 
     injectKeyframes();
+    const actions = actionsHtml ?? `
+      <button type="button" class="arcade-btn arcade-btn--${tone} arcade-btn--full" data-close-modal>Aceptar</button>`;
     modalRoot.innerHTML = `
       <div class="arcade-modal-overlay">
         <div class="arcade-modal animate-bounceInCenter">
           <button type="button" class="arcade-modal__close" data-close-modal aria-label="Cerrar">&times;</button>
           <h2 class="arcade-modal__title arcade-modal__title--confirm">${title}</h2>
           ${message ? `<p class="arcade-modal__message">${message}</p>` : ""}
-          <div class="arcade-modal__actions">
-            <button type="button" class="arcade-btn arcade-btn--${tone} arcade-btn--full" data-close-modal>Aceptar</button>
+          <div class="arcade-modal__actions flex flex-col gap-3 mt-4 w-full max-w-xs">
+            ${actions}
           </div>
         </div>
       </div>`;
@@ -120,24 +123,40 @@ document.addEventListener("DOMContentLoaded", () => {
     surrenderBtn?.remove();
   }
 
+  function gameEndActionsHtml() {
+    return window.GuessDlePlayModalNav?.buildActionsHtml(modalNav)
+      ?? `<button type="button" class="arcade-btn arcade-btn--primary arcade-btn--full" data-close-modal>Aceptar</button>`;
+  }
+
   function showGameEndModal(state) {
     if (!state.game_over) return;
 
     disablePlayControls();
+    const actionsHtml = gameEndActionsHtml();
     if (state.won_perfect) {
       showModal(
         "¡Rosco completo!",
         "Has acertado las 27 letras. El bote se repartirá al cierre de la semana entre todos los ganadores perfectos.",
         "primary",
+        null,
+        actionsHtml,
       );
     } else if (state.session_status === "completed") {
       showModal(
         "Rosco terminado",
         "Has contestado todas las letras. Podrás jugar de nuevo la semana que viene.",
         "secondary",
+        null,
+        actionsHtml,
       );
     } else if (state.action === "surrender") {
-      showModal("Partida rendida", "Has abandonado el rosco de esta semana.", "secondary");
+      showModal(
+        "Partida rendida",
+        "Has abandonado el rosco de esta semana.",
+        "secondary",
+        null,
+        actionsHtml,
+      );
     }
   }
 

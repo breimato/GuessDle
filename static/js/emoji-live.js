@@ -73,13 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ?? (outcome === "surrender"
         ? `¡Qué lástima! El personaje era ${targetName}`
         : `¡Correcto! ${targetName}`);
-    const modesLink = modesUrl
-      ? `<a href="${modesUrl}" class="arcade-btn arcade-btn--secondary arcade-btn--full">Cambiar modo</a>`
-      : "";
-    showModal(title, `
-      ${modesLink}
-      <a href="${panelUrl}" class="arcade-btn arcade-btn--primary arcade-btn--full">Dashboard</a>
-    `);
+    const navOptions = window.GuessDlePlayModalNav?.readFromDataset(gameData) ?? {
+      modesUrl,
+      panelUrl,
+    };
+    const actionsHtml = window.GuessDlePlayModalNav?.buildActionsHtml(navOptions)
+      ?? `<a href="${panelUrl}" class="arcade-btn arcade-btn--primary arcade-btn--full">Dashboard</a>`;
+    showModal(title, actionsHtml);
     if (outcome === "victory") {
       launchConfettiSides();
     }

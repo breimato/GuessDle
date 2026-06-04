@@ -39,7 +39,11 @@ min-h-screen flex flex-col items-center gap-6 py-8 px-4 rosco-play
      data-pass-url="{{ pass_url }}"
      data-surrender-url="{{ surrender_url }}"
      data-can-play="{{ can_play|yesno:'true,false' }}"
-     data-session-status="{{ session_status }}">
+     data-session-status="{{ session_status }}"
+     data-panel-url="{% url 'dashboard' %}"
+     data-modes-url="{{ back_to_modes_url }}"
+     {% if next_mode_url %}data-next-mode-url="{{ next_mode_url }}"{% endif %}
+     {% if next_mode_label %}data-next-mode-label="{{ next_mode_label }}"{% endif %}>
 </div>
 
 <div class="rosco-layout">
@@ -87,5 +91,6 @@ min-h-screen flex flex-col items-center gap-6 py-8 px-4 rosco-play
 
 {% block extra_scripts %}
 <script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/play-modal-nav.js' %}" defer></script>
 <script src="{% static 'js/rosco-live.js' %}" defer></script>
 {% endblock %}

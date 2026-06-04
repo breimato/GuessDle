@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         updated = 0
         for item in GameItem.objects.filter(game=game, deleted=False):
-            enriched = enrich_item_data(item.data or {})
+            enriched = enrich_item_data(item.data or {}, game=game)
             if enriched != item.data:
                 item.data = enriched
                 item.save(update_fields=["data"])
