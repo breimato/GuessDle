@@ -37,6 +37,7 @@ min-h-screen flex flex-col items-center py-8 px-4 proximity-play
      data-value-unit="{{ value_unit }}"
      data-is-team-play="{{ is_team_play|yesno:'true,false' }}"
      data-deadline-iso="{{ deadline_iso|default:'' }}"
+     {% if timer_seconds %}data-timer-seconds="{{ timer_seconds }}"{% endif %}
      data-timed-out="{{ timed_out|yesno:'true,false' }}"
      data-default-portrait="{{ default_portrait_url }}">
 </div>
@@ -74,7 +75,10 @@ min-h-screen flex flex-col items-center py-8 px-4 proximity-play
   {% if is_team_play and can_play %}
   <div id="proximity-timer" class="proximity-timer arcade-card" aria-live="polite">
     <span class="proximity-timer__label">Tiempo</span>
-    <span id="proximity-timer-value" class="proximity-timer__value">--:--</span>
+    <div class="proximity-timer__track" role="progressbar" id="proximity-timer-bar"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-label="Tiempo restante">
+      <div id="proximity-timer-fill" class="proximity-timer__fill"></div>
+    </div>
   </div>
   {% endif %}
 

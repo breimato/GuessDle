@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("proximity-guess-form");
   const input = document.getElementById("guess");
   const errorEl = document.getElementById("proximity-guess-error");
-  const timerEl = document.getElementById("proximity-timer-value");
+  const timerFillEl = document.getElementById("proximity-timer-fill");
+  const timerBarEl = document.getElementById("proximity-timer-bar");
+  const timerSeconds = parseInt(gameData.dataset.timerSeconds || "60", 10);
   const modalRoot = document.getElementById("proximity-modal-root");
   const playNav = document.querySelector(".play-nav");
 
@@ -143,21 +145,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function startTimer() {
-    if (!isTeamPlay || !deadlineIso || !timerEl || !canPlay) return;
+  function updateTimerBar(pct) {
+    if (!timerFillEl) return;
+    const clamped = Math.max(0, Math.min(100, pct));
+    timerFillEl.style.width = `${clamped}%`;
+    if (timerBarEl) {
+      timerBarEl.setAttribute("aria-valuenow", String(Math.round(clamped)));
+    }
+  }
+
+  function startTimerBar() {
+    if (!isTeamPlay || !deadlineIso || !timerFillEl || !canPlay) return;
     const deadline = new Date(deadlineIso).getTime();
+    const totalMs = timerSeconds * 1000;
 
     function tick() {
       const remainingMs = deadline - Date.now();
       if (remainingMs <= 0) {
-        timerEl.textContent = "0:00";
+        updateTimerBar(0);
         handleTimeout();
         return;
       }
-      const totalSec = Math.ceil(remainingMs / 1000);
-      const mins = Math.floor(totalSec / 60);
-      const secs = totalSec % 60;
-      timerEl.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
+      updateTimerBar((remainingMs / totalMs) * 100);
     }
 
     tick();
@@ -214,6 +223,6 @@ document.addEventListener("DOMContentLoaded", () => {
       timedOut: finishedFlag.dataset.timedOut === "true",
     });
   } else {
-    startTimer();
+    startTimerBar();
   }
 });
