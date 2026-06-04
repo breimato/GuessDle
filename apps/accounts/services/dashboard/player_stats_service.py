@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Q, Sum
 
 from apps.accounts.models import GameElo
 from apps.accounts.services.dashboard.ranking_scope import (
@@ -7,10 +7,19 @@ from apps.accounts.services.dashboard.ranking_scope import (
     ranking_modes_for_game,
     ranking_session_filter_q,
 )
-from apps.games.models import Game, GameAttempt, PlaySession
+from apps.games.models import Game, GameAttempt, GameModePlayType, PlaySession
 
 
 class PlayerStatsService:
+    @staticmethod
+    def _includes_legacy_normal_mode(game, mode) -> bool:
+        return (
+            mode is not None
+            and mode.slug == "normal"
+            and mode.play_type == GameModePlayType.WORDLE
+            and bool(ranking_modes_for_game(game))
+        )
+
     @staticmethod
     def _elo_lookup(game, mode=None):
         lookup = {"game": game}
@@ -21,11 +30,42 @@ class PlayerStatsService:
         return lookup
 
     @staticmethod
+    def _elo_points(user, game, mode=None) -> float:
+        if PlayerStatsService._includes_legacy_normal_mode(game, mode):
+            mode_row = GameElo.objects.filter(
+                user=user, game=game, mode=mode
+            ).first()
+            legacy_row = GameElo.objects.filter(
+                user=user, game=game, mode__isnull=True
+            ).first()
+            return (mode_row.elo if mode_row else 0) + (legacy_row.elo if legacy_row else 0)
+
+        elo_record = GameElo.objects.filter(
+            user=user, **PlayerStatsService._elo_lookup(game, mode)
+        ).first()
+        return elo_record.elo if elo_record else 0
+
+    @staticmethod
     def _session_queryset(user, game, mode=None):
         queryset = PlaySession.objects.filter(user=user, game=game)
-        if mode:
-            return queryset.filter(mode=mode)
-        return queryset.filter(mode__isnull=True)
+        if mode is None:
+            return queryset.filter(mode__isnull=True)
+        if PlayerStatsService._includes_legacy_normal_mode(game, mode):
+            return queryset.filter(Q(mode=mode) | Q(mode__isnull=True))
+        return queryset.filter(mode=mode)
+
+    @staticmethod
+    def _ranking_elo_user_ids(game, mode=None):
+        if PlayerStatsService._includes_legacy_normal_mode(game, mode):
+            return (
+                GameElo.objects.filter(game=game)
+                .filter(Q(mode=mode) | Q(mode__isnull=True))
+                .values_list("user_id", flat=True)
+                .distinct()
+            )
+        return GameElo.objects.filter(
+            **PlayerStatsService._elo_lookup(game, mode)
+        ).values_list("user_id", flat=True)
 
     @staticmethod
     def _winning_sessions(base_sessions):
@@ -60,11 +100,7 @@ class PlayerStatsService:
 
     @staticmethod
     def get_game_stats(user, game, mode=None) -> dict:
-        elo_record = GameElo.objects.filter(
-            user=user, **PlayerStatsService._elo_lookup(game, mode)
-        ).first()
-        points = elo_record.elo if elo_record else 0
-
+        points = PlayerStatsService._elo_points(user, game, mode)
         base_sessions = PlayerStatsService._session_queryset(user, game, mode)
         games_finished = PlayerStatsService._count_finished_games(base_sessions)
         average_attempts = PlayerStatsService._calculate_ranking_average(base_sessions)
@@ -156,8 +192,7 @@ class PlayerStatsService:
 
     @staticmethod
     def _build_ranking_rows(game, mode=None) -> list[dict]:
-        lookup = PlayerStatsService._elo_lookup(game, mode)
-        user_ids = GameElo.objects.filter(**lookup).values_list("user_id", flat=True)
+        user_ids = PlayerStatsService._ranking_elo_user_ids(game, mode)
         rows = []
         for user in User.objects.filter(id__in=user_ids).order_by("username"):
             stats = PlayerStatsService.get_game_stats(user, game, mode=mode)

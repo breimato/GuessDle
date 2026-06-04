@@ -4,7 +4,7 @@ from apps.games.services.pokemon_normal_backfill import backfill_pokemon_normal_
 
 
 class Command(BaseCommand):
-    help = "Asigna las estadísticas históricas de Pokémon al modo Normal."
+    help = "Migra ELO, sesiones y diarios legacy (mode=null) al modo wordle indicado."
 
     def add_arguments(self, parser):
         parser.add_argument("--slug", default="pokemon")

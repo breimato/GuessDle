@@ -597,6 +597,30 @@ class RankingScopeTests(TestCase):
         self.assertEqual(list(game_rankings.keys()), ["normal"])
 
 
+class OnePieceLegacyRankingTests(TestCase):
+    def setUp(self):
+        from apps.games.models import GameMode, GameModePlayType
+
+        self.user = User.objects.create_user(username="op_rank", password="x")
+        self.game = Game.objects.create(name="One Piece", slug="one-piece-rank")
+        self.normal = GameMode.objects.create(
+            game=self.game,
+            slug="normal",
+            label="Diario",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=0,
+        )
+        GameElo.objects.create(user=self.user, game=self.game, elo=250)
+
+    def test_ranking_shows_legacy_elo_under_normal_mode_tab(self):
+        from apps.accounts.services.dashboard.player_stats_service import PlayerStatsService
+
+        rows = PlayerStatsService.build_ranking_per_game()[self.game.slug]["normal"]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["username"], "op_rank")
+        self.assertEqual(rows[0]["points"], 250)
+
+
 class RegistrationTests(TestCase):
     URL_REGISTER = "register"
     URL_LOGIN = "login"

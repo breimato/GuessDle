@@ -2,7 +2,7 @@ from apps.accounts.models import Challenge, GameElo
 from apps.games.models import DailyTarget, ExtraDailyPlay, Game, GameMode, PlaySession
 
 
-def backfill_pokemon_normal_mode(game_slug="pokemon", mode_slug="normal"):
+def backfill_legacy_mode_to_normal(game_slug="pokemon", mode_slug="normal"):
     game = Game.objects.filter(slug=game_slug).first()
     if not game:
         return {"game_found": False}
@@ -73,3 +73,6 @@ def backfill_pokemon_normal_mode(game_slug="pokemon", mode_slug="normal"):
     ).update(mode=normal_mode)
 
     return summary
+
+
+backfill_pokemon_normal_mode = backfill_legacy_mode_to_normal
