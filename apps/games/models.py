@@ -72,6 +72,7 @@ class GameModePlayType(models.TextChoices):
     ROSCO = "rosco", "Rosco"
     EMOJI = "emoji", "Emoji"
     PROXIMITY = "proximity", "Proximidad"
+    SILHOUETTE = "silhouette", "Silueta"
 
 
 MIN_EMOJI_CLUES = 3
@@ -116,6 +117,11 @@ class GameMode(models.Model):
             from apps.games.services.proximity.game_config import proximity_info_text
 
             return proximity_info_text(self.game)
+        if self.play_type == GameModePlayType.SILHOUETTE:
+            return (
+                "Minijuego diario con silueta y zoom progresivo. "
+                "Adivina el Pokémon del día o ríndete para ver la respuesta. Sin puntuación ELO."
+            )
         filt = self.item_filter or {}
         if "generacion__lte" in filt:
             count = int(filt["generacion__lte"])
@@ -140,6 +146,10 @@ class GameMode(models.Model):
     @property
     def is_proximity(self) -> bool:
         return self.play_type == GameModePlayType.PROXIMITY
+
+    @property
+    def is_silhouette(self) -> bool:
+        return self.play_type == GameModePlayType.SILHOUETTE
 
 
 class ArcCatalog(models.Model):
@@ -172,6 +182,41 @@ class ProximityPrompt(models.Model):
 
     def __str__(self):
         return f"{self.game.slug}: {self.prompt_text[:50]}"
+
+
+SILHOUETTE_ANCHOR_CHOICES = (
+    ("tl", "Top left"),
+    ("tr", "Top right"),
+    ("bl", "Bottom left"),
+    ("br", "Bottom right"),
+)
+
+
+class SilhouetteDailyAssignment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="silhouette_assignments")
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="silhouette_assignments")
+    mode = models.ForeignKey(GameMode, on_delete=models.CASCADE, related_name="silhouette_assignments")
+    date = models.DateField()
+    is_team = models.BooleanField(default=False)
+    filter_config = models.JSONField(default=dict)
+    target_item = models.ForeignKey(
+        "GameItem",
+        on_delete=models.CASCADE,
+        related_name="silhouette_assignments",
+    )
+    anchor = models.CharField(max_length=2, choices=SILHOUETTE_ANCHOR_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "game", "mode", "date", "is_team"],
+                name="unique_silhouette_assignment_per_day",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.user.username}:{self.game.slug}:{self.date}:{self.target_item.name}"
 
 
 class ProximityDailyAssignment(models.Model):
@@ -503,6 +548,7 @@ class PlaySessionType(models.TextChoices):
     CHALLENGE = "CHALLENGE", "Challenge"
     ROSCO = "ROSCO", "Rosco"
     PROXIMITY = "PROXIMITY", "Proximity"
+    SILHOUETTE = "SILHOUETTE", "Silhouette"
 
 
 class RoscoSessionStatus(models.TextChoices):

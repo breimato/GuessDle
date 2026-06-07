@@ -20,6 +20,10 @@ from .views import (
     proximity_filters,
     proximity_guess,
     proximity_timeout,
+    play_silhouette_game,
+    silhouette_filters,
+    silhouette_guess,
+    silhouette_surrender,
 )
 
 
@@ -52,5 +56,16 @@ urlpatterns = [
         "<slug:slug>/<slug:mode_slug>/proximidad/timeout/",
         proximity_timeout,
         name="proximity_timeout",
+    ),
+    path(
+        "<slug:slug>/<slug:mode_slug>/silueta/filters/",
+        silhouette_filters,
+        name="silhouette_filters",
+    ),
+    path("<slug:slug>/<slug:mode_slug>/silueta/guess/", silhouette_guess, name="silhouette_guess"),
+    path(
+        "<slug:slug>/<slug:mode_slug>/silueta/surrender/",
+        silhouette_surrender,
+        name="silhouette_surrender",
     ),
 ]

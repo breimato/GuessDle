@@ -1,13 +1,13 @@
-from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 from apps.accounts.views.auth_views import home_redirect
+from apps.games.admin.site import admin_site
 
 urlpatterns = [
     path('', home_redirect),
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('home/', include('apps.accounts.urls')),
     path('accounts/', include('apps.accounts.urls')),
     path('games/', include('apps.games.urls')),

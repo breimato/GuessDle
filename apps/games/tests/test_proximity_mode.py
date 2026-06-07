@@ -775,8 +775,8 @@ class OnePiecePickerCatalogTests(TestCase):
                     "Zoro derrota solo a los agentes de Baroque Works "
                     "mientras la tripulación duerme"
                 ),
-                "answer_chapter": 115,
-                "answer_episode": 70,
+                "answer_chapter": 110,
+                "answer_episode": 65,
                 "arcs": ["whiskey_peak"],
                 "kind": "event",
             }
@@ -785,6 +785,51 @@ class OnePiecePickerCatalogTests(TestCase):
         prompt = game.proximity_prompts.get()
         self.assertIn("Baroque Works", prompt.prompt_text)
         self.assertNotIn("entrena con los Sombrero", prompt.prompt_text)
+        self.assertEqual(prompt.answer_value, 110)
+        self.assertEqual(prompt.answer_episode, 65)
+
+    def test_corrected_prompts_use_wiki_chapter_and_episode(self):
+        from apps.games.services.proximity.prompt_importer import import_proximity_prompts
+
+        game = Game.objects.create(name="OP", slug="one-piece-corrected-prompts", attributes=["capitulo"])
+        payload = [
+            {
+                "prompt": "Chopper se une a los Sombrero de Paja",
+                "answer_chapter": 153,
+                "answer_episode": 90,
+                "arcs": ["isla_drum"],
+                "kind": "event",
+            },
+            {
+                "prompt": "Nami pide ayuda a Luffy contra Arlong",
+                "answer_chapter": 81,
+                "answer_episode": 37,
+                "arcs": ["arlong_park"],
+                "kind": "event",
+            },
+            {
+                "prompt": "Usopp quema la bandera del Gobierno Mundial con Fire Bird Star",
+                "answer_chapter": 398,
+                "answer_episode": 278,
+                "arcs": ["enies_lobby"],
+                "kind": "event",
+            },
+        ]
+        import_proximity_prompts(game, payload)
+
+        chopper = game.proximity_prompts.get(prompt_text="Chopper se une a los Sombrero de Paja")
+        nami = game.proximity_prompts.get(prompt_text="Nami pide ayuda a Luffy contra Arlong")
+        usopp = game.proximity_prompts.get(
+            prompt_text="Usopp quema la bandera del Gobierno Mundial con Fire Bird Star"
+        )
+
+        self.assertEqual(chopper.answer_value, 153)
+        self.assertEqual(chopper.answer_episode, 90)
+        self.assertEqual(nami.answer_value, 81)
+        self.assertEqual(nami.answer_episode, 37)
+        self.assertEqual(usopp.answer_value, 398)
+        self.assertEqual(usopp.answer_episode, 278)
+        self.assertEqual(usopp.arcs, ["enies_lobby"])
 
     def test_arc_catalog_fills_continuous_range_between_pool_min_and_max(self):
         from apps.games.models import ArcCatalog

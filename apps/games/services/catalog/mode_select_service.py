@@ -7,6 +7,7 @@ from apps.games.services.daily.target_service import TargetService
 from apps.games.services.emoji.daily_target_service import EmojiDailyTargetService
 from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.proximity.status_service import ProximityStatusService
+from apps.games.services.silhouette.status_service import SilhouetteStatusService
 from apps.games.services.rosco.rosco_access import rosco_is_available_today, user_can_see_rosco
 from apps.games.services.rosco.week_utils import week_label
 from apps.games.services.rosco.weekly_pot_service import WeeklyPotService
@@ -58,6 +59,7 @@ class ModeSelectService:
             entry.get("rosco_unavailable")
             or entry.get("emoji_unavailable")
             or entry.get("proximity_unavailable")
+            or entry.get("silhouette_unavailable")
         )
 
     def _entry_for_mode(self, mode: GameMode) -> dict | None:
@@ -129,6 +131,27 @@ class ModeSelectService:
                 "is_emoji": True,
                 "emoji_unavailable": False,
                 "resolved": service.is_daily_resolved(),
+                "play_url": reverse("play_mode", args=[self.slug, mode.slug]),
+            }
+
+        if mode.is_silhouette:
+            status = SilhouetteStatusService(self.game, self.user, mode)
+            if not status.pool_available():
+                return {
+                    "mode": mode,
+                    "is_rosco": False,
+                    "is_silhouette": True,
+                    "silhouette_unavailable": True,
+                    "resolved": False,
+                    "play_url": reverse("play_mode", args=[self.slug, mode.slug]),
+                    "silhouette_status_label": "No disponible",
+                }
+            return {
+                "mode": mode,
+                "is_rosco": False,
+                "is_silhouette": True,
+                "silhouette_unavailable": False,
+                "resolved": status.is_resolved_today(),
                 "play_url": reverse("play_mode", args=[self.slug, mode.slug]),
             }
 

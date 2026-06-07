@@ -20,7 +20,13 @@ from apps.games.services.daily.flow import (
 from apps.games.views.helpers import process_reveal_hint, resolve_play_context
 from apps.games.views.rosco_views import play_rosco_game
 from apps.games.views.emoji_views import play_emoji_game
-from apps.games.views.proximity_views import play_proximity_game
+from apps.games.views.proximity_views import (
+    play_proximity_game,
+    proximity_filters,
+    proximity_guess,
+    proximity_timeout,
+)
+from apps.games.views.silhouette_views import play_silhouette_game
 
 
 @require_POST
@@ -79,6 +85,9 @@ def play_daily_game(request, slug: str, mode_slug=None):
 
     if mode and mode.is_proximity:
         return play_proximity_game(request, slug, mode_slug)
+
+    if mode and mode.is_silhouette:
+        return play_silhouette_game(request, slug, mode_slug)
 
     if not daily_target:
         return render_missing_daily_target(request, game, mode)

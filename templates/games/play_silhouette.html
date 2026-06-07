@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pokedex-frame.css' %}">
+<link rel="stylesheet" href="{% static 'css/silhouette-mode.css' %}">
+{% endblock %}
+
+{% block main_class %}
+min-h-screen flex flex-col items-center py-8 px-4 silhouette-play
+{% endblock %}
+
+{% block content %}
+{% static 'images/default-character.png' as default_portrait_url %}
+<nav class="play-nav w-full max-w-4xl" aria-label="Navegación de partida">
+  <div class="play-nav__start">
+    {% if back_to_modes_url %}
+    <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary play-nav__back">← Modos</a>
+    {% endif %}
+    {% if can_play and not filters_locked %}
+    <a href="{{ filters_url }}" class="arcade-btn arcade-btn--secondary play-nav__filters">Filtros</a>
+    {% endif %}
+    {% if can_play %}
+    <button type="button" id="silhouette-surrender-btn" class="arcade-btn arcade-btn--surrender play-nav__surrender">
+      Rendirse
+    </button>
+    {% endif %}
+  </div>
+  <a href="{% url 'dashboard' %}" class="arcade-btn arcade-btn--secondary play-nav__home">Dashboard</a>
+</nav>
+
+<div id="silhouette-game-data"
+     data-guess-url="{{ guess_url }}"
+     data-surrender-url="{{ surrender_url }}"
+     data-can-play="{{ can_play|yesno:'true,false' }}"
+     data-modes-url="{{ back_to_modes_url }}"
+     data-panel-url="{% url 'dashboard' %}"
+     data-anchor="{{ anchor }}"
+     data-zoom-level="{{ zoom_level }}"
+     data-sprite-url="{{ sprite_url }}"
+     {% if next_mode_url %}data-next-mode-url="{{ next_mode_url }}"{% endif %}
+     {% if next_mode_label %}data-next-mode-label="{{ next_mode_label }}"{% endif %}
+     data-default-portrait="{{ default_portrait_url }}">
+</div>
+
+{% if won %}
+<script id="silhouette-won-flag"
+        data-champ="{{ target.name|escape }}"
+        data-image="{{ sprite_url|escape }}"></script>
+{% elif surrendered %}
+<script id="silhouette-surrender-flag"
+        data-champ="{{ target.name|escape }}"
+        data-image="{{ sprite_url|escape }}"></script>
+{% endif %}
+
+<div class="silhouette-layout">
+  <header class="silhouette-layout__header">
+    <h1 class="arcade-heading-lg">{{ game.name }} — {{ game_mode.label }}</h1>
+  </header>
+
+  <section class="silhouette-stage" aria-label="Silueta del Pokémon">
+    <p class="silhouette-stage__label arcade-label">¿Cuál es este Pokémon?</p>
+    <div class="silhouette-pokedex proximity-pokedex">
+      <div class="proximity-pokedex__lights" aria-hidden="true">
+        <span class="proximity-pokedex__light proximity-pokedex__light--blue"></span>
+        <span class="proximity-pokedex__light proximity-pokedex__light--red"></span>
+        <span class="proximity-pokedex__light proximity-pokedex__light--yellow"></span>
+      </div>
+      <div class="proximity-pokedex__screen">
+        <div class="silhouette-viewport" id="silhouette-viewport">
+          {% if sprite_url %}
+          <img src="{{ sprite_url }}"
+               alt=""
+               class="silhouette-viewport__img"
+               id="silhouette-sprite"
+               decoding="async">
+          {% else %}
+          <p class="silhouette-viewport__error arcade-text-muted">No hay sprite disponible.</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="proximity-pokedex__hinge" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <form id="silhouette-guess-form"
+        class="silhouette-guess-form arcade-card {% if won or surrendered %}opacity-50 pointer-events-none{% endif %}"
+        novalidate>
+    {% csrf_token %}
+    <label for="guess" class="arcade-label">Escribe el nombre del Pokémon</label>
+    <p id="silhouette-guess-error" class="arcade-alert arcade-alert--error mt-2 hidden" role="alert"></p>
+    <div class="relative mt-2">
+      <input type="text"
+             name="guess"
+             id="guess"
+             class="arcade-input rounded-b-none"
+             placeholder="Escribe un nombre"
+             autocomplete="off"
+             required
+             data-names="{{ remaining_names_json|escape }}"
+             {% if won or surrendered %}disabled{% endif %}>
+      <ul id="suggestions"
+          role="listbox"
+          class="hidden w-full absolute left-0 top-full arcade-card rounded-t-none max-h-56 overflow-y-auto z-50 p-0"></ul>
+    </div>
+    <button type="submit"
+            class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
+            {% if won or surrendered %}disabled{% endif %}>
+      Probar
+    </button>
+  </form>
+
+  <section class="silhouette-guesses" aria-label="Intentos">
+    <div id="silhouette-guesses-list" class="silhouette-guesses__list">
+      {% for attempt in attempts reversed %}
+      <div class="silhouette-guess-card square show {% if attempt.is_correct %}square-good{% else %}square-bad{% endif %}">
+        <div class="square-content silhouette-guess-card__content">
+          <img src="{% if attempt.guess_image_url %}{{ attempt.guess_image_url }}{% else %}{{ default_portrait_url }}{% endif %}"
+               alt="{{ attempt.name }}"
+               title="{{ attempt.name }}"
+               class="guess-portrait silhouette-guess-card__portrait"
+               onerror="this.onerror=null; this.src='{{ default_portrait_url }}';">
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+<div id="silhouette-modal-root"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+<script src="{% static 'js/guess-autocomplete.js' %}" defer></script>
+<script src="{% static 'js/play/play-messages.js' %}" defer></script>
+<script src="{% static 'js/play-modal-nav.js' %}" defer></script>
+<script src="{% static 'js/silhouette-live.js' %}" defer></script>
+{% endblock %}

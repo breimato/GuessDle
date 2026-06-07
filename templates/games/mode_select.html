@@ -77,6 +77,11 @@
         {{ entry.mode.label }}
         <span class="text-sm opacity-70">({{ entry.proximity_status_label }})</span>
       </span>
+      {% elif entry.is_silhouette and entry.silhouette_unavailable %}
+      <span class="arcade-btn arcade-btn--secondary arcade-btn--full opacity-60 cursor-not-allowed" aria-disabled="true">
+        {{ entry.mode.label }}
+        <span class="text-sm opacity-70">({{ entry.silhouette_status_label }})</span>
+      </span>
       {% else %}
       <a
         href="{{ entry.play_url }}"

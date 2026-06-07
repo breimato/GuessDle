@@ -4,6 +4,12 @@ from apps.games.views.challenge_views import (
     reveal_challenge_hint,
 )
 from apps.games.views.daily_views import play_daily_game, process_daily_guess, reveal_daily_hint
+from apps.games.views.silhouette_views import (
+    play_silhouette_game,
+    silhouette_filters,
+    silhouette_guess,
+    silhouette_surrender,
+)
 from apps.games.views.extra_views import (
     play_extra_daily_game,
     process_extra_guess,
@@ -53,4 +59,8 @@ __all__ = [
     "proximity_filters",
     "proximity_guess",
     "proximity_timeout",
+    "play_silhouette_game",
+    "silhouette_filters",
+    "silhouette_guess",
+    "silhouette_surrender",
 ]

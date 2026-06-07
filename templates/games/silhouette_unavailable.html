@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} — {{ game_mode.label }}{% endblock %}
+
+{% block body_class %}cabinet-page{% endblock %}
+
+{% block content %}
+<nav class="play-nav w-full max-w-3xl mx-auto mb-6">
+  <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--secondary">← Modos</a>
+</nav>
+
+<section class="arcade-card mx-auto p-6 max-w-4xl text-center">
+  <h1 class="arcade-heading-lg mb-2">{{ game_mode.label }}</h1>
+  <p class="arcade-text-muted mb-4">{{ message }}</p>
+  <a href="{{ back_to_modes_url }}" class="arcade-btn arcade-btn--primary">Volver a modos</a>
+</section>
+{% endblock %}

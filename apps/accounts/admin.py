@@ -1,9 +1,10 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.contrib import admin
-from apps.accounts.models import UserProfile, GameElo, Challenge, Notification
 from django.db.models import F
 
+from apps.accounts.models import Challenge, GameElo, Notification, UserProfile
+from apps.games.admin.site import admin_site
 
 
 class UserProfileInline(admin.StackedInline):
@@ -23,35 +24,45 @@ class UserAdmin(BaseUserAdmin):
     is_team_account.short_description = "Cuenta de equipo"
 
     def get_list_display(self, request):
-        return super().get_list_display(request) + ('is_team_account',)
+        return super().get_list_display(request) + ("is_team_account",)
 
 
-@admin.register(GameElo)
+@admin.register(GameElo, site=admin_site)
 class GameEloAdmin(admin.ModelAdmin):
-    list_display = ('user', 'game', 'elo', 'partidas')
-    list_filter = ('game',)
-    search_fields = ('user__username',)
-    list_editable = ('elo',)   # Puedes editar el ELO directamente en la lista
-
-    actions = ['sumar_elo']
+    list_display = ("user", "game", "elo", "partidas")
+    list_filter = ("game",)
+    search_fields = ("user__username",)
+    list_editable = ("elo",)
+    actions = ["sumar_elo"]
 
     @admin.action(description="Sumar 50 puntos de elo a los seleccionados")
     def sumar_elo(self, request, queryset):
-        updated = queryset.update(elo=F('elo') + 50)
+        updated = queryset.update(elo=F("elo") + 50)
         self.message_user(request, f"Sumados 50 puntos de elo a {updated} usuarios.")
 
-@admin.register(Notification)
+
+@admin.register(Notification, site=admin_site)
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ("user", "type", "created_at", "read_at")
     list_filter = ("type", "read_at")
     search_fields = ("user__username",)
 
-@admin.register(Challenge)
+
+@admin.register(Challenge, site=admin_site)
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ('challenger', 'opponent', 'game', 'target', 'created_at', 'accepted', 'completed', 'winner', 'elo_exchanged')
-    list_filter = ('game', 'accepted', 'completed')
-    search_fields = ('challenger__username', 'opponent__username', 'target__name')
+    list_display = (
+        "challenger",
+        "opponent",
+        "game",
+        "target",
+        "created_at",
+        "accepted",
+        "completed",
+        "winner",
+        "elo_exchanged",
+    )
+    list_filter = ("game", "accepted", "completed")
+    search_fields = ("challenger__username", "opponent__username", "target__name")
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
 
+admin_site.register(User, UserAdmin)

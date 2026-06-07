@@ -932,64 +932,13 @@
   }
 }
 
-/* Pokédex picker */
-.proximity-pokedex {
-  position: relative;
-  max-width: 100%;
-  min-height: 10.5rem;
-  padding: 0.65rem;
-  background: linear-gradient(165deg, #c62828 0%, #8e0000 100%);
-  border: 4px solid var(--cab-panel-border);
-  box-shadow: var(--cab-shadow);
-  border-radius: 1rem;
-  transition: min-height 0.25s ease;
-}
-
+/* Pokédex picker (frame shell in pokedex-frame.css) */
 .proximity-pokedex--open {
   min-height: 12rem;
 }
 
 .proximity-pokedex__hint {
   margin-bottom: 0.5rem;
-}
-
-.proximity-pokedex__lights {
-  display: flex;
-  gap: 0.4rem;
-  margin-bottom: 0.5rem;
-}
-
-.proximity-pokedex__light {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.35);
-}
-
-.proximity-pokedex__light--blue { background: #4fc3f7; }
-.proximity-pokedex__light--red { background: #ef5350; }
-.proximity-pokedex__light--yellow { background: #ffee58; }
-
-.proximity-pokedex__hinge {
-  position: absolute;
-  left: 50%;
-  top: 0.65rem;
-  bottom: 0.65rem;
-  width: 0.35rem;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
-}
-
-.proximity-pokedex__screen {
-  position: relative;
-  z-index: 1;
-  padding: 0.65rem;
-  background: #b8e0d2;
-  border: 3px solid #2d5a4a;
-  border-radius: 0.35rem;
-  min-height: 8rem;
-  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .proximity-pokedex__toolbar {
