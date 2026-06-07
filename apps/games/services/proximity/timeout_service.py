@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from apps.games.models import PlaySession
-from apps.games.services.proximity.game_config import TEAM_TIMEOUT_SCORE, TEAM_TIMER_SECONDS
+from apps.games.services.proximity.game_config import TEAM_TIMER_SECONDS
 from apps.games.services.proximity.score_service import ProximityScoreService
 
 
@@ -24,8 +24,8 @@ class ProximityTimeoutService:
             return {"already_finished": True}
 
         session.proximity_timed_out = True
-        session.proximity_first_distance = TEAM_TIMEOUT_SCORE
-        session.proximity_score_locked = TEAM_TIMEOUT_SCORE
+        session.proximity_first_distance = None
+        session.proximity_score_locked = None
         session.save(
             update_fields=[
                 "proximity_timed_out",
@@ -34,4 +34,4 @@ class ProximityTimeoutService:
             ]
         )
         points = ProximityScoreService(self.user, self.game, self.mode).apply_completion(session)
-        return {"timed_out": True, "points_awarded": points, "score_locked": TEAM_TIMEOUT_SCORE}
+        return {"timed_out": True, "points_awarded": points, "score_locked": None}

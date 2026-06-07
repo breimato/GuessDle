@@ -1,4 +1,5 @@
 from apps.games.models import Game, ProximityPrompt
+from apps.games.services.proximity.prompt_text_sanitizer import sanitize_proximity_prompt_text
 
 
 class ProximityPromptImportError(Exception):
@@ -32,7 +33,7 @@ def import_proximity_prompts(game: Game, payload: list, *, source: str = "JSON")
     validate_proximity_prompt_payload(payload, source=source)
     upserted = 0
     for entry in payload:
-        prompt_text = str(entry["prompt"]).strip()
+        prompt_text = sanitize_proximity_prompt_text(str(entry["prompt"]).strip())
         answer_value = int(entry["answer_chapter"])
         answer_episode = entry.get("answer_episode")
         answer_episode = int(answer_episode) if answer_episode is not None else None

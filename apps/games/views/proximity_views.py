@@ -16,7 +16,6 @@ from apps.games.services.proximity.guess_processor import ProximityGuessProcesso
 from apps.games.services.proximity.pool_service import ProximityPoolService
 from apps.games.services.proximity.session_service import ProximitySessionService
 from apps.games.services.proximity.target_service import ProximityTargetService
-from apps.games.services.proximity.timeout_service import ProximityTimeoutService
 
 
 def _filter_payload_from_request(request, game: Game) -> dict:
@@ -166,15 +165,8 @@ def proximity_timeout(request, slug: str, mode_slug: str):
     if not assignment:
         return JsonResponse({"error": "No hay reto de hoy."}, status=400)
 
-    session = ProximitySessionService.get_or_create(
-        request.user, game, mode, assignment
-    )
-    timeout_service = ProximityTimeoutService(game, mode, request.user)
-    if not timeout_service.is_past_deadline(session) and not session.proximity_attempts.exists():
-        return JsonResponse({"error": "Aún queda tiempo."}, status=400)
-
-    timeout_service.fail_timed_out(session)
-    session.refresh_from_db()
     processor = ProximityGuessProcessor(game, mode, request.user)
-    payload = processor.build_state(session, assignment)
+    is_valid, payload = processor.process_timeout(request, assignment)
+    if not is_valid:
+        return JsonResponse(payload, status=400)
     return JsonResponse(payload)

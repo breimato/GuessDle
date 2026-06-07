@@ -36,7 +36,7 @@
     "answer_episode": 1
   },
   {
-    "prompt": "Luffy derrota a Buggy en Orange Town",
+    "prompt": "Luffy derrota a Buggy",
     "answer_chapter": 39,
     "arcs": [
       "orange_town"
@@ -45,7 +45,7 @@
     "answer_episode": 38
   },
   {
-    "prompt": "Nami traiciona a los Sombrero de Paja en Baratie",
+    "prompt": "Nami traiciona a los Sombrero de Paja",
     "answer_chapter": 68,
     "arcs": [
       "baratie"
@@ -54,7 +54,7 @@
     "answer_episode": 31
   },
   {
-    "prompt": "Sanji cocina el arroz para Gin en el Baratie",
+    "prompt": "Sanji cocina el arroz para Gin",
     "answer_chapter": 58,
     "arcs": [
       "baratie"
@@ -72,7 +72,7 @@
     "answer_episode": 42
   },
   {
-    "prompt": "Luffy destruye el mapa de Arlong Park",
+    "prompt": "Luffy destruye el mapa",
     "answer_chapter": 95,
     "arcs": [
       "arlong_park"
@@ -81,7 +81,7 @@
     "answer_episode": 45
   },
   {
-    "prompt": "Smoker persigue a Luffy en Loguetown",
+    "prompt": "Smoker persigue a Luffy",
     "answer_chapter": 99,
     "arcs": [
       "loguetown"
@@ -108,7 +108,7 @@
     "answer_episode": 81
   },
   {
-    "prompt": "Luffy derrota a Wapol en Drum Castle",
+    "prompt": "Luffy derrota a Wapol",
     "answer_chapter": 144,
     "arcs": [
       "isla_drum"
@@ -117,7 +117,7 @@
     "answer_episode": 87
   },
   {
-    "prompt": "Crocodile es derrotado en los subsuelos de Alabasta",
+    "prompt": "Crocodile es derrotado en los subsuelos",
     "answer_chapter": 218,
     "arcs": [
       "arabasta"
@@ -126,7 +126,7 @@
     "answer_episode": 143
   },
   {
-    "prompt": "Luffy salva a Vivi en el palacio real de Alabasta",
+    "prompt": "Luffy salva a Vivi en el palacio real",
     "answer_chapter": 212,
     "arcs": [
       "arabasta"
@@ -135,7 +135,7 @@
     "answer_episode": 128
   },
   {
-    "prompt": "Bellamy es noqueado de un golpe en Jaya",
+    "prompt": "Bellamy es noqueado de un golpe",
     "answer_chapter": 231,
     "arcs": [
       "jaya"
@@ -144,7 +144,7 @@
     "answer_episode": 151
   },
   {
-    "prompt": "Luffy suena la campana dorada en Skypiea",
+    "prompt": "Luffy suena la campana dorada",
     "answer_chapter": 302,
     "arcs": [
       "skypiea"
@@ -207,7 +207,7 @@
     "answer_episode": 278
   },
   {
-    "prompt": "El Going Merry recibe un funeral en Water 7",
+    "prompt": "El Going Merry recibe un funeral",
     "answer_chapter": 430,
     "arcs": [
       "water_7"
@@ -225,7 +225,7 @@
     "answer_episode": 321
   },
   {
-    "prompt": "Bartholomew Kuma separa a la tripulación en Sabaody",
+    "prompt": "Bartholomew Kuma separa a la tripulación",
     "answer_chapter": 516,
     "arcs": [
       "archipielago_sabaody"
@@ -234,7 +234,7 @@
     "answer_episode": 516
   },
   {
-    "prompt": "Luffy golpea a un Tenryuubito en Sabaody",
+    "prompt": "Luffy golpea a un Tenryuubito",
     "answer_chapter": 502,
     "arcs": [
       "archipielago_sabaody"
@@ -252,7 +252,7 @@
     "answer_episode": 516
   },
   {
-    "prompt": "El timeskip: la tripulación se reúne en Sabaody dos años después",
+    "prompt": "El timeskip: la tripulación se reúne dos años después",
     "answer_chapter": 598,
     "arcs": [
       "retorno_a_sabaody"
@@ -261,7 +261,7 @@
     "answer_episode": 517
   },
   {
-    "prompt": "Luffy usa Haoshoku Haki en el retorno a Sabaody",
+    "prompt": "Luffy usa Haoshoku Haki tras el timeskip",
     "answer_chapter": 599,
     "arcs": [
       "retorno_a_sabaody"
@@ -270,7 +270,7 @@
     "answer_episode": 518
   },
   {
-    "prompt": "Luffy derrota a Hody Jones en Isla Gyojin",
+    "prompt": "Luffy derrota a Hody Jones",
     "answer_chapter": 645,
     "arcs": [
       "isla_gyojin"
@@ -351,7 +351,7 @@
     "answer_episode": 877
   },
   {
-    "prompt": "Luffy derrota a Cracker en el bosque de Broc Coli",
+    "prompt": "Luffy derrota a Cracker en el bosque",
     "answer_chapter": 838,
     "arcs": [
       "whole_cake_island"
@@ -360,7 +360,7 @@
     "answer_episode": 791
   },
   {
-    "prompt": "Pedro se sacrifica para ayudar a escapar del Whole Cake",
+    "prompt": "Pedro se sacrifica para ayudar a escapar",
     "answer_chapter": 877,
     "arcs": [
       "whole_cake_island"
@@ -414,7 +414,7 @@
     "answer_episode": 1080
   },
   {
-    "prompt": "Ace muere protegiendo a Luffy en Marineford",
+    "prompt": "Ace muere protegiendo a Luffy",
     "answer_chapter": 574,
     "arcs": [
       "marineford"
@@ -432,7 +432,7 @@
     "answer_episode": 484
   },
   {
-    "prompt": "Shanks detiene el ataque de Akainu en Marineford",
+    "prompt": "Shanks detiene el ataque de Akainu",
     "answer_chapter": 579,
     "arcs": [
       "marineford"
@@ -450,7 +450,7 @@
     "answer_episode": 1088
   },
   {
-    "prompt": "Sabo es acusado del asesinato de Cobra en Reverie",
+    "prompt": "Sabo es acusado del asesinato de Cobra",
     "answer_chapter": 1084,
     "arcs": [
       "reverie"
@@ -459,7 +459,7 @@
     "answer_episode": 1118
   },
   {
-    "prompt": "Usopp dispara a un pájaro desde la Torre de Gion en God Valley",
+    "prompt": "Usopp dispara a un pájaro desde la Torre de Gion",
     "answer_chapter": 1086,
     "arcs": [
       "egghead"
@@ -468,7 +468,7 @@
     "answer_episode": 1098
   },
   {
-    "prompt": "Vegapunk transmite su mensaje al mundo desde Egghead",
+    "prompt": "Vegapunk transmite su mensaje al mundo",
     "answer_chapter": 1114,
     "arcs": [
       "egghead"
@@ -477,7 +477,7 @@
     "answer_episode": 1129
   },
   {
-    "prompt": "Luffy transforma a un Buster Call en goma en Egghead",
+    "prompt": "Luffy transforma a un Buster Call en goma",
     "answer_chapter": 1095,
     "arcs": [
       "egghead"
@@ -486,7 +486,7 @@
     "answer_episode": 1108
   },
   {
-    "prompt": "Zoro entrena con los Sombrero de Paja en Whiskey Peak",
+    "prompt": "Zoro derrota solo a los agentes de Baroque Works mientras la tripulación duerme",
     "answer_chapter": 115,
     "arcs": [
       "whiskey_peak"
@@ -495,7 +495,7 @@
     "answer_episode": 70
   },
   {
-    "prompt": "Brook se une a los Sombrero de Paja en Thriller Bark",
+    "prompt": "Brook se une a los Sombrero de Paja",
     "answer_chapter": 489,
     "arcs": [
       "thriller_bark"
@@ -504,7 +504,7 @@
     "answer_episode": 381
   },
   {
-    "prompt": "Zoro toma el dolor de Luffy de Kuma en Thriller Bark",
+    "prompt": "Zoro toma el dolor de Luffy de Kuma",
     "answer_chapter": 485,
     "arcs": [
       "thriller_bark"
@@ -513,7 +513,7 @@
     "answer_episode": 377
   },
   {
-    "prompt": "Luffy libera a Hancock en Amazon Lily",
+    "prompt": "Luffy libera a Hancock",
     "answer_chapter": 523,
     "arcs": [
       "amazon_lily"
@@ -531,7 +531,7 @@
     "answer_episode": 451
   },
   {
-    "prompt": "Buggy y Alvida se reencuentran en Impel Down",
+    "prompt": "Buggy y Alvida se reencuentran",
     "answer_chapter": 526,
     "arcs": [
       "impel_down"
@@ -540,7 +540,7 @@
     "answer_episode": 422
   },
   {
-    "prompt": "Morgan corta la estatua de Marine en Shells Town",
+    "prompt": "Morgan corta la estatua",
     "answer_chapter": 4,
     "arcs": [
       "romance_dawn"
@@ -558,7 +558,7 @@
     "answer_episode": 17
   },
   {
-    "prompt": "Luffy derrota a Don Krieg en el Baratie",
+    "prompt": "Luffy derrota a Don Krieg",
     "answer_chapter": 68,
     "arcs": [
       "baratie"

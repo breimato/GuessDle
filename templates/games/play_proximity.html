@@ -74,10 +74,10 @@ min-h-screen flex flex-col items-center py-8 px-4 proximity-play
 
   {% if is_team_play and can_play %}
   <div id="proximity-timer" class="proximity-timer arcade-card" aria-live="polite">
-    <span class="proximity-timer__label">Tiempo</span>
+    <span id="proximity-timer-countdown" class="proximity-timer__countdown proximity-timer__countdown--high">1:00</span>
     <div class="proximity-timer__track" role="progressbar" id="proximity-timer-bar"
          aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-label="Tiempo restante">
-      <div id="proximity-timer-fill" class="proximity-timer__fill"></div>
+      <div id="proximity-timer-fill" class="proximity-timer__fill proximity-timer__fill--high"></div>
     </div>
   </div>
   {% endif %}
@@ -104,15 +104,32 @@ min-h-screen flex flex-col items-center py-8 px-4 proximity-play
         class="proximity-guess-form arcade-card {% if not can_play %}opacity-50 pointer-events-none{% endif %}"
         novalidate>
     {% csrf_token %}
-    <label for="guess" class="arcade-label">Tu respuesta ({{ value_unit }})</label>
+    <p class="arcade-label proximity-guess-form__label">Tu respuesta ({{ value_unit }})</p>
     <p id="proximity-guess-error" class="arcade-alert arcade-alert--error mt-2 hidden" role="alert"></p>
-    <input type="number" name="guess" id="guess" class="arcade-input mt-2" inputmode="numeric" required
-           {% if not can_play %}disabled{% endif %}>
-    <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
-            {% if not can_play %}disabled{% endif %}>
+    <div id="proximity-guess-picker"
+         class="proximity-picker proximity-picker--{{ game.slug }}"
+         data-picker-mode="{{ guess_bounds.picker_mode }}"
+         data-guess-min="{{ guess_bounds.guess_min }}"
+         data-guess-max="{{ guess_bounds.guess_max }}"
+         data-guess-step="{{ guess_bounds.guess_step }}"
+         data-segment-block-size="{{ guess_bounds.segment_block_size }}"
+         data-value-unit="{{ value_unit }}">
+      <p class="proximity-picker__value" aria-live="polite">—</p>
+      <div class="proximity-picker__body"></div>
+    </div>
+    <input type="hidden" name="guess" id="guess" value="">
+    <button type="submit" id="proximity-guess-submit" class="arcade-btn arcade-btn--primary arcade-btn--full mt-4"
+            {% if not can_play %}disabled{% else %}disabled{% endif %}>
       Probar
     </button>
   </form>
+
+  {% if guess_bounds.discrete_values %}
+  {{ guess_bounds.discrete_values|json_script:"proximity-discrete-values" }}
+  {% endif %}
+  {% if picker_catalog %}
+  {{ picker_catalog|json_script:"proximity-picker-catalog" }}
+  {% endif %}
 </div>
 
 <div id="proximity-modal-root"></div>
@@ -129,5 +146,9 @@ min-h-screen flex flex-col items-center py-8 px-4 proximity-play
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 <script src="{% static 'js/play-modal-nav.js' %}" defer></script>
+<script src="{% static 'js/proximity-pickers/lol-years.js' %}" defer></script>
+<script src="{% static 'js/proximity-pickers/pokemon-pokedex.js' %}" defer></script>
+<script src="{% static 'js/proximity-pickers/one-piece-scroll.js' %}" defer></script>
+<script src="{% static 'js/proximity-picker.js' %}" defer></script>
 <script src="{% static 'js/proximity-live.js' %}" defer></script>
 {% endblock %}

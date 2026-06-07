@@ -82,12 +82,37 @@
   padding: 0.75rem 1rem;
 }
 
-.proximity-timer__label {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.proximity-timer__countdown {
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
   text-align: center;
+  letter-spacing: 0.04em;
+  color: #fffef5;
+  text-shadow:
+    2px 2px 0 rgba(0, 0, 0, 0.55),
+    0 0 12px rgba(0, 0, 0, 0.35);
+}
+
+.proximity-timer__countdown--high {
+  color: #e8fff0;
+  text-shadow:
+    2px 2px 0 rgba(0, 48, 24, 0.7),
+    0 0 10px rgba(46, 204, 113, 0.45);
+}
+
+.proximity-timer__countdown--mid {
+  color: #fff8c8;
+  text-shadow:
+    2px 2px 0 rgba(72, 52, 0, 0.75),
+    0 0 10px rgba(255, 229, 102, 0.4);
+}
+
+.proximity-timer__countdown--low {
+  color: #ffe8e8;
+  text-shadow:
+    2px 2px 0 rgba(72, 0, 0, 0.8),
+    0 0 12px rgba(192, 57, 43, 0.55);
 }
 
 .proximity-timer__track {
@@ -102,8 +127,20 @@
   display: block;
   height: 100%;
   width: 100%;
+  background: linear-gradient(165deg, #7dffb0 0%, #2ecc71 100%);
+  transition: width 0.25s linear, background 0.35s ease;
+}
+
+.proximity-timer__fill--high {
+  background: linear-gradient(165deg, #7dffb0 0%, #2ecc71 100%);
+}
+
+.proximity-timer__fill--mid {
   background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
-  transition: width 0.25s linear;
+}
+
+.proximity-timer__fill--low {
+  background: linear-gradient(165deg, #ff8a7a 0%, var(--cab-red-dark, #c0392b) 100%);
 }
 
 .proximity-filters__fieldset {
@@ -263,6 +300,13 @@
   color: var(--cab-ink);
   word-break: break-word;
   hyphens: auto;
+}
+
+.proximity-filter-tile--arc .proximity-filter-tile__label {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .proximity-filter-tile--gen .proximity-filter-tile__label {
@@ -430,7 +474,7 @@
 }
 
 .proximity-filters--one-piece .proximity-filter-tile--arc .proximity-filter-tile__label {
-  font-size: clamp(0.55rem, 1.5vw, 0.68rem);
+  font-size: clamp(0.72rem, 2vw, 0.88rem);
   line-height: 1.4;
   max-width: 100%;
 }
@@ -576,5 +620,725 @@
 
   .proximity-filters--lol .proximity-filter-tile-grid--lol-years {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ─── Guess picker (play) ─── */
+.proximity-guess-form__label {
+  margin-bottom: 0.5rem;
+}
+
+.proximity-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.proximity-picker__value {
+  margin: 0;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--cab-ink);
+  letter-spacing: 0.04em;
+}
+
+.proximity-picker__body {
+  min-height: 6rem;
+}
+
+.proximity-picker__hint {
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--cab-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.proximity-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+.proximity-picker__grid--segments {
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+}
+
+.proximity-picker__chip {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--cab-ink);
+  background: linear-gradient(165deg, #ede4d4 0%, #d8c9ad 100%);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow-sm);
+  cursor: var(--cursor-lol);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.proximity-picker__chip:hover:not(.is-selected) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--cab-panel-border);
+}
+
+.proximity-picker__chip.is-selected,
+.proximity-picker__chip--segment.is-selected {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-picker__chip.is-selected:hover {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-picker__chip:focus-visible {
+  outline: 3px solid var(--cab-blue);
+  outline-offset: 2px;
+}
+
+.proximity-picker__slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.proximity-picker__slider {
+  width: 100%;
+  accent-color: var(--cab-yellow);
+}
+
+.proximity-picker__stepper {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.proximity-picker__step-btn {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cab-ink);
+  background: linear-gradient(165deg, #ede4d4 0%, #d8c9ad 100%);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow-sm);
+  cursor: var(--cursor-lol);
+}
+
+.proximity-picker__step-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--cab-panel-border);
+}
+
+.proximity-picker__back {
+  margin-bottom: 0.5rem;
+}
+
+/* Shared picker frame (LoL + One Piece) */
+.proximity-picker-frame {
+  max-width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  min-height: 6rem;
+  transition: min-height 0.25s ease;
+}
+
+.proximity-picker-frame--open {
+  min-height: 8rem;
+}
+
+.proximity-picker-frame__hint {
+  margin-bottom: 0.5rem;
+}
+
+.proximity-picker-frame__content {
+  min-height: 6rem;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.proximity-picker-frame__scroll {
+  max-height: min(40vh, 18rem);
+  margin-top: 0;
+  padding: 0.85rem 0.75rem 0.85rem 0.85rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(0, 0, 0, 0.12);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.18);
+  border-radius: var(--cab-radius);
+  scrollbar-width: thin;
+  scrollbar-color: var(--cab-yellow) rgba(0, 0, 0, 0.25);
+}
+
+.proximity-picker-frame__scroll::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.proximity-picker-frame__scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.18);
+  border: 2px solid var(--cab-panel-border);
+}
+
+.proximity-picker-frame__scroll::-webkit-scrollbar-thumb {
+  background: var(--cab-yellow);
+  border: 2px solid var(--cab-panel-border);
+}
+
+.proximity-picker-frame__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.proximity-picker-frame__back {
+  flex-shrink: 0;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding: 0;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.proximity-picker-frame__legend {
+  margin: 0;
+  flex: 1;
+  padding: 0.45rem 0.75rem;
+  text-align: center;
+  font-family: var(--font-marquee);
+  font-size: clamp(0.58rem, 1.9vw, 0.75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff8e7;
+  background: var(--cab-red-dark);
+  border: 2px solid var(--cab-panel-border);
+  box-shadow: 3px 3px 0 var(--cab-panel-border);
+}
+
+.proximity-picker--one-piece .proximity-picker-frame__legend {
+  font-family: var(--font-ui);
+  font-size: clamp(0.75rem, 2.2vw, 0.95rem);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.proximity-picker-frame__body {
+  min-height: 4rem;
+}
+
+@keyframes proximityPickerFrameOpen {
+  from {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.proximity-picker-frame--opening .proximity-picker-frame__content {
+  animation: proximityPickerFrameOpen 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center top;
+}
+
+/* LoL year picker (play) */
+.proximity-picker--lol.proximity-filters--lol
+  .proximity-filter-tile-grid--lol-years {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.proximity-picker--lol.proximity-filters--lol
+  .proximity-filter-tile--lol-year
+  .proximity-filter-tile__face {
+  min-height: 6.5rem;
+  padding: 0.75rem 0.5rem;
+}
+
+.proximity-picker--lol.proximity-filters--lol
+  .proximity-filter-tile--lol-year
+  .proximity-filter-tile__label {
+  font-size: clamp(0.8rem, 2.4vw, 1rem);
+  line-height: 1.25;
+}
+
+.proximity-picker--lol.proximity-filters--lol
+  .proximity-filter-tile--lol-year
+  .proximity-filter-tile__watermark {
+  opacity: 0.14;
+}
+
+.proximity-picker-frame__tile {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: var(--cursor-lol);
+}
+
+.proximity-picker-frame__tile.is-selected .proximity-filter-tile__face {
+  background: linear-gradient(165deg, #e85a4a 0%, var(--cab-red) 42%, var(--cab-red-dark) 100%);
+  border-color: #5a1a14;
+  transform: translate(4px, 4px);
+  box-shadow: inset 0 3px 0 rgba(255, 220, 120, 0.35);
+}
+
+.proximity-picker-frame__tile.is-selected .proximity-filter-tile__label {
+  color: #fff8e7;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.proximity-picker--lol .proximity-filter-tile:hover:not(.is-selected) .proximity-filter-tile__face {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-picker-frame__tile.is-selected:hover .proximity-filter-tile__face {
+  background: linear-gradient(165deg, #e85a4a 0%, var(--cab-red) 42%, var(--cab-red-dark) 100%);
+  border-color: #5a1a14;
+  transform: translate(4px, 4px);
+  box-shadow: inset 0 3px 0 rgba(255, 220, 120, 0.35);
+}
+
+.proximity-picker-frame__tile.is-selected:hover .proximity-filter-tile__label {
+  color: #fff8e7;
+  text-shadow: 1px 1px 0 #000;
+}
+
+@media (max-width: 640px) {
+  .proximity-picker--lol.proximity-filters--lol
+    .proximity-filter-tile-grid--lol-years {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .proximity-picker--lol.proximity-filters--lol
+    .proximity-filter-tile-grid--lol-years {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Pokédex picker */
+.proximity-pokedex {
+  position: relative;
+  max-width: 100%;
+  min-height: 10.5rem;
+  padding: 0.65rem;
+  background: linear-gradient(165deg, #c62828 0%, #8e0000 100%);
+  border: 4px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow);
+  border-radius: 1rem;
+  transition: min-height 0.25s ease;
+}
+
+.proximity-pokedex--open {
+  min-height: 12rem;
+}
+
+.proximity-pokedex__hint {
+  margin-bottom: 0.5rem;
+}
+
+.proximity-pokedex__lights {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.proximity-pokedex__light {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+}
+
+.proximity-pokedex__light--blue { background: #4fc3f7; }
+.proximity-pokedex__light--red { background: #ef5350; }
+.proximity-pokedex__light--yellow { background: #ffee58; }
+
+.proximity-pokedex__hinge {
+  position: absolute;
+  left: 50%;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  width: 0.35rem;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+}
+
+.proximity-pokedex__screen {
+  position: relative;
+  z-index: 1;
+  padding: 0.65rem;
+  background: #b8e0d2;
+  border: 3px solid #2d5a4a;
+  border-radius: 0.35rem;
+  min-height: 8rem;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.proximity-pokedex__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.proximity-pokedex__back-btn {
+  flex-shrink: 0;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #1b3d32;
+  background: #e8f5e9;
+  border: 2px solid #2d5a4a;
+  border-radius: 0.35rem;
+  cursor: var(--cursor-lol);
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+
+.proximity-pokedex__back-btn:hover {
+  background: #c8e6c9;
+  transform: translateX(-1px);
+}
+
+.proximity-pokedex__panel {
+  min-height: 6rem;
+}
+
+@keyframes proximityPokedexOpen {
+  from {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes proximityPokedexLightPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(79, 195, 247, 0);
+  }
+  40% {
+    box-shadow: 0 0 0.35rem 0.15rem rgba(79, 195, 247, 0.85);
+  }
+}
+
+.proximity-pokedex--opening .proximity-pokedex__screen {
+  animation: proximityPokedexOpen 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center top;
+}
+
+.proximity-pokedex--opening .proximity-pokedex__light--blue {
+  animation: proximityPokedexLightPulse 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proximity-pokedex--opening .proximity-pokedex__screen,
+  .proximity-pokedex--opening .proximity-pokedex__light--blue {
+    animation: none;
+  }
+
+  .proximity-pokedex,
+  .proximity-pokedex__screen {
+    transition: none;
+  }
+}
+
+.proximity-pokedex__regions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+.proximity-pokedex__region {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.55rem 0.35rem;
+  background: #e8f5e9;
+  border: 2px solid #2d5a4a;
+  cursor: var(--cursor-lol);
+  text-align: center;
+}
+
+.proximity-pokedex__region:hover {
+  background: #c8e6c9;
+}
+
+.proximity-pokedex__region-kicker {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2d5a4a;
+}
+
+.proximity-pokedex__region-label {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #1b3d32;
+}
+
+.proximity-pokedex__region-count {
+  font-size: 0.7rem;
+  color: #4a6b5f;
+}
+
+.proximity-pokedex__title {
+  margin: 0;
+  font-weight: 800;
+  color: #1b3d32;
+}
+
+.proximity-pokedex__scroll {
+  max-height: min(35vh, 16rem);
+  overflow-y: auto;
+  transition: max-height 0.25s ease;
+}
+
+.proximity-pokedex__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+  gap: 0.35rem;
+}
+
+.proximity-pokedex__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.25rem;
+  background: #e8f5e9;
+  border: 2px solid #2d5a4a;
+  cursor: var(--cursor-lol);
+}
+
+.proximity-pokedex__cell.is-selected {
+  background: #ffe566;
+  box-shadow: inset 0 0 0 2px #2d5a4a;
+}
+
+.proximity-pokedex__cell.is-selected:hover {
+  background: #ffe566;
+  box-shadow: inset 0 0 0 2px #2d5a4a;
+}
+
+.proximity-pokedex__number {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #1b3d32;
+}
+
+.proximity-pokedex__cell-img--silhouette {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  opacity: 0.45;
+}
+
+/* One Piece scroll picker */
+.proximity-picker--one-piece.proximity-filters--one-piece
+  .proximity-picker-frame__scroll.proximity-filters__scroll--arcs
+  .proximity-filter-tile-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.proximity-picker--one-piece.proximity-filters--one-piece
+  .proximity-filter-tile--arc
+  .proximity-filter-tile__face {
+  min-height: 7.75rem;
+  padding: 0.8rem 0.6rem;
+}
+
+.proximity-picker--one-piece.proximity-filters--one-piece
+  .proximity-filter-tile--arc
+  .proximity-filter-tile__label {
+  font-size: clamp(0.72rem, 2vw, 0.88rem);
+  line-height: 1.4;
+  max-width: 100%;
+}
+
+.proximity-picker--one-piece.proximity-filters--one-piece
+  .proximity-filter-tile--arc
+  .proximity-filter-tile__watermark--scene {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  transform: none;
+}
+
+.proximity-picker--one-piece.proximity-filters--one-piece
+  .proximity-filter-tile:hover:not(.is-selected)
+  .proximity-filter-tile__face {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+}
+
+.proximity-picker--one-piece .proximity-picker-frame__scroll.proximity-scroll {
+  background: var(--cab-input-bg);
+  border: 3px solid var(--cab-panel-border);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.15);
+  border-radius: var(--cab-radius);
+  padding: 0.5rem;
+  max-height: min(40vh, 18rem);
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry {
+  background: linear-gradient(165deg, #ede4d4 0%, #d8c9ad 100%);
+  border: 2px solid var(--cab-panel-border);
+  box-shadow: var(--cab-shadow-sm);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry--numeric {
+  justify-content: center;
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry--numeric .proximity-scroll__entry-value {
+  min-width: 0;
+  text-align: center;
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry:hover:not(.is-selected) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--cab-panel-border);
+  background: linear-gradient(165deg, #ede4d4 0%, #d8c9ad 100%);
+  border-color: var(--cab-panel-border);
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry.is-selected {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  border-color: var(--cab-panel-border);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+  transform: translate(-2px, -2px);
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry.is-selected:hover {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  border-color: var(--cab-panel-border);
+  box-shadow: 5px 5px 0 var(--cab-panel-border);
+  transform: translate(-2px, -2px);
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry-value {
+  color: var(--cab-ink);
+}
+
+.proximity-picker--one-piece .proximity-scroll__entry-name {
+  color: var(--cab-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proximity-picker-frame--opening .proximity-picker-frame__content {
+    animation: none;
+  }
+
+  .proximity-picker-frame,
+  .proximity-picker-frame__content {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .proximity-picker--one-piece.proximity-filters--one-piece
+    .proximity-picker-frame__scroll.proximity-filters__scroll--arcs
+    .proximity-filter-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.proximity-scroll {
+  max-height: min(45vh, 22rem);
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: linear-gradient(180deg, #f4e4bc 0%, #e8d4a8 100%);
+  border: 3px solid #8b6914;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 0 12px rgba(139, 105, 20, 0.25);
+}
+
+.proximity-scroll--pirate {
+  background:
+    linear-gradient(180deg, rgba(244, 228, 188, 0.95), rgba(232, 212, 168, 0.95)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1.5rem,
+      rgba(139, 105, 20, 0.08) 1.5rem,
+      rgba(139, 105, 20, 0.08) calc(1.5rem + 1px)
+    );
+}
+
+.proximity-scroll__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.proximity-scroll__entry {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(139, 105, 20, 0.35);
+  cursor: var(--cursor-lol);
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.proximity-scroll__entry:hover {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: #8b6914;
+}
+
+.proximity-scroll__entry.is-selected {
+  background: linear-gradient(165deg, #ffe566 0%, var(--cab-yellow) 100%);
+  border-color: var(--cab-panel-border);
+  box-shadow: 3px 3px 0 var(--cab-panel-border);
+}
+
+.proximity-scroll__entry-value {
+  min-width: 3rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--cab-ink);
+}
+
+.proximity-scroll__entry-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cab-muted);
+}
+
+@media (max-width: 640px) {
+  .proximity-picker__grid--segments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

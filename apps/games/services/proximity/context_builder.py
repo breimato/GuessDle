@@ -5,7 +5,9 @@ from apps.games.models import Game, GameMode, ProximityDailyAssignment
 from apps.games.services.catalog.play_background import resolve_background_url
 from apps.games.services.catalog.play_mode_navigation import next_mode_navigation
 from apps.games.services.proximity.filter_service import ProximityFilterService
+from apps.games.services.proximity.guess_bounds_service import ProximityGuessBoundsService
 from apps.games.services.proximity.guess_processor import ProximityGuessProcessor
+from apps.games.services.proximity.picker_catalog_service import ProximityPickerCatalogService
 from apps.games.services.proximity.game_config import (
     TEAM_TIMER_SECONDS,
     proximity_game_kind,
@@ -49,6 +51,14 @@ class ProximityContextBuilder:
         if game_kind == "pokemon" and item is not None:
             prompt_question = "¿Qué número de Pokédex es?"
 
+        filter_config = self.assignment.filter_config or {}
+        guess_bounds = ProximityGuessBoundsService(
+            self.game, self.mode, self.assignment
+        ).resolve()
+        picker_catalog = ProximityPickerCatalogService(
+            self.game, self.mode, filter_config
+        ).build()
+
         return {
             "game": self.game,
             "game_mode": self.mode,
@@ -82,6 +92,8 @@ class ProximityContextBuilder:
                 "proximity_filters", args=[self.game.slug, self.mode.slug]
             ),
             "filters_locked": filter_service.filter_locked(session),
+            "guess_bounds": guess_bounds,
+            "picker_catalog": picker_catalog,
             **next_mode_navigation(self.game, self.user, self.mode),
         }
 

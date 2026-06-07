@@ -5,6 +5,7 @@ from django.utils import timezone
 from apps.games.models import Game, GameMode, ProximityAttempt, ProximityDailyAssignment
 from apps.games.services.proximity.answer_resolver import resolve_assignment_answer
 from apps.games.services.proximity.filter_service import ProximityFilterService
+from apps.games.services.proximity.guess_bounds_service import ProximityGuessBoundsService
 from apps.games.services.proximity.game_config import TEAM_TIMER_SECONDS
 from apps.games.services.proximity.score_service import ProximityScoreService
 from apps.games.services.proximity.session_service import ProximitySessionService
@@ -36,14 +37,73 @@ class ProximityGuessProcessor:
                 session.refresh_from_db()
                 return False, {"error": "Se acabó el tiempo."}
 
+        guess_value, error = self._parse_guess(request, assignment)
+        if error is not None:
+            return False, error
+
+        points_awarded = self._record_guess(session, assignment, guess_value)
+        session.refresh_from_db()
+        return True, self.build_state(session, assignment, points_awarded=points_awarded)
+
+    def process_timeout(
+        self, request, assignment: ProximityDailyAssignment
+    ) -> tuple[bool, dict]:
+        session = ProximitySessionService.get_or_create(
+            self.user, self.game, self.mode, assignment
+        )
+        finished, payload = self._reject_if_finished(session)
+        if finished:
+            return False, payload
+
+        if not self.is_team:
+            return False, {"error": "El tiempo solo aplica en cuentas de equipo."}
+
+        timeout_service = ProximityTimeoutService(self.game, self.mode, self.user)
+        if not timeout_service.is_past_deadline(session):
+            return False, {"error": "Aún queda tiempo."}
+
         raw_guess = request.POST.get("guess", "").strip()
         if not raw_guess:
-            return False, {"error": "Debes introducir un número."}
+            timeout_service.fail_timed_out(session)
+            session.refresh_from_db()
+            return True, self.build_state(session, assignment)
+
+        guess_value, error = self._parse_guess(request, assignment)
+        if error is not None:
+            timeout_service.fail_timed_out(session)
+            session.refresh_from_db()
+            return True, self.build_state(session, assignment)
+
+        points_awarded = self._record_guess(session, assignment, guess_value)
+        session.refresh_from_db()
+        return True, self.build_state(session, assignment, points_awarded=points_awarded)
+
+    def _parse_guess(
+        self, request, assignment: ProximityDailyAssignment
+    ) -> tuple[int | None, dict | None]:
+        raw_guess = request.POST.get("guess", "").strip()
+        if not raw_guess:
+            return None, {"error": "Debes introducir un número."}
         try:
             guess_value = int(raw_guess)
         except ValueError:
-            return False, {"error": "El intento debe ser un número entero."}
+            return None, {"error": "El intento debe ser un número entero."}
 
+        bounds = ProximityGuessBoundsService(self.game, self.mode, assignment).resolve()
+        guess_min = bounds["guess_min"]
+        guess_max = bounds["guess_max"]
+        if guess_value < guess_min or guess_value > guess_max:
+            return None, {
+                "error": f"El intento debe estar entre {guess_min} y {guess_max}.",
+            }
+        return guess_value, None
+
+    def _record_guess(
+        self,
+        session,
+        assignment: ProximityDailyAssignment,
+        guess_value: int,
+    ) -> int:
         answer = resolve_assignment_answer(self.game, assignment)
         distance = abs(guess_value - answer)
         ProximityAttempt.objects.create(
@@ -56,12 +116,9 @@ class ProximityGuessProcessor:
         session.proximity_score_locked = ProximityScoreService.points_for_distance(distance)
         session.save(update_fields=["proximity_first_distance", "proximity_score_locked"])
 
-        points_awarded = ProximityScoreService(
+        return ProximityScoreService(
             self.user, self.game, self.mode
         ).apply_completion(session)
-        session.refresh_from_db()
-
-        return True, self.build_state(session, assignment, points_awarded=points_awarded)
 
     def _reject_if_finished(self, session) -> tuple[bool, dict | None]:
         if session.proximity_timed_out:

@@ -10,8 +10,19 @@ LOL_RECENT_WEIGHT = 3
 LOL_LEGACY_WEIGHT = 1
 
 TEAM_TIMER_SECONDS = 60
-TEAM_TIMEOUT_SCORE = 999
 PROXIMITY_TEAM_TIMER_NOTE = "Las cuentas de equipo tienen 1 minuto para responder."
+
+POKEMON_REGIONS = {
+    1: "Kanto",
+    2: "Johto",
+    3: "Hoenn",
+    4: "Sinnoh",
+    5: "Unova",
+    6: "Kalos",
+    7: "Alola",
+    8: "Galar",
+    9: "Paldea",
+}
 
 
 def lol_release_year(data: dict | None) -> int | None:

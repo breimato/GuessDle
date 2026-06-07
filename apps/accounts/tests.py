@@ -2,6 +2,11 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
 
+from apps.accounts.views.auth_views import (
+    REMEMBER_ME_SESSION_AGE,
+    REMEMBER_ME_SESSION_KEY,
+)
+
 from apps.accounts.models import Challenge, GameElo, Notification
 from apps.accounts.services.notifications.notification_service import NotificationService
 from apps.accounts.services.notifications.notification_types import NotificationType
@@ -619,6 +624,82 @@ class OnePieceLegacyRankingTests(TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["username"], "op_rank")
         self.assertEqual(rows[0]["points"], 250)
+
+
+class RememberMeTests(TestCase):
+    URL_LOGIN = "login"
+    URL_DASHBOARD = "dashboard"
+    USER_PASSWORD = "password123"
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="remember_user",
+            password=self.USER_PASSWORD,
+        )
+
+    def test_login_with_remember_me_sets_persistent_session_cookie(self):
+        response = self.client.post(
+            reverse(self.URL_LOGIN),
+            {
+                "username": self.user.username,
+                "password": self.USER_PASSWORD,
+                "remember_me": "on",
+            },
+        )
+
+        self.assertRedirects(response, reverse(self.URL_DASHBOARD))
+        self.assertEqual(self.client.session.get_expiry_age(), REMEMBER_ME_SESSION_AGE)
+        self.assertTrue(self.client.session.get(REMEMBER_ME_SESSION_KEY))
+
+    def test_login_without_remember_me_sets_browser_session(self):
+        response = self.client.post(
+            reverse(self.URL_LOGIN),
+            {
+                "username": self.user.username,
+                "password": self.USER_PASSWORD,
+            },
+        )
+
+        self.assertRedirects(response, reverse(self.URL_DASHBOARD))
+        self.assertTrue(self.client.session.get_expire_at_browser_close())
+        self.assertFalse(self.client.session.get(REMEMBER_ME_SESSION_KEY))
+
+    def test_login_without_remember_me_visiting_root_shows_login(self):
+        self.client.post(
+            reverse(self.URL_LOGIN),
+            {
+                "username": self.user.username,
+                "password": self.USER_PASSWORD,
+            },
+        )
+        response = self.client.get("/")
+        self.assertRedirects(response, reverse(self.URL_LOGIN))
+
+    def test_login_with_remember_me_visiting_root_redirects_to_dashboard(self):
+        self.client.post(
+            reverse(self.URL_LOGIN),
+            {
+                "username": self.user.username,
+                "password": self.USER_PASSWORD,
+                "remember_me": "on",
+            },
+        )
+        response = self.client.get("/")
+        self.assertRedirects(response, reverse(self.URL_DASHBOARD))
+
+    def test_authenticated_user_with_remember_flag_visiting_login_redirects_to_dashboard(self):
+        self.client.force_login(self.user)
+        session = self.client.session
+        session[REMEMBER_ME_SESSION_KEY] = True
+        session.save()
+        response = self.client.get(reverse(self.URL_LOGIN))
+        self.assertRedirects(response, reverse(self.URL_DASHBOARD))
+
+    def test_authenticated_user_without_remember_flag_visiting_login_shows_login(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse(self.URL_LOGIN))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Recordarme")
 
 
 class RegistrationTests(TestCase):

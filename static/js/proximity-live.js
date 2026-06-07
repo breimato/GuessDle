@@ -13,12 +13,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("proximity-guess-form");
   const input = document.getElementById("guess");
+  const pickerEl = document.getElementById("proximity-guess-picker");
+  const submitBtn = document.getElementById("proximity-guess-submit");
   const errorEl = document.getElementById("proximity-guess-error");
   const timerFillEl = document.getElementById("proximity-timer-fill");
   const timerBarEl = document.getElementById("proximity-timer-bar");
+  const timerCountdownEl = document.getElementById("proximity-timer-countdown");
   const timerSeconds = parseInt(gameData.dataset.timerSeconds || "60", 10);
+  const TIMER_PHASE_HIGH = 50;
+  const TIMER_PHASE_LOW = 25;
+  const TIMER_FILL_PHASE_CLASSES = [
+    "proximity-timer__fill--high",
+    "proximity-timer__fill--mid",
+    "proximity-timer__fill--low",
+  ];
+  const TIMER_COUNTDOWN_PHASE_CLASSES = [
+    "proximity-timer__countdown--high",
+    "proximity-timer__countdown--mid",
+    "proximity-timer__countdown--low",
+  ];
   const modalRoot = document.getElementById("proximity-modal-root");
   const playNav = document.querySelector(".play-nav");
+  const valueUnit = pickerEl?.dataset.valueUnit || "";
 
   let timerInterval = null;
   let timeoutRequested = false;
@@ -80,15 +96,26 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${modesLink}<a href="${panelUrl}" class="arcade-btn arcade-btn--primary arcade-btn--full">Dashboard</a>`;
   }
 
-  function showFinishedModal({ won, answer, score, firstGuess, timedOut }) {
+  function showFinishedModal({ won, answer, score, firstGuess, timedOut, noAnswer, value_unit: modalValueUnit }) {
     lockFiltersNav();
+    const unit = modalValueUnit || valueUnit;
+    const formatValue = (value) => {
+      if (value === null || value === undefined || value === "") {
+        return "?";
+      }
+      return unit ? `${unit} ${value}` : String(value);
+    };
+    const answerLabel = formatValue(answer);
+    const guessLabel = formatValue(firstGuess);
     let title;
     if (won) {
       title = "¡HAS ACERTADO!";
+    } else if (timedOut && noAnswer) {
+      title = `No contestaste a tiempo.<br><br>¡Has perdido!<br>Respuesta: ${escapeHtml(answerLabel)}`;
     } else if (timedOut) {
-      title = `Tiempo agotado.<br><br>Respuesta: ${escapeHtml(answer)}<br>¡Te has quedado a ${escapeHtml(score)}!`;
+      title = `Tiempo agotado.<br><br>Respuesta: ${escapeHtml(answerLabel)}<br>¡Te has quedado a ${escapeHtml(score)}!`;
     } else {
-      title = `Respuesta: ${escapeHtml(answer)}<br>Tu intento: ${escapeHtml(firstGuess ?? "?")}<br>¡Te has quedado a ${escapeHtml(score)}!`;
+      title = `Respuesta: ${escapeHtml(answerLabel)}<br>Tu intento: ${escapeHtml(guessLabel)}<br>¡Te has quedado a ${escapeHtml(score)}!`;
     }
     showModal(title, modalActions());
     if (won && typeof confetti === "function") {
@@ -125,16 +152,33 @@ document.addEventListener("DOMContentLoaded", () => {
   async function handleTimeout() {
     if (timeoutRequested || !canPlay) return;
     timeoutRequested = true;
+    const pendingGuess = input?.value?.trim();
     const body = new FormData();
     body.append("csrfmiddlewaretoken", csrf);
+    if (pendingGuess) {
+      body.append("guess", pendingGuess);
+    }
     try {
-      const data = await postForm(timeoutUrl, body);
-      applyState(data);
+      const data = applyState(await postForm(timeoutUrl, body));
+      if (data.timed_out) {
+        showFinishedModal({
+          won: false,
+          answer: data.answer_value,
+          score: data.score_locked,
+          timedOut: true,
+          noAnswer: !pendingGuess,
+          value_unit: data.value_unit,
+        });
+        return;
+      }
+      if (input) input.value = "";
       showFinishedModal({
-        won: false,
+        won: data.won,
         answer: data.answer_value,
         score: data.score_locked,
-        timedOut: true,
+        firstGuess: data.first_guess_value,
+        timedOut: false,
+        value_unit: data.value_unit,
       });
     } catch (err) {
       timeoutRequested = false;
@@ -145,12 +189,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function updateTimerBar(pct) {
+  function timerPhaseForPct(pct) {
+    if (pct > TIMER_PHASE_HIGH) {
+      return "high";
+    }
+    if (pct > TIMER_PHASE_LOW) {
+      return "mid";
+    }
+    return "low";
+  }
+
+  function applyTimerPhase(phase) {
+    if (!timerFillEl) return;
+    TIMER_FILL_PHASE_CLASSES.forEach((className) => {
+      timerFillEl.classList.remove(className);
+    });
+    timerFillEl.classList.add(`proximity-timer__fill--${phase}`);
+    if (!timerCountdownEl) return;
+    TIMER_COUNTDOWN_PHASE_CLASSES.forEach((className) => {
+      timerCountdownEl.classList.remove(className);
+    });
+    timerCountdownEl.classList.add(`proximity-timer__countdown--${phase}`);
+  }
+
+  function formatCountdown(remainingMs) {
+    const totalSeconds = Math.max(0, Math.ceil(remainingMs / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function updateTimerBar(pct, remainingMs) {
     if (!timerFillEl) return;
     const clamped = Math.max(0, Math.min(100, pct));
+    const phase = timerPhaseForPct(clamped);
     timerFillEl.style.width = `${clamped}%`;
+    applyTimerPhase(phase);
     if (timerBarEl) {
       timerBarEl.setAttribute("aria-valuenow", String(Math.round(clamped)));
+    }
+    if (timerCountdownEl && remainingMs !== undefined) {
+      timerCountdownEl.textContent = formatCountdown(remainingMs);
     }
   }
 
@@ -162,21 +241,32 @@ document.addEventListener("DOMContentLoaded", () => {
     function tick() {
       const remainingMs = deadline - Date.now();
       if (remainingMs <= 0) {
-        updateTimerBar(0);
+        updateTimerBar(0, 0);
         handleTimeout();
         return;
       }
-      updateTimerBar((remainingMs / totalMs) * 100);
+      updateTimerBar((remainingMs / totalMs) * 100, remainingMs);
     }
 
     tick();
     timerInterval = setInterval(tick, 250);
   }
 
+  if (pickerEl && input && submitBtn && typeof initProximityGuessPicker === "function") {
+    initProximityGuessPicker(pickerEl, input, submitBtn);
+  }
+
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!canPlay) return;
     errorEl?.classList.add("hidden");
+    if (!input?.value) {
+      if (errorEl) {
+        errorEl.textContent = "Elige una respuesta antes de probar.";
+        errorEl.classList.remove("hidden");
+      }
+      return;
+    }
     const body = new FormData(form);
     try {
       const data = applyState(await postForm(guessUrl, body));
@@ -187,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         score: data.score_locked,
         firstGuess: data.first_guess_value,
         timedOut: false,
+        value_unit: data.value_unit,
       });
     } catch (err) {
       if (errorEl) {
@@ -215,12 +306,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (finishedFlag) {
     disablePlay();
     lockFiltersNav();
+    const timedOut = finishedFlag.dataset.timedOut === "true";
+    const firstGuess = finishedFlag.dataset.firstGuess;
     showFinishedModal({
       won: finishedFlag.dataset.won === "true",
       answer: finishedFlag.dataset.answer,
       score: finishedFlag.dataset.score,
-      firstGuess: finishedFlag.dataset.firstGuess,
-      timedOut: finishedFlag.dataset.timedOut === "true",
+      firstGuess,
+      timedOut,
+      noAnswer: timedOut && !firstGuess,
     });
   } else {
     startTimerBar();

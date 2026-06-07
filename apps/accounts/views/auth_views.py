@@ -3,6 +3,19 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.shortcuts import redirect, render
 
+REMEMBER_ME_SESSION_AGE = 1209600
+REMEMBER_ME_SESSION_KEY = "remember_me"
+
+
+def has_remember_me_session(request) -> bool:
+    return bool(request.session.get(REMEMBER_ME_SESSION_KEY, False))
+
+
+def home_redirect(request):
+    if request.user.is_authenticated and has_remember_me_session(request):
+        return redirect("dashboard")
+    return redirect("login")
+
 
 def register_view(request):
     if request.method != "POST":
@@ -44,13 +57,21 @@ def register_view(request):
 class LoginView(DjangoLoginView):
     template_name = "registration/login.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and has_remember_me_session(request):
+            return redirect(self.get_success_url())
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         response = super().form_valid(form)
         remember_me = self.request.POST.get("remember_me")
 
         if remember_me:
-            self.request.session.set_expiry(1209600)
+            self.request.session.set_expiry(REMEMBER_ME_SESSION_AGE)
+            self.request.session[REMEMBER_ME_SESSION_KEY] = True
         else:
             self.request.session.set_expiry(0)
+            self.request.session[REMEMBER_ME_SESSION_KEY] = False
 
+        self.request.session.modified = True
         return response

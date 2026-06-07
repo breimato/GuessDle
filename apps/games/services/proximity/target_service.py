@@ -1,4 +1,4 @@
-import random
+import secrets
 
 from django.utils import timezone
 
@@ -7,7 +7,6 @@ from apps.games.services.proximity.answer_resolver import (
     ProximityAnswerResolver,
     resolve_assignment_answer,
 )
-from apps.games.services.proximity.filter_service import ProximityFilterService
 from apps.games.services.proximity.game_config import EVENT_POOL_WEIGHT, proximity_game_kind
 from apps.games.services.proximity.pool_service import ProximityPoolService
 from apps.games.services.proximity.weighted_picker import pick_weighted_item
@@ -48,8 +47,7 @@ class ProximityTargetService:
         if not pool.has_playable_pool():
             return None
 
-        seed = self._build_seed(filter_config)
-        rng = random.Random(seed)
+        rng = secrets.SystemRandom()
         resolver = ProximityAnswerResolver(self.game, media=filter_config.get("media"))
         target_item, prompt = self._pick_target(pool, rng)
         if target_item is None and prompt is None:
@@ -75,12 +73,7 @@ class ProximityTargetService:
             answer_value=answer,
         )
 
-    def _build_seed(self, filter_config: dict) -> int:
-        filter_hash = ProximityFilterService(self.game).config_hash(filter_config)
-        raw = f"{self.user.pk}:{self.game.slug}:{self.mode.slug}:{timezone.localdate()}:{filter_hash}"
-        return int.from_bytes(raw.encode(), "big") % (2**32)
-
-    def _pick_target(self, pool: ProximityPoolService, rng: random.Random):
+    def _pick_target(self, pool: ProximityPoolService, rng: secrets.SystemRandom):
         items = list(pool.item_queryset())
         prompts = list(pool.prompt_queryset())
 
