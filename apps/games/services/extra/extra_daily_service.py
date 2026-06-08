@@ -33,16 +33,20 @@ class ExtraDailyService:
 
     def start_extra_play(self, bet_amount: float) -> ExtraDailyPlay:
         if bet_amount <= 0:
-            raise ValueError("The bet must be greater than zero.")
+            raise ValueError("La apuesta debe ser mayor que cero.")
 
         if self.max_reached():
-            raise ValueError("You have already played the maximum number of extra games today.")
+            raise ValueError(
+                "Ya has jugado el máximo de partidas extra de hoy para este juego."
+            )
 
         score_service = ScoreService(self.user, self.game, mode=self.mode)
         current_points = score_service.score_obj.elo
 
         if current_points < bet_amount:
-            raise ValueError("You do not have enough points for that bet.")
+            raise ValueError(
+                "No tienes puntos suficientes en este juego para esa apuesta."
+            )
 
         score_service.score_obj.elo = current_points - bet_amount
         score_service.score_obj.save(update_fields=["elo"])

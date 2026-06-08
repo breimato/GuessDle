@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>`;
     const overlay = modalRoot.querySelector(".arcade-modal-overlay");
+    window.GuessDleArcadeModal?.mount(overlay);
     const close = () => { modalRoot.innerHTML = ""; };
     modalRoot.querySelectorAll("[data-close-modal]").forEach((btn) => btn.addEventListener("click", close));
     overlay?.addEventListener("click", (e) => { if (e.target === overlay) close(); });
@@ -290,8 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const infoBtn = document.getElementById("proximity-info-btn");
   const infoOverlay = document.getElementById("proximity-info-modal");
   if (infoBtn && infoOverlay) {
-    const closeInfo = () => { infoOverlay.hidden = true; };
-    infoBtn.addEventListener("click", () => { infoOverlay.hidden = false; });
+    const closeInfo = () => { window.GuessDleArcadeModal?.close(infoOverlay); };
+    infoBtn.addEventListener("click", () => { window.GuessDleArcadeModal?.open(infoOverlay); });
     infoOverlay.querySelector("[data-close-proximity-info]")?.addEventListener("click", closeInfo);
     infoOverlay.addEventListener("click", (event) => {
       if (event.target === infoOverlay) closeInfo();

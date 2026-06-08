@@ -1,6 +1,7 @@
 from apps.games.services.play_session.play_context import PlayContext
 from apps.games.services.play_session.play_kind import PlayKind
 from apps.games.models import ExtraDailyPlay, GameAttempt
+from apps.games.services.extra.extra_daily_service import ExtraDailyService
 from apps.games.services.extra.payout import compute_extra_bet_payout, evaluate_extra_bet_won
 from apps.games.services.extra.session import resolve_global_average
 from apps.games.services.play_session.play_session_service import PlaySessionService
@@ -52,6 +53,8 @@ def _update_extra(game, user, play_context: PlayContext, attempts_count: int) ->
         extra_play.completed = True
         extra_play.save(update_fields=["completed"])
 
+    extra_daily_service = ExtraDailyService(user, game, mode=play_context.mode)
+
     return {
         "points_awarded": payout.points_awarded,
         "bet_amount": extra_play.bet_amount,
@@ -59,6 +62,7 @@ def _update_extra(game, user, play_context: PlayContext, attempts_count: int) ->
         "global_average": resolve_global_average(score_service),
         "current_attempts": attempts_count,
         "bet_won": has_beaten_average,
+        "max_extras_reached": extra_daily_service.max_reached(),
     }
 
 

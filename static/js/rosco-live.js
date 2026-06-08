@@ -59,35 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function injectKeyframes() {
-    if (document.getElementById("bounce-modal-style")) return;
-    const style = document.createElement("style");
-    style.id = "bounce-modal-style";
-    style.textContent = `
-      @keyframes bounceInCenter{
-        0%{opacity:0;transform:scale(.9) translateY(-40px)}
-        60%{opacity:1;transform:scale(1.03) translateY(8px)}
-        80%{transform:scale(.97) translateY(-4px)}
-        100%{transform:scale(1) translateY(0)}
-      }
-      .animate-bounceInCenter{
-        animation:bounceInCenter .75s cubic-bezier(.25,.8,.25,1) forwards;
-      }`;
-    document.head.appendChild(style);
-  }
-
   function showModal(title, message, tone = "primary", onClose = null, actionsHtml = null) {
     if (!modalRoot) {
       onClose?.();
       return;
     }
 
-    injectKeyframes();
     const actions = actionsHtml ?? `
       <button type="button" class="arcade-btn arcade-btn--${tone} arcade-btn--full" data-close-modal>Aceptar</button>`;
     modalRoot.innerHTML = `
       <div class="arcade-modal-overlay">
-        <div class="arcade-modal animate-bounceInCenter">
+        <div class="arcade-modal">
           <button type="button" class="arcade-modal__close" data-close-modal aria-label="Cerrar">&times;</button>
           <h2 class="arcade-modal__title arcade-modal__title--confirm">${title}</h2>
           ${message ? `<p class="arcade-modal__message">${message}</p>` : ""}
@@ -98,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
 
     const overlay = modalRoot.querySelector(".arcade-modal-overlay");
+    window.GuessDleArcadeModal?.mount(overlay);
     const close = () => {
       modalRoot.innerHTML = "";
       onClose?.();

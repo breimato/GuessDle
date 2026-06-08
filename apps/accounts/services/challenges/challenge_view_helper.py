@@ -9,9 +9,13 @@ from apps.accounts.models import Challenge, GameElo
 from apps.accounts.services.notifications.notification_service import NotificationService
 from apps.games.models import Game
 from apps.accounts.services.challenges.challenger_manager import ChallengeManager
+from apps.accounts.services.challenges.challenge_scope import (
+    assert_challengeable_game_and_mode,
+    is_challengeable_game,
+    resolve_challenge_mode,
+)
 from apps.accounts.services.challenges.challenge_stake_service import ChallengeStakeService
 from apps.games.services.daily.target_service import TargetService
-from apps.games.services.catalog.mode_resolver import ModeResolver
 
 
 class ChallengeViewHelper:
@@ -124,10 +128,16 @@ class ChallengeViewHelper:
         if opponent == request.user:
             return None, "No puedes retarte a ti mismo."
 
-        resolver = ModeResolver(game)
-        mode = resolver.resolve(mode_slug) if mode_slug else None
-        if resolver.has_modes() and not mode:
-            return None, "Debes elegir una dificultad."
+        if not is_challengeable_game(game):
+            return None, "Solo puedes retar en modos Wordle."
+
+        mode, mode_error = resolve_challenge_mode(game, mode_slug)
+        if mode_error:
+            return None, mode_error
+
+        challenge_error = assert_challengeable_game_and_mode(game, mode)
+        if challenge_error:
+            return None, challenge_error
 
         stake_service = ChallengeStakeService(game, mode=mode)
         max_stake = stake_service.max_stake_between(request.user, opponent)

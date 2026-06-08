@@ -1,5 +1,6 @@
 from apps.accounts.services.wallet.score_service import ScoreService
 from apps.games.models import GameAttempt
+from apps.games.services.extra.extra_daily_service import ExtraDailyService
 
 
 class ExtraPlaySurrenderHandler:
@@ -25,6 +26,10 @@ class ExtraPlaySurrenderHandler:
         if global_average is None:
             global_average = score_service.calculate_user_average_attempts()
 
+        extra_daily_service = ExtraDailyService(
+            self.user, self.game, mode=extra_play.mode
+        )
+
         return {
             "points_awarded": 0,
             "bet_amount": extra_play.bet_amount,
@@ -32,4 +37,5 @@ class ExtraPlaySurrenderHandler:
             "global_average": global_average,
             "current_attempts": attempts_count,
             "bet_won": False,
+            "max_extras_reached": extra_daily_service.max_reached(),
         }

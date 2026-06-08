@@ -85,16 +85,16 @@ min-h-screen flex flex-col gap-12 pt-16 pb-12 px-4
     <div>
       <label for="game" class="arcade-label">Seleccionar juego</label>
       <select id="game" name="game" class="arcade-select">
-        {% for game in available_games %}
-        <option value="{{ game.id }}" data-has-modes="{% if game.active_modes %}true{% else %}false{% endif %}">{{ game.name }}</option>
+        {% for game in challengeable_games %}
+        <option value="{{ game.id }}" data-has-modes="{% if game.requires_challenge_mode %}true{% else %}false{% endif %}">{{ game.name }}</option>
         {% endfor %}
       </select>
     </div>
     <div id="challenge-mode-wrap" class="hidden">
       <label for="challenge-mode" class="arcade-label">Dificultad</label>
       <select id="challenge-mode" name="mode" class="arcade-select">
-        {% for game in available_games %}
-          {% for mode in game.active_modes %}
+        {% for game in challengeable_games %}
+          {% for mode in game.challenge_modes %}
           <option value="{{ mode.slug }}" data-game-id="{{ game.id }}">{{ mode.label }}</option>
           {% endfor %}
         {% endfor %}
@@ -186,12 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const option = gameSelect.selectedOptions[0];
     const hasModes = option && option.dataset.hasModes === 'true';
     modeWrap.classList.toggle('hidden', !hasModes);
+    modeSelect.disabled = !hasModes;
     Array.from(modeSelect.options).forEach((opt) => {
       opt.hidden = opt.dataset.gameId !== gameSelect.value;
     });
     const visible = Array.from(modeSelect.options).filter((opt) => !opt.hidden);
     if (visible.length) modeSelect.value = visible[0].value;
   };
+  window.syncChallengeMode = syncChallengeMode;
   if (gameSelect) {
     gameSelect.addEventListener('change', syncChallengeMode);
     syncChallengeMode();

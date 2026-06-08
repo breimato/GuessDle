@@ -394,23 +394,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initSpriteZoom();
 
-  function injectKeyframes() {
-    if (document.getElementById("silhouette-modal-style")) return;
-    const style = document.createElement("style");
-    style.id = "silhouette-modal-style";
-    style.textContent = `
-      @keyframes bounceInCenter{
-        0%{opacity:0;transform:scale(.9) translateY(-40px)}
-        60%{opacity:1;transform:scale(1.03) translateY(8px)}
-        80%{transform:scale(.97) translateY(-4px)}
-        100%{transform:scale(1) translateY(0)}
-      }
-      .animate-bounceInCenter{
-        animation:bounceInCenter .75s cubic-bezier(.25,.8,.25,1) forwards;
-      }`;
-    document.head.appendChild(style);
-  }
-
   function escapeHtml(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -421,13 +404,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showModal(title, actionsHtml = "", imageUrl = "") {
     if (!modalRoot) return;
-    injectKeyframes();
     const imageHtml = imageUrl
       ? `<img src="${escapeHtml(imageUrl)}" alt="" class="silhouette-modal__portrait">`
       : "";
     modalRoot.innerHTML = `
       <div class="arcade-modal-overlay">
-        <div class="arcade-modal animate-bounceInCenter">
+        <div class="arcade-modal">
           <button type="button" class="arcade-modal__close" data-close-modal aria-label="Cerrar">&times;</button>
           ${imageHtml}
           <h2 class="arcade-modal__title">${title}</h2>
@@ -438,6 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
 
     const overlay = modalRoot.querySelector(".arcade-modal-overlay");
+    window.GuessDleArcadeModal?.mount(overlay);
     const close = () => { modalRoot.innerHTML = ""; };
     modalRoot.querySelectorAll("[data-close-modal]").forEach((button) => {
       button.addEventListener("click", close);

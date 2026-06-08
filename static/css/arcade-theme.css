@@ -1147,6 +1147,15 @@ html.radical-enter-pending body {
 }
 
 /* ─── Modal (JS) ─── */
+@keyframes arcadeModalOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .arcade-modal-overlay {
   position: fixed;
   inset: 0;
@@ -1155,6 +1164,21 @@ html.radical-enter-pending body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+}
+
+.arcade-modal-overlay.is-opening {
+  animation: arcadeModalOverlayIn 0.28s ease-out both;
+}
+
+.arcade-modal-overlay.is-opening > .arcade-modal {
+  animation: bounceInCenter 0.52s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcade-modal-overlay.is-opening,
+  .arcade-modal-overlay.is-opening > .arcade-modal {
+    animation: none;
+  }
 }
 
 .arcade-modal {
@@ -1255,13 +1279,22 @@ html.radical-enter-pending body {
 }
 
 @keyframes bounceInCenter {
-  0%   { opacity: 0; transform: scale(0.95) translateY(-20px); }
-  60%  { opacity: 1; transform: scale(1.02) translateY(4px); }
-  100% { transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(-24px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .animate-bounceInCenter {
-  animation: bounceInCenter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  animation: bounceInCenter 0.52s cubic-bezier(0.25, 0.8, 0.25, 1) both;
 }
 
 /* ─── Links ─── */

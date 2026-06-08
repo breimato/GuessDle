@@ -9,6 +9,7 @@ from apps.games.services.extra.payout import (
     evaluate_extra_bet_won,
 )
 from apps.games.services.extra.session import resolve_global_average
+from apps.games.services.extra.play_urls import resolve_start_extra_url
 from apps.games.services.hints.hint_reveal_service import HintRevealService
 from apps.games.services.catalog.item_pool_service import ItemPoolService
 from apps.games.services.catalog.play_background import resolve_background_url
@@ -82,6 +83,7 @@ class ContextBuilder:
         if self.daily_target or self.extra_play:
             context["guess_url"] = url_registry.guess_url()
             context["background_url"] = resolve_background_url(self.game, mode)
+            context["start_extra_url"] = resolve_start_extra_url(self.game, mode)
             self._apply_daily_extensions(context, mode)
 
             if self.extra_play:

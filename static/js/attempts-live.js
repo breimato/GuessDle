@@ -11,11 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const slug = gameData?.dataset.slug;
   const extraId = gameData?.dataset.extraId;
   const modeMatch = location.pathname.match(/\/play\/[^/]+\/([^/]+)\/?$/);
-  const modeSlug = modeMatch?.[1];
-  const startExtraURL = slug
-    ? (modeSlug ? `/games/start-extra/${slug}/${modeSlug}/` : `/games/start-extra/${slug}/`)
-    : null;
-  const maxExtrasReached = document.getElementById("game-data")?.dataset.maxExtrasReached === "true";
+  const modeSlug = gameData?.dataset.modeSlug || modeMatch?.[1];
+  const startExtraURL = gameData?.dataset.startExtraUrl
+    || (slug
+      ? (modeSlug ? `/games/start-extra/${slug}/${modeSlug}/` : `/games/start-extra/${slug}/`)
+      : null);
+  let maxExtrasReached = gameData?.dataset.maxExtrasReached === "true";
+
+  function syncMaxExtrasReached(value) {
+    if (typeof value !== "boolean") return;
+    maxExtrasReached = value;
+    if (gameData) {
+      gameData.dataset.maxExtrasReached = value ? "true" : "false";
+    }
+  }
   const modesUrl = gameData?.dataset.modesUrl || null;
   const panelUrl = gameData?.dataset.panelUrl || "/accounts/";
   const surrenderUrl = gameData?.dataset.surrenderUrl || null;
@@ -391,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (betData) {
       mergeBetResponse(data);
     }
+    syncMaxExtrasReached(data.max_extras_reached);
 
     if (data.hint_state) {
       handleHintState(data.hint_state);
@@ -505,12 +515,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showErrorModal(message, title = "Error") {
-    injectKeyframes();
     const overlay = document.createElement("div");
     overlay.className = "arcade-modal-overlay";
 
     const modal = document.createElement("div");
-    modal.className = "arcade-modal animate-bounceInCenter";
+    modal.className = "arcade-modal";
     const titleClass = title === "Error"
       ? "arcade-modal__title arcade-modal__title--error"
       : "arcade-modal__title arcade-modal__title--confirm";
@@ -525,6 +534,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    window.GuessDleArcadeModal?.mount(overlay);
 
     const close = () => overlay.remove();
     modal.querySelector(".arcade-modal__close")?.addEventListener("click", close);
@@ -536,9 +546,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function showSurrenderConfirmModal() {
-    injectKeyframes();
+  function bindBetFormSubmit(form) {
+    if (!form || !startExtraURL) return;
 
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const body = new URLSearchParams(new FormData(form));
+      if (extraId && !body.get("return_extra_id")) {
+        body.set("return_extra_id", extraId);
+      }
+
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrf,
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body,
+      });
+      const data = await response.json();
+
+      if (data.status === "ok" && data.redirect_url) {
+        window.location.href = data.redirect_url;
+        return;
+      }
+
+      if (data.message) {
+        showErrorModal(data.message, "Error");
+      }
+    });
+  }
+
+  function showSurrenderConfirmModal() {
     return new Promise((resolve) => {
       const overlay = document.createElement("div");
       overlay.className = "arcade-modal-overlay";
@@ -547,7 +587,7 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.setAttribute("aria-labelledby", "surrender-confirm-title");
 
       const modal = document.createElement("div");
-      modal.className = "arcade-modal animate-bounceInCenter";
+      modal.className = "arcade-modal";
       modal.innerHTML = `
         <button type="button" class="arcade-modal__close" data-surrender-dismiss aria-label="Cerrar">&times;</button>
         <h2 id="surrender-confirm-title" class="arcade-modal__title arcade-modal__title--confirm">¿Rendirse?</h2>
@@ -571,6 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       overlay.appendChild(modal);
       document.body.appendChild(overlay);
+      window.GuessDleArcadeModal?.mount(overlay);
 
       modal.querySelectorAll("[data-surrender-dismiss]").forEach((button) => {
         button.addEventListener("click", () => closeConfirmModal(false));
@@ -616,6 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (betData) {
       mergeBetResponse(data);
     }
+    syncMaxExtrasReached(data.max_extras_reached);
 
     const challengeData = data.challenge ? normalizeChallengeData(data.challenge) : null;
     handleSurrenderCompletion(
@@ -656,14 +698,13 @@ document.addEventListener("DOMContentLoaded", () => {
     challengePending = false,
   }) {
   hideSurrenderButton();
-  injectKeyframes();
   const displayName = normalizeDisplayText(targetName);
 
   const overlay = document.createElement("div");
   overlay.className = "arcade-modal-overlay";
 
   const modal = document.createElement("div");
-  modal.className = "arcade-modal animate-bounceInCenter";
+  modal.className = "arcade-modal";
 
   const betMessageHtml = isExtra && betInfo ? playMessages.buildBetMessageHtml(betInfo) : "";
   const isChallengeModal = typeof IS_CHALLENGE !== "undefined" && IS_CHALLENGE === "true";
@@ -687,6 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button id="show-bet-form" class="arcade-btn arcade-btn--primary arcade-btn--full">Apostar y jugar extra</button>
         <form method="post" action="${startExtraURL}" id="bet-form" class="flex flex-col gap-2 hidden">
           <input type="hidden" name="csrfmiddlewaretoken" value="${csrf}">
+          ${extraId ? `<input type="hidden" name="return_extra_id" value="${extraId}">` : ""}
           <label for="bet" class="arcade-label">¿Cuánto quieres apostar?</label>
           <input type="number" name="bet" min="10" step="1" required class="arcade-input" />
           <button type="submit" class="arcade-btn arcade-btn--primary arcade-btn--full">¡Jugar ahora!</button>
@@ -719,6 +761,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
+  window.GuessDleArcadeModal?.mount(overlay);
 
 
   // Event listener para cerrar el modal al hacer click fuera
@@ -745,6 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
       showBetFormBtn.style.display = "none";
       betForm.classList.remove("hidden");
     });
+    bindBetFormSubmit(betForm);
   }
 
   if (outcome === "victory") {
@@ -755,23 +799,6 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 
-  function injectKeyframes() {
-    if (document.getElementById("bounce-modal-style")) return;
-    const s = document.createElement("style");
-    s.id = "bounce-modal-style";
-    s.textContent = `
-      @keyframes bounceInCenter{
-        0%{opacity:0;transform:scale(.9) translateY(-40px)}
-        60%{opacity:1;transform:scale(1.03) translateY(8px)}
-        80%{transform:scale(.97) translateY(-4px)}
-        100%{transform:scale(1) translateY(0)}
-      }
-      .animate-bounceInCenter{
-        animation:bounceInCenter .75s cubic-bezier(.25,.8,.25,1) forwards;
-      }`;
-    document.head.appendChild(s);
-  }
-
   /* ───────── confetti lados ───────── */
   function launchConfettiSides() {
     const end = Date.now() + 2000;
@@ -780,16 +807,6 @@ document.addEventListener("DOMContentLoaded", () => {
       confetti({ particleCount: 12, angle: 120, spread: 60, origin: { x: 1, y: .6 } });
       if (Date.now() < end) requestAnimationFrame(frame);
     })();
-  }
-
-  const showBetFormBtn = document.getElementById("show-bet-form");
-  const betForm = document.getElementById("bet-form");
-
-  if (showBetFormBtn && betForm) {
-    showBetFormBtn.addEventListener("click", () => {
-      showBetFormBtn.style.display = "none";
-      betForm.classList.remove("hidden");
-    });
   }
 
 });

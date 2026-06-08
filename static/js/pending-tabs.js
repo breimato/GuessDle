@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    window.GuessDleArcadeModal?.mount(overlay);
 
     const close = () => overlay.remove();
     modal.querySelector('.arcade-modal__close')?.addEventListener('click', close);
@@ -26,6 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
         close();
       }
     });
+  };
+
+  const buildChallengeSuccessMessage = (form) => {
+    const opponent = form.querySelector('#opponent')?.selectedOptions[0]?.textContent?.trim();
+    const game = form.querySelector('#game')?.selectedOptions[0]?.textContent?.trim();
+    const modeSelect = form.querySelector('#challenge-mode');
+    const mode = modeSelect && !modeSelect.disabled
+      ? modeSelect.selectedOptions[0]?.textContent?.trim()
+      : '';
+
+    let message = `Has retado a ${opponent} en ${game}`;
+    if (mode) {
+      message += ` (${mode})`;
+    }
+    message += '.';
+    return message;
   };
 
   const buttons = document.querySelectorAll('.view-btn');
@@ -67,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sentPanel.querySelectorAll('.arcade-empty').forEach((node) => node.remove());
           sentPanel.insertAdjacentHTML('afterbegin', data.card);
         }
-        form.reset();
+        showModalMessage(buildChallengeSuccessMessage(form), 'Reto enviado');
         return;
       }
 

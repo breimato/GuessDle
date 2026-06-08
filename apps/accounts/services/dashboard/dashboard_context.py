@@ -3,6 +3,11 @@ from django.db import models
 from django.utils.timezone import now
 
 from apps.accounts.models import Challenge
+from apps.accounts.services.challenges.challenge_scope import (
+    challenge_modes_for_game,
+    is_challengeable_game,
+    requires_challenge_mode_selection,
+)
 from apps.accounts.services.dashboard.extra_play_index import (
     build_extra_play_index,
     resolve_game_redirect_url,
@@ -41,13 +46,26 @@ def enrich_available_games(request, available_games):
     return available_games
 
 
+def build_challengeable_games(available_games):
+    challengeable_games = []
+    for game in available_games:
+        if not is_challengeable_game(game):
+            continue
+        game.challenge_modes = challenge_modes_for_game(game)
+        game.requires_challenge_mode = requires_challenge_mode_selection(game)
+        challengeable_games.append(game)
+    return challengeable_games
+
+
 def build_dashboard_context(request):
     user = request.user
     available_games = list(active_games_queryset().prefetch_related("modes"))
     enrich_available_games(request, available_games)
+    challengeable_games = build_challengeable_games(available_games)
 
     return {
         "available_games": available_games,
+        "challengeable_games": challengeable_games,
         "user_stats": {
             "games": PlayerStatsService.get_user_games_stats(user),
             "global_elo": PlayerStatsService.get_global_elo(user),

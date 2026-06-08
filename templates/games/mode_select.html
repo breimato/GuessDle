@@ -162,8 +162,8 @@
   const overlay = document.getElementById("mode-info-modal");
   if (!btn || !overlay) return;
 
-  const close = () => { overlay.hidden = true; };
-  const open = () => { overlay.hidden = false; };
+  const close = () => { window.GuessDleArcadeModal?.close(overlay); };
+  const open = () => { window.GuessDleArcadeModal?.open(overlay); };
 
   btn.addEventListener("click", open);
   overlay.querySelector("[data-close-mode-info]").addEventListener("click", close);

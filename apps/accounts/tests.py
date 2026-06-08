@@ -174,6 +174,67 @@ class ChallengeBackendTests(TestCase):
         )
         self.assertEqual(notification.count(), 1)
 
+    def test_create_challenge_rejects_non_wordle_mode(self):
+        from apps.games.models import GameMode, GameModePlayType
+
+        minigame = Game.objects.create(name="Minigame", slug="minigame-challenge")
+        emoji_mode = GameMode.objects.create(
+            game=minigame,
+            slug="emoji",
+            label="Emoji",
+            play_type=GameModePlayType.EMOJI,
+        )
+        GameElo.objects.create(user=self.challenger, game=minigame, mode=emoji_mode, elo=100)
+        GameElo.objects.create(user=self.opponent, game=minigame, mode=emoji_mode, elo=100)
+
+        self.client.force_login(self.challenger)
+        response = self.client.post(
+            reverse(self.URL_CREATE_CHALLENGE),
+            {
+                "opponent": self.opponent.id,
+                "game": minigame.id,
+                "mode": emoji_mode.slug,
+                "stake_points": 20,
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["status"], "error")
+        self.assertFalse(
+            Notification.objects.filter(
+                user=self.opponent,
+                type=NotificationType.CHALLENGE_RECEIVED,
+            ).exists()
+        )
+
+    def test_create_challenge_without_mode_uses_single_wordle_mode(self):
+        from apps.games.models import GameMode, GameModePlayType
+
+        league = Game.objects.create(name="League", slug="league-challenge-auto-mode")
+        normal_mode = GameMode.objects.create(
+            game=league,
+            slug="normal",
+            label="Diario",
+            play_type=GameModePlayType.WORDLE,
+        )
+        GameItem.objects.create(game=league, name="Ahri")
+        GameElo.objects.create(user=self.challenger, game=league, mode=normal_mode, elo=100)
+        GameElo.objects.create(user=self.opponent, game=league, mode=normal_mode, elo=100)
+
+        self.client.force_login(self.challenger)
+        response = self.client.post(
+            reverse(self.URL_CREATE_CHALLENGE),
+            {
+                "opponent": self.opponent.id,
+                "game": league.id,
+                "stake_points": 20,
+            },
+        )
+
+        self.assertEqual(response.status_code, self.HTTP_OK)
+        challenge = Challenge.objects.filter(game=league).latest("created_at")
+        self.assertEqual(challenge.mode, normal_mode)
+
     def test_create_challenge_rejects_stake_above_opponent_available_points(self):
         opponent_score = GameElo.objects.get(user=self.opponent, game=self.game, mode__isnull=True)
         opponent_score.elo = 10
@@ -600,6 +661,88 @@ class RankingScopeTests(TestCase):
         rankings = PlayerStatsService.build_ranking_per_game()
         game_rankings = rankings[self.game.slug]
         self.assertEqual(list(game_rankings.keys()), ["normal"])
+
+
+class ChallengeScopeTests(TestCase):
+    def setUp(self):
+        from apps.games.models import GameMode, GameModePlayType
+
+        self.game = Game.objects.create(name="Challenge Scope", slug="challenge-scope-game")
+        self.wordle_mode = GameMode.objects.create(
+            game=self.game,
+            slug="normal",
+            label="Normal",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=0,
+        )
+        GameMode.objects.create(
+            game=self.game,
+            slug="pasapalabra",
+            label="Pasapalabra",
+            play_type=GameModePlayType.ROSCO,
+            sort_order=1,
+        )
+        GameMode.objects.create(
+            game=self.game,
+            slug="proximidad",
+            label="Proximidad",
+            play_type=GameModePlayType.PROXIMITY,
+            sort_order=2,
+        )
+
+    def test_challenge_modes_exclude_minigames_and_pasapalabra(self):
+        from apps.accounts.services.challenges.challenge_scope import (
+            challenge_modes_for_game,
+            requires_challenge_mode_selection,
+        )
+
+        slugs = [mode.slug for mode in challenge_modes_for_game(self.game)]
+        self.assertEqual(slugs, ["normal"])
+        self.assertFalse(requires_challenge_mode_selection(self.game))
+
+    def test_requires_challenge_mode_selection_only_for_multiple_wordle_modes(self):
+        from apps.games.models import GameMode, GameModePlayType
+        from apps.accounts.services.challenges.challenge_scope import requires_challenge_mode_selection
+
+        pokemon = Game.objects.create(name="Pokemon", slug="pokemon-challenge-scope")
+        GameMode.objects.create(
+            game=pokemon,
+            slug="normal",
+            label="Normal",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=0,
+        )
+        GameMode.objects.create(
+            game=pokemon,
+            slug="dificil",
+            label="Difícil",
+            play_type=GameModePlayType.WORDLE,
+            sort_order=1,
+        )
+
+        self.assertFalse(requires_challenge_mode_selection(self.game))
+        self.assertTrue(requires_challenge_mode_selection(pokemon))
+
+    def test_build_challengeable_games_excludes_minigame_only_games(self):
+        from apps.accounts.services.dashboard.dashboard_context import build_challengeable_games
+        from apps.games.models import GameMode, GameModePlayType
+
+        emoji_game = Game.objects.create(name="Emoji Only", slug="emoji-only-challenge")
+        GameMode.objects.create(
+            game=emoji_game,
+            slug="emoji",
+            label="Emoji",
+            play_type=GameModePlayType.EMOJI,
+        )
+
+        challengeable = build_challengeable_games([self.game, emoji_game])
+        slugs = [game.slug for game in challengeable]
+
+        self.assertEqual(slugs, ["challenge-scope-game"])
+        self.assertEqual(
+            [mode.slug for mode in challengeable[0].challenge_modes],
+            ["normal"],
+        )
 
 
 class OnePieceLegacyRankingTests(TestCase):
